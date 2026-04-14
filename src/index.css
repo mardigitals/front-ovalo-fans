@@ -51,14 +51,14 @@
   }
 }
 :root {
-  --text: #6b6375;
+  --text: #C3C3C3;
   --text-h: #08060d;
   --bg: #fff;
   /* --border: #e5e4e7; */
   --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
+  --accent: #42C6FF;
+  --accent-bg: rgba(66, 198, 255, 0.1);
+  --accent-border: rgba(66, 198, 255, 0.5);
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
@@ -84,14 +84,14 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
+    --text: #C3C3C3;
     --text-h: #f3f4f6;
-    --bg: #16171d;
+    --bg: #08060d;
     --border: #2e303a;
     --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
+    --accent: #42C6FF;
+    --accent-bg: rgba(66, 198, 255, 0.15);
+    --accent-border: rgba(66, 198, 255, 0.5);
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
@@ -103,19 +103,15 @@
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  background-color: var(--bg); 
+  color: var(--text);
 }
 
 h1,
@@ -129,10 +125,6 @@ h1 {
   font-size: 56px;
   letter-spacing: -1.68px;
   margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
 }
 h2 {
   font-size: 24px;
@@ -160,4 +152,28 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+/* --- CLASES GLOBALES PERSONALIZADAS --- */
+@layer components {
+  /* Efecto Glass (Vidrio) y Neón Blanco combinado para usar en cualquier botón, bloque o enlace */
+  .glass-neon-btn {
+    @apply transition-all duration-300 border border-transparent;
+  }
+  
+  .glass-neon-btn:hover {
+    /* Fondo tipo vidrio */
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    
+    /* Letras e iconos en blanco con sombra/resplandor Cyan Neón (#42C6FF) */
+    color: #ffffff;
+    text-shadow: 
+      0 0 5px rgba(66, 198, 255, 0.9),
+      0 0 15px rgba(66, 198, 255, 0.7),
+      0 0 25px rgba(66, 198, 255, 0.4);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), 0 0 15px rgba(255, 255, 255, 0.05) inset;
+  }
 }

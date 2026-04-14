@@ -1,12 +1,20 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  // Shadcn necesita saber dónde están tus componentes y tu código
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        // Los colores de tu PDF
+        institucional: {
+          celeste: "#42C6FF",
+          gris: "#C3C3C3",
+          oscuro: "#08060d", // El fondo que ya veníamos usando
+        },
+      },
+    },
   },
   plugins: [],
 }

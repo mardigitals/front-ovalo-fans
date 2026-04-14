@@ -1,9 +1,35 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Modo Moderno (Vite) */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Estrechez de motor */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Los famosos Alias */
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+
+    /* Para que reconozca los CSS y archivos de Vite */
+    "types": ["vite/client"],
+    
+    /* El silenciador de advertencias */
+    "ignoreDeprecations": "5.0"
   },
   "include": ["src"],
   "exclude": ["node_modules"]
