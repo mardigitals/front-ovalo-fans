@@ -21,7 +21,7 @@ const HomePage = () => (
       </div>
     </div>
     <div className="text-center max-w-3xl mb-12 mt-10">
-      <h2 className="text-5xl md:text-7xl font-extrabold mb-6 text-cyan-400 tracking-tight leading-none">
+      <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-sky-200 tracking-tighter uppercase">
         ¡VIVE LA PASIÓN!
       </h2>
       <p className="text-stone-400 text-lg md:text-xl">

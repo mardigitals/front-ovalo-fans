@@ -3,7 +3,7 @@ import { Outlet, Link } from 'react-router-dom';
 const PublicLayout = () => (
   <div className="min-h-screen bg-[#08060d] text-white flex flex-col font-sans">
     <header className="bg-black/40 backdrop-blur-xl border-b border-white/10 p-4 flex justify-between items-center sticky top-0 z-50">
-      <h1 className="text-2xl font-bold tracking-tighter text-cyan-400">
+      <h1 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-sky-200 tracking-tighter uppercase">
         AUTÓDROMO RAFAELA
       </h1>
       <nav className="hidden md:flex space-x-6 text-sm font-medium">
