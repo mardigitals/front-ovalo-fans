@@ -15,7 +15,7 @@ const LoginPage = () => {
     setError('');
 
     try {
-      const response = await api.post('/usuario-auth/login', { email, password });
+      const response = await api.post('/usuario-auth/login', { email, contrasena: password });
       localStorage.setItem('token', response.data.access_token);
       navigate('/dashboard'); 
     } catch (err: any) {
@@ -27,7 +27,6 @@ const LoginPage = () => {
   };
 
   return (
-    // 1. Le sacamos el bg-[#08060d] y text-white. Ahora el body de index.css controla el modo Claro/Oscuro automáticamente
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
       
       {/* Botón volver */}
@@ -38,14 +37,12 @@ const LoginPage = () => {
       {/* 2. Tarjeta Glass adaptada para Claro y Oscuro */}
       <div className="w-full max-w-md p-8 space-y-8 bg-white/80 dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl dark:shadow-sky-500/20">
         
-        {/* 3. ¡Mirá qué limpio quedó el título usando title-fan! */}
         <h2 className="title-fan text-center text-4xl md:text-5xl">
           Iniciar Sesión
         </h2>
         
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           
-          {/* 4. Inputs usando input-fan. Les puse un gap (space-y-4) para que respiren mejor */}
           <div className="space-y-4">
             <div>
               <label htmlFor="email" className="label-fan">Email</label>
@@ -73,7 +70,6 @@ const LoginPage = () => {
             </div>
           </div>
 
-          {/* Mensaje de error */}
           {error && (
             <p className="text-sm font-bold text-red-500 text-center bg-red-500/10 py-3 rounded-md border border-red-500/20">
               {error}
