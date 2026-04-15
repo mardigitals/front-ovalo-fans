@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 2. Las variables de Shadcn (necesarias para que el botón funcione) */
+/* 2. Base y Variables de Shadcn */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -49,126 +49,57 @@
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
   }
-}
-:root {
-  --text: #C3C3C3;
-  --text-h: #08060d;
-  --bg: #fff;
-  /* --border: #e5e4e7; */
-  --code-bg: #f4f3ec;
-  --accent: #42C6FF;
-  --accent-bg: rgba(66, 198, 255, 0.1);
-  --accent-border: rgba(66, 198, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  /* Reset básico usando Tailwind (Controla el fondo de toda la app) */
+  body {
+    @apply font-sans antialiased min-h-[100svh] flex flex-col m-0
+           /* Modo Claro: Fondo claro, texto oscuro */
+           bg-slate-50 text-slate-900
+           /* Modo Oscuro: El negro institucional */
+           dark:bg-[#08060d] dark:text-slate-300;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #C3C3C3;
-    --text-h: #f3f4f6;
-    --bg: #08060d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #42C6FF;
-    --accent-bg: rgba(66, 198, 255, 0.15);
-    --accent-border: rgba(66, 198, 255, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-}
-
-body {
-  margin: 0;
-  background-color: var(--bg); 
-  color: var(--text);
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
-
-/* --- CLASES GLOBALES PERSONALIZADAS --- */
+/* 3. Tus Clases Personalizadas (Óvalo Fans Design System) */
 @layer components {
-  /* Efecto Glass (Vidrio) y Neón Blanco combinado para usar en cualquier botón, bloque o enlace */
+  
+  /* --- TIPOGRAFÍA ESTANDARIZADA --- */
+  
+  .title-fan {
+    @apply text-3xl md:text-5xl font-black text-transparent bg-clip-text 
+           /* Modo Claro: Un celeste más intenso para que resalte en blanco */
+           bg-gradient-to-r from-sky-600 to-sky-400 
+           /* Modo Oscuro: Tu celeste original, más brillante */
+           dark:from-sky-400 dark:to-sky-200 
+           tracking-tighter uppercase;
+  }
+
+  .subtitle-fan {
+    @apply text-xl md:text-2xl font-bold text-transparent bg-clip-text 
+           bg-gradient-to-r from-sky-600 to-sky-400 
+           dark:from-sky-400 dark:to-sky-200 
+           tracking-tight;
+  }
+
+  .text-fan {
+    @apply text-base md:text-lg leading-relaxed
+           /* Modo Claro: Gris oscuro */
+           text-slate-700 
+           /* Modo Oscuro: Gris claro */
+           dark:text-slate-400;
+  }
+
+  /* --- COMPONENTES UI --- */
+
   .glass-neon-btn {
     @apply transition-all duration-300 border border-transparent;
   }
   
   .glass-neon-btn:hover {
-    /* Fondo tipo vidrio */
     background-color: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    
-    /* Letras e iconos en blanco con sombra/resplandor Cyan Neón (#42C6FF) */
     color: #ffffff;
     text-shadow: 
       0 0 5px rgba(66, 198, 255, 0.9),
@@ -176,13 +107,22 @@ code {
       0 0 25px rgba(66, 198, 255, 0.4);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), 0 0 15px rgba(255, 255, 255, 0.05) inset;
   }
-  /* Input base institucional (Celeste/Gris) */
+
   .input-fan {
-    @apply w-full px-4 py-3 border border-white/10 bg-white/[0.03] rounded-md outline-none transition-all duration-200 text-slate-200 placeholder:text-slate-600 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20;
+    @apply w-full px-4 py-3 rounded-md outline-none transition-all duration-200
+           /* Modo Claro: Fondo blanco, borde gris, texto negro */
+           bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400
+           /* Modo Oscuro: Tu diseño glassmorphism original */
+           dark:bg-white/[0.03] dark:border-white/10 dark:text-slate-200 dark:placeholder:text-slate-600
+           /* Focus (Sirve para ambos) */
+           focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20;
   }
 
-  /* Label para los formularios */
   .label-fan {
-    @apply text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1 mb-1 block;
+    @apply text-[11px] font-bold uppercase tracking-widest ml-1 mb-1 block
+           /* Modo Claro */
+           text-slate-600 
+           /* Modo Oscuro */
+           dark:text-slate-400; 
   }
 }
