@@ -28,22 +28,32 @@ const HomePage = () => (
       <h2 className="title-fan mb-4">
         ¡VIVE LA PASIÓN!
       </h2>
-      
+      <h3 className="subtitle-fan mb-6">
+        Bienvenido a <em>ÓVALO FANS,</em> tu espacio para vivir la historia y la emoción del automovilismo.
+      </h3>
      
+      <em className="text-fan">
+        ¡Elegí la membresia que mas se adapte a vos!
+      </em>
       <p className="text-fan">
-        Explora la historia del Óvalo y gestiona tu experiencia como fan.
+        Convertite en un <span className="subtitle-fan">P1-P2-P3 </span>FAN, accedé a contenido exclusivo y disfrutá de <em>beneficios únicos.</em>
       </p>
+
     </div>
 
     
     <Link 
       to="/login" 
-      className="mb-12 relative z-10 py-4 px-8 font-black rounded-full text-black bg-sky-500 hover:bg-sky-400 shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.6)] hover:scale-105 transition-all uppercase tracking-widest text-lg"
-    >
+      className="mb-12 relative z-10 py-4 px-8 font-black rounded-full text-black bg-sky-500 hover:bg-sky-400 shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.6)] hover:scale-105 transition-all uppercase tracking-widest text-lg">
       ¡Únete a ÓVALO FANS!
     </Link>
-    
-  </div>
+
+    {/* Botón terminos y condiciones */}
+    <Link to="/terms-conditions" className="mb-8 text-slate-500 hover:text-sky-500 transition-colors text-sm font-medium">
+      Ver términos y condiciones
+    </Link>
+
+</div>
 );
 
 export default HomePage;
