@@ -176,7 +176,6 @@ const DashboardLayout = () => {
   }
 
   // 4. Lógica de Menú Dinámico
-  // Ajustá estas variables si en tu payload (req.user) se llaman distinto (ej: userProfile.role)
   const rol = userProfile?.rol || 'Fan'; 
   const nivelFan = userProfile?.nivelFan || 'P3'; 
 
@@ -243,7 +242,7 @@ const DashboardLayout = () => {
         {/* ETIQUETA VISUAL DEL ROL / NIVEL */}
         <div className="px-6 pb-2">
           <span className="inline-block px-3 py-1 bg-institucional-celeste/10 border border-institucional-celeste/20 rounded-full text-[10px] font-black text-institucional-celeste uppercase tracking-widest">
-            {rol === 'Fan' ? `Socio Nivel ${nivelFan}` : `Staff: ${rol}`}
+            {rol === 'fan' ? `Socio Nivel ${nivelFan}` : `Staff: ${rol}`}
           </span>
         </div>
 

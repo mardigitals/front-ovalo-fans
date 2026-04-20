@@ -27,8 +27,8 @@ const AppRoutes = () => (
       <Route element={<ProtectedRoute />}>
 
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Fan o staff</div>} />
-          {/* Aquí irán las secciones del dashboard(staff o fan), etc. */}
+          <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Óvalo Fans</div>} />
+          {/* Aquí irán las secciones del dashboard */}
         </Route>
 
       </Route>
