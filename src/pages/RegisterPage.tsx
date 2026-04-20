@@ -129,7 +129,11 @@ const RegisterPage = () => {
                                 {isLoading ? 'Registrando...' : 'Siguiente'}
                             </button>
                         </form>
-                        
+                        <div className="bg-institucional-celeste/5 border-l-4 border-institucional-celeste p-4 mt-6">
+                            <p className="text-sm italic text-fan">
+                            * Al registrarte, aceptas nuestros <Link to="/terms-conditions" ><strong>Términos y Condiciones</strong></Link> y nuestras <Link to="/privacy-policy" ><strong>Políticas de Privacidad</strong></Link>.
+                            </p>
+                        </div>
                         <p className="text-center text-slate-500 text-sm">
                             ¿Ya tienes cuenta? <Link to="/login" className="text-sky-500 hover:text-sky-400 font-black tracking-wide ml-1">INICIA SESIÓN</Link>
                         </p>
