@@ -186,7 +186,7 @@ const DashboardLayout = () => {
     // Todos ven el Inicio
     items.push({ to: '/dashboard', icon: <Home size={20} />, label: 'Inicio' });
 
-    if (rol === 'Fan') {
+    if (rol === 'fan') {
       items.push({ to: '/dashboard/mapa', icon: <Map size={20} />, label: 'Mapa Interactivo' });
       
       if (nivelFan === 'P1' || nivelFan === 'P2') {
