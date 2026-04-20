@@ -6,11 +6,13 @@ import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import TermsConditionsPage from '@/pages/TermsConditionsPage';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 
 
 const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
+
       {/* Rutas Públicas */}
       <Route path="/" element={<PublicLayout />}>
         <Route index element={<HomePage />} />
@@ -21,11 +23,16 @@ const AppRoutes = () => (
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       
 
-      {/* Rutas Privadas (Dashboard) */}
-      <Route path="/dashboard" element={<DashboardLayout />}>
-        <Route index element={<div className="p-8 text-white">Bienvenido al Panel de Socio</div>} />
-        {/* Aquí irán las secciones de Socios, Mapa, etc. */}
+      {/* Rutas Privadas */}
+      <Route element={<ProtectedRoute />}>
+
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Fan o staff</div>} />
+          {/* Aquí irán las secciones del dashboard(staff o fan), etc. */}
+        </Route>
+
       </Route>
+
     </Routes>
   </BrowserRouter>
 );
