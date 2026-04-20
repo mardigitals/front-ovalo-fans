@@ -1,11 +1,26 @@
 import axios from 'axios';
 
+// 1. Creamos la instancia base
 const api = axios.create({
-  // VITE_API_URL debe estar en tu archivo .env
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: 'http://localhost:3000', 
 });
+
+// 2. EL INTERCEPTOR 
+api.interceptors.request.use(
+  (config) => {
+    // Buscamos el token
+    const token = localStorage.getItem('token');
+    
+    // Si existe, se lo inyectamos a los Headers
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default api;
