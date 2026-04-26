@@ -27,7 +27,7 @@ const PublicLayout = () => {
         
         <div className="flex justify-between items-center w-full">
           <h1 className="title-fan text-2xl md:text-4xl">
-           <img src="/public/logo-autodromo-horizontal-color.png" alt="Logo Autódromo" className="h-10 md:h-16" />
+           <img src="src\assets\icons\logo-autodromo-horizontal-color.png" alt="Logo Autódromo" className="h-10 md:h-16" />
           </h1>
           
           {/* NAV DE ESCRITORIO (Se oculta en móviles con md:flex) */}
