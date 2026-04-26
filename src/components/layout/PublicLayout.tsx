@@ -24,7 +24,8 @@ const PublicLayout = () => {
 
   return (
     <div className="min-h-screen flex flex-col font-sans">
-    <header className="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-black/20 backdrop-blur-xl border-b border-white/5 p-4 transition-colors duration-300">        <div className="flex justify-between items-center w-full">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-black/20 backdrop-blur-xl border-b border-white/5 p-4 transition-colors duration-300">        
+      <div className="flex justify-between items-center w-full">
           <h1 className="title-fan text-2xl md:text-4xl">
            <img src={logo} alt="Logo Autódromo" className="h-6 md:h-16" />
         
