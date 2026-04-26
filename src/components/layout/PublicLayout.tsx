@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react'; // <-- Importamos los íconos
+import { Menu, X } from 'lucide-react'; 
+import logo from '../../assets/icons/logo-autodromo-color.png';
 
 const PublicLayout = () => {
   const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'));
@@ -23,11 +24,10 @@ const PublicLayout = () => {
 
   return (
     <div className="min-h-screen flex flex-col font-sans">
-      <header className="bg-white/80 dark:bg-black/40 backdrop-blur-xl border-b border-slate-200 dark:border-white/10 p-4 sticky top-0 z-50 transition-colors duration-300">
-        
-        <div className="flex justify-between items-center w-full">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-black/20 backdrop-blur-xl border-b border-white/5 p-4 transition-colors duration-300">        <div className="flex justify-between items-center w-full">
           <h1 className="title-fan text-2xl md:text-4xl">
-           <img src="src\assets\icons\logo-autodromo-horizontal-color.png" alt="Logo Autódromo" className="h-10 md:h-16" />
+           <img src={logo} alt="Logo Autódromo" className="h-6 md:h-16" />
+        
           </h1>
           
           {/* NAV DE ESCRITORIO (Se oculta en móviles con md:flex) */}
