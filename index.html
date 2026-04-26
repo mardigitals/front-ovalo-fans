@@ -1,16 +1,38 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="es-AR" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ovalo-fans-front</title>
+    
+    <title>Óvalo Fans | Autódromo Ciudad de Rafaela</title>
+    <meta name="description" content="Plataforma oficial del Autódromo de Rafaela. Accedé a beneficios exclusivos, Fast Access, VIP Boxes, Pruebas Libres y más. Convertite en un OVALO FAN." />
+    <meta name="keywords" content="autodromo rafaela, ovalo fans, turismo carretera, club atletico rafaela, carreras, beneficios socios, club beneficios, socios, fans" />
+    <meta name="author" content="MAR digitals" />
+
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Ovalo Fans" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#08060d" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://autodromorafaela.com/" />
+    <meta property="og:title" content="Óvalo Fans | Autódromo Ciudad de Rafaela" />
+    <meta property="og:description" content="Plataforma oficial del Autódromo de Rafaela. Accedé a beneficios exclusivos, Fast Access, VIP Boxes, Pruebas Libres y más. Convertite en un OVALO FAN." />
+    <meta property="og:image" content="https://autodromorafaela.com/og-image.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Óvalo Fans | Autódromo Ciudad de Rafaela" />
+    <meta name="twitter:description" content="Plataforma oficial del Autódromo de Rafaela. Accedé a beneficios exclusivos, Fast Access, VIP Boxes, Pruebas Libres y más. Convertite en un OVALO FAN." />
+    <meta name="twitter:image" content="https://autodromorafaela.com/og-image.jpg" />
+
     <script>
-      // 1. Revisa si el usuario ya eligió un tema antes, O si su compu/celular está en modo oscuro
-      if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('dark');
-      } else {
+      if (localStorage.getItem('color-theme') === 'light') {
           document.documentElement.classList.remove('dark');
+      } else {
+          document.documentElement.classList.add('dark');
       }
     </script>
   </head>
