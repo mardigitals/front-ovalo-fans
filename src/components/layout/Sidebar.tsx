@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Map, Users, User, LogOut, X, Shield, Camera, Star, Ticket, Settings, PercentIcon } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { useTheme } from '@/hooks/useTheme'; // <-- Importamos el hook
 
-// 1. Subcomponente para los botones del menú (lo dejamos acá porque solo le sirve al Sidebar)
+// 1. Subcomponente para los botones del menú
 const SidebarItem = ({ to, icon, label, isActive, onClick }: { to: string; icon: React.ReactNode; label: string; isActive?: boolean; onClick?: () => void }) => (
   <Link
     to={to}
@@ -25,23 +25,9 @@ interface SidebarProps {
 
 const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
   const location = useLocation();
-  const { userProfile, handleLogout } = useAuth(); // <-- Traemos los datos y la función de deslogueo
+  const { userProfile, handleLogout } = useAuth();
+  const { isDark, toggleTheme } = useTheme(); // <-- Instanciamos el hook acá y borramos toda la lógica vieja
   
-  // Estado local para el cambio de tema
-  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'));
-
-  const toggleTheme = () => {
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('color-theme', 'light');
-      setIsDark(false);
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('color-theme', 'dark');
-      setIsDark(true);
-    }
-  };
-
   // Variables de seguridad
   const rol = userProfile?.rol?.toLowerCase() || 'fan'; 
   const nivelFan = userProfile?.nivelFan || 'P3'; 
