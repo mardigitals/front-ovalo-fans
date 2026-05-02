@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react'; 
-import logo from '../../assets/icons/logo-autodromo-color.png';
+import logo from '@/assets/icons/logo-autodromo-color.png';
+import logoMar from '@/assets/icons/MAR negro sin fondo.png';
+import logoDark from '@/assets/icons/MAR blanco sin fondo.png';
 import { useTheme } from '@/hooks/useTheme';
 
 // Arreglo para no repetir código en el menú de escritorio y móvil
@@ -82,11 +84,15 @@ const PublicLayout = () => {
         <Outlet />
       </main>
       
-      <footer className="p-8 text-center text-slate-500 text-sm border-t border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-black/20 transition-colors duration-300">
-        &copy; {new Date().getFullYear()} Autódromo Rafaela. Desarrollado por MAR digitals.
+      <footer className="pt-3 justify-center text-center text-slate-500 text-sm border-t border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-black/20 transition-colors duration-300">
+        &copy; {new Date().getFullYear()} Autódromo Rafaela.  Todos los derechos reservados. 
+        <p className="flex items-center justify-center gap-2">
+          Desarrollado por 
+          <img src={logoMar} alt="Logo MAR digitals" className="h-20 w-auto dark:hidden" />
+          <img src={logoDark} alt="Logo MAR digitals" className="h-20 w-auto hidden dark:block" />
+        </p>
       </footer>
     </div>
   );
-};
-
+}
 export default PublicLayout;

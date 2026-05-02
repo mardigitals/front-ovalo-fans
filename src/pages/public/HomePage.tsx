@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/images/hero-image.png';
-import { Zap, Gauge } from 'lucide-react';
+import { Gauge } from 'lucide-react';
+import logo from '@/assets/icons/logo-autodromo-negro.png';
+import logoDark from '@/assets/icons/logo-autodromo-blanco.png';
 
 const HomePage = () => (
   <main className="flex flex-col min-h-screen bg-white dark:bg-[#08060d] transition-colors duration-300">
@@ -65,6 +67,8 @@ const HomePage = () => (
     {/* <footer> */}
     <footer className="flex items-center justify-center gap-2 text-slate-600 dark:text-slate-300 font-medium italic mb-2 text-sm font-firma">
       <Gauge size={20} /> templo de la velocidad 
+      <img src={logo} alt="Logo Autódromo" className="h-5 w-auto dark:hidden" />
+      <img src={logoDark} alt="Logo Autódromo" className="h-5 w-auto hidden dark:block" />
     </footer>
   </main>
 );
