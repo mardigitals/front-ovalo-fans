@@ -19,7 +19,7 @@ const HomePage = () => (
     {/* <section> */}
     <section className="relative z-10 flex flex-col items-center text-center px-6 py-16 md:py-24 max-w-4xl mx-auto">
       
-      <h2 className="title-fan text-4xl md:text-6xl mb-6 text-black dark:text-white">
+      <h2 className="title-fan text-center text-4xl md:text-5xl">
         ¡VIVE LA PASIÓN!
       </h2>
       
@@ -63,7 +63,7 @@ const HomePage = () => (
 
     {/* <footer> */}
     <footer className="h-20 text-center text-slate-500 dark:text-slate-700 text-[10px] uppercase tracking-widest">
-      Autódromo Ciudad de Rafaela - MAR digitals
+      Desde 1919 organizando carreras - Autódromo Ciudad de Rafaela - Cumbre del Automovilismo
     </footer>
   </main>
 );
