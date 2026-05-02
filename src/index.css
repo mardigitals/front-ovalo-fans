@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Cookie&family=Playwrite+US+Modern:wght@100..400&display=swap');
 /* 1. Las tres leyes de Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 /* 2. Base y Variables de Shadcn */
 @layer base {

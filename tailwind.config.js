@@ -1,3 +1,5 @@
+import { s } from 'framer-motion/client'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"], // <--- ¡darkmode se activa con la clase "dark" en el elemento raíz!
@@ -15,7 +17,10 @@ export default {
           oscuro: "#08060d", //bg
         },
       },
+      fontFamily: {
+        'firma': ['"Playwrite US Modern"', 'cursive'],
+      },
     },
-  },
-  plugins: [],
+    plugins: [],
+  }
 }

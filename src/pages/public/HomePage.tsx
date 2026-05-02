@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/images/hero-image.png';
+import { Zap, Gauge } from 'lucide-react';
 
 const HomePage = () => (
   <main className="flex flex-col min-h-screen bg-white dark:bg-[#08060d] transition-colors duration-300">
@@ -62,8 +63,8 @@ const HomePage = () => (
     </section>
 
     {/* <footer> */}
-    <footer className="h-20 text-center text-slate-500 dark:text-slate-700 text-[10px] uppercase tracking-widest">
-      Desde 1919 organizando carreras - Autódromo Ciudad de Rafaela - Cumbre del Automovilismo
+    <footer className="flex items-center justify-center gap-2 text-slate-600 dark:text-slate-300 font-medium italic mb-2 text-sm font-firma">
+      <Gauge size={20} /> templo de la velocidad 
     </footer>
   </main>
 );
