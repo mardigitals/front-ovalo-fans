@@ -1,5 +1,5 @@
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
-import { Home, Map, Users, LogOut, Menu, X, Shield, Camera, Star, Ticket, Settings } from 'lucide-react';
+import { Home, Map, Users, User, LogOut, Menu, X, Shield, Camera, Star, Ticket, Settings, PercentIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import api from '@/api/axios'; 
 
@@ -74,6 +74,10 @@ const DashboardLayout = () => {
 
     // Todos ven el Inicio
     items.push({ to: '/dashboard', icon: <Home size={20} />, label: 'Inicio' });
+
+    items.push({ to: '/dashboard/perfil', icon: <User size={20} />, label: 'Mi Perfil' });
+
+    items.push({ to: '/dashboard/beneficios', icon: <PercentIcon size={20} />, label: 'Beneficios y Descuentos' });
 
     if (rol === 'fan') {
       items.push({ to: '/dashboard/mapa', icon: <Map size={20} />, label: 'Mapa Interactivo' });
