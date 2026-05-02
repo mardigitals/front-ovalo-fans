@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PublicLayout from '../components/layout/PublicLayout';
-import DashboardLayout from '../components/layout/DashboardLayout';
-import HomePage from '../pages/HomePage';
-import LoginPage from '../pages/LoginPage';
-import RegisterPage from '../pages/RegisterPage';
-import TermsConditionsPage from '@/pages/TermsConditionsPage';
-import PrivacyPolicy from '@/pages/PrivacyPolicy';
+import PublicLayout from '@/components/layout/PublicLayout';
+import DashboardLayout from '@/components/layout/DashboardLayout';
+import HomePage from '@/pages/public/HomePage';
+import LoginPage from '@/pages/public/LoginPage';
+import RegisterPage from '@/pages/public/RegisterPage';
+import TermsConditionsPage from '@/pages/public/TermsConditionsPage';
+import PrivacyPolicy from '@/pages/public/PrivacyPolicy';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 
 

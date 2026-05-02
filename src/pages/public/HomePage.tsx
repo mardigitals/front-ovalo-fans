@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import heroImage from '../assets/images/hero-image.png';
+import heroImage from '@/assets/images/hero-image.png';
 
 const HomePage = () => (
   <main className="flex flex-col min-h-screen bg-white dark:bg-[#08060d] transition-colors duration-300">
