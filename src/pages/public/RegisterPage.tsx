@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '@/api/axios';
+import { X } from 'lucide-react';
 
 const RegisterPage = () => {
     const [step, setStep] = useState(1);
@@ -17,6 +18,8 @@ const RegisterPage = () => {
         cp: '', ciudad: '', provincia: '', pais: 'Argentina',
         alias: '', es_socio_club: false, hincha_marca_tc: 'Ford', chicana_favorita: '1 de adentro'
     });
+
+    const [modalBeneficios, setModalBeneficios] = useState<'P1' | 'P2' | 'P3' | null>(null);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
@@ -253,7 +256,7 @@ const RegisterPage = () => {
                     <div className="space-y-8 animate-in fade-in slide-in-from-right-8 duration-500">
                         <div className="text-center space-y-2">
                             <h2 className="title-fan text-center text-3xl md:text-5xl">
-                                Elegí tu Nivel de Socio
+                                Elegí tu Nivel de FAN
                             </h2>
                             <p className="text-fan">Asegurá tu lugar y accedé a los beneficios.</p>
                         </div>
@@ -261,8 +264,16 @@ const RegisterPage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                             {/* Tarjeta P3 */}
                             <div className="border border-slate-200 dark:border-white/10 p-6 rounded-xl text-center">
-                                <h3 className="subtitle-fan text-xl text-slate-500">Nivel P3</h3>
-                                <p className="text-2xl font-black my-4">$5.000 / mes</p>
+                                <h3 className="title-fan text-xl text-slate-500">Nivel P3</h3>
+                                <button 
+                                    type="button" 
+                                    onClick={() => setModalBeneficios('P3')} 
+                                    className="subtitle-fan text-sm text-sky-500 hover:text-sky-400 transition-colors mt-1 underline underline-offset-2"
+                                >
+                                    Ver Beneficios
+                                </button>
+
+                                <p className="text-2xl font-black my-4">$4.499,05 ARS / mes</p>
                                 <button onClick={() => handlePayment(3)} className="w-full py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700">Seleccionar</button>
                             </div>
 
@@ -270,14 +281,28 @@ const RegisterPage = () => {
                             <div className="border border-sky-500 p-6 rounded-xl text-center relative shadow-[0_0_15px_rgba(14,165,233,0.3)]">
                                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-sky-500 text-black px-3 py-1 text-xs font-black rounded-full">RECOMENDADO</span>
                                 <h3 className="subtitle-fan text-xl text-sky-500">Nivel P2</h3>
-                                <p className="text-2xl font-black my-4">$10.000 / mes</p>
+                                <button 
+                                    type="button" 
+                                    onClick={() => setModalBeneficios('P2')} 
+                                    className="subtitle-fan text-sm text-sky-500 hover:text-sky-400 transition-colors mt-1 underline underline-offset-2"
+                                >
+                                    Ver Beneficios
+                                </button>
+                                <p className="text-2xl font-black my-4">$6.999,25 ARS / mes</p>
                                 <button onClick={() => handlePayment(2)} className="w-full py-2 bg-sky-500 text-black rounded-lg hover:bg-sky-400 font-black">Seleccionar</button>
                             </div>
 
                             {/* Tarjeta P1 */}
                             <div className="border border-yellow-500 p-6 rounded-xl text-center">
                                 <h3 className="subtitle-fan text-xl text-yellow-500">Nivel P1 VIP</h3>
-                                <p className="text-2xl font-black my-4">$25.000 / mes</p>
+                                <button 
+                                    type="button" 
+                                    onClick={() => setModalBeneficios('P1')} 
+                                    className="subtitle-fan text-sm text-sky-500 hover:text-sky-400 transition-colors mt-1 underline underline-offset-2"
+                                >
+                                    Ver Beneficios
+                                </button>
+                                <p className="text-2xl font-black my-4">$8.545,45 ARS / mes</p>
                                 <button onClick={() => handlePayment(1)} className="w-full py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 font-black">Seleccionar</button>
                             </div>
                         </div>
@@ -285,6 +310,65 @@ const RegisterPage = () => {
                 )}
 
             </div>
+
+            {/* --- VENTANA MODAL DE BENEFICIOS --- */}
+            {modalBeneficios && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+                    <div className="w-full max-w-md bg-white/90 dark:bg-[#08060d]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl relative p-6 animate-in zoom-in-95 duration-300">
+                        
+                        {/* Botón Cerrar */}
+                        <button 
+                            onClick={() => setModalBeneficios(null)}
+                            className="absolute top-4 right-4 text-slate-500 hover:text-sky-500 transition-colors bg-slate-100 dark:bg-white/5 p-2 rounded-full"
+                        >
+                            <X size={20} />
+                        </button>
+
+                        <h3 className="title-fan text-2xl mb-6 text-center text-slate-800 dark:text-white border-b border-slate-200 dark:border-white/10 pb-4">
+                            Beneficios Nivel {modalBeneficios}
+                        </h3>
+
+                        {/* Lista Dinámica según el plan seleccionado */}
+                        <ul className="space-y-4 text-slate-600 dark:text-slate-300 font-medium">
+                            {modalBeneficios === 'P3' && (
+                                <>
+                                    <li className="flex items-center gap-3">🏁 Acceso anticipado a entradas generales.</li>
+                                    <li className="flex items-center gap-3">🏁 10% de descuento en Merchandising.</li>
+                                    <li className="flex items-center gap-3">🏁 Participación en sorteos mensuales.</li>
+                                    <li className="flex items-center gap-3">🏁 Acceso al foro de Fans oficial.</li>
+                                </>
+                            )}
+                            
+                            {modalBeneficios === 'P2' && (
+                                <>
+                                    <li className="flex items-center gap-3">🏁 Todos los beneficios del Nivel P3.</li>
+                                    <li className="flex items-center gap-3">⚡ Acceso preferencial a boxes.</li>
+                                    <li className="flex items-center gap-3">⚡ 20% de descuento en Merchandising.</li>
+                                    <li className="flex items-center gap-3">⚡ Fast Pass en ingresos.</li>
+                                </>
+                            )}
+
+                            {modalBeneficios === 'P1' && (
+                                <>
+                                    <li className="flex items-center gap-3">🏁 Todos los beneficios del Nivel P2 y P3.</li>
+                                    <li className="flex items-center gap-3">⭐ Acceso VIP y Hospitalities.</li>
+                                    <li className="flex items-center gap-3">⭐ Meet & Greet con pilotos.</li>
+                                    <li className="flex items-center gap-3">⭐ Merchandising exclusivo de regalo.</li>
+                                </>
+                            )}
+                        </ul>
+
+                        <div className="mt-8">
+                            <button 
+                                onClick={() => setModalBeneficios(null)} 
+                                className="w-full py-3 bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 text-slate-800 dark:text-white font-black rounded-lg transition-all"
+                            >
+                                Entendido
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
