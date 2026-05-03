@@ -217,6 +217,19 @@ const RegisterPage = () => {
                         </form>
                     </div>
                 )}
+
+                {/* --- UI PASO 3 --- */}
+                {step === 3 && (
+                    <div className="space-y-8 animate-in fade-in slide-in-from-right-8 duration-500">
+                        <div className="text-center space-y-2">
+                            <h2 className="title-fan text-center text-3xl md:text-5xl">
+                                Elegí tu membresia! 
+                            </h2>
+                            <p className="text-fan">Ingresá tu método de pago para empezar a disfrutar de los beneficios exclusivos.</p>
+                        </div>
+                    </div>
+                )}
+
             </div>
         </div>
     );

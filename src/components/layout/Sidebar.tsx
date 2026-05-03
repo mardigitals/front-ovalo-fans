@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, FileChartColumn, MapPin, Gift, PenLine, Road, Users, Warehouse, User, LogOut, ChevronLeft, X, Shield, Camera, Star, Ticket, Settings, PercentIcon, FastForward, LockKeyholeOpen, Flag } from 'lucide-react';
+import { Home, FileChartColumn, ShieldUser, Calendar, MapPin, Film, Gift, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, ChevronLeft, X, Shield, Camera, Star, Ticket, Settings, PercentIcon, FastForward, LockKeyholeOpen, Flag, Info, UserRoundKey, ShoppingBasket, Check, CircleCheckBig, ChartCandlestick } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/hooks/useTheme'; // <-- Importamos el hook
 
@@ -38,6 +38,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     
     items.push({ to: '/dashboard', icon: <FileChartColumn size={20} />, label: 'Resumen' });
     items.push({ to: '/dashboard/perfil', icon: <User size={20} />, label: 'Mi Perfil' });
+    items.push({ to: '/dashboard/validar', icon: < CircleCheckBig size={20} />, label: 'Validar DNI' });
     
 
     if (rol === 'fan') {
@@ -60,13 +61,21 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       }
     } else {
       if (rol === 'superadmin' || rol === 'administrativo') {
-        items.push({ to: '/dashboard/socios', icon: <Users size={20} />, label: 'Gestión Socios' });
+         items.push({ to: '/dashboard/metricas', icon: <ChartCandlestick size={20} />, label: 'Métricas de suscrip.' });
+        items.push({ to: '/dashboard/socios', icon: <Users size={20} />, label: 'Socios' });       
+        items.push({ to: '/dashboard/solicitudes', icon: <Check size={20} />, label: 'Solicitudes' });
+        items.push({ to: '/dashboard/calendario', icon: <Calendar size={20} />, label: 'Calendario' });
+        items.push({ to: '/dashboard/comercios', icon: <ShoppingBasket size={20} />, label: 'Comercios' });
       }
       if (rol === 'superadmin' || rol === 'prensa') {
-        items.push({ to: '/dashboard/prensa', icon: <Camera size={20} />, label: 'Prensa y Medios' });
+        items.push({ to: '/dashboard/noticias', icon: <Info size={20} />, label: 'Noticias' });
+        items.push({ to: '/dashboard/galeria', icon: <Film size={20} />, label: 'Galería' });
       }
       if (rol === 'superadmin') {
-        items.push({ to: '/dashboard/config', icon: <Settings size={20} />, label: 'Configuración' });
+        items.push({ to: '/dashboard/usuarios', icon: <ShieldUser size={20} />, label: 'Cuentas' });
+        items.push({ to: '/dashboard/roles', icon: <UserRoundKey size={20} />, label: 'Staff' });
+        items.push({ to: '/dashboard/membresias', icon: <Pyramid size={20} />, label: 'Membresías' });  
+        items.push({ to: '/dashboard/config', icon: <Settings size={20} />, label: 'Configuración y roles' });
         items.push({ to: '/dashboard/seguridad', icon: <Shield size={20} />, label: 'Seguridad' });
       }
     }
@@ -112,7 +121,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
             onClick={() => window.location.href = '/'} 
             className="flex items-center mt-2 gap-3 text-slate-600 dark:text-institucional-gris w-full px-4 py-1 rounded-lg glass-neon-btn group"
           >
-            <ChevronLeft size={20} className="group-hover:text-institucional transition-colors" />
+            <ChevronLeft size={20} className="group-hover:text-institucional-celeste transition-colors" />
             <Home size={20} className="group-hover:text-institucional-celeste transition-colors" />
             <span className="font-small transition-colors">Inicio</span>
           </button>
