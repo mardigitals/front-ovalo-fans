@@ -12,7 +12,9 @@ const navLinks = [
   { to: '/historia', label: 'Historia' },
   { to: '/calendario', label: 'Calendario' },
   { to: '/noticias', label: 'Noticias' },
-  { to: '/contacto', label: 'Contacto' }
+  { to: '/galeria', label: 'Galería' },
+  { to: '/contacto', label: 'Contacto' },
+  { to: '/dashboard', label:'Ovalo Fans'}
 ];
 
 const PublicLayout = () => {

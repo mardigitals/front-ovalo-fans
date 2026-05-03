@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, MapPin, Gift, PenLine, Users, Warehouse, User, LogOut, ChevronLeft, X, Shield, Camera, Star, Ticket, Settings, PercentIcon, FastForward, LockKeyholeOpen, Flag } from 'lucide-react';
+import { Home, FileChartColumn, MapPin, Gift, PenLine, Road, Users, Warehouse, User, LogOut, ChevronLeft, X, Shield, Camera, Star, Ticket, Settings, PercentIcon, FastForward, LockKeyholeOpen, Flag } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/hooks/useTheme'; // <-- Importamos el hook
 
@@ -36,7 +36,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
   const getNavItems = () => {
     const items = [];
     
-    items.push({ to: '/dashboard', icon: <Home size={20} />, label: 'Resumen' });
+    items.push({ to: '/dashboard', icon: <FileChartColumn size={20} />, label: 'Resumen' });
     items.push({ to: '/dashboard/perfil', icon: <User size={20} />, label: 'Mi Perfil' });
     
 
@@ -44,6 +44,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       items.push({ to: '/dashboard/mapa', icon: <MapPin size={20} />, label: 'Mapa Interactivo' });
       items.push({ to: '/dashboard/beneficios', icon: <PercentIcon size={20} />, label: 'Beneficios' });
       items.push({ to: '/calendario', icon: <Ticket size={20} />, label: 'Recitales y Carreras' });
+      items.push({ to: '/dashboard/pruebas', icon: <Road size={20} />, label: 'Pruebas' });
       
       if (nivelFan === 'P1' || nivelFan === 'P2') {
         items.push({ to: '/dashboard/fast-pass', icon: <FastForward size={20} />, label: 'Fast Access' });
@@ -111,8 +112,9 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
             onClick={() => window.location.href = '/'} 
             className="flex items-center mt-2 gap-3 text-slate-600 dark:text-institucional-gris w-full px-4 py-1 rounded-lg glass-neon-btn group"
           >
-            <ChevronLeft size={20} className="group-hover:text-institucional-celeste transition-colors" />
-            <span className="font-small transition-colors">Volver a la WEB</span>
+            <ChevronLeft size={20} className="group-hover:text-institucional transition-colors" />
+            <Home size={20} className="group-hover:text-institucional-celeste transition-colors" />
+            <span className="font-small transition-colors">Inicio</span>
           </button>
         </div>
 
