@@ -82,7 +82,7 @@ const RegisterPage = () => {
                 headers: { Authorization: `Bearer ${newToken}` } 
             });
 
-            navigate('/dashboard');
+            setStep(3);
         } catch (err: any) {
             const msg = err.response?.data?.message || 'Error al guardar tu perfil de Fan';
             setError(Array.isArray(msg) ? msg[0] : msg);
