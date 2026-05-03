@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import api from '@/api/axios';
 
 const RegisterPage = () => {
-    const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -87,6 +86,37 @@ const RegisterPage = () => {
             const msg = err.response?.data?.message || 'Error al guardar tu perfil de Fan';
             setError(Array.isArray(msg) ? msg[0] : msg);
         } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Ahora recibimos un número, que es el ID de la membresía en tu BD
+    const handlePayment = async (membresiaId: number) => {
+        setIsLoading(true);
+        setError('');
+
+        try {
+            // 1. Crear la Suscripción mandando el membresia_id correcto
+            const suscripcionResponse = await api.post('/suscripcion', {
+                membresia_id: membresiaId 
+                // Nota: perfil_fan_id es @IsOptional en tu DTO, así que si tu backend 
+                // lo saca automáticamente del token JWT, no hace falta mandarlo acá.
+            });
+
+            const suscripcionId = suscripcionResponse.data.id; 
+
+            // 2. Generar el link de Mercado Pago
+            const pagoResponse = await api.post('/pago-log', {
+                suscripcion_id: suscripcionId
+            });
+
+            // 3. Redirigir a Mercado Pago
+            window.location.href = pagoResponse.data.init_point; 
+
+        } catch (err: any) {
+            console.error("Error en el proceso de pago:", err);
+            const msg = err.response?.data?.message || 'Error al procesar la suscripción.';
+            setError(Array.isArray(msg) ? msg[0] : msg);
             setIsLoading(false);
         }
     };
@@ -217,6 +247,43 @@ const RegisterPage = () => {
                         </form>
                     </div>
                 )}
+
+                {/* --- UI PASO 3: PAGO --- */}
+                {step === 3 && (
+                    <div className="space-y-8 animate-in fade-in slide-in-from-right-8 duration-500">
+                        <div className="text-center space-y-2">
+                            <h2 className="title-fan text-center text-3xl md:text-5xl">
+                                Elegí tu Nivel de Socio
+                            </h2>
+                            <p className="text-fan">Asegurá tu lugar y accedé a los beneficios.</p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                            {/* Tarjeta P3 */}
+                            <div className="border border-slate-200 dark:border-white/10 p-6 rounded-xl text-center">
+                                <h3 className="subtitle-fan text-xl text-slate-500">Nivel P3</h3>
+                                <p className="text-2xl font-black my-4">$5.000 / mes</p>
+                                <button onClick={() => handlePayment(3)} className="w-full py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700">Seleccionar</button>
+                            </div>
+
+                            {/* Tarjeta P2 */}
+                            <div className="border border-sky-500 p-6 rounded-xl text-center relative shadow-[0_0_15px_rgba(14,165,233,0.3)]">
+                                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-sky-500 text-black px-3 py-1 text-xs font-black rounded-full">RECOMENDADO</span>
+                                <h3 className="subtitle-fan text-xl text-sky-500">Nivel P2</h3>
+                                <p className="text-2xl font-black my-4">$10.000 / mes</p>
+                                <button onClick={() => handlePayment(2)} className="w-full py-2 bg-sky-500 text-black rounded-lg hover:bg-sky-400 font-black">Seleccionar</button>
+                            </div>
+
+                            {/* Tarjeta P1 */}
+                            <div className="border border-yellow-500 p-6 rounded-xl text-center">
+                                <h3 className="subtitle-fan text-xl text-yellow-500">Nivel P1 VIP</h3>
+                                <p className="text-2xl font-black my-4">$25.000 / mes</p>
+                                <button onClick={() => handlePayment(1)} className="w-full py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 font-black">Seleccionar</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
             </div>
         </div>
     );
