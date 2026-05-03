@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '@/api/axios';
 import { X } from 'lucide-react';
+
 
 const RegisterPage = () => {
     const [step, setStep] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
     const [error, setError] = useState('');
 
     const [email, setEmail] = useState('');
@@ -332,25 +334,26 @@ const RegisterPage = () => {
                         <ul className="space-y-4 text-slate-600 dark:text-slate-300 font-medium">
                             {modalBeneficios === 'P3' && (
                                 <>
-                                    <li className="flex items-center gap-3">🏁 Acceso anticipado a entradas generales.</li>
-                                    <li className="flex items-center gap-3">🏁 10% de descuento en Merchandising.</li>
-                                    <li className="flex items-center gap-3">🏁 Participación en sorteos mensuales.</li>
-                                    <li className="flex items-center gap-3">🏁 Acceso al foro de Fans oficial.</li>
+                                    <li className="flex items-center gap-3">🏁 Todos los beneficios de P3 FAN.</li>
+                                    <li className="flex items-center gap-3">⚡ Descuentos del 10% al 20% en comercios adheridos.</li>
+                                    <li className="flex items-center gap-3">⚡ Descuentos del 20% en pruebas libres.</li>
+                                    <li className="flex items-center gap-3">⚡ Descuentos del 20% en recitales y carreras seleccionados.</li>
                                 </>
                             )}
                             
                             {modalBeneficios === 'P2' && (
                                 <>
-                                    <li className="flex items-center gap-3">🏁 Todos los beneficios del Nivel P3.</li>
-                                    <li className="flex items-center gap-3">⚡ Acceso preferencial a boxes.</li>
-                                    <li className="flex items-center gap-3">⚡ 20% de descuento en Merchandising.</li>
-                                    <li className="flex items-center gap-3">⚡ Fast Pass en ingresos.</li>
+                                    <li className="flex items-center gap-3">🏁 Todos los beneficios de P2 FAN <em>(incluye los de P3)</em></li>
+                                    <li className="flex items-center gap-3">⚡ FAST PASS en el TC en Rafaela.</li>
+                                    <li className="flex items-center gap-3">⚡ Galería de fotos y videos exclusiva.</li>
+                                    <li className="flex items-center gap-3">⚡ Visitas guiadas al Autódromo.</li>
+                                    <li className="flex items-center gap-3">⚡ SUPERFAN gift.</li>
                                 </>
                             )}
 
                             {modalBeneficios === 'P1' && (
                                 <>
-                                    <li className="flex items-center gap-3">🏁 Todos los beneficios del Nivel P2 y P3.</li>
+                                    <li className="flex items-center gap-3">🏁 Todos los beneficios de P1 <em>(incluye los de P2 y P3)</em></li>
                                     <li className="flex items-center gap-3">⭐ Acceso VIP y Hospitalities.</li>
                                     <li className="flex items-center gap-3">⭐ Meet & Greet con pilotos.</li>
                                     <li className="flex items-center gap-3">⭐ Merchandising exclusivo de regalo.</li>
@@ -360,10 +363,10 @@ const RegisterPage = () => {
 
                         <div className="mt-8">
                             <button 
-                                onClick={() => setModalBeneficios(null)} 
+                                onClick={() => navigate('/terms-conditions')} 
                                 className="w-full py-3 bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 text-slate-800 dark:text-white font-black rounded-lg transition-all"
                             >
-                                Entendido
+                                Conocé más                         
                             </button>
                         </div>
                     </div>
