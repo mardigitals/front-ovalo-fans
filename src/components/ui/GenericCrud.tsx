@@ -38,7 +38,7 @@ const GenericCrud = ({
       {/* Cabecera del CRUD */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <div>
-          <h2 className="title-fan text-3xl text-slate-800 dark:text-white">{title}</h2>
+          <h2 className="title-fan text-3xl">{title}</h2>
           <p className="subtitle-fan text-slate-500 dark:text-institucional-gris mt-1">{subtitle}</p>
         </div>
 

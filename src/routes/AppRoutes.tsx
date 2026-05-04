@@ -7,6 +7,7 @@ import RegisterPage from '@/pages/public/RegisterPage';
 import TermsConditionsPage from '@/pages/public/TermsConditionsPage';
 import PrivacyPolicy from '@/pages/public/PrivacyPolicy';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import ComerciosPage from '@/pages/dashboard/ComerciosPage';
 
 
 const AppRoutes = () => (
@@ -28,7 +29,8 @@ const AppRoutes = () => (
 
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Óvalo Fans</div>} />
-          {/* Aquí irán las secciones del dashboard */}
+         
+          <Route path="comercios" element={<ComerciosPage />} />
         </Route>
 
       </Route>
