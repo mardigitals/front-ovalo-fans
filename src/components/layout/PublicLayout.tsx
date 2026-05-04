@@ -14,7 +14,7 @@ const navLinks = [
   { to: '/noticias', label: 'Noticias' },
   { to: '/galeria', label: 'Galería' },
   { to: '/contacto', label: 'Contacto' },
-  { to: '/dashboard', label:'Ovalo Fans'}
+  { to: '/dashboard', label:'Ovalo Fans', style: 'subtitle-fan text-sm bg-sky-500 px-2 py-1 rounded-xl shadow-[0_0_15px_rgba(14,165,233,0.3)]' }
 ];
 
 const PublicLayout = () => {
@@ -35,18 +35,18 @@ const PublicLayout = () => {
           {/* NAV DE ESCRITORIO (Se oculta en móviles con md:flex) */}
           <nav className="hidden md:flex space-x-6 text-sm font-bold items-center text-slate-600 dark:text-slate-300 uppercase tracking-wider">
             {navLinks.map((link) => (
-              <Link key={link.to} to={link.to} className="hover:text-sky-500 transition-colors">
+              <Link key={link.to} to={link.to} className={`hover:text-sky-500 transition-colors ${link.style || ''}`}>
                 {link.label}
               </Link>
             ))}
-            
-            <button onClick={toggleTheme} className="p-2 rounded-full bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 transition-colors text-xl">
-              {isDark ? '☀️' : '🌙'}
-            </button>
-            
-            <Link to="/login" className="bg-sky-500 text-black px-5 py-2 rounded-md hover:bg-sky-400 transition-all font-black shadow-[0_0_15px_rgba(14,165,233,0.3)] hover:shadow-[0_0_25px_rgba(14,165,233,0.5)] ml-2">
+          
+            <Link to="/login" className="subtitle-fan text-sm  bg-sky-500 px-2 py-1 rounded-xl hover:text-sky-500 transition-colors shadow-[0_0_15px_rgba(14,165,233,0.3)]" >
               LOGIN
             </Link>
+
+             <button onClick={toggleTheme} className="p-2 rounded-full bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 transition-colors text-xs">
+              {isDark ? '☀️' : '🌙'}
+            </button>
           </nav>
 
           {/* BOTÓN HAMBURGUESA PARA MÓVILES (Se oculta en PC) */}
@@ -74,7 +74,7 @@ const PublicLayout = () => {
             </div>
             
             <div className="px-4">
-              <Link to="/login" onClick={closeMenu} className="block w-full bg-sky-500 text-black px-5 py-3 rounded-md font-black shadow-[0_0_15px_rgba(14,165,233,0.3)]">
+              <Link to="/login" onClick={closeMenu} className="block w-full bg-sky-500 text-black px-5 py-3 rounded-xl font-black shadow-[0_0_15px_rgba(14,165,233,0.3)]">
                 LOGIN
               </Link>
             </div>
