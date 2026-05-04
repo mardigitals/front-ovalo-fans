@@ -5,7 +5,7 @@ import logo from '@/assets/icons/logo-autodromo-negro.png';
 import logoDark from '@/assets/icons/logo-autodromo-blanco.png';
 
 const HomePage = () => (
-  <main className="flex flex-col min-h-screen bg-white dark:bg-[#08060d] transition-colors duration-300">
+  <main className="flex flex-col min-h-screen bg-zinc dark:bg-[#08060d] transition-colors duration-300">
     
     {/* image hero */}
     <header className="relative w-full h-[40vh] md:h-screen flex-shrink-0 overflow-hidden bg-gradient-to-r from-transparent via-white/20 to-transparent">
@@ -29,7 +29,7 @@ const HomePage = () => (
       {/* <article> */}
       <div className="space-y-8 mb-12">
         <h3 className="subtitle-fan text-xl md:text-2xl leading-relaxed text-slate-800 dark:text-slate-200">
-          Bienvenido a <em className="text-institucional-celeste not-italic">ÓVALO FANS,</em> tu espacio para vivir la historia y la emoción del automovilismo.
+          Bienvenido a <em className="subtitle-fan not-italic">ÓVALO FANS,</em> tu espacio para vivir la historia y la emoción del automovilismo.
         </h3>
         
         {/* Fondo sutil adaptado a ambos modos */}
@@ -38,8 +38,7 @@ const HomePage = () => (
                 ¡Elegí la membresía que más se adapte a vos!
             </p>
             <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base">
-                Convertite en un <span className="text-institucional-celeste font-black tracking-tighter">P1 · P2 · P3</span> FAN, 
-                accedé a contenido exclusivo y disfrutá de <em className="text-black dark:text-white not-italic font-bold">beneficios únicos.</em>
+                Convertite en un <span className="subtitle-fan text-lg font-black tracking-tighter">P1 · P2 · P3</span> <em className="text-black dark:text-white not-italic text-lg font-bold">FAN</em>, accedé a contenido exclusivo y disfrutá de <em className="text-black dark:text-white not-italic font-bold">beneficios únicos.</em>
             </p>
         </div>
       </div>
