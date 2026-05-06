@@ -144,6 +144,7 @@ const ComerciosPage = () => {
     { key: 'nombre_comercio', label: 'Comercio' },
     { key: 'cuit', label: 'CUIT' },
     { key: 'rubro', label: 'Rubro' },
+    { key: 'calle', label: 'Dirección', render: (item: any) => `${item.calle} ${item.numero || ''}`.trim() },
     { 
       key: 'descuento_porcentaje', 
       label: 'Descuento',
