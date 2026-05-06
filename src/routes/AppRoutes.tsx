@@ -8,6 +8,7 @@ import TermsConditionsPage from '@/pages/public/TermsConditionsPage';
 import PrivacyPolicy from '@/pages/public/PrivacyPolicy';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import ComerciosPage from '@/pages/dashboard/ComerciosPage';
+import CuentasPage from '@/pages/dashboard/CuentasPage';
 
 
 const AppRoutes = () => (
@@ -31,6 +32,7 @@ const AppRoutes = () => (
           <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Óvalo Fans</div>} />
          
           <Route path="comercios" element={<ComerciosPage />} />
+          <Route path="cuentas" element={<CuentasPage />} />
         </Route>
 
       </Route>
