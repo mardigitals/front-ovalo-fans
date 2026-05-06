@@ -22,8 +22,8 @@ const CuentasPage = () => {
   const fetchCuentas = async () => {
     try {
       // ACA DEBERÁS CREAR ESTE ENDPOINT EN TU BACKEND PARA TRAER TODAS LAS CUENTAS
-      const response = await api.get('/usuario-auth'); 
-      setCuentas(response.data);
+      const response = await api.get('/usuario-auth/all'); 
+      setCuentas(response.data.data);
     } catch (error) {
       console.error("Error cargando cuentas:", error);
     }
