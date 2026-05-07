@@ -16,6 +16,7 @@ interface GenericCrudProps {
   onAdd?: () => void;
   onEdit?: (item: any) => void;
   onDelete?: (item: any) => void;
+  disableDeleteFn?: (item: any) => boolean;
   searchTerm?: string;
   onSearchChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   canEdit?: boolean; // Controla permisos según el rol del usuario
@@ -32,6 +33,7 @@ const GenericCrud = ({
   onAdd,
   onEdit,
   onDelete,
+  disableDeleteFn,
   searchTerm,
   onSearchChange,
   canEdit = true, // Por defecto se puede editar, a menos que el rol diga lo contrario
@@ -120,9 +122,14 @@ const GenericCrud = ({
                         )}
                         {onDelete && (
                           <button
-                            onClick={() => onDelete(item)}
-                            className="p-2 text-slate-400 hover:text-red-500 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 rounded-md transition-all"
-                            title="Eliminar"
+                            onClick={() => disableDeleteFn?.(item) ? null : onDelete(item)}
+                            disabled={disableDeleteFn?.(item)}
+                            className={`p-2 rounded-md transition-all ${
+                              disableDeleteFn?.(item) 
+                                ? 'text-slate-300 dark:text-slate-700 opacity-50 cursor-not-allowed' 
+                                : 'text-slate-400 hover:text-red-500 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10'
+                            }`}
+                            title={disableDeleteFn?.(item) ? "Ya eliminado" : "Eliminar"}
                           >
                             <Trash2 size={16} />
                           </button>
