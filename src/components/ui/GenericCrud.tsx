@@ -19,6 +19,9 @@ interface GenericCrudProps {
   searchTerm?: string;
   onSearchChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   canEdit?: boolean; // Controla permisos según el rol del usuario
+  currentPage?: number;
+  totalPages?: number;
+  onPageChange?: (page: number) => void;
 }
 
 const GenericCrud = ({
@@ -32,6 +35,9 @@ const GenericCrud = ({
   searchTerm,
   onSearchChange,
   canEdit = true, // Por defecto se puede editar, a menos que el rol diga lo contrario
+  currentPage,
+  totalPages,
+  onPageChange
 }: GenericCrudProps) => {
   return (
     <div className="w-full animate-in fade-in duration-500">
@@ -135,6 +141,37 @@ const GenericCrud = ({
             </tbody>
           </table>
         </div>
+      {/* --- CONTROLES DE PAGINACIÓN --- */}
+        {totalPages && totalPages > 1 && onPageChange && (
+          <div className="flex items-center justify-between px-6 py-4 bg-slate-50/50 dark:bg-black/20 border-t border-slate-200 dark:border-white/10 mt-2">
+            <span className="text-sm font-medium text-slate-500 dark:text-institucional-gris">
+              Página {currentPage} de {totalPages}
+            </span>
+            <div className="flex gap-2">
+              <button
+                onClick={() => onPageChange(currentPage! - 1)}
+                disabled={currentPage === 1}
+                className="px-3 py-1.5 text-sm font-bold rounded-md bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                Anterior
+              </button>
+              <button
+                onClick={() => onPageChange(currentPage! + 1)}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1.5 text-sm font-bold rounded-md bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                Siguiente
+              </button>
+              <button
+                onClick={() => onPageChange(totalPages)}
+                disabled={currentPage === totalPages}
+                className="hidden sm:block px-3 py-1.5 text-sm font-bold rounded-md bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                Última
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
