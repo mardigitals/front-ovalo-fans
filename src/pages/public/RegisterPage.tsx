@@ -11,6 +11,7 @@ const RegisterPage = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [authId, setAuthId] = useState<number | null>(null);
 
     const [formData, setFormData] = useState({
@@ -97,6 +98,10 @@ const RegisterPage = () => {
 
     const handleRegisterFree = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (password !== confirmPassword) {
+            setError('Las contraseñas no coinciden. Verificalas antes de acelerar.');
+            return;
+        }
         setIsLoading(true);
         setError('');
 
@@ -207,7 +212,6 @@ const RegisterPage = () => {
                 {step === 1 && (
                     <div className="space-y-8 animate-in fade-in zoom-in duration-300">
                         <div>
-                            {/* Usamos title-fan y text-fan */}
                             <h2 className="title-fan text-center text-4xl">Crear Cuenta</h2>
                             <p className="mt-2 text-center text-fan text-sm">Paso 1: Datos de acceso</p>
                         </div>
@@ -218,21 +222,33 @@ const RegisterPage = () => {
                                     <label className="label-fan">Correo electrónico</label>
                                     <input type="email" required placeholder="tu@correo.com" value={email} onChange={(e) => setEmail(e.target.value)} className="input-fan" />
                                 </div>
-                                <div>
-                                    <label className="label-fan">Contraseña</label>
-                                    <input type="password" required placeholder="Mín. 8, Mayúscula y Especial" value={password} onChange={(e) => setPassword(e.target.value)} className="input-fan" />
+                                
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="label-fan">Contraseña</label>
+                                        {/* Agregamos el pattern para que el navegador también valide la regex de tu DTO */}
+                                        <input type="password" required placeholder="Mín. 8, Mayúscula y Especial" value={password} onChange={(e) => setPassword(e.target.value)} className="input-fan" 
+                                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$" title="Debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial" />
+                                    </div>
+                                    <div>
+                                        <label className="label-fan">Repetir Contraseña</label>
+                                        <input type="password" required placeholder="Repetir contraseña" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="input-fan" />
+                                    </div>
                                 </div>
                             </div>
+                            
                             <button type="submit" disabled={isLoading} 
-                                className="w-full py-3 px-4 font-black rounded-lg text-slate-900 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 transition-all uppercase tracking-widest">
+                                className="w-full py-3 px-4 font-black rounded-lg text-slate-900 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 transition-all uppercase tracking-widest mt-2">
                                 {isLoading ? 'Registrando...' : 'Siguiente'}
                             </button>
                         </form>
+                        
                         <div className="bg-institucional-celeste/5 border-l-4 border-institucional-celeste p-4 mt-6">
                             <p className="text-sm italic text-fan">
                             * Al registrarte, aceptas nuestros <Link to="/terms-conditions" target="_blank" rel="noopener noreferrer"><strong>Términos y Condiciones</strong></Link> y nuestras <Link to="/privacy-policy" target="_blank" rel="noopener noreferrer"><strong>Políticas de Privacidad</strong></Link>.
                             </p>
                         </div>
+                        
                         <p className="text-center text-slate-500 text-sm">
                             ¿Ya tienes cuenta? <Link to="/login" className="text-sky-500 hover:text-sky-400 font-black tracking-wide ml-1">INICIA SESIÓN</Link>
                         </p>
