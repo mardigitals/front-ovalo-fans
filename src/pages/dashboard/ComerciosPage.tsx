@@ -53,7 +53,7 @@ const ComerciosPage = () => {
   
   // --- ESTADOS DE PAGINACIÓN FRONTEND ---
   const [paginaActual, setPaginaActual] = useState(1);
-  const limitePorPagina = 10; // Podés cambiar a 5 si querés que cambie de página más rápido
+  const limitePorPagina = 10;
   
   // Estados para Modales
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -203,7 +203,6 @@ const ComerciosPage = () => {
 
       {/* --- MODAL DE FORMULARIO (NUEVO/EDITAR) --- */}
       {isModalOpen && (
-        // El z-[999] y md:pl-64 aseguran que tape la sidebar y se centre perfecto en el contenido
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm md:pl-64 transition-all duration-300">
           <div className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white/90 dark:bg-[#08060d]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl relative p-6 animate-in zoom-in-95 duration-300">
             
