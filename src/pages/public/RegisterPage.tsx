@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '@/api/axios';
 import { X } from 'lucide-react';
@@ -15,12 +15,76 @@ const RegisterPage = () => {
 
     const [formData, setFormData] = useState({
         nombre: '', apellido: '', dni: '', fecha_nacimiento: '', genero: 'M',
-        telefono: '', calle: '', numero: '', piso: '', depto: '',
+        nacionalidad: '', telefono: '', calle: '', numero: '', piso: '', depto: '',
         cp: '', ciudad: '', provincia: '', pais: 'Argentina',
         alias: '', es_socio_club: false, hincha_marca_tc: 'Ford', chicana_favorita: '1 de adentro'
     });
 
     const [modalBeneficios, setModalBeneficios] = useState<'P1' | 'P2' | 'P3' | null>(null);
+
+    const [provincias, setProvincias] = useState<any[]>([]);
+    const [ciudades, setCiudades] = useState<any[]>([]);
+    const [paises, setPaises] = useState<string[]>([]);
+
+    // 1. CARGAR PROVINCIAS (Desde API del Gobierno)
+    useEffect(() => {
+        const fetchProvincias = async () => {
+            try {
+                const response = await fetch('https://apis.datos.gob.ar/georef/api/provincias?orden=nombre');
+                const data = await response.json();
+                setProvincias(data.provincias);
+            } catch (error) {
+                console.error("Error al cargar provincias:", error);
+            }
+        };
+        fetchProvincias();
+    }, []);
+
+    // 2. CARGAR CIUDADES (Solo si es Argentina)
+    useEffect(() => {
+        // Si no hay provincia elegida, O el país NO es Argentina, cortamos acá.
+        if (!formData.provincia || formData.pais !== 'Argentina') {
+            setCiudades([]);
+            return;
+        }
+        const fetchCiudades = async () => {
+            try {
+                const response = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?provincia=${formData.provincia}&max=2000&orden=nombre`);
+                const data = await response.json();
+                setCiudades(data.localidades);
+            } catch (error) {
+                console.error("Error al cargar ciudades:", error);
+            }
+        };
+        fetchCiudades();
+    }, [formData.provincia, formData.pais]); // <-- Agregamos formData.pais a las dependencias
+
+    // 3. CARGAR PAÍSES DEL MUNDO (REST Countries API)
+    React.useEffect(() => {
+        const fetchPaises = async () => {
+            try {
+                // Pedimos solo los nombres y traducciones para que cargue rapidísimo
+                const response = await fetch('https://restcountries.com/v3.1/all?fields=name,translations');
+                const data = await response.json();
+                
+                // Extraemos el nombre en español
+                let listaPaises = data.map((pais: any) => pais.translations?.spa?.common || pais.name.common);
+                
+                // Ordenamos alfabéticamente
+                listaPaises.sort((a: string, b: string) => a.localeCompare(b, 'es'));
+                
+                // Filtramos "Argentina" porque la vamos a poner fija al principio
+                listaPaises = listaPaises.filter((p: string) => p !== 'Argentina');
+                
+                setPaises(listaPaises);
+            } catch (error) {
+                console.error("Error al cargar países:", error);
+                // Fallback de emergencia por si la API falla
+                setPaises(['Bolivia', 'Brasil', 'Chile', 'Paraguay', 'Uruguay', 'Otro']);
+            }
+        };
+        fetchPaises();
+    }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
@@ -64,6 +128,7 @@ const RegisterPage = () => {
             const usuarioPayload = {
                 usuario_auth_id: authId, nombre: formData.nombre, apellido: formData.apellido,
                 dni: formData.dni, fecha_nacimiento: formData.fecha_nacimiento, genero: formData.genero,
+                nacionalidad: formData.nacionalidad || undefined, 
                 telefono: formData.telefono, calle: formData.calle, numero: formData.numero,
                 piso: formData.piso || undefined, depto: formData.depto || undefined, cp: formData.cp,
                 ciudad: formData.ciudad, provincia: formData.provincia, pais: formData.pais
@@ -193,13 +258,13 @@ const RegisterPage = () => {
                                 {/* Le agregamos pattern para letras y espacios */}
                                 <div>
                                     <label className="label-fan">Nombre</label>
-                                    <input type="text" name="nombre" required placeholder="Ej: Francisco" value={formData.nombre} onChange={handleInputChange} className="input-fan" 
+                                    <input type="text" name="nombre" required placeholder="Franco" value={formData.nombre} onChange={handleInputChange} className="input-fan" 
                                     pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras" />
                                 </div>
                                 
                                 <div>
                                     <label className="label-fan">Apellido</label>
-                                    <input type="text" name="apellido" required placeholder="Ej: Paravano" value={formData.apellido} onChange={handleInputChange} className="input-fan" 
+                                    <input type="text" name="apellido" required placeholder="Colapinto" value={formData.apellido} onChange={handleInputChange} className="input-fan" 
                                     pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras" />
                                 </div>
                                 
@@ -223,11 +288,18 @@ const RegisterPage = () => {
                                         <option value="Prefiero no decirlo">Prefiero no decirlo</option>
                                     </select>
                                 </div>
+
+                                {/* --- INPUT DE NACIONALIDAD  --- */}
+                                <div>
+                                    <label className="label-fan">Nacionalidad </label>
+                                    <input type="text" name="nacionalidad" placeholder="Argentina" value={formData.nacionalidad} onChange={handleInputChange} className="input-fan" 
+                                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras" />
+                                </div>
                                 
                                 {/* Le agregamos pattern solo números */}
                                 <div>
                                     <label className="label-fan">Teléfono</label>
-                                    <input type="tel" name="telefono" required placeholder="Ej: 349215334455" value={formData.telefono} onChange={handleInputChange} className="input-fan" 
+                                    <input type="tel" name="telefono" required placeholder="349215334455" value={formData.telefono} onChange={handleInputChange} className="input-fan" 
                                     pattern="[0-9]+" title="Solo se permiten números, sin guiones ni espacios" />
                                 </div>
                             </div>
@@ -238,14 +310,12 @@ const RegisterPage = () => {
                                 
                                 <div className="md:col-span-2">
                                     <label className="label-fan">Calle</label>
-                                    <input type="text" name="calle" required placeholder="Ej: Bv. Lehmann" value={formData.calle} onChange={handleInputChange} className="input-fan" />
+                                    <input type="text" name="calle" required placeholder="Bv. Lehmann" value={formData.calle} onChange={handleInputChange} className="input-fan" />
                                 </div>
                                 
-                                {/* Pattern: Solo números para el número de calle */}
                                 <div>
                                     <label className="label-fan">Número</label>
-                                    <input type="text" name="numero" required placeholder="Ej: 1234" value={formData.numero} onChange={handleInputChange} className="input-fan" 
-                                    pattern="[0-9]+" title="El número de calle solo debe contener números" />
+                                    <input type="text" name="numero" required placeholder="1234" value={formData.numero} onChange={handleInputChange} className="input-fan" pattern="[0-9]+" title="El número de calle solo debe contener números" />
                                 </div>
                                 
                                 <div>
@@ -258,29 +328,84 @@ const RegisterPage = () => {
                                     <input type="text" name="depto" placeholder="Opcional" value={formData.depto} onChange={handleInputChange} className="input-fan" />
                                 </div>
                                 
-                                {/* Pattern: Solo números para el CP */}
                                 <div>
                                     <label className="label-fan">Código Postal</label>
-                                    <input type="text" name="cp" required placeholder="Ej: 2300" value={formData.cp} onChange={handleInputChange} className="input-fan" 
-                                    pattern="[0-9]+" title="El código postal solo debe contener números" />
+                                    <input type="text" name="cp" required placeholder="2300" value={formData.cp} onChange={handleInputChange} className="input-fan" pattern="[0-9]+" title="El código postal solo debe contener números" />
                                 </div>
-                                
-                                <div className="md:col-span-1">
-                                    <label className="label-fan">Ciudad</label>
-                                    <input type="text" name="ciudad" required placeholder="Ej: Rafaela" value={formData.ciudad} onChange={handleInputChange} className="input-fan" />
+
+                                {/* --- PAÍS (Select con API Mundial) --- */}
+                                <div className="md:col-span-3">
+                                    <label className="label-fan">País</label>
+                                    <select 
+                                        name="pais" 
+                                        required 
+                                        value={formData.pais} 
+                                        onChange={(e) => {
+                                            handleInputChange(e);
+                                            // Si cambia de país, limpiamos la provincia y ciudad
+                                            setFormData(prev => ({ ...prev, provincia: '', ciudad: '' }));
+                                        }} 
+                                        className="input-fan"
+                                    >
+                                        {/* Argentina fija al principio por UX */}
+                                        <option value="Argentina">Argentina</option>
+                                        
+                                        <option disabled>──────────</option>
+                                        
+                                        {/* Resto del mundo dinámico */}
+                                        {paises.map(pais => (
+                                            <option key={pais} value={pais}>{pais}</option>
+                                        ))}
+                                    </select>
                                 </div>
-                                
-                                <div className="md:col-span-2">
-                                    <label className="label-fan">Provincia</label>
-                                    <input type="text" name="provincia" required placeholder="Ej: Santa Fe" value={formData.provincia} onChange={handleInputChange} className="input-fan" />
-                                </div>
+
+                                {/* --- RENDERIZADO CONDICIONAL: API ARGENTINA VS RESTO DEL MUNDO --- */}
+                                {formData.pais === 'Argentina' ? (
+                                    <>
+                                        {/* --- PROVINCIA ARGENTINA (API) --- */}
+                                        <div className="md:col-span-1">
+                                            <label className="label-fan">Provincia</label>
+                                            <select name="provincia" required value={formData.provincia} onChange={(e) => { handleInputChange(e); setFormData(prev => ({ ...prev, ciudad: '' })); }} className="input-fan">
+                                                <option value="">Seleccioná...</option>
+                                                {provincias.map(prov => (
+                                                    <option key={prov.id} value={prov.nombre}>{prov.nombre}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+
+                                        {/* --- CIUDAD ARGENTINA (API) --- */}
+                                        <div className="md:col-span-2">
+                                            <label className="label-fan">Ciudad / Localidad</label>
+                                            <select name="ciudad" required value={formData.ciudad} onChange={handleInputChange} className="input-fan disabled:opacity-50 disabled:cursor-not-allowed" disabled={!formData.provincia || ciudades.length === 0}>
+                                                <option value="">{formData.provincia ? 'Seleccioná tu ciudad...' : 'Primero elegí una provincia'}</option>
+                                                {ciudades.map(ciudad => (
+                                                    <option key={ciudad.id} value={ciudad.nombre}>{ciudad.nombre}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        {/* --- ESTADO/PROVINCIA EXTRANJERA (Input libre) --- */}
+                                        <div className="md:col-span-1">
+                                            <label className="label-fan">Estado / Provincia</label>
+                                            <input type="text" name="provincia" required placeholder="Indiana" value={formData.provincia} onChange={handleInputChange} className="input-fan" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo letras" />
+                                        </div>
+
+                                        {/* --- CIUDAD EXTRANJERA (Input libre) --- */}
+                                        <div className="md:col-span-2">
+                                            <label className="label-fan">Ciudad / Localidad</label>
+                                            <input type="text" name="ciudad" required placeholder="Indianapolis" value={formData.ciudad} onChange={handleInputChange} className="input-fan" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo letras" />
+                                        </div>
+                                    </>
+                                )}
                             </div>
 
                             {/* Sección Perfil Fan */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 bg-slate-100 dark:bg-white/[0.02] p-6 rounded-xl border border-slate-200 dark:border-white/5">
                                 <h3 className="subtitle-fan md:col-span-2 flex items-center gap-2">🏁 Tu ADN Tuerca</h3>
                                 
-                                <div><label className="label-fan">Alias / Apodo</label><input type="text" name="alias" required placeholder="Ej: ElRayo" value={formData.alias} onChange={handleInputChange} maxLength={20} className="input-fan" /></div>
+                                <div><label className="label-fan">Alias / Apodo</label><input type="text" name="alias" required placeholder="FanDeArdusso12" value={formData.alias} onChange={handleInputChange} maxLength={20} className="input-fan" /></div>
                                 
                                 {/* Checkbox adaptado a Light/Dark */}
                                 <div className="flex items-center space-x-3 bg-white dark:bg-black/50 px-4 mt-[18px] rounded-md border border-slate-300 dark:border-white/10 h-[50px]">

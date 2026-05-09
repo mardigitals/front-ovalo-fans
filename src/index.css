@@ -60,6 +60,10 @@
            /* Modo Oscuro: El negro institucional */
            dark:bg-[#08060d] dark:text-slate-300;
   }
+
+  option {
+    @apply bg-white text-slate-900 dark:bg-[#08060d] dark:text-white;
+  }
 }
 
 /* 3. Tus Clases Personalizadas (Óvalo Fans Design System) */
