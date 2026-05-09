@@ -231,18 +231,49 @@ const RegisterPage = () => {
                                     pattern="[0-9]+" title="Solo se permiten números, sin guiones ni espacios" />
                                 </div>
                             </div>
-                            
+
                             {/* Sección Domicilio */}
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-6">
                                 <h3 className="subtitle-fan md:col-span-3 border-b border-slate-200 dark:border-white/10 pb-2 mt-4">Domicilio</h3>
                                 
-                                <div className="md:col-span-2"><label className="label-fan">Calle</label><input type="text" name="calle" required placeholder="Ej: Bv. Lehmann" value={formData.calle} onChange={handleInputChange} className="input-fan" /></div>
-                                <div><label className="label-fan">Número</label><input type="text" name="numero" required placeholder="Ej: 1234" value={formData.numero} onChange={handleInputChange} className="input-fan" /></div>
-                                <div><label className="label-fan">Piso</label><input type="text" name="piso" placeholder="Opcional" value={formData.piso} onChange={handleInputChange} className="input-fan" /></div>
-                                <div><label className="label-fan">Depto</label><input type="text" name="depto" placeholder="Opcional" value={formData.depto} onChange={handleInputChange} className="input-fan" /></div>
-                                <div><label className="label-fan">Código Postal</label><input type="text" name="cp" required placeholder="Ej: 2300" value={formData.cp} onChange={handleInputChange} className="input-fan" /></div>
-                                <div className="md:col-span-1"><label className="label-fan">Ciudad</label><input type="text" name="ciudad" required placeholder="Ej: Rafaela" value={formData.ciudad} onChange={handleInputChange} className="input-fan" /></div>
-                                <div className="md:col-span-2"><label className="label-fan">Provincia</label><input type="text" name="provincia" required placeholder="Ej: Santa Fe" value={formData.provincia} onChange={handleInputChange} className="input-fan" /></div>
+                                <div className="md:col-span-2">
+                                    <label className="label-fan">Calle</label>
+                                    <input type="text" name="calle" required placeholder="Ej: Bv. Lehmann" value={formData.calle} onChange={handleInputChange} className="input-fan" />
+                                </div>
+                                
+                                {/* Pattern: Solo números para el número de calle */}
+                                <div>
+                                    <label className="label-fan">Número</label>
+                                    <input type="text" name="numero" required placeholder="Ej: 1234" value={formData.numero} onChange={handleInputChange} className="input-fan" 
+                                    pattern="[0-9]+" title="El número de calle solo debe contener números" />
+                                </div>
+                                
+                                <div>
+                                    <label className="label-fan">Piso</label>
+                                    <input type="text" name="piso" placeholder="Opcional" value={formData.piso} onChange={handleInputChange} className="input-fan" />
+                                </div>
+                                
+                                <div>
+                                    <label className="label-fan">Depto</label>
+                                    <input type="text" name="depto" placeholder="Opcional" value={formData.depto} onChange={handleInputChange} className="input-fan" />
+                                </div>
+                                
+                                {/* Pattern: Solo números para el CP */}
+                                <div>
+                                    <label className="label-fan">Código Postal</label>
+                                    <input type="text" name="cp" required placeholder="Ej: 2300" value={formData.cp} onChange={handleInputChange} className="input-fan" 
+                                    pattern="[0-9]+" title="El código postal solo debe contener números" />
+                                </div>
+                                
+                                <div className="md:col-span-1">
+                                    <label className="label-fan">Ciudad</label>
+                                    <input type="text" name="ciudad" required placeholder="Ej: Rafaela" value={formData.ciudad} onChange={handleInputChange} className="input-fan" />
+                                </div>
+                                
+                                <div className="md:col-span-2">
+                                    <label className="label-fan">Provincia</label>
+                                    <input type="text" name="provincia" required placeholder="Ej: Santa Fe" value={formData.provincia} onChange={handleInputChange} className="input-fan" />
+                                </div>
                             </div>
 
                             {/* Sección Perfil Fan */}
