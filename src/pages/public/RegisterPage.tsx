@@ -190,10 +190,31 @@ const RegisterPage = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
                                 <h3 className="subtitle-fan md:col-span-2 border-b border-slate-200 dark:border-white/10 pb-2">Datos Personales</h3>
                                 
-                                <div><label className="label-fan">Nombre</label><input type="text" name="nombre" required placeholder="Ej: Francisco" value={formData.nombre} onChange={handleInputChange} className="input-fan" /></div>
-                                <div><label className="label-fan">Apellido</label><input type="text" name="apellido" required placeholder="Ej: Paravano" value={formData.apellido} onChange={handleInputChange} className="input-fan" /></div>
-                                <div><label className="label-fan">DNI</label><input type="text" name="dni" required placeholder="Sin puntos" value={formData.dni} onChange={handleInputChange} className="input-fan" /></div>
-                                <div><label className="label-fan">Fecha de Nacimiento</label><input type="date" name="fecha_nacimiento" required value={formData.fecha_nacimiento} onChange={handleInputChange} className="input-fan [&::-webkit-calendar-picker-indicator]:dark:filter [&::-webkit-calendar-picker-indicator]:dark:invert" /></div>
+                                {/* Le agregamos pattern para letras y espacios */}
+                                <div>
+                                    <label className="label-fan">Nombre</label>
+                                    <input type="text" name="nombre" required placeholder="Ej: Francisco" value={formData.nombre} onChange={handleInputChange} className="input-fan" 
+                                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras" />
+                                </div>
+                                
+                                <div>
+                                    <label className="label-fan">Apellido</label>
+                                    <input type="text" name="apellido" required placeholder="Ej: Paravano" value={formData.apellido} onChange={handleInputChange} className="input-fan" 
+                                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras" />
+                                </div>
+                                
+                                {/* Le agregamos pattern numérico de 7 a 8 caracteres */}
+                                <div>
+                                    <label className="label-fan">DNI</label>
+                                    <input type="text" name="dni" required placeholder="Sin puntos" value={formData.dni} onChange={handleInputChange} className="input-fan" 
+                                    pattern="[0-9]{7,8}" title="Debe contener entre 7 y 8 números, sin puntos" />
+                                </div>
+                                
+                                <div>
+                                    <label className="label-fan">Fecha de Nacimiento</label>
+                                    <input type="date" name="fecha_nacimiento" required value={formData.fecha_nacimiento} onChange={handleInputChange} className="input-fan [&::-webkit-calendar-picker-indicator]:dark:filter [&::-webkit-calendar-picker-indicator]:dark:invert" />
+                                </div>
+                                
                                 <div>
                                     <label className="label-fan">Género</label>
                                     <select name="genero" value={formData.genero} onChange={handleInputChange} className="input-fan">
@@ -202,9 +223,15 @@ const RegisterPage = () => {
                                         <option value="Prefiero no decirlo">Prefiero no decirlo</option>
                                     </select>
                                 </div>
-                                <div><label className="label-fan">Teléfono</label><input type="tel" name="telefono" required placeholder="Ej: 3492-15..." value={formData.telefono} onChange={handleInputChange} className="input-fan" /></div>
+                                
+                                {/* Le agregamos pattern solo números */}
+                                <div>
+                                    <label className="label-fan">Teléfono</label>
+                                    <input type="tel" name="telefono" required placeholder="Ej: 349215334455" value={formData.telefono} onChange={handleInputChange} className="input-fan" 
+                                    pattern="[0-9]+" title="Solo se permiten números, sin guiones ni espacios" />
+                                </div>
                             </div>
-
+                            
                             {/* Sección Domicilio */}
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-6">
                                 <h3 className="subtitle-fan md:col-span-3 border-b border-slate-200 dark:border-white/10 pb-2 mt-4">Domicilio</h3>
