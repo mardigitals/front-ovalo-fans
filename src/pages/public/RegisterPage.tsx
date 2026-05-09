@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import api from '@/api/axios';
 import { X } from 'lucide-react';
 
@@ -7,7 +7,6 @@ import { X } from 'lucide-react';
 const RegisterPage = () => {
     const [step, setStep] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
     const [error, setError] = useState('');
 
     const [email, setEmail] = useState('');
@@ -166,7 +165,7 @@ const RegisterPage = () => {
                         </form>
                         <div className="bg-institucional-celeste/5 border-l-4 border-institucional-celeste p-4 mt-6">
                             <p className="text-sm italic text-fan">
-                            * Al registrarte, aceptas nuestros <Link to="/terms-conditions" ><strong>Términos y Condiciones</strong></Link> y nuestras <Link to="/privacy-policy" ><strong>Políticas de Privacidad</strong></Link>.
+                            * Al registrarte, aceptas nuestros <Link to="/terms-conditions" target="_blank" rel="noopener noreferrer"><strong>Términos y Condiciones</strong></Link> y nuestras <Link to="/privacy-policy" target="_blank" rel="noopener noreferrer"><strong>Políticas de Privacidad</strong></Link>.
                             </p>
                         </div>
                         <p className="text-center text-slate-500 text-sm">
@@ -363,7 +362,7 @@ const RegisterPage = () => {
 
                         <div className="mt-8">
                             <button 
-                                onClick={() => navigate('/terms-conditions')} 
+                                onClick={() => window.open('/terms-conditions', '_blank')}
                                 className="w-full py-3 bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 text-slate-800 dark:text-white font-black rounded-lg transition-all"
                             >
                                 Conocé más                         
