@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PrivacyPolicy = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="py-12 px-4 sm:px-6 lg:px-8 animate-in fade-in duration-500">
       
             <div className="max-w-4xl mx-auto">
                 {/* Botón Volver */}
-                <Link to="/" className="inline-block mb-8 text-slate-500 hover:text-sky-500 font-bold transition-colors text-sm uppercase tracking-wider">
+                <button onClick={() => { window.history.length > 2 ? navigate(-1) : window.close(); }} className="inline-block mb-8 text-slate-500 hover:text-sky-500 font-bold transition-colors text-sm uppercase tracking-wider">
                 ← Volver al inicio
-                </Link>
+                </button>
 
                 {/* Contenedor tipo Glass */}
                 <div className="bg-white/80 dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl dark:shadow-sky-500/5">
@@ -114,9 +116,9 @@ const PrivacyPolicy = () => {
                     <p className="text-fan text-sm mb-6">
                     Si tienes dudas sobre el cobro de tu membresía, contáctanos a través de nuestros canales oficiales.
                     </p>
-                    <Link to="/" className="glass-neon-btn px-8 py-3 rounded-md font-bold text-slate-800 dark:text-white bg-white/5 border border-slate-300 dark:border-white/10">
+                    <button onClick={() => { window.history.length > 2 ? navigate(-1) : window.close(); }} className="glass-neon-btn px-8 py-3 rounded-md font-bold text-slate-800 dark:text-white bg-white/5 border border-slate-300 dark:border-white/10">
                     Entendido
-                    </Link>
+                    </button>
                 </div>
 
             </div>

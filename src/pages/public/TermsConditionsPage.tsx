@@ -8,7 +8,7 @@ const TermsConditionsPage = () => {
     
       <div className="max-w-4xl mx-auto">
         {/* Botón Volver */}
-        <button onClick={() => navigate(-1)} className="inline-block mb-8 text-slate-500 hover:text-sky-500 font-bold transition-colors text-sm uppercase tracking-wider">
+        <button onClick={() => { window.history.length > 2 ? navigate(-1) : window.close(); }} className="inline-block mb-8 text-slate-500 hover:text-sky-500 font-bold transition-colors text-sm uppercase tracking-wider">
           ← Volver
         </button>
 
@@ -115,7 +115,7 @@ const TermsConditionsPage = () => {
         <p className="text-fan text-sm mb-6">
           Si tienes dudas sobre el cobro de tu membresía, contáctanos a través de nuestros canales oficiales.
         </p>
-        <button onClick={() => navigate(-1)} className="glass-neon-btn px-8 py-3 rounded-md font-bold text-slate-800 dark:text-white bg-white/5 border border-slate-300 dark:border-white/10">
+        <button onClick={() => { window.history.length > 2 ? navigate(-1) : window.close(); }} className="glass-neon-btn px-8 py-3 rounded-md font-bold text-slate-800 dark:text-white bg-white/5 border border-slate-300 dark:border-white/10">
           Entendido
         </button>
       </div>
