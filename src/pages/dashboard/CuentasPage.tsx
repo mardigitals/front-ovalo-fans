@@ -22,32 +22,38 @@ const CuentasPage = () => {
     const [cuentaSeleccionada, setCuentaSeleccionada] = useState<any>(null);
 
     const [cuentaAEliminar, setCuentaAEliminar] = useState<any>(null);
-
-    // 1. CARGAR DATOS
-    const fetchCuentas = async (page = 1) => {
+    
+    const fetchCuentas = async (page = 1, search = '') => {
         try {
-        // Le pasamos la página a tu backend
-        const response = await api.get(`/usuario-auth/all?pagina=${page}`); 
-        setCuentas(response.data.data);
-        setPaginaActual(Number(response.data.pagina));
-        setTotalPaginas(Number(response.data.totalPaginas));
+            // Le pasamos ambas cosas al backend
+            const response = await api.get(`/usuario-auth/all?pagina=${page}&buscar=${search}`); 
+            setCuentas(response.data.data);
+            setPaginaActual(Number(response.data.pagina));
+            setTotalPaginas(Number(response.data.totalPaginas));
         } catch (error) {
-        console.error("Error cargando cuentas:", error);
+            console.error("Error cargando cuentas:", error);
         }
     };
 
-    // Se vuelve a ejecutar cada vez que cambia la página actual
+    // EFECTO 1: Cuando cambia la PÁGINA (Paginación normal)
     useEffect(() => {
-        fetchCuentas(paginaActual);
+        fetchCuentas(paginaActual, searchTerm);
     }, [paginaActual]);
 
-    // 2. BUSCADOR
-    const datosFiltrados = cuentas.filter(c =>
-        c.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        c.estado_cuenta?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        c.ultima_ip?.includes(searchTerm)
-    );
+    // EFECTO 2: Cuando cambia el BUSCADOR (con Debounce)
+    useEffect(() => {
+        // Esperamos medio segundo antes de buscar, para no saturar el servidor
+        const delayDebounceFn = setTimeout(() => {
+            if (paginaActual !== 1) {
+                setPaginaActual(1); // Si busca algo nuevo, lo devolvemos a la pag 1
+            } else {
+                fetchCuentas(1, searchTerm);
+            }
+        }, 500);
 
+        // Si el usuario sigue tipeando, limpiamos el temporizador anterior
+        return () => clearTimeout(delayDebounceFn);
+    }, [searchTerm]);
     // 3. ACCIONES DE LA TABLA
     const handleEdit = (cuenta: any) => {
         setCuentaSeleccionada(cuenta);
@@ -130,7 +136,7 @@ const CuentasPage = () => {
             title="CUENTAS DE USUARIOS" 
             subtitle="Gestión de seguridad y credenciales del sistema."
             columns={columns} 
-            data={datosFiltrados} 
+            data={cuentas} 
             searchTerm={searchTerm}
             onSearchChange={(e) => setSearchTerm(e.target.value)}
             // Omitimos onAdd para que no aparezca el botón "Nuevo"
