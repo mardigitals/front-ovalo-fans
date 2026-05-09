@@ -9,6 +9,7 @@ import PrivacyPolicy from '@/pages/public/PrivacyPolicy';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import ComerciosPage from '@/pages/dashboard/ComerciosPage';
 import CuentasPage from '@/pages/dashboard/CuentasPage';
+import ResetPasswordPage from '@/pages/public/ResetPasswordPage';
 
 
 const AppRoutes = () => (
@@ -21,6 +22,7 @@ const AppRoutes = () => (
       </Route>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/terms-conditions" element={<TermsConditionsPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       
