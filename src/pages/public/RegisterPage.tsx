@@ -180,12 +180,17 @@ const RegisterPage = () => {
             const suscripcionId = suscripcionResponse.data.id; 
 
             // 2. Generar el link de Mercado Pago
-            const pagoResponse = await api.post('/pago-log', {
+            const pagoResponse = await api.post('/pagos/generar-link', {
                 suscripcion_id: suscripcionId
             });
 
-            // 3. Redirigir a Mercado Pago
-            window.location.href = pagoResponse.data.init_point; 
+            // 3. Redirigir a Mercado Pago usando el nombre de variable de TU backend
+            // Usamos url_sandbox para pruebas
+            if (pagoResponse.data.url_sandbox) {
+                window.location.href = pagoResponse.data.url_sandbox; 
+            } else {
+                setError("No se pudo generar el enlace de pago. Contactá a soporte.");
+            }
 
         } catch (err: any) {
             console.error("Error en el proceso de pago:", err);

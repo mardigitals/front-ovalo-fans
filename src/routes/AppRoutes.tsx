@@ -10,6 +10,9 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import ComerciosPage from '@/pages/dashboard/ComerciosPage';
 import CuentasPage from '@/pages/dashboard/CuentasPage';
 import ResetPasswordPage from '@/pages/public/ResetPasswordPage';
+import PagoExitoPage from '@/pages/public/PagoExitoPage';
+import PagoErrorPage from '@/pages/public/PagoErrorPage';
+import PagoPendientePage from '@/pages/public/PagoPendientePage';
 
 
 const AppRoutes = () => (
@@ -25,6 +28,10 @@ const AppRoutes = () => (
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/terms-conditions" element={<TermsConditionsPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      {/* RUTAS DE RETORNO DE MERCADO PAGO (Públicas) */}
+      <Route path="/pago/exito" element={<PagoExitoPage />} />
+      <Route path="/pago/error" element={<PagoErrorPage />} />
+      <Route path="/pago/pendiente" element={<PagoPendientePage />} />
       
 
       {/* Rutas Privadas */}
