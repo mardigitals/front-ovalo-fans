@@ -14,7 +14,6 @@ import PagoExitoPage from '@/pages/public/PagoExitoPage';
 import PagoErrorPage from '@/pages/public/PagoErrorPage';
 import PagoPendientePage from '@/pages/public/PagoPendientePage';
 
-
 const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
@@ -39,7 +38,6 @@ const AppRoutes = () => (
 
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Óvalo Fans</div>} />
-         
           <Route path="comercios" element={<ComerciosPage />} />
           <Route path="cuentas" element={<CuentasPage />} />
         </Route>

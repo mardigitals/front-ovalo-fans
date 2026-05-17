@@ -4,6 +4,7 @@ import { Menu } from 'lucide-react';
 import Sidebar from '@/components/layout/Sidebar';
 import FullScreenLoader from '@/components/ui/FullScreenLoader';
 import { useAuth } from '@/hooks/useAuth';
+import PitStopOverlay from '@/components/auth/PitStopOverlay';
 
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -23,6 +24,7 @@ const DashboardLayout = () => {
       {/* CONTENIDO PRINCIPAL */}
       <main className="flex-1 overflow-y-auto relative flex flex-col h-screen">
         
+        <PitStopOverlay />
         {/* Cabecera Móvil */}
         <header className="md:hidden flex items-center justify-between p-4 border-b border-slate-200 dark:border-white/10 bg-white/50 dark:bg-black/20 backdrop-blur-md z-10 sticky top-0">
            <h2 className="subtitle-fan text-lg">ÓVALO FANS</h2>
