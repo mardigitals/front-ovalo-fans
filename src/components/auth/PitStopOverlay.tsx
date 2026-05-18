@@ -45,7 +45,7 @@ const PitStopOverlay = () => {
   }, [userProfile]);
 
   if (accesoPermitido === null || accesoPermitido === true) return null;
-  if (location.pathname.includes('/dashboard/cuentas') || location.pathname.includes('/dashboard/comercios') || location.pathname.includes('/dashboard/perfil')) return null;
+  if (location.pathname.includes('/dashboard/mi-cuenta') ||location.pathname.includes('/dashboard/comercios') || location.pathname.includes('/dashboard/mi-perfil')) return null;
 
   return (
     // VOLVEMOS AL ABSOLUTE: Solo tapa el contenedor padre (el <main>)

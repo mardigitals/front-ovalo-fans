@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, FileChartColumn, ShieldUser, Calendar, MapPin, Film, Gift, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, ChevronLeft, X, Shield, Camera, Star, Ticket, Settings, PercentIcon, FastForward, LockKeyholeOpen, Flag, Info, UserRoundKey, ShoppingBasket, Check, CircleCheckBig, ChartCandlestick } from 'lucide-react';
+import { Home, FileChartColumn, ShieldUser, Calendar, MapPin, Film, Gift, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, ChevronLeft, X, Shield, Camera, Star, Ticket, Settings, PercentIcon, FastForward, LockKeyholeOpen, Flag, Info, UserRoundKey, ShoppingBasket, Check, CircleCheckBig, ChartCandlestick, ShieldCheck } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/hooks/useTheme'; // <-- Importamos el hook
 
@@ -26,7 +26,7 @@ interface SidebarProps {
 const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
   const location = useLocation();
   const { userProfile, handleLogout } = useAuth();
-  const { isDark, toggleTheme } = useTheme(); // <-- Instanciamos el hook acá y borramos toda la lógica vieja
+  const { isDark, toggleTheme } = useTheme(); 
   
   // Variables de seguridad
   const rol = userProfile?.rol?.toLowerCase() || 'fan'; 
@@ -37,8 +37,9 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     const items = [];
     
     items.push({ to: '/dashboard', icon: <FileChartColumn size={20} />, label: 'Resumen' });
-    items.push({ to: '/dashboard/perfil', icon: <User size={20} />, label: 'Mi Perfil' });
+    items.push({ to: '/dashboard/mi-perfil', icon: <User size={20} />, label: 'Mi Perfil' });
     items.push({ to: '/dashboard/validar', icon: < CircleCheckBig size={20} />, label: 'Validar DNI' });
+    items.push({ to: '/dashboard/mi-cuenta', icon: <ShieldCheck size={20} />, label: 'Mi Cuenta' });
     
 
     if (rol === 'fan') {

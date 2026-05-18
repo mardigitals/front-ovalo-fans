@@ -13,6 +13,8 @@ import ResetPasswordPage from '@/pages/public/ResetPasswordPage';
 import PagoExitoPage from '@/pages/public/PagoExitoPage';
 import PagoErrorPage from '@/pages/public/PagoErrorPage';
 import PagoPendientePage from '@/pages/public/PagoPendientePage';
+import MiPerfilPage from '@/pages/dashboard/MiPerfilPage';
+import MiCuentaPage from '@/pages/dashboard/MiCuentaPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -40,6 +42,8 @@ const AppRoutes = () => (
           <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Óvalo Fans</div>} />
           <Route path="comercios" element={<ComerciosPage />} />
           <Route path="cuentas" element={<CuentasPage />} />
+          <Route path="mi-cuenta" element={<MiCuentaPage />} />
+          <Route path="mi-perfil" element={<MiPerfilPage />} />
         </Route>
 
       </Route>
