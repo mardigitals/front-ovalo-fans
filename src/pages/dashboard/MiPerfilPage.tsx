@@ -184,7 +184,7 @@ const MiPerfilPage = () => {
         {/* Formulario de Datos */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
           
-          {/* Fila 1: DNI (Bloqueado) y Teléfono */}
+          {/* Fila 1: DNI (Bloqueado) */}
           <div>
             <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">DNI (No editable)</label>
             <input type="text" disabled value={datosPerfil?.usuario?.dni || ''} className="w-full bg-slate-100 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-500 dark:text-slate-400 cursor-not-allowed" />
@@ -194,7 +194,7 @@ const MiPerfilPage = () => {
             <input type="text" name="telefono" disabled={!isEditing} value={formData.telefono} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-3 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2 focus:ring-institucional-celeste/20' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
           </div>
 
-          {/* Fila 2: Nombre y Apellido */}
+          {/* Sección 2: Datos Usuario */}
           <div>
             <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Nombre</label>
             <input type="text" name="nombre" disabled={!isEditing} value={formData.nombre} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-3 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2 focus:ring-institucional-celeste/20' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
@@ -203,43 +203,18 @@ const MiPerfilPage = () => {
             <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Apellido</label>
             <input type="text" name="apellido" disabled={!isEditing} value={formData.apellido} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-3 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2 focus:ring-institucional-celeste/20' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
           </div>
-          
-          {/* Fila 3: Alias y Bio */}
-          {/* <div>
-            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Alias / Apodo</label>
-            <input type="text" name="alias" disabled={!isEditing} value={formData.alias} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-3 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2 focus:ring-institucional-celeste/20' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Biografía (Tu historia en las pistas)</label>
-            <textarea name="bio" disabled={!isEditing} rows={3} value={formData.bio} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-3 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2 focus:ring-institucional-celeste/20' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-          </div> */}
-
-          {/* Fila 4: Hincha de qué marca de TC y Chicana Favorita */}
-          {/* <div>
-            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Marca de TC</label>
-            <select name="hincha_marca_tc" disabled={!isEditing} value={formData.hincha_marca_tc} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-3 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2 focus:ring-institucional-celeste/20' : 'border-slate-200 dark:border-white/10 opacity-70'}`}>
-              <option value="">Seleccionar...</option>
-              <option value="Ford">Ford</option>
-              <option value="Chevrolet">Chevrolet</option>
-              <option value="Dodge">Dodge</option>
-              <option value="Torino">Torino</option>
-              <option value="Toyota">Toyota</option>
-              <option value="Bmw">Bmw</option>
-              <option value="Mercedes">Mercedes</option>
-            </select>
-          </div> */}
-          {/* --- SECCIÓN 3: PERFIL PISTERO --- */}
+        
+          {/* --- SECCIÓN 3: PERFIL FAN --- */}
           <div className="pt-4 border-t border-slate-200 dark:border-white/10">
-            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4"><Flag size={20} className="text-institucional-celeste"/> Perfil Pistero</h3>
+            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4"><Flag size={20} className="text-institucional-celeste"/> Perfil Fan</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Alias / Apodo</label>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Alias Fan</label>
                 <input type="text" name="alias" disabled={!isEditing} value={formData.alias} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
               </div>
               
               <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Escudería (Marca de TC)</label>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Marca de TC preferida</label>
                 <select name="hincha_marca_tc" disabled={!isEditing} value={formData.hincha_marca_tc} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`}>
                   <option value="">Seleccionar...</option>
                   <option value="Ford">Ford</option>
@@ -247,12 +222,21 @@ const MiPerfilPage = () => {
                   <option value="Dodge">Dodge</option>
                   <option value="Torino">Torino</option>
                   <option value="Toyota">Toyota</option>
+                  <option value="Bmw">Bmw</option>
+                  <option value="Mercedes">Mercedes</option>
                 </select>
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Chicana Favorita (Autódromo Rafaela)</label>
-                <input type="text" name="chicana_favorita" disabled={!isEditing} value={formData.chicana_favorita} placeholder="Ej: La 2 de afuera..." onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Chicana Favorita</label>
+                <select name="chicana_favorita" disabled={!isEditing} value={formData.chicana_favorita} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`}>
+                  <option value="">Seleccionar...</option>
+                  <option value="1 de adentro">1 de adentro</option>
+                  <option value="1 de afuera">1 de afuera</option>
+                  <option value="2 de adentro">2 de adentro</option>
+                  <option value="2 de afuera">2 de afuera</option>
+                  <option value="3">3</option>
+                </select>              
               </div>
 
               <div className="md:col-span-2">
