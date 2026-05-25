@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Camera, Edit2, Save, X } from 'lucide-react';
+import { Camera, Edit2, Save, X, Flag } from 'lucide-react';
 import FullScreenLoader from '@/components/ui/FullScreenLoader';
 
 const MiPerfilPage = () => {
@@ -205,7 +205,7 @@ const MiPerfilPage = () => {
           </div>
           
           {/* Fila 3: Alias y Bio */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Alias / Apodo</label>
             <input type="text" name="alias" disabled={!isEditing} value={formData.alias} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-3 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2 focus:ring-institucional-celeste/20' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
           </div>
@@ -213,11 +213,11 @@ const MiPerfilPage = () => {
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Biografía (Tu historia en las pistas)</label>
             <textarea name="bio" disabled={!isEditing} rows={3} value={formData.bio} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-3 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2 focus:ring-institucional-celeste/20' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-          </div>
+          </div> */}
 
           {/* Fila 4: Hincha de qué marca de TC y Chicana Favorita */}
-          <div>
-            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Escudería (Marca de TC)</label>
+          {/* <div>
+            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Marca de TC</label>
             <select name="hincha_marca_tc" disabled={!isEditing} value={formData.hincha_marca_tc} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-3 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2 focus:ring-institucional-celeste/20' : 'border-slate-200 dark:border-white/10 opacity-70'}`}>
               <option value="">Seleccionar...</option>
               <option value="Ford">Ford</option>
@@ -225,7 +225,41 @@ const MiPerfilPage = () => {
               <option value="Dodge">Dodge</option>
               <option value="Torino">Torino</option>
               <option value="Toyota">Toyota</option>
+              <option value="Bmw">Bmw</option>
+              <option value="Mercedes">Mercedes</option>
             </select>
+          </div> */}
+          {/* --- SECCIÓN 3: PERFIL PISTERO --- */}
+          <div className="pt-4 border-t border-slate-200 dark:border-white/10">
+            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4"><Flag size={20} className="text-institucional-celeste"/> Perfil Pistero</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Alias / Apodo</label>
+                <input type="text" name="alias" disabled={!isEditing} value={formData.alias} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+              
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Escudería (Marca de TC)</label>
+                <select name="hincha_marca_tc" disabled={!isEditing} value={formData.hincha_marca_tc} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`}>
+                  <option value="">Seleccionar...</option>
+                  <option value="Ford">Ford</option>
+                  <option value="Chevrolet">Chevrolet</option>
+                  <option value="Dodge">Dodge</option>
+                  <option value="Torino">Torino</option>
+                  <option value="Toyota">Toyota</option>
+                </select>
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Chicana Favorita (Autódromo Rafaela)</label>
+                <input type="text" name="chicana_favorita" disabled={!isEditing} value={formData.chicana_favorita} placeholder="Ej: La 2 de afuera..." onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Biografía (Tu historia en las pistas)</label>
+                <textarea name="bio" disabled={!isEditing} rows={3} value={formData.bio} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
