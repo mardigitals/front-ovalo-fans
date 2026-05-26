@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Camera, Edit2, Save, X, Flag, MapPin, UserIcon } from 'lucide-react';
 import FullScreenLoader from '@/components/ui/FullScreenLoader';
 import FormField from '@/components/ui/FormField';
@@ -10,10 +10,10 @@ const MiPerfilPage = () => {
   const [guardando, setGuardando] = useState(false);
 
   // // Referencia para el input de archivo oculto
-  // const fileInputRef = useRef<HTMLInputElement>(null);
-  // // Estado para la previsualización de la foto seleccionada
-  // const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-  // const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  // Estado para la previsualización de la foto seleccionada
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
   // Estados para los campos del formulario
   const [formData, setFormData] = useState({
@@ -79,16 +79,16 @@ const MiPerfilPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // // --- LÓGICA PARA ELEGIR FOTO ---
-  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files && e.target.files[0]) {
-  //     const file = e.target.files[0];
-  //     setAvatarFile(file);
-  //     // Creamos una URL temporal para mostrarla en pantalla al instante
-  //     setAvatarPreview(URL.createObjectURL(file));
-  //     setIsEditing(true); // Si elige foto, activamos el modo edición automáticamente
-  //   }
-  // };
+  // --- LÓGICA PARA ELEGIR FOTO ---
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setAvatarFile(file);
+      // Creamos una URL temporal para mostrarla en pantalla al instante
+      setAvatarPreview(URL.createObjectURL(file));
+      setIsEditing(true); // Si elige foto, activamos el modo edición automáticamente
+    }
+  };
 
   const guardarCambios = async () => {
     setGuardando(true);
@@ -106,8 +106,8 @@ const MiPerfilPage = () => {
       }
 
       // 1. (OPCIONAL) Si hay una foto nueva, deberías mandarla a una ruta especial de NestJS acá.
-      // let nuevaUrlAvatar = datosPerfil?.perfil_fan?.avatar;
-      /*
+       let nuevaUrlAvatar = datosPerfil?.perfil_fan?.avatar;
+      
       if (avatarFile) {
         const formDataAvatar = new FormData();
         formDataAvatar.append('file', avatarFile);
@@ -117,7 +117,7 @@ const MiPerfilPage = () => {
         const dataFoto = await resFoto.json();
         nuevaUrlAvatar = dataFoto.url; // Reemplazamos por la URL final que nos de el backend
       }
-      */
+      
 
       // 2. Separamos datos
       const datosUsuario = {
@@ -130,7 +130,7 @@ const MiPerfilPage = () => {
       const datosPerfilFan = {
         alias: formData.alias, bio: formData.bio, 
         hincha_marca_tc: formData.hincha_marca_tc, chicana_favorita: formData.chicana_favorita,
-        // avatar: nuevaUrlAvatar // <--- Descomentar cuando tengas la ruta de subir fotos armada
+        avatar: nuevaUrlAvatar 
       };
 
       // 3. Disparamos las DOS peticiones en paralelo usando tus controladores
@@ -186,15 +186,29 @@ const MiPerfilPage = () => {
         <div className="flex flex-col sm:flex-row items-center gap-6 mb-8 relative z-10">
           <div className="relative group">
             <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-institucional-celeste bg-slate-800 flex items-center justify-center">
-              {datosPerfil?.perfil_fan?.avatar ? (
-                <img src={datosPerfil.perfil_fan.avatar} alt="Avatar" className="w-full h-full object-cover" />
+              {/* Le decimos que muestre el avatarPreview temporal, y si no hay, el de la BD */}
+              {(avatarPreview || datosPerfil?.perfil_fan?.avatar) ? (
+                <img src={avatarPreview || datosPerfil.perfil_fan.avatar} alt="Avatar" className="w-full h-full object-cover" />
               ) : (
                 <span className="text-4xl font-bold text-white">{datosPerfil?.usuario?.nombre?.charAt(0)}</span>
               )}
             </div>
 
-            {/* Botón flotante para cambiar foto */}
-            <button className="absolute bottom-0 right-0 bg-institucional-celeste p-3 rounded-full text-white hover:scale-110 transition-transform shadow-lg cursor-pointer">
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              onChange={handleFileChange} 
+              accept="image/*" 
+              className="hidden" 
+            />
+
+            {/* Botón flotante para cambiar foto (Acá activamos el clic) */}
+            <button 
+              onClick={() => fileInputRef.current?.click()}
+              disabled={!isEditing}
+              className={`absolute bottom-0 right-0 p-3 rounded-full text-white shadow-lg transition-transform ${isEditing ? 'bg-institucional-celeste hover:scale-110 cursor-pointer' : 'bg-slate-500 opacity-50 cursor-not-allowed'}`}
+              title={isEditing ? "Cambiar foto de perfil" : "Habilitá la edición para cambiar la foto"}
+            >
               <Camera size={20} />
             </button>
           </div>
@@ -204,7 +218,7 @@ const MiPerfilPage = () => {
               {datosPerfil?.usuario?.nombre} {datosPerfil?.usuario?.apellido}
             </h2>
             <p className="text-institucional-celeste font-semibold mb-2">
-              {datosPerfil?.perfil_fan?.es_socio_club ? 'Socio Club Atlético Rafaela' : 'Fan del Óvalo'}
+              {datosPerfil?.perfil_fan?.es_socio_club ? 'Socio Atlético Rafaela' : 'Fan del Óvalo'}
             </p>
           </div>
 
