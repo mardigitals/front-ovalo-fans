@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Camera, Edit2, Save, X, Flag } from 'lucide-react';
+import { Camera, Edit2, Save, X, Flag, MapPin, UserIcon } from 'lucide-react';
 import FullScreenLoader from '@/components/ui/FullScreenLoader';
 
 const MiPerfilPage = () => {
@@ -8,12 +8,23 @@ const MiPerfilPage = () => {
   const [datosPerfil, setDatosPerfil] = useState<any>(null);
   const [guardando, setGuardando] = useState(false);
 
+  // // Referencia para el input de archivo oculto
+  // const fileInputRef = useRef<HTMLInputElement>(null);
+  // // Estado para la previsualización de la foto seleccionada
+  // const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  // const [avatarFile, setAvatarFile] = useState<File | null>(null);
+
   // Estados para los campos del formulario
   const [formData, setFormData] = useState({
     //Datos de tabla Usuario
+    email: '',
     nombre: '',
     apellido: '',
     telefono: '',
+    fecha_nacimiento: '', genero: '', nacionalidad: '',
+    provincia: '', ciudad: '', cp: '',
+    calle: '', numero: '', piso: '', depto: '',
+
     //Datos de tabla PerfilFan
     alias: '',
     bio: '',
@@ -35,8 +46,19 @@ const MiPerfilPage = () => {
         if (data.perfil_fan) {
           setFormData({
             nombre: data.usuario?.nombre || '',
+            email: data.usuario?.email || '',
             apellido: data.usuario?.apellido || '',
             telefono: data.usuario?.telefono || '',
+            fecha_nacimiento: data.usuario?.fecha_nacimiento ? new Date(data.usuario.fecha_nacimiento).toISOString().split('T')[0] : '',
+            genero: data.usuario?.genero || '',
+            nacionalidad: data.usuario?.nacionalidad || '',
+            provincia: data.usuario?.provincia || '',
+            ciudad: data.usuario?.ciudad || '',
+            cp: data.usuario?.cp || '',
+            calle: data.usuario?.calle || '',
+            numero: data.usuario?.numero || '',
+            piso: data.usuario?.piso || '',
+            depto: data.usuario?.depto || '',
             alias: data.perfil_fan.alias || '',
             bio: data.perfil_fan.bio || '',
             hincha_marca_tc: data.perfil_fan.hincha_marca_tc || '',
@@ -56,6 +78,17 @@ const MiPerfilPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // // --- LÓGICA PARA ELEGIR FOTO ---
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     const file = e.target.files[0];
+  //     setAvatarFile(file);
+  //     // Creamos una URL temporal para mostrarla en pantalla al instante
+  //     setAvatarPreview(URL.createObjectURL(file));
+  //     setIsEditing(true); // Si elige foto, activamos el modo edición automáticamente
+  //   }
+  // };
+
   const guardarCambios = async () => {
     setGuardando(true);
     try {
@@ -71,18 +104,32 @@ const MiPerfilPage = () => {
         return;
       }
 
+      // 1. (OPCIONAL) Si hay una foto nueva, deberías mandarla a una ruta especial de NestJS acá.
+      // let nuevaUrlAvatar = datosPerfil?.perfil_fan?.avatar;
+      /*
+      if (avatarFile) {
+        const formDataAvatar = new FormData();
+        formDataAvatar.append('file', avatarFile);
+        const resFoto = await fetch(`http://localhost:3000/perfil-fan/${perfilFanId}/avatar`, {
+          method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: formDataAvatar
+        });
+        const dataFoto = await resFoto.json();
+        nuevaUrlAvatar = dataFoto.url; // Reemplazamos por la URL final que nos de el backend
+      }
+      */
+
       // 2. Separamos datos
       const datosUsuario = {
-        nombre: formData.nombre,
-        apellido: formData.apellido,
-        telefono: formData.telefono
+        nombre: formData.nombre, apellido: formData.apellido, telefono: formData.telefono,
+        fecha_nacimiento: formData.fecha_nacimiento, genero: formData.genero, nacionalidad: formData.nacionalidad,
+        provincia: formData.provincia, ciudad: formData.ciudad, cp: formData.cp,
+        calle: formData.calle, numero: formData.numero, piso: formData.piso, depto: formData.depto
       };
 
       const datosPerfilFan = {
-        alias: formData.alias,
-        bio: formData.bio,
-        hincha_marca_tc: formData.hincha_marca_tc,
-        chicana_favorita: formData.chicana_favorita
+        alias: formData.alias, bio: formData.bio, 
+        hincha_marca_tc: formData.hincha_marca_tc, chicana_favorita: formData.chicana_favorita,
+        // avatar: nuevaUrlAvatar // <--- Descomentar cuando tengas la ruta de subir fotos armada
       };
 
       // 3. Disparamos las DOS peticiones en paralelo usando tus controladores
@@ -134,7 +181,7 @@ const MiPerfilPage = () => {
       <h1 className="text-3xl font-extrabold text-slate-800 dark:text-white uppercase tracking-tighter">Mi Perfil</h1>
 
       <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-2xl p-6 shadow-xl relative overflow-hidden">
-        
+
         {/* Cabecera del Perfil (Avatar y Nombre) */}
         <div className="flex flex-col sm:flex-row items-center gap-6 mb-8 relative z-10">
           <div className="relative group">
@@ -145,6 +192,7 @@ const MiPerfilPage = () => {
                 <span className="text-4xl font-bold text-white">{datosPerfil?.usuario?.nombre?.charAt(0)}</span>
               )}
             </div>
+
             {/* Botón flotante para cambiar foto */}
             <button className="absolute bottom-0 right-0 bg-institucional-celeste p-3 rounded-full text-white hover:scale-110 transition-transform shadow-lg cursor-pointer">
               <Camera size={20} />
@@ -182,30 +230,88 @@ const MiPerfilPage = () => {
         </div>
 
         {/* Formulario de Datos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
-          
-          {/* Fila 1: DNI (Bloqueado) */}
-          <div>
-            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">DNI (No editable)</label>
-            <input type="text" disabled value={datosPerfil?.usuario?.dni || ''} className="w-full bg-slate-100 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-500 dark:text-slate-400 cursor-not-allowed" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Teléfono</label>
-            <input type="text" name="telefono" disabled={!isEditing} value={formData.telefono} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-3 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2 focus:ring-institucional-celeste/20' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+        <div className="gap-6 relative z-10">
+
+          {/* --- SECCIÓN 1: DATOS PERSONALES --- */}
+          <div className="p-3 border-t border-slate-200 dark:border-white/10">
+            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4"><UserIcon size={20} className="text-institucional-celeste"/> Datos Personales</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">DNI (No editable)</label>
+                <input type="text" disabled value={datosPerfil?.usuario?.dni || ''} className="w-full bg-slate-100 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-slate-500 dark:text-slate-400 cursor-not-allowed" />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Nombre</label>
+                <input type="text" name="nombre" disabled={!isEditing} value={formData.nombre} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Apellido</label>
+                <input type="text" name="apellido" disabled={!isEditing} value={formData.apellido} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Fecha de Nacimiento</label>
+                <input type="date" name="fecha_nacimiento" disabled={!isEditing} value={formData.fecha_nacimiento} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Género</label>
+                <select name="genero" disabled={!isEditing} value={formData.genero} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`}>
+                  <option value="">Seleccionar...</option>
+                  <option value="M">Masculino</option>
+                  <option value="F">Femenino</option>
+                  <option value="X">Otro</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Teléfono</label>
+                <input type="text" name="telefono" disabled={!isEditing} value={formData.telefono} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+            </div>
           </div>
 
-          {/* Sección 2: Datos Usuario */}
-          <div>
-            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Nombre</label>
-            <input type="text" name="nombre" disabled={!isEditing} value={formData.nombre} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-3 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2 focus:ring-institucional-celeste/20' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Apellido</label>
-            <input type="text" name="apellido" disabled={!isEditing} value={formData.apellido} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-3 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2 focus:ring-institucional-celeste/20' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+          {/* --- SECCIÓN 2: DOMICILIO --- */}
+          <div className="p-3 border-t border-slate-200 dark:border-white/10">
+            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4"><MapPin size={20} className="text-institucional-celeste"/> Domicilio</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Nacionalidad</label>
+                <input type="text" name="nacionalidad" disabled={!isEditing} value={formData.nacionalidad} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Provincia</label>
+                <input type="text" name="provincia" disabled={!isEditing} value={formData.provincia} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Ciudad</label>
+                <input type="text" name="ciudad" disabled={!isEditing} value={formData.ciudad} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Código Postal</label>
+                <input type="text" name="cp" disabled={!isEditing} value={formData.cp} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Calle</label>
+                <input type="text" name="calle" disabled={!isEditing} value={formData.calle} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Número</label>
+                <input type="text" name="numero" disabled={!isEditing} value={formData.numero} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Piso</label>
+                  <input type="text" name="piso" disabled={!isEditing} value={formData.piso} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Depto</label>
+                  <input type="text" name="depto" disabled={!isEditing} value={formData.depto} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+                </div>
+              </div>
+            </div>
           </div>
         
           {/* --- SECCIÓN 3: PERFIL FAN --- */}
-          <div className="pt-4 border-t border-slate-200 dark:border-white/10">
+          <div className="p-3 border-t border-slate-200 dark:border-white/10">
             <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4"><Flag size={20} className="text-institucional-celeste"/> Perfil Fan</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -246,7 +352,9 @@ const MiPerfilPage = () => {
             </div>
           </div>
         </div>
+
       </div>
+      
     </div>
   );
 };
