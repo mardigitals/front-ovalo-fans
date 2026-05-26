@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Camera, Edit2, Save, X, Flag, MapPin, UserIcon } from 'lucide-react';
 import FullScreenLoader from '@/components/ui/FullScreenLoader';
+import FormField from '@/components/ui/FormField';
 
 const MiPerfilPage = () => {
   const [loading, setLoading] = useState(true);
@@ -179,7 +180,6 @@ const MiPerfilPage = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       <h1 className="text-3xl font-extrabold text-slate-800 dark:text-white uppercase tracking-tighter">Mi Perfil</h1>
-
       <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-2xl p-6 shadow-xl relative overflow-hidden">
 
         {/* Cabecera del Perfil (Avatar y Nombre) */}
@@ -231,130 +231,76 @@ const MiPerfilPage = () => {
 
         {/* Formulario de Datos */}
         <div className="gap-6 relative z-10">
-
           {/* --- SECCIÓN 1: DATOS PERSONALES --- */}
           <div className="p-3 border-t border-slate-200 dark:border-white/10">
-            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4"><UserIcon size={20} className="text-institucional-celeste"/> Datos Personales</h3>
+            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4">
+              <UserIcon size={20} className="text-institucional-celeste"/> Datos Personales
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">DNI (No editable)</label>
-                <input type="text" disabled value={datosPerfil?.usuario?.dni || ''} className="w-full bg-slate-100 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-slate-500 dark:text-slate-400 cursor-not-allowed" />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Nombre</label>
-                <input type="text" name="nombre" disabled={!isEditing} value={formData.nombre} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Apellido</label>
-                <input type="text" name="apellido" disabled={!isEditing} value={formData.apellido} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Fecha de Nacimiento</label>
-                <input type="date" name="fecha_nacimiento" disabled={!isEditing} value={formData.fecha_nacimiento} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Género</label>
-                <select name="genero" disabled={!isEditing} value={formData.genero} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`}>
-                  <option value="">Seleccionar...</option>
-                  <option value="M">Masculino</option>
-                  <option value="F">Femenino</option>
-                  <option value="X">Otro</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Teléfono</label>
-                <input type="text" name="telefono" disabled={!isEditing} value={formData.telefono} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-              </div>
+              <FormField label="DNI (No editable)" value={datosPerfil?.usuario?.dni || ''} disabled={true} />
+              <FormField label="Nombre" name="nombre" value={formData.nombre} onChange={handleInputChange} disabled={!isEditing} />
+              <FormField label="Apellido" name="apellido" value={formData.apellido} onChange={handleInputChange} disabled={!isEditing} />
+              <FormField label="Fecha de Nacimiento" name="fecha_nacimiento" type="date" value={formData.fecha_nacimiento} onChange={handleInputChange} disabled={!isEditing} />
+              <FormField label="Género" name="genero" value={formData.genero} onChange={handleInputChange} disabled={!isEditing} options={[
+                  { value: 'M', label: 'Masculino' },
+                  { value: 'F', label: 'Femenino' },
+                  { value: 'X', label: 'Otro' }
+                ]} />
+              <FormField label="Teléfono" name="telefono" value={formData.telefono} onChange={handleInputChange} disabled={!isEditing} />
             </div>
           </div>
 
           {/* --- SECCIÓN 2: DOMICILIO --- */}
           <div className="p-3 border-t border-slate-200 dark:border-white/10">
-            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4"><MapPin size={20} className="text-institucional-celeste"/> Domicilio</h3>
+            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4">
+              <MapPin size={20} className="text-institucional-celeste"/> Domicilio
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Nacionalidad</label>
-                <input type="text" name="nacionalidad" disabled={!isEditing} value={formData.nacionalidad} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Provincia</label>
-                <input type="text" name="provincia" disabled={!isEditing} value={formData.provincia} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Ciudad</label>
-                <input type="text" name="ciudad" disabled={!isEditing} value={formData.ciudad} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Código Postal</label>
-                <input type="text" name="cp" disabled={!isEditing} value={formData.cp} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-              </div>
+              <FormField label="Nacionalidad" name="nacionalidad" value={formData.nacionalidad} onChange={handleInputChange} disabled={!isEditing} />
+              <FormField label="Provincia" name="provincia" value={formData.provincia} onChange={handleInputChange} disabled={!isEditing} />
+              <FormField label="Ciudad" name="ciudad" value={formData.ciudad} onChange={handleInputChange} disabled={!isEditing} />
+              <FormField label="Código Postal" name="cp" value={formData.cp} onChange={handleInputChange} disabled={!isEditing} />
               <div className="md:col-span-2">
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Calle</label>
-                <input type="text" name="calle" disabled={!isEditing} value={formData.calle} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+                <FormField label="Calle" name="calle" value={formData.calle} onChange={handleInputChange} disabled={!isEditing} />
               </div>
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Número</label>
-                <input type="text" name="numero" disabled={!isEditing} value={formData.numero} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-              </div>
+              <FormField label="Número" name="numero" value={formData.numero} onChange={handleInputChange} disabled={!isEditing} />
               <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Piso</label>
-                  <input type="text" name="piso" disabled={!isEditing} value={formData.piso} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Depto</label>
-                  <input type="text" name="depto" disabled={!isEditing} value={formData.depto} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-                </div>
+                <FormField label="Piso" name="piso" value={formData.piso} onChange={handleInputChange} disabled={!isEditing} />
+                <FormField label="Depto" name="depto" value={formData.depto} onChange={handleInputChange} disabled={!isEditing} />
               </div>
             </div>
           </div>
         
           {/* --- SECCIÓN 3: PERFIL FAN --- */}
           <div className="p-3 border-t border-slate-200 dark:border-white/10">
-            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4"><Flag size={20} className="text-institucional-celeste"/> Perfil Fan</h3>
+            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4">
+              <Flag size={20} className="text-institucional-celeste"/> Perfil Fan
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Alias Fan</label>
-                <input type="text" name="alias" disabled={!isEditing} value={formData.alias} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
-              </div>
+              <FormField label="Alias Fan" name="alias" value={formData.alias} onChange={handleInputChange} disabled={!isEditing} />
               
-              <div>
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Marca de TC preferida</label>
-                <select name="hincha_marca_tc" disabled={!isEditing} value={formData.hincha_marca_tc} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`}>
-                  <option value="">Seleccionar...</option>
-                  <option value="Ford">Ford</option>
-                  <option value="Chevrolet">Chevrolet</option>
-                  <option value="Dodge">Dodge</option>
-                  <option value="Torino">Torino</option>
-                  <option value="Toyota">Toyota</option>
-                  <option value="Bmw">Bmw</option>
-                  <option value="Mercedes">Mercedes</option>
-                </select>
+              <FormField label="Marca de TC preferida" name="hincha_marca_tc" value={formData.hincha_marca_tc} onChange={handleInputChange} disabled={!isEditing} options={[
+                  { value: 'Ford', label: 'Ford' }, { value: 'Chevrolet', label: 'Chevrolet' },
+                  { value: 'Dodge', label: 'Dodge' }, { value: 'Torino', label: 'Torino' },
+                  { value: 'Toyota', label: 'Toyota' }, { value: 'Bmw', label: 'Bmw' },
+                  { value: 'Mercedes', label: 'Mercedes' }
+                ]} />
+
+              <div className="md:col-span-2">
+                <FormField label="Chicana Favorita" name="chicana_favorita" value={formData.chicana_favorita} onChange={handleInputChange} disabled={!isEditing} options={[
+                  { value: '1 de adentro', label: '1 de adentro' }, { value: '1 de afuera', label: '1 de afuera' },
+                  { value: '2 de adentro', label: '2 de adentro' }, { value: '2 de afuera', label: '2 de afuera' },
+                  { value: '3', label: '3' }
+                ]} />
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Chicana Favorita</label>
-                <select name="chicana_favorita" disabled={!isEditing} value={formData.chicana_favorita} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`}>
-                  <option value="">Seleccionar...</option>
-                  <option value="1 de adentro">1 de adentro</option>
-                  <option value="1 de afuera">1 de afuera</option>
-                  <option value="2 de adentro">2 de adentro</option>
-                  <option value="2 de afuera">2 de afuera</option>
-                  <option value="3">3</option>
-                </select>              
-              </div>
-
-              <div className="md:col-span-2">
-                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Biografía (Tu historia en las pistas)</label>
-                <textarea name="bio" disabled={!isEditing} rows={3} value={formData.bio} onChange={handleInputChange} className={`w-full bg-slate-50 dark:bg-black/20 border rounded-xl px-4 py-2 text-slate-800 dark:text-white transition-colors ${isEditing ? 'border-institucional-celeste focus:ring-2' : 'border-slate-200 dark:border-white/10 opacity-70'}`} />
+                <FormField label="Biografía (Tu historia en las pistas)" name="bio" value={formData.bio} onChange={handleInputChange} disabled={!isEditing} isTextarea={true} />
               </div>
             </div>
           </div>
         </div>
-
       </div>
-      
     </div>
   );
 };
