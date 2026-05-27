@@ -15,6 +15,7 @@ import PagoErrorPage from '@/pages/public/PagoErrorPage';
 import PagoPendientePage from '@/pages/public/PagoPendientePage';
 import MiPerfilPage from '@/pages/dashboard/MiPerfilPage';
 import MiCuentaPage from '@/pages/dashboard/MiCuentaPage';
+import RoleGuard from '@/components/auth/RoleGuard';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -40,10 +41,24 @@ const AppRoutes = () => (
 
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Óvalo Fans</div>} />
-          <Route path="comercios" element={<ComerciosPage />} />
-          <Route path="cuentas" element={<CuentasPage />} />
           <Route path="mi-cuenta" element={<MiCuentaPage />} />
           <Route path="mi-perfil" element={<MiPerfilPage />} />
+
+          {/*  SuperAdmin y Administrativo */}
+          <Route element={<RoleGuard allowedRoles={['superadmin', 'administrativo']} />}>
+            <Route path="comercios" element={<ComerciosPage />} />
+          </Route>
+
+          {/*  SuperAdmin y Prensa */}
+          <Route element={<RoleGuard allowedRoles={['superadmin', 'prensa']} />}>
+        {/*aca van las rutas de prensa */}
+          </Route>
+          
+          {/* Solo SuperAdmin */}
+          <Route element={<RoleGuard allowedRoles={['superadmin']} />}>
+            <Route path="cuentas" element={<CuentasPage />} />  
+          </Route>
+
         </Route>
 
       </Route>
