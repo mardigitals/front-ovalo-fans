@@ -16,6 +16,8 @@ import PagoPendientePage from '@/pages/public/PagoPendientePage';
 import MiPerfilPage from '@/pages/dashboard/MiPerfilPage';
 import MiCuentaPage from '@/pages/dashboard/MiCuentaPage';
 import RoleGuard from '@/components/auth/RoleGuard';
+import NivelGuard from '@/components/auth/NivelGuard';
+import FastPassPage from '@/pages/dashboard/FastPassPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -40,9 +42,23 @@ const AppRoutes = () => (
       <Route element={<ProtectedRoute />}>
 
         <Route path="/dashboard" element={<DashboardLayout />}>
+          {/* SECTOR COMUN (Todos los niveles, P1 - P2 - P3) */}
           <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Óvalo Fans</div>} />
           <Route path="mi-cuenta" element={<MiCuentaPage />} />
           <Route path="mi-perfil" element={<MiPerfilPage />} />
+          
+          {/*  SECTOR MEDIO (P1 y P2) */}
+          <Route element={<NivelGuard allowedNiveles={['P1', 'P2']} />}>
+            {/* Cuando crees los componentes, los ponés acá */}
+            <Route path="fast-pass" element={<FastPassPage />} />
+            {/* <Route path="fotos-exclusivas" element={<FotosExclusivasPage />} /> */}
+          </Route>
+
+          {/*  SECTOR ALTO (P1) */}
+          <Route element={<NivelGuard allowedNiveles={['P1']} />}>
+            {/* <Route path="vip" element={<VipBoxesPage />} /> */}
+            {/* <Route path="experience-race" element={<ExperienceRacePage />} /> */}
+          </Route>
 
           {/*  SuperAdmin y Administrativo */}
           <Route element={<RoleGuard allowedRoles={['superadmin', 'administrativo']} />}>
