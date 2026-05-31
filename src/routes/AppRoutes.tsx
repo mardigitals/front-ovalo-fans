@@ -42,10 +42,16 @@ const AppRoutes = () => (
       <Route element={<ProtectedRoute />}>
 
         <Route path="/dashboard" element={<DashboardLayout />}>
-          {/* SECTOR COMUN (Todos los niveles, P1 - P2 - P3) */}
+          {/* SECTOR COMUN (Todos los niveles, P1 - P2 - P3, incluidos los vencidos) */}
           <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Óvalo Fans</div>} />
           <Route path="mi-cuenta" element={<MiCuentaPage />} />
           <Route path="mi-perfil" element={<MiPerfilPage />} />
+
+          {/*  SECTOR BAJO (P1, P2 y P3, activos) */}
+          <Route element={<NivelGuard allowedNiveles={['P1', 'P2', 'P3']} />}>
+            {/* Cuando crees los componentes, los ponés acá */}
+            {/* <Route path="promociones" element={<PromocionesPage />} /> */}
+          </Route>
           
           {/*  SECTOR MEDIO (P1 y P2) */}
           <Route element={<NivelGuard allowedNiveles={['P1', 'P2']} />}>
@@ -67,7 +73,7 @@ const AppRoutes = () => (
 
           {/*  SuperAdmin y Prensa */}
           <Route element={<RoleGuard allowedRoles={['superadmin', 'prensa']} />}>
-        {/*aca van las rutas de prensa */}
+          {/*aca van las rutas de prensa */}
           </Route>
           
           {/* Solo SuperAdmin */}
