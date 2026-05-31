@@ -6,6 +6,8 @@ interface GenericPayProps {
   onSelectPlan: (nivelId: number) => void; 
   // Opcional: Podés pasarle si está "cargando" para deshabilitar botones
   isLoading?: boolean; 
+  titulo?: string; // Nuevo prop para el título
+  subtitulo?: string; // Nuevo prop para el subtítulo
 }
 
 const GenericPay = ({ onSelectPlan, isLoading = false }: GenericPayProps) => {
