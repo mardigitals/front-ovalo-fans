@@ -18,6 +18,7 @@ import MiCuentaPage from '@/pages/dashboard/MiCuentaPage';
 import RoleGuard from '@/components/auth/RoleGuard';
 import NivelGuard from '@/components/auth/NivelGuard';
 import FastPassPage from '@/pages/dashboard/FastPassPage';
+import PagosPage from '@/pages/dashboard/PagosPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -46,6 +47,7 @@ const AppRoutes = () => (
           <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Óvalo Fans</div>} />
           <Route path="mi-cuenta" element={<MiCuentaPage />} />
           <Route path="mi-perfil" element={<MiPerfilPage />} />
+          <Route path="pagos" element={<PagosPage />} />
 
           {/*  SECTOR BAJO (P1, P2 y P3, activos) */}
           <Route element={<NivelGuard allowedNiveles={['P1', 'P2', 'P3']} />}>
