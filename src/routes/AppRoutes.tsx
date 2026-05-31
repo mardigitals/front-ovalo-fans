@@ -19,6 +19,7 @@ import RoleGuard from '@/components/auth/RoleGuard';
 import NivelGuard from '@/components/auth/NivelGuard';
 import FastPassPage from '@/pages/dashboard/FastPassPage';
 import PagosPage from '@/pages/dashboard/PagosPage';
+import ResumenPage from '@/pages/dashboard/ResumenPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -45,6 +46,7 @@ const AppRoutes = () => (
         <Route path="/dashboard" element={<DashboardLayout />}>
           {/* SECTOR COMUN (Todos los niveles, P1 - P2 - P3, incluidos los vencidos) */}
           <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Óvalo Fans</div>} />
+          <Route path="resumen" element={<ResumenPage />} />
           <Route path="mi-cuenta" element={<MiCuentaPage />} />
           <Route path="mi-perfil" element={<MiPerfilPage />} />
           <Route path="pagos" element={<PagosPage />} />
