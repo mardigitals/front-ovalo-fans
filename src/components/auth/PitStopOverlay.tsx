@@ -113,7 +113,7 @@ const PitStopOverlay = () => {
             )}
 
             <button 
-              onClick={() => navigate('/dashboard/cuentas')}
+              onClick={() => navigate('/dashboard/pagos')}
               className="group w-full bg-institucional-celeste hover:bg-white text-white hover:text-institucional-celeste font-extrabold text-lg py-4 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-3 border-2 border-institucional-celeste shadow-lg shadow-institucional-celeste/20 hover:shadow-xl hover:scale-[1.02]"
             >
               <Wallet2 size={24}/>
