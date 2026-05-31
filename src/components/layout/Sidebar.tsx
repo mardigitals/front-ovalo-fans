@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, FileChartColumn, ShieldUser, Calendar, MapPin, Film, Gift, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, ChevronLeft, X, Shield, Camera, Star, Ticket, Settings, PercentIcon, FastForward, LockKeyholeOpen, Flag, Info, UserRoundKey, ShoppingBasket, Check, CircleCheckBig, ChartCandlestick, ShieldCheck } from 'lucide-react';
+import { Home, FileChartColumn, BadgeDollarSign, ShieldUser, Calendar, MapPin, Film, Gift, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, ChevronLeft, X, Shield, Camera, Star, Ticket, Settings, PercentIcon, FastForward, LockKeyholeOpen, Flag, Info, UserRoundKey, ShoppingBasket, Check, CircleCheckBig, ChartCandlestick, ShieldCheck } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/hooks/useTheme'; // <-- Importamos el hook
 
@@ -43,6 +43,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     
 
     if (rol === 'fan') {
+      items.push({ to: '/dashboard/pagos', icon: <BadgeDollarSign size={20} />, label: 'Mi Billetera' });
       items.push({ to: '/dashboard/mapa', icon: <MapPin size={20} />, label: 'Mapa Interactivo' });
       items.push({ to: '/dashboard/beneficios', icon: <PercentIcon size={20} />, label: 'Beneficios' });
       items.push({ to: '/calendario', icon: <Ticket size={20} />, label: 'Recitales y Carreras' });
