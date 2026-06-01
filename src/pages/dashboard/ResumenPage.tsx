@@ -1,31 +1,23 @@
-import { useState, useEffect } from 'react';
-import { User, Shield, Calendar, CheckCircle, Clock, Award, Star, TrendingUp, Users, Activity, MapPin, Flag } from 'lucide-react';
-import { 
-    PieChart, Pie, Cell, 
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
-    AreaChart, Area
-} from 'recharts';
+import { useState, useEffect, useMemo } from 'react';
+import { User, Shield, Calendar, CheckCircle, Clock, Award, Star, TrendingUp, MapPin } from 'lucide-react';
 import api from '@/api/axios';
 
-// Colores para la distribución de estados
-const COLORES_ESTADO = {
-    Activo: '#22c55e',
-    Pendiente: '#f59e0b',
-    Vencido: '#ef4444',
-    Cancelado: '#64748b'
-};
+// --- IMPORTACIONES DE SHADCN UI Y RECHARTS ---
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis, Label, Pie, PieChart, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 const ResumenPage = () => {
     const [perfil, setPerfil] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // Mock states para las métricas que agregaremos (simulando carga de datos)
+    // Mock states para las métricas de Fan
     const [ultimosBeneficios, setUltimosBeneficios] = useState<any[]>([]);
     const [proximosBeneficios, setProximosBeneficios] = useState<any[]>([]);
 
-    // --- ESTADOS EXCLUSIVOS PARA RECHARTS (STAFF) ---
-    const [datosEstadosPie, setDatosEstadosPie] = useState<any[]>([]);
+    // --- ESTADOS STAFF ---
+    const [metricasEstados, setMetricasEstados] = useState({ Activo: 0, Pendiente: 0, Vencido: 0, Cancelado: 0, Total: 0 });
     const [topChicanas, setTopChicanas] = useState<any[]>([]);
     const [topCiudades, setTopCiudades] = useState<any[]>([]);
     const [metricasFinanzas, setMetricasFinanzas] = useState<any[]>([]);
@@ -33,15 +25,13 @@ const ResumenPage = () => {
     useEffect(() => {
         const cargarResumen = async () => {
             try {
-                // Traemos el perfil que ya tiene resuelto el rol y estado
                 const res = await api.get('/usuario-auth/perfil');
                 setPerfil(res.data);
                 
-                // Mocks para la vista del fan
+                // Mocks Fan
                 setUltimosBeneficios([{ id: 1, nombre: 'Descuento 20% Boxes', fecha: '28/5/2026' }]);
                 setProximosBeneficios([{ id: 2, nombre: 'Acceso Anticipado TC Rafaela', fecha: '14/6/2026' }]);
 
-                // --- CARGA DE TELEMETRÍA SI ES STAFF ---
                 const rolStr = res.data?.rol?.toLowerCase() || '';
                 const esStaffCheck = ['superadmin', 'administrativo', 'prensa'].includes(rolStr);
 
@@ -52,38 +42,36 @@ const ResumenPage = () => {
                         api.get('/suscripcion/admin/metricas/ciudades').catch(() => ({ data: [] }))
                     ]);
 
-                    // 1. Gráfico de Torta (Suscripciones)
-                    // Tu findAll de suscripciones devuelve un sobre con { data: [...] }
+                    // 1. Estados
                     const rawSuscripciones = resSuscripciones.data;
                     const listaSuscripciones = rawSuscripciones?.data || (Array.isArray(rawSuscripciones) ? rawSuscripciones : []);
+                    
+                    setMetricasEstados({
+                        Activo: listaSuscripciones.filter((s: any) => s && s.estado === 'Activo').length,
+                        Pendiente: listaSuscripciones.filter((s: any) => s && s.estado === 'Pendiente').length,
+                        Vencido: listaSuscripciones.filter((s: any) => s && s.estado === 'Vencido').length,
+                        Cancelado: listaSuscripciones.filter((s: any) => s && s.estado === 'Cancelado').length,
+                        Total: listaSuscripciones.length || 0 
+                    });
 
-                    const estadosAgrupados = [
-                        { name: 'Activo', value: listaSuscripciones.filter((s: any) => s && s.estado === 'Activo').length },
-                        { name: 'Pendiente', value: listaSuscripciones.filter((s: any) => s && s.estado === 'Pendiente').length },
-                        { name: 'Vencido', value: listaSuscripciones.filter((s: any) => s && s.estado === 'Vencido').length },
-                        { name: 'Cancelado', value: listaSuscripciones.filter((s: any) => s && s.estado === 'Cancelado').length },
-                    ].filter(e => e.value > 0);
-                    setDatosEstadosPie(estadosAgrupados);
-
-                    // 2. Gráfico de Barras (Chicanas)
-                    // 🚨 CORREGIDO: Mapeamos 'chicana' y forzamos Number() para activar Recharts
+                    // 2. Chicanas
                     const chicanasFormateadas = (resChicanas.data || []).map((c: any) => ({
                         nombre: c.chicana || 'Sin definir',
                         fans: Number(c.cantidad || 0) 
                     }));
                     setTopChicanas(chicanasFormateadas);
 
-                    // 3. Tabla de Ciudades (Guardamos directo el array que viene del service)
+                    // 3. Ciudades
                     setTopCiudades(resCiudades.data || []);
 
-                    // 4. Mock para ingresos financieros
+                    // 4. Finanzas (Mock)
                     setMetricasFinanzas([
-                        { mes: 'Ene', ingresos: 450000 },
-                        { mes: 'Feb', ingresos: 520000 },
-                        { mes: 'Mar', ingresos: 850000 },
-                        { mes: 'Abr', ingresos: 610000 },
-                        { mes: 'May', ingresos: 720000 },
-                        { mes: 'Jun', ingresos: 980000 },
+                        { mes: "Ene", ingresos: 450000 },
+                        { mes: "Feb", ingresos: 520000 },
+                        { mes: "Mar", ingresos: 850000 },
+                        { mes: "Abr", ingresos: 610000 },
+                        { mes: "May", ingresos: 720000 },
+                        { mes: "Jun", ingresos: 980000 },
                     ]);
                 }
 
@@ -97,6 +85,48 @@ const ResumenPage = () => {
 
         cargarResumen();
     }, []);
+
+    // ============================================================================
+    // ⚙️ CONFIGURACIÓN DE SHADCN CHARTS (Colores y mapeo de datos)
+    // ============================================================================
+    
+    // 1. Suscripciones (Donut con texto central)
+    const datosSuscripcionesShadcn = useMemo(() => [
+        { estado: "Activo", cantidad: metricasEstados.Activo, fill: "#22c55e" },
+        { estado: "Pendiente", cantidad: metricasEstados.Pendiente, fill: "#64748b" },
+        { estado: "Vencido", cantidad: metricasEstados.Vencido, fill: "#efde44" },
+        { estado: "Cancelado", cantidad: metricasEstados.Cancelado, fill: "#be2323" },
+    ].filter(d => d.cantidad > 0), [metricasEstados]);
+    
+    const configSuscripciones = {
+        cantidad: { label: "Suscripciones" },
+        Activo: { label: "Activos", color: "#22c55e" },
+        Pendiente: { label: "Pendientes", color: "#64748b" },
+        Vencido: { label: "Vencidos", color: "#efde44" },
+        Cancelado: { label: "Cancelados", color: "#be2323" },
+    };
+
+    // 2. Fans Totales (Radial Shape)
+    const radialData = [{ browser: "fans", visitors: metricasEstados.Total, fill: "#0b97f5" }];
+    const configRadial = { visitors: { label: "Fans Totales" }, fans: { label: "Fans", color: "#0b97f5" } };
+    
+    // 3. Sectores Favoritos (Donut simple)
+    const coloresSectores = ["#0b97f5", "#0b97f5d5", "#0b97f58f", "#0b97f557", "#0b97f527"];
+    const datosSectoresShadcn = useMemo(() => {
+        // Ordenamos los datos de mayor a menor para que el [0] sea siempre el líder
+        const sorted = [...topChicanas].sort((a, b) => b.fans - a.fans);
+        return sorted.map((c, i) => ({
+            browser: c.nombre,
+            visitors: c.fans,
+            fill: coloresSectores[i % coloresSectores.length]
+        }));
+    }, [topChicanas]);
+
+    const configSectores = { visitors: { label: "Fans" } };
+
+    // 4. Finanzas (Bar Chart Custom Label)
+    const configFinanzas = { ingresos: { label: "Recaudación", color: "#0ea5e9" } };
+
 
     if (isLoading) {
         return (
@@ -139,7 +169,7 @@ const ResumenPage = () => {
                 </div>
             </div>
 
-            {/* 🏎️ VISTA 1: TABLERO PARA FANS (P1, P2, P3) */}
+            {/* 🏎️ VISTA 1: TABLERO PARA FANS (INTACTA) */}
             {!esStaff && (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     
@@ -185,8 +215,6 @@ const ResumenPage = () => {
 
                     {/* Métricas e Historial del Fan */}
                     <div className="lg:col-span-2 space-y-6">
-                        
-                        {/* Grid de mini métricas rápidas */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="bg-white dark:bg-[#161024] border border-slate-200 dark:border-white/5 rounded-2xl p-5 flex items-center gap-4 shadow-sm">
                                 <div className="p-3 bg-institucional-celeste/10 text-institucional-celeste rounded-xl">
@@ -197,7 +225,6 @@ const ResumenPage = () => {
                                     <p className="text-2xl font-black text-slate-800 dark:text-white">12 Beneficios</p>
                                 </div>
                             </div>
-
                             <div className="bg-white dark:bg-[#161024] border border-slate-200 dark:border-white/5 rounded-2xl p-5 flex items-center gap-4 shadow-sm">
                                 <div className="p-3 bg-amber-500/10 text-amber-500 rounded-xl">
                                     <Star size={24} />
@@ -211,9 +238,7 @@ const ResumenPage = () => {
                             </div>
                         </div>
 
-                        {/* Listas de actividad */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Último beneficio utilizado */}
                             <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-2xl p-5 shadow-md">
                                 <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                                     <Clock size={16} className="text-institucional-celeste" /> Último Uso
@@ -225,8 +250,6 @@ const ResumenPage = () => {
                                     </div>
                                 ))}
                             </div>
-
-                            {/* Próximos pedidos / Reservas */}
                             <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-2xl p-5 shadow-md">
                                 <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                                     <Calendar size={16} className="text-green-400" /> Próximas Citas
@@ -244,110 +267,158 @@ const ResumenPage = () => {
                                 ))}
                             </div>
                         </div>
-
                     </div>
                 </div>
             )}
 
             {/* ========================================================================= */}
-            {/* 📊 VISTA 2: TABLERO DE ADMINISTRACIÓN CON RECHARTS (STAFF)                */}
+            {/* 📊 VISTA 2: TABLERO SHADCN UI + RECHARTS (STAFF)                          */}
             {/* ========================================================================= */}
             {esStaff && (
-                <div className="space-y-8">
+                <div className="space-y-6">
                     
-                    {/* FILA 1: GRÁFICOS PRINCIPALES (Suscripciones y Sectores) */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* FILA 1: TARJETAS PEQUEÑAS (Suscripciones, Fans, Sectores) */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         
-                        {/* Gráfico de Torta - Suscripciones */}
-                        <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-md flex flex-col justify-between">
-                            <h3 className="text-base font-black text-slate-800 dark:text-white uppercase tracking-wider mb-4 text-center">
-                                Distribución de Suscripciones
-                            </h3>
-                            <div className="h-64 w-full">
-                                <ResponsiveContainer width="100%" height="100%" minWidth={250}>
+                        {/* 1. SUSCRIPCIONES (DONUT CON TEXTO) */}
+                        <Card className="flex flex-col bg-white dark:bg-[#110c1b] border-slate-200 dark:border-white/10">
+                            <CardHeader className="items-center pb-0">
+                                <CardTitle className="dark:text-white text-sm font-black uppercase tracking-wider">Estado de Suscripciones</CardTitle>
+                                <CardDescription>En tiempo real</CardDescription>
+                            </CardHeader>
+                            <CardContent className="flex-1 pb-0">
+                                <ChartContainer config={configSuscripciones} className="mx-auto aspect-square max-h-[250px]">
                                     <PieChart>
-                                        <Pie
-                                            isAnimationActive={false}
-                                            data={datosEstadosPie}
-                                            innerRadius={60}
-                                            outerRadius={90}
-                                            paddingAngle={5}
-                                            dataKey="value"
-                                            label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
-                                        >
-                                            {datosEstadosPie.map((entry, index) => (
-                                                <Cell key={`cell-${index}`} fill={COLORES_ESTADO[entry.name as keyof typeof COLORES_ESTADO] || '#cbd5e1'} />
-                                            ))}
+                                        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                                        <Pie data={datosSuscripcionesShadcn} dataKey="cantidad" nameKey="estado" innerRadius={60} strokeWidth={5}>
+                                            <Label
+                                                content={({ viewBox }) => {
+                                                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                                                        return (
+                                                            <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
+                                                                <tspan x={viewBox.cx} y={viewBox.cy} className="fill-slate-800 dark:fill-white text-3xl font-bold">
+                                                                    {metricasEstados.Total.toLocaleString()}
+                                                                </tspan>
+                                                                <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-slate-500 text-xs">
+                                                                    Totales
+                                                                </tspan>
+                                                            </text>
+                                                        )
+                                                    }
+                                                }}
+                                            />
                                         </Pie>
-                                        <RechartsTooltip 
-                                            contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: 'white' }}
-                                            itemStyle={{ color: 'white' }}
-                                        />
                                     </PieChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </div>
+                                </ChartContainer>
+                            </CardContent>
+                        </Card>
 
-                        {/* Gráfico de Barras - Top Chicanas */}
-                        <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-md flex flex-col justify-between">
-                            <h3 className="text-base font-black text-slate-800 dark:text-white uppercase tracking-wider mb-4 text-center">
-                                Sectores Favoritos (Chicanas)
-                            </h3>
-                            <div className="h-64 w-full">
-                                <ResponsiveContainer width="100%" height="100%" minWidth={250}>
-                                    <BarChart data={topChicanas} layout="vertical" margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-                                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" horizontal={false} />
-                                        <XAxis type="number" stroke="#94a3b8" />
-                                        <YAxis dataKey="nombre" type="category" stroke="#94a3b8" width={90} fontSize={12} />
-                                        <RechartsTooltip 
-                                            cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }}
-                                            contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: 'white' }}
-                                        />
-                                        <Bar isAnimationActive={false} dataKey="fans" fill="#f59e0b" radius={[0, 4, 4, 0]} barSize={20} name="Fans" />
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </div>
+                        {/* 2. FANS TOTALES (RADIAL SHAPE) */}
+                        <Card className="flex flex-col bg-white dark:bg-[#110c1b] border-slate-200 dark:border-white/10">
+                            <CardHeader className="items-center pb-0">
+                                <CardTitle className="dark:text-white text-sm font-black uppercase tracking-wider">Comunidad Óvalo</CardTitle>
+                                <CardDescription>P1 + P2 + P3 FANS</CardDescription>
+                            </CardHeader>
+                            <CardContent className="flex-1 pb-0">
+                                <ChartContainer config={configRadial} className="mx-auto aspect-square max-h-[250px]">
+                                    <RadialBarChart data={radialData} endAngle={100} innerRadius={65} outerRadius={95}>
+                                        <PolarGrid gridType="circle" radialLines={false} stroke="none" className="first:fill-slate-100 dark:first:fill-white/5 last:fill-transparent" polarRadius={[86, 74]} />
+                                        <RadialBar dataKey="visitors" background />
+                                        <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
+                                            <Label
+                                                content={({ viewBox }) => {
+                                                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                                                        return (
+                                                            <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
+                                                                <tspan x={viewBox.cx} y={viewBox.cy} className="fill-institucional-celeste text-4xl font-bold">
+                                                                    {metricasEstados.Total.toLocaleString()}
+                                                                </tspan>
+                                                                <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-slate-500 text-xs">
+                                                                    Fans
+                                                                </tspan>
+                                                            </text>
+                                                        )
+                                                    }
+                                                }}
+                                            />
+                                        </PolarRadiusAxis>
+                                    </RadialBarChart>
+                                </ChartContainer>
+                            </CardContent>
+                        </Card>
+
+                        {/* 3. SECTORES FAVORITOS (DONUT SIMPLE) */}
+                        <Card className="flex flex-col bg-white dark:bg-[#110c1b] border-slate-200 dark:border-white/10">
+                            <CardHeader className="items-center pb-0">
+                                <CardTitle className="dark:text-white text-sm font-black uppercase tracking-wider">Sectores Favoritos</CardTitle>
+                                <CardDescription>Top Chicanas elegidas</CardDescription>
+                            </CardHeader>
+                            <CardContent className="flex-1 pb-0">
+                                <ChartContainer config={configSectores} className="mx-auto aspect-square max-h-[250px]">
+                                    <PieChart>
+                                        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                                        <Pie data={datosSectoresShadcn} dataKey="visitors" nameKey="browser" innerRadius={60} strokeWidth={5}>
+                                            <Label
+                                                content={({ viewBox }) => {
+                                                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                                                        return (
+                                                            <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
+                                                                <tspan x={viewBox.cx} y={viewBox.cy} className="fill-institucional-celeste text-xl font-bold">
+                                                                    {datosSectoresShadcn[0]?.browser || "-"}
+                                                                </tspan>
+                                                                <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 20} className="fill-slate-500 text-[10px] uppercase">
+                                                                    Favorito
+                                                                </tspan>
+                                                            </text>
+                                                        )
+                                                    }
+                                                }}
+                                            />
+                                        </Pie>
+                                    </PieChart>
+                                </ChartContainer>
+                            </CardContent>
+                        </Card>
 
                     </div>
 
-                    {/* FILA 2: GRÁFICO GRANDE - EVOLUCIÓN FINANCIERA */}
-                    <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-md">
-                        <div className="flex justify-between items-center mb-6">
-                            <h3 className="text-lg font-black text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                                <TrendingUp className="text-green-500" size={20} /> Evolución de Ingresos Mensuales
-                            </h3>
-                            <span className="px-3 py-1 bg-green-500/10 text-green-500 border border-green-500/20 text-xs font-bold rounded-full uppercase tracking-wider">
-                                Auditoría Global
-                            </span>
-                        </div>
-                        <div className="h-72 w-full">
-                            <ResponsiveContainer width="100%" height="100%" minWidth={300}>
-                                <AreaChart data={metricasFinanzas} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                                    <defs>
-                                        <linearGradient id="colorIngresos" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.3}/>
-                                            <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0}/>
-                                        </linearGradient>
-                                    </defs>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
-                                    <XAxis dataKey="mes" stroke="#94a3b8" />
-                                    <YAxis stroke="#94a3b8" tickFormatter={(v) => `$${v / 1000}k`} />
-                                    <RechartsTooltip 
-                                        formatter={(value: any) => [`$${Number(value).toLocaleString('es-AR')}`, 'Recaudación']}
-                                        contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: 'white' }}
-                                    />
-                                    <Area isAnimationActive={false} type="monotone" dataKey="ingresos" stroke="#0ea5e9" strokeWidth={3} fillOpacity={1} fill="url(#colorIngresos)" />
-                                </AreaChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </div>
+                    {/* FILA 2: GRÁFICO BARRA CUSTOM - INGRESOS FINANCIEROS */}
+                    <Card className="bg-white dark:bg-[#110c1b] border-slate-200 dark:border-white/10">
+                        <CardHeader>
+                            <CardTitle className="dark:text-white uppercase tracking-wider font-black flex items-center gap-2">
+                                <TrendingUp className="text-institucional-celeste" /> Evolución Financiera
+                            </CardTitle>
+                            <CardDescription>Ingresos de los últimos 6 meses</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <ChartContainer config={configFinanzas} className="h-[300px] w-full">
+                                <BarChart accessibilityLayer data={metricasFinanzas} layout="vertical" margin={{ right: 40 }}>
+                                    <CartesianGrid horizontal={false} strokeDasharray="3 3" stroke="#334155" />
+                                    <YAxis dataKey="mes" type="category" tickLine={false} tickMargin={10} axisLine={false} hide />
+                                    <XAxis dataKey="ingresos" type="number" hide />
+                                    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
+                                    <Bar dataKey="ingresos" fill="#0ea5e9" radius={4}>
+                                        <LabelList dataKey="mes" position="insideLeft" offset={8} className="fill-white font-medium" fontSize={12} />
+                                        <LabelList dataKey="ingresos" position="right" offset={8} className="fill-slate-700 dark:fill-white font-bold" fontSize={12} formatter={(v: any) => `$${(v/1000)}k`} />
+                                    </Bar>
+                                </BarChart>
+                            </ChartContainer>
+                        </CardContent>
+                        <CardFooter className="flex-col items-start gap-2 text-sm border-t border-slate-200 dark:border-white/10 pt-4">
+                            <div className="flex gap-2 leading-none font-medium text-green-500">
+                                Tendencia alcista detectada <TrendingUp className="h-4 w-4" />
+                            </div>
+                            <div className="leading-none text-slate-500">
+                                Mostrando recaudación histórica mensual.
+                            </div>
+                        </CardFooter>
+                    </Card>
 
-                    {/* FILA 3: LISTA DEMOGRÁFICA DE CIUDADES */}
-                    <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-md max-w-xl mx-auto">
+                    {/* FILA 3: TABLA DE CIUDADES (TRADICIONAL) */}
+                    <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-xl p-6 shadow-md max-w-xl mx-auto">
                         <div className="flex items-center gap-2 mb-4">
                             <MapPin className="text-institucional-celeste" size={20} />
-                            <h3 className="text-base font-black text-slate-800 dark:text-white uppercase tracking-wider">Ranking de Socios por Ciudad</h3>
+                            <h3 className="text-base font-black text-slate-800 dark:text-white uppercase tracking-wider">Demografía Socios</h3>
                         </div>
                         <table className="w-full text-left border-collapse">
                             <thead>
@@ -359,27 +430,16 @@ const ResumenPage = () => {
                             <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                                 {topCiudades.slice(0, 5).map((ciudad, idx) => (
                                     <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
-                                        <td className="py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300">
-                                            {ciudad.ciudad || 'No especificada'}
-                                        </td>
-                                        {/* 🚨 CORREGIDO: Usamos ciudad.cantidad en vez de .count */}
-                                        <td className="py-2.5 text-sm font-bold text-institucional-celeste text-right">
-                                            {ciudad.cantidad}
-                                        </td>
+                                        <td className="py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300">{ciudad.ciudad || 'No especificada'}</td>
+                                        <td className="py-2.5 text-sm font-bold text-institucional-celeste text-right">{ciudad.cantidad}</td>
                                     </tr>
                                 ))}
-                                {topCiudades.length === 0 && (
-                                    <tr>
-                                        <td colSpan={2} className="py-4 text-center text-sm text-slate-500 italic">No hay registros geográficos aún.</td>
-                                    </tr>
-                                )}
                             </tbody>
                         </table>
                     </div>
 
                 </div>
             )}
-
         </div>
     );
 };
