@@ -121,7 +121,7 @@ const LoginPage = () => {
     try {
       const response = await api.post('/usuario-auth/login', { email, contrasena: password });
       localStorage.setItem('token', response.data.access_token);
-      navigate('/dashboard'); 
+      navigate('/dashboard/resumen'); 
     } catch (err: any) {
       const msg = err.response?.data?.message || 'Error de conexión';
       setError(Array.isArray(msg) ? msg[0] : msg);

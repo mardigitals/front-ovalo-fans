@@ -14,7 +14,7 @@ const navLinks = [
   { to: '/noticias', label: 'Noticias' },
   { to: '/galeria', label: 'Galería' },
   { to: '/contacto', label: 'Contacto' },
-  { to: '/dashboard', label:'Ovalo Fans', style: 'subtitle-fan text-sm bg-sky-500 px-2 py-1 rounded-xl shadow-[0_0_15px_rgba(14,165,233,0.3)]' }
+  { to: '/dashboard/resumen', label:'Ovalo Fans', style: 'subtitle-fan text-sm bg-sky-500 px-2 py-1 rounded-xl shadow-[0_0_15px_rgba(14,165,233,0.3)]' }
 ];
 
 const PublicLayout = () => {
