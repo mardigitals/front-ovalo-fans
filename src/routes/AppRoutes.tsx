@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import PublicLayout from '@/components/layout/PublicLayout';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import HomePage from '@/pages/public/HomePage';
@@ -45,7 +45,8 @@ const AppRoutes = () => (
 
         <Route path="/dashboard" element={<DashboardLayout />}>
           {/* SECTOR COMUN (Todos los niveles, P1 - P2 - P3, incluidos los vencidos) */}
-          <Route index element={<div className="sub-title-fan">Bienvenido al Panel de Óvalo Fans</div>} />
+        
+          <Route index element={<Navigate to="resumen" replace />} />
           <Route path="resumen" element={<ResumenPage />} />
           <Route path="mi-cuenta" element={<MiCuentaPage />} />
           <Route path="mi-perfil" element={<MiPerfilPage />} />
