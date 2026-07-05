@@ -36,11 +36,12 @@ const ResumenPage = () => {
                 const esStaffCheck = ['superadmin', 'administrativo', 'prensa'].includes(rolStr);
 
                 if (esStaffCheck) {
-                    const [resSuscripciones, resChicanas, resCiudades] = await Promise.all([
+                    const [resSuscripciones, resChicanas, resCiudades, resIngresos] = await Promise.all([
                         api.get('/suscripcion/admin').catch(() => ({ data: [] })),
                         api.get('/suscripcion/admin/metricas/chicanas').catch(() => ({ data: [] })),
-                        api.get('/suscripcion/admin/metricas/ciudades').catch(() => ({ data: [] }))
-                    ]);
+                        api.get('/suscripcion/admin/metricas/ciudades').catch(() => ({ data: [] })),
+                        api.get('/pagos/mensuales').catch(() => ({ data: [] }))
+                    ]);                    
 
                     // 1. Estados
                     const rawSuscripciones = resSuscripciones.data;
@@ -63,19 +64,22 @@ const ResumenPage = () => {
 
                     // 3. Ciudades
                     setTopCiudades(resCiudades.data || []);
+                    
+                    // 4. Finanzas
+                    const nombresMeses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+ 
+                    const finanzasFormateadas = (resIngresos.data || []).map((item: any) => ({
+                        // Traducimos el número de mes a texto (ej: 8 -> 'Ago'). Restamos 1 porque los arrays empiezan en 0.
+                        mes: item.mes ? nombresMeses[item.mes - 1] : 'Desconocido',
+                        
+                        // Leemos 'total_ingresos' del backend y lo guardamos como 'ingresos' que es lo que espera el gráfico
+                        ingresos: Number(item.total_ingresos || 0)
+                    }));
 
-                    // 4. Finanzas (Mock)
-                    setMetricasFinanzas([
-                        { mes: "Ene", ingresos: 450000 },
-                        { mes: "Feb", ingresos: 520000 },
-                        { mes: "Mar", ingresos: 850000 },
-                        { mes: "Abr", ingresos: 610000 },
-                        { mes: "May", ingresos: 720000 },
-                        { mes: "Jun", ingresos: 980000 },
-                    ]);
+                    setMetricasFinanzas(finanzasFormateadas);
                 }
 
-            } catch (err) {
+            }catch (err) {
                 console.error("Error al cargar el resumen:", err);
                 setError("No se pudo cargar el tablero principal.");
             } finally {
@@ -388,7 +392,11 @@ const ResumenPage = () => {
                             <CardTitle className="dark:text-white uppercase tracking-wider font-black flex items-center gap-2">
                                 <TrendingUp className="text-institucional-celeste" /> Evolución Financiera
                             </CardTitle>
-                            <CardDescription>Ingresos de los últimos 6 meses</CardDescription>
+                            <CardDescription className="subtitle-fan">Ingresos mensuales del  {new Date().toLocaleDateString('es-AR', { year: 'numeric' })}
+                            </CardDescription>
+                            <div className="text-sm text-slate-400 font-mono">
+                                  panel actualizado el {new Date().toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                            </div>
                         </CardHeader>
                         <CardContent>
                             <ChartContainer config={configFinanzas} className="h-[300px] w-full">
