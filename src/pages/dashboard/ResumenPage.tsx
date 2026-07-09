@@ -37,7 +37,7 @@ const ResumenPage = () => {
 
                 if (esStaffCheck) {
                     const [resSuscripciones, resChicanas, resCiudades, resIngresos] = await Promise.all([
-                        api.get('/suscripcion/admin').catch(() => ({ data: [] })),
+                        api.get('/suscripcion/admin/metricas/suscripciones').catch(() => ({ data: [] })),
                         api.get('/suscripcion/admin/metricas/chicanas').catch(() => ({ data: [] })),
                         api.get('/suscripcion/admin/metricas/ciudades').catch(() => ({ data: [] })),
                         api.get('/pagos/mensuales').catch(() => ({ data: [] }))
@@ -46,13 +46,15 @@ const ResumenPage = () => {
                     // 1. Estados
                     const rawSuscripciones = resSuscripciones.data;
                     const listaSuscripciones = rawSuscripciones?.data || (Array.isArray(rawSuscripciones) ? rawSuscripciones : []);
-                    
+
                     setMetricasEstados({
-                        Activo: listaSuscripciones.filter((s: any) => s && s.estado === 'Activo').length,
-                        Pendiente: listaSuscripciones.filter((s: any) => s && s.estado === 'Pendiente').length,
-                        Vencido: listaSuscripciones.filter((s: any) => s && s.estado === 'Vencido').length,
-                        Cancelado: listaSuscripciones.filter((s: any) => s && s.estado === 'Cancelado').length,
-                        Total: listaSuscripciones.length || 0 
+                        // Buscamos el objeto donde el estado coincida y tomamos su propiedad cantidad
+                        Activo: Number(listaSuscripciones.find((s: any) => s.estado === 'Activo')?.cantidad || 0),
+                        Pendiente: Number(listaSuscripciones.find((s: any) => s.estado === 'Pendiente')?.cantidad || 0),
+                        Vencido: Number(listaSuscripciones.find((s: any) => s.estado === 'Vencido')?.cantidad || 0),
+                        Cancelado: Number(listaSuscripciones.find((s: any) => s.estado === 'Cancelado')?.cantidad || 0),
+                        // Para el total, sumamos las cantidades de todos los objetos recibidos
+                        Total: listaSuscripciones.reduce((acc: number, curr: any) => acc + Number(curr.cantidad), 0)
                     });
 
                     // 2. Chicanas
@@ -111,7 +113,7 @@ const ResumenPage = () => {
     };
 
     // 2. Fans Totales (Radial Shape)
-    const radialData = [{ browser: "fans", visitors: metricasEstados.Total, fill: "#0b97f5" }];
+    const radialData = [{ browser: "fans", visitors: metricasEstados.Activo , fill: "#0b97f5" }];
     const configRadial = { visitors: { label: "Fans Totales" }, fans: { label: "Fans", color: "#0b97f5" } };
     
     // 3. Sectores Favoritos (Donut simple)
@@ -320,8 +322,8 @@ const ResumenPage = () => {
                         {/* 2. FANS TOTALES (RADIAL SHAPE) */}
                         <Card className="flex flex-col bg-white dark:bg-[#110c1b] border-slate-200 dark:border-white/10">
                             <CardHeader className="items-center pb-0">
-                                <CardTitle className="dark:text-white text-sm font-black uppercase tracking-wider">Comunidad Óvalo</CardTitle>
-                                <CardDescription>P1 + P2 + P3 FANS</CardDescription>
+                                <CardTitle className="dark:text-white text-sm font-black uppercase tracking-wider">Comunidad Óvalo Activa</CardTitle>
+                                <CardDescription>P1 + P2 + P3 FANS (activos)</CardDescription>
                             </CardHeader>
                             <CardContent className="flex-1 pb-0">
                                 <ChartContainer config={configRadial} className="mx-auto aspect-square max-h-[250px]">
@@ -335,10 +337,10 @@ const ResumenPage = () => {
                                                         return (
                                                             <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
                                                                 <tspan x={viewBox.cx} y={viewBox.cy} className="fill-institucional-celeste text-4xl font-bold">
-                                                                    {metricasEstados.Total.toLocaleString()}
+                                                                    {metricasEstados.Activo.toLocaleString()}
                                                                 </tspan>
                                                                 <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-slate-500 text-xs">
-                                                                    Fans
+                                                                    Fans 
                                                                 </tspan>
                                                             </text>
                                                         )
