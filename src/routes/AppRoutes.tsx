@@ -20,6 +20,7 @@ import NivelGuard from '@/components/auth/NivelGuard';
 import FastPassPage from '@/pages/dashboard/FastPassPage';
 import PagosPage from '@/pages/dashboard/PagosPage';
 import ResumenPage from '@/pages/dashboard/ResumenPage';
+import ComerciosFanPage from '@/pages/dashboard/ComerciosFanPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -55,6 +56,7 @@ const AppRoutes = () => (
           {/*  SECTOR BAJO (P1, P2 y P3, activos) */}
           <Route element={<NivelGuard allowedNiveles={['P1', 'P2', 'P3']} />}>
             {/* Cuando crees los componentes, los ponés acá */}
+            <Route path="beneficios" element={<ComerciosFanPage />} />
             {/* <Route path="promociones" element={<PromocionesPage />} /> */}
           </Route>
           

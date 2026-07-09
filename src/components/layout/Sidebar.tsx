@@ -38,7 +38,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     
     items.push({ to: '/dashboard/resumen', icon: <FileChartColumn size={20} />, label: 'Resumen' });
     items.push({ to: '/dashboard/mi-perfil', icon: <User size={20} />, label: 'Mi Perfil' });
-    items.push({ to: '/dashboard/validar', icon: < CircleCheckBig size={20} />, label: 'Validar DNI' });
+    // items.push({ to: '/dashboard/validar', icon: < CircleCheckBig size={20} />, label: 'Validar DNI' });
     items.push({ to: '/dashboard/mi-cuenta', icon: <ShieldCheck size={20} />, label: 'Mi Cuenta' });
     
 
