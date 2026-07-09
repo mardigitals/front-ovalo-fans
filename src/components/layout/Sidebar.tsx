@@ -44,7 +44,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     if (rol === 'fan') {
       items.push({ to: '/dashboard/pagos', icon: <BadgeDollarSign size={20} />, label: 'Mi Billetera' });
       items.push({ to: '/dashboard/beneficios', icon: <PercentIcon size={20} />, label: 'Beneficios' });
-      items.push({ to: '/calendario', icon: <Ticket size={20} />, label: 'Recitales y Carreras' });
+      items.push({ to: '/dashboard/calendario', icon: <Ticket size={20} />, label: 'Recitales y Carreras' });
       items.push({ to: '/dashboard/pruebas', icon: <Road size={20} />, label: 'Pruebas' });
       
       if (nivelFan === 'P1' || nivelFan === 'P2') {
@@ -64,7 +64,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
          items.push({ to: '/dashboard/metricas', icon: <ChartCandlestick size={20} />, label: 'Métricas de suscrip.' });
         items.push({ to: '/dashboard/socios', icon: <Users size={20} />, label: 'Socios' });       
         items.push({ to: '/dashboard/solicitudes', icon: <Check size={20} />, label: 'Solicitudes' });
-        items.push({ to: '/dashboard/calendario', icon: <Calendar size={20} />, label: 'Calendario' });
+        items.push({ to: '/dashboard/eventos', icon: <Calendar size={20} />, label: 'Calendario eventos' });
         items.push({ to: '/dashboard/comercios', icon: <ShoppingBasket size={20} />, label: 'Comercios' });
       }
       if (rol === 'superadmin' || rol === 'prensa') {
