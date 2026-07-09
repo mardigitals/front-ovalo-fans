@@ -64,7 +64,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
          items.push({ to: '/dashboard/metricas', icon: <ChartCandlestick size={20} />, label: 'Métricas de suscrip.' });
         items.push({ to: '/dashboard/socios', icon: <Users size={20} />, label: 'Socios' });       
         items.push({ to: '/dashboard/solicitudes', icon: <Check size={20} />, label: 'Solicitudes' });
-        items.push({ to: '/dashboard/eventos', icon: <Calendar size={20} />, label: 'Calendario eventos' });
+        items.push({ to: '/dashboard/eventos', icon: <Calendar size={20} />, label: 'Calendario' });
         items.push({ to: '/dashboard/comercios', icon: <ShoppingBasket size={20} />, label: 'Comercios' });
       }
       if (rol === 'superadmin' || rol === 'prensa') {
