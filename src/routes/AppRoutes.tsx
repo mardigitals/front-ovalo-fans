@@ -22,6 +22,7 @@ import PagosPage from '@/pages/dashboard/PagosPage';
 import ResumenPage from '@/pages/dashboard/ResumenPage';
 import ComerciosFanPage from '@/pages/dashboard/ComerciosFanPage';
 import EventosPage from '@/pages/dashboard/EventosPage';
+import CalendarPage from '@/pages/public/CalendarPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -36,6 +37,7 @@ const AppRoutes = () => (
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/terms-conditions" element={<TermsConditionsPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/calendario" element={<CalendarPage />} />
       {/* RUTAS DE RETORNO DE MERCADO PAGO (Públicas) */}
       <Route path="/pago/exito" element={<PagoExitoPage />} />
       <Route path="/pago/error" element={<PagoErrorPage />} />
