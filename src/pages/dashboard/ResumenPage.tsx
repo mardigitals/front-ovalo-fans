@@ -9,6 +9,9 @@ import { ChicanasPieChart } from '@/components/ui/ChicanasPieChart';
 import { FansRadialChart } from '@/components/ui/FansRadialChart';
 import { SuscripcionesDonutChart } from '@/components/ui/SuscripcionesDonutChart';
 import { ClimaInfo } from '@/components/ui/ClimaInfo';
+import { EventosPieChart } from '@/components/ui/EventosPieChart';
+import { PublicacionesRadarChart } from '@/components/ui/PublicacionesRadarChart';
+import { VisualizacionesBarChart } from '@/components/ui/VisualizacionesBarChart';
 
 const ResumenPage = () => {
     const [perfil, setPerfil] = useState<any>(null);
@@ -19,11 +22,19 @@ const ResumenPage = () => {
     const [ultimosBeneficios, setUltimosBeneficios] = useState<any[]>([]);
     const [proximosBeneficios, setProximosBeneficios] = useState<any[]>([]);
 
+    //Mock states para las metricas de Prensa
+    const [Tipos] = useState<any[]>([]);
+    const [Publicaciones] = useState<any[]>([]);
+    const [metricasVisualizaciones] = useState<any[]>([]);
+
     // --- ESTADOS STAFF ---
     const [metricasEstados, setMetricasEstados] = useState({ Activo: 0, Pendiente: 0, Vencido: 0, Cancelado: 0, Total: 0 });
     const [topChicanas, setTopChicanas] = useState<any[]>([]);
     const [topCiudades, setTopCiudades] = useState<any[]>([]);
     const [metricasFinanzas, setMetricasFinanzas] = useState<any[]>([]);
+
+
+
 
     useEffect(() => {
         const cargarResumen = async () => {
@@ -36,7 +47,7 @@ const ResumenPage = () => {
                 setProximosBeneficios([{ id: 2, nombre: 'Acceso Anticipado TC Rafaela', fecha: '14/6/2026' }]);
 
                 const rolStr = res.data?.rol?.toLowerCase() || '';
-                const esStaffCheck = ['superadmin', 'administrativo', 'prensa'].includes(rolStr);
+                const esStaffCheck = ['superadmin', 'administrativo'].includes(rolStr);
                 const esPrensaCheck = ['prensa'].includes(rolStr);
 
                 if (esStaffCheck) {
@@ -84,6 +95,17 @@ const ResumenPage = () => {
 
                     setMetricasFinanzas(finanzasFormateadas);
                 }
+                
+                // if (esPrensaCheck) {
+                //     const [resTipos, resPublicaciones, resMetricasVisualizaciones] = await Promise.all([
+                //         api.get('/prensa/admin/metricas/tipos').catch(() => ({ data: [] })),
+                //         api.get('/prensa/admin/metricas/publicaciones').catch(() => ({ data: [] })),
+                //         api.get('/prensa/admin/metricas/visualizaciones').catch(() => ({ data: [] }))
+                //     ]);
+                
+
+
+                // }
 
             }catch (err) {
                 console.error("Error al cargar el resumen:", err);
@@ -116,7 +138,7 @@ const ResumenPage = () => {
         );
     }
 
-    const esStaff = ['superadmin', 'administrativo', 'prensa'].includes(perfil?.rol?.toLowerCase());
+    const esStaff = ['superadmin', 'administrativo'].includes(perfil?.rol?.toLowerCase());
     const esPrensa = ['prensa'].includes(perfil?.rol?.toLowerCase());
 
     return (
@@ -130,7 +152,9 @@ const ResumenPage = () => {
                         Panel de Control
                     </h1>
                     <p className="text-slate-500">
-                        {esStaff ? `Bienvenido al centro de operaciones (${perfil?.rol})` : `¡Hola de nuevo, Fanático de la velocidad!`}
+                        {esPrensa ? `Bienvenido al centro de prensa` : ''}
+                        {esStaff ? `Bienvenido al centro de operaciones` : ''}
+                        {!esStaff && !esPrensa ? `Bienvenido de nuevo, Fan del Óvalo` : ''}
                     </p>
                 </div>
                 <div className="text-sm text-slate-400 font-mono">
@@ -271,20 +295,19 @@ const ResumenPage = () => {
 
             {/* 📊 VISTA 3: TABLERO SHADCN UI + RECHARTS (PRENSA)                          */}
             {/* ========================================================================= */}
-            {/* {esPrensa && (
+            {esPrensa && (
                 <div className="space-y-6">
                     
                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <EventosPieChart tipos={metricasTipo} />
-                        <PublicacionesRadarChart publicaciones={metricasPublicaciones} />
+                      <EventosPieChart tipos={Tipos} />
+                    <PublicacionesRadarChart publicaciones={Publicaciones} />
                     </div>
 
-                  
-                    <VisualizacionesBarChart metricasVisualizaciones={metricasVisualizaciones} />
+                  <VisualizacionesBarChart metricasVisualizaciones={metricasVisualizaciones} />
 
                 </div>
-            )} */}
+            )}
 
 
         </div>
