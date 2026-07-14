@@ -23,7 +23,7 @@ const obtenerEstadoDinamico = (fechaStr: string) => {
 
 const EventosPage = () => {
   const { userProfile } = useAuth();
-  const esAdmin = ['superadmin', 'administrativo', 'prensa'].includes(userProfile?.rol?.toLowerCase() || '');
+  const esAdmin = ['superadmin', 'administrativo'].includes(userProfile?.rol?.toLowerCase() || '');
 
   const [eventos, setEventos] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
