@@ -46,6 +46,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       items.push({ to: '/dashboard/beneficios', icon: <PercentIcon size={20} />, label: 'Beneficios' });
       items.push({ to: '/dashboard/calendario', icon: <Ticket size={20} />, label: 'Recitales y Carreras' });
       items.push({ to: '/dashboard/pruebas', icon: <Road size={20} />, label: 'Pruebas' });
+      items.push({ to: '/dashboard/eventos', icon: <Calendar size={20} />, label: 'Eventos' });
       
       if (nivelFan === 'P1' || nivelFan === 'P2') {
         items.push({ to: '/dashboard/fast-pass', icon: <FastForward size={20} />, label: 'Fast Access' });
@@ -70,6 +71,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       if (rol === 'superadmin' || rol === 'prensa') {
         items.push({ to: '/dashboard/noticias', icon: <Info size={20} />, label: 'Noticias' });
         items.push({ to: '/dashboard/galeria', icon: <Film size={20} />, label: 'Galería' });
+        items.push({ to: '/dashboard/eventos', icon: <Calendar size={20} />, label: 'Eventos' });
       }
       if (rol === 'superadmin') {
         items.push({ to: '/dashboard/cuentas', icon: <ShieldUser size={20} />, label: 'Cuentas' });

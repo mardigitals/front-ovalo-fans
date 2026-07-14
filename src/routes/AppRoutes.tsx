@@ -61,6 +61,7 @@ const AppRoutes = () => (
           <Route element={<NivelGuard allowedNiveles={['P1', 'P2', 'P3']} />}>
             {/* Cuando crees los componentes, los ponés acá */}
             <Route path="beneficios" element={<ComerciosFanPage />} />
+            <Route path="eventos" element={<EventosPage />} />
             {/* <Route path="promociones" element={<PromocionesPage />} /> */}
           </Route>
           
@@ -87,6 +88,7 @@ const AppRoutes = () => (
           {/*  SuperAdmin y Prensa */}
           <Route element={<RoleGuard allowedRoles={['superadmin', 'prensa']} />}>
           {/*aca van las rutas de prensa */}
+            <Route path="eventos" element={<EventosPage />} />
           </Route>
           
           {/* Solo SuperAdmin */}
