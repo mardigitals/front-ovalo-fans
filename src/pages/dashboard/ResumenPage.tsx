@@ -1,11 +1,13 @@
-import { useState, useEffect, useMemo } from 'react';
-import { User, Shield, Calendar, CheckCircle, Clock, Award, Star, TrendingUp, MapPin } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { User, Shield, Calendar, CheckCircle, Clock, Award, Star } from 'lucide-react';
 import api from '@/api/axios';
 
-// --- IMPORTACIONES DE SHADCN UI Y RECHARTS ---
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis, Label, Pie, PieChart, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+// --- IMPORTACIONES COMPONENTES UI CHARTS Y TABLE---
+import { CiudadesTable } from '@/components/ui/CiudadesTable';
+import { FinanzasBarChart } from '@/components/ui/FinanzasBarChart';
+import { ChicanasPieChart } from '@/components/ui/ChicanasPieChart';
+import { FansRadialChart } from '@/components/ui/FansRadialChart';
+import { SuscripcionesDonutChart } from '@/components/ui/SuscripcionesDonutChart';
 
 const ResumenPage = () => {
     const [perfil, setPerfil] = useState<any>(null);
@@ -91,48 +93,6 @@ const ResumenPage = () => {
 
         cargarResumen();
     }, []);
-
-    // ============================================================================
-    // ⚙️ CONFIGURACIÓN DE SHADCN CHARTS (Colores y mapeo de datos)
-    // ============================================================================
-    
-    // 1. Suscripciones (Donut con texto central)
-    const datosSuscripcionesShadcn = useMemo(() => [
-        { estado: "Activo", cantidad: metricasEstados.Activo, fill: "#22c55e" },
-        { estado: "Pendiente", cantidad: metricasEstados.Pendiente, fill: "#64748b" },
-        { estado: "Vencido", cantidad: metricasEstados.Vencido, fill: "#efde44" },
-        { estado: "Cancelado", cantidad: metricasEstados.Cancelado, fill: "#be2323" },
-    ].filter(d => d.cantidad > 0), [metricasEstados]);
-    
-    const configSuscripciones = {
-        cantidad: { label: "Suscripciones" },
-        Activo: { label: "Activos", color: "#22c55e" },
-        Pendiente: { label: "Pendientes", color: "#64748b" },
-        Vencido: { label: "Vencidos", color: "#efde44" },
-        Cancelado: { label: "Cancelados", color: "#be2323" },
-    };
-
-    // 2. Fans Totales (Radial Shape)
-    const radialData = [{ browser: "fans", visitors: metricasEstados.Activo , fill: "#0b97f5" }];
-    const configRadial = { visitors: { label: "Fans Totales" }, fans: { label: "Fans", color: "#0b97f5" } };
-    
-    // 3. Sectores Favoritos (Donut simple)
-    const coloresSectores = ["#0b97f5", "#0b97f5d5", "#0b97f58f", "#0b97f557", "#0b97f527"];
-    const datosSectoresShadcn = useMemo(() => {
-        // Ordenamos los datos de mayor a menor para que el [0] sea siempre el líder
-        const sorted = [...topChicanas].sort((a, b) => b.fans - a.fans);
-        return sorted.map((c, i) => ({
-            browser: c.nombre,
-            visitors: c.fans,
-            fill: coloresSectores[i % coloresSectores.length]
-        }));
-    }, [topChicanas]);
-
-    const configSectores = { visitors: { label: "Fans" } };
-
-    // 4. Finanzas (Bar Chart Custom Label)
-    const configFinanzas = { ingresos: { label: "Recaudación", color: "#0ea5e9" } };
-
 
     if (isLoading) {
         return (
@@ -277,7 +237,7 @@ const ResumenPage = () => {
                 </div>
             )}
 
-            {/* ========================================================================= */}
+           {/* ========================================================================= */}
             {/* 📊 VISTA 2: TABLERO SHADCN UI + RECHARTS (STAFF)                          */}
             {/* ========================================================================= */}
             {esStaff && (
@@ -285,168 +245,16 @@ const ResumenPage = () => {
                     
                     {/* FILA 1: TARJETAS PEQUEÑAS (Suscripciones, Fans, Sectores) */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        
-                        {/* 1. SUSCRIPCIONES (DONUT CON TEXTO) */}
-                        <Card className="flex flex-col bg-white dark:bg-[#110c1b] border-slate-200 dark:border-white/10">
-                            <CardHeader className="items-center pb-0">
-                                <CardTitle className="dark:text-white text-sm font-black uppercase tracking-wider">Estado de Suscripciones</CardTitle>
-                                <CardDescription>En tiempo real</CardDescription>
-                            </CardHeader>
-                            <CardContent className="flex-1 pb-0">
-                                <ChartContainer config={configSuscripciones} className="mx-auto aspect-square max-h-[250px]">
-                                    <PieChart>
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                                        <Pie data={datosSuscripcionesShadcn} dataKey="cantidad" nameKey="estado" innerRadius={60} strokeWidth={5}>
-                                            <Label
-                                                content={({ viewBox }) => {
-                                                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                                                        return (
-                                                            <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                                                                <tspan x={viewBox.cx} y={viewBox.cy} className="fill-slate-800 dark:fill-white text-3xl font-bold">
-                                                                    {metricasEstados.Total.toLocaleString()}
-                                                                </tspan>
-                                                                <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-slate-500 text-xs">
-                                                                    Totales
-                                                                </tspan>
-                                                            </text>
-                                                        )
-                                                    }
-                                                }}
-                                            />
-                                        </Pie>
-                                    </PieChart>
-                                </ChartContainer>
-                            </CardContent>
-                        </Card>
-
-                        {/* 2. FANS TOTALES (RADIAL SHAPE) */}
-                        <Card className="flex flex-col bg-white dark:bg-[#110c1b] border-slate-200 dark:border-white/10">
-                            <CardHeader className="items-center pb-0">
-                                <CardTitle className="dark:text-white text-sm font-black uppercase tracking-wider">Comunidad Óvalo Activa</CardTitle>
-                                <CardDescription>P1 + P2 + P3 FANS (activos)</CardDescription>
-                            </CardHeader>
-                            <CardContent className="flex-1 pb-0">
-                                <ChartContainer config={configRadial} className="mx-auto aspect-square max-h-[250px]">
-                                    <RadialBarChart data={radialData} endAngle={100} innerRadius={65} outerRadius={95}>
-                                        <PolarGrid gridType="circle" radialLines={false} stroke="none" className="first:fill-slate-100 dark:first:fill-white/5 last:fill-transparent" polarRadius={[86, 74]} />
-                                        <RadialBar dataKey="visitors" background />
-                                        <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
-                                            <Label
-                                                content={({ viewBox }) => {
-                                                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                                                        return (
-                                                            <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                                                                <tspan x={viewBox.cx} y={viewBox.cy} className="fill-institucional-celeste text-4xl font-bold">
-                                                                    {metricasEstados.Activo.toLocaleString()}
-                                                                </tspan>
-                                                                <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-slate-500 text-xs">
-                                                                    Fans 
-                                                                </tspan>
-                                                            </text>
-                                                        )
-                                                    }
-                                                }}
-                                            />
-                                        </PolarRadiusAxis>
-                                    </RadialBarChart>
-                                </ChartContainer>
-                            </CardContent>
-                        </Card>
-
-                        {/* 3. SECTORES FAVORITOS (DONUT SIMPLE) */}
-                        <Card className="flex flex-col bg-white dark:bg-[#110c1b] border-slate-200 dark:border-white/10">
-                            <CardHeader className="items-center pb-0">
-                                <CardTitle className="dark:text-white text-sm font-black uppercase tracking-wider">Sectores Favoritos</CardTitle>
-                                <CardDescription>Top Chicanas elegidas</CardDescription>
-                            </CardHeader>
-                            <CardContent className="flex-1 pb-0">
-                                <ChartContainer config={configSectores} className="mx-auto aspect-square max-h-[250px]">
-                                    <PieChart>
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                                        <Pie data={datosSectoresShadcn} dataKey="visitors" nameKey="browser" innerRadius={60} strokeWidth={5}>
-                                            <Label
-                                                content={({ viewBox }) => {
-                                                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                                                        return (
-                                                            <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                                                                <tspan x={viewBox.cx} y={viewBox.cy} className="fill-institucional-celeste text-xl font-bold">
-                                                                    {datosSectoresShadcn[0]?.browser || "-"}
-                                                                </tspan>
-                                                                <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 20} className="fill-slate-500 text-[10px] uppercase">
-                                                                    Favorito
-                                                                </tspan>
-                                                            </text>
-                                                        )
-                                                    }
-                                                }}
-                                            />
-                                        </Pie>
-                                    </PieChart>
-                                </ChartContainer>
-                            </CardContent>
-                        </Card>
-
+                        <SuscripcionesDonutChart metricasEstados={metricasEstados} />
+                        <FansRadialChart activos={metricasEstados.Activo} />
+                        <ChicanasPieChart chicanas={topChicanas} />
                     </div>
 
                     {/* FILA 2: GRÁFICO BARRA CUSTOM - INGRESOS FINANCIEROS */}
-                    <Card className="bg-white dark:bg-[#110c1b] border-slate-200 dark:border-white/10">
-                        <CardHeader>
-                            <CardTitle className="dark:text-white uppercase tracking-wider font-black flex items-center gap-2">
-                                <TrendingUp className="text-institucional-celeste" /> Evolución Financiera
-                            </CardTitle>
-                            <CardDescription className="subtitle-fan">Ingresos mensuales del  {new Date().toLocaleDateString('es-AR', { year: 'numeric' })}
-                            </CardDescription>
-                            <div className="text-sm text-slate-400 font-mono">
-                                  panel actualizado el {new Date().toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            <ChartContainer config={configFinanzas} className="h-[300px] w-full">
-                                <BarChart accessibilityLayer data={metricasFinanzas} layout="vertical" margin={{ right: 40 }}>
-                                    <CartesianGrid horizontal={false} strokeDasharray="3 3" stroke="#334155" />
-                                    <YAxis dataKey="mes" type="category" tickLine={false} tickMargin={10} axisLine={false} hide />
-                                    <XAxis dataKey="ingresos" type="number" hide />
-                                    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-                                    <Bar dataKey="ingresos" fill="#0ea5e9" radius={4}>
-                                        <LabelList dataKey="mes" position="insideLeft" offset={8} className="fill-white font-medium" fontSize={12} />
-                                        <LabelList dataKey="ingresos" position="right" offset={8} className="fill-slate-700 dark:fill-white font-bold" fontSize={12} formatter={(v: any) => `$${(v/1000)}k`} />
-                                    </Bar>
-                                </BarChart>
-                            </ChartContainer>
-                        </CardContent>
-                        <CardFooter className="flex-col items-start gap-2 text-sm border-t border-slate-200 dark:border-white/10 pt-4">
-                            <div className="flex gap-2 leading-none font-medium text-green-500">
-                                Tendencia alcista detectada <TrendingUp className="h-4 w-4" />
-                            </div>
-                            <div className="leading-none text-slate-500">
-                                Mostrando recaudación histórica mensual.
-                            </div>
-                        </CardFooter>
-                    </Card>
+                    <FinanzasBarChart metricasFinanzas={metricasFinanzas} />
 
                     {/* FILA 3: TABLA DE CIUDADES (TRADICIONAL) */}
-                    <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-xl p-6 shadow-md max-w-xl mx-auto">
-                        <div className="flex items-center gap-2 mb-4">
-                            <MapPin className="text-institucional-celeste" size={20} />
-                            <h3 className="text-base font-black text-slate-800 dark:text-white uppercase tracking-wider">Demografía Socios</h3>
-                        </div>
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="border-b border-slate-200 dark:border-white/10 text-xs font-bold text-slate-400 uppercase tracking-wider">
-                                    <th className="pb-2">Ciudad</th>
-                                    <th className="pb-2 text-right">Cantidad</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-100 dark:divide-white/5">
-                                {topCiudades.slice(0, 5).map((ciudad, idx) => (
-                                    <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
-                                        <td className="py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300">{ciudad.ciudad || 'No especificada'}</td>
-                                        <td className="py-2.5 text-sm font-bold text-institucional-celeste text-right">{ciudad.cantidad}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <CiudadesTable ciudades={topCiudades} />
 
                 </div>
             )}
