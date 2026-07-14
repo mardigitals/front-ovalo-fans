@@ -2,7 +2,7 @@ import { MapPin } from "lucide-react";
 
 export function CiudadesTable({ ciudades }: { ciudades: any[] }) {
   return (
-    <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-xl p-6 shadow-md max-w-xl mx-auto">
+    <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-xl p-6 shadow-md w-full mx-auto">
       <div className="flex items-center gap-2 mb-4">
         <MapPin className="text-institucional-celeste" size={20} />
         <h3 className="text-base font-black text-slate-800 dark:text-white uppercase tracking-wider">Demografía Socios</h3>

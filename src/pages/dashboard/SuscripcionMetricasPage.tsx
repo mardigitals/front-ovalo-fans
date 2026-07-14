@@ -9,6 +9,7 @@ import { CiudadesTable } from '@/components/ui/CiudadesTable';
 import { AltasBajasChart } from '@/components/ui/AltasBajasChart';
 import { MrrChart } from '@/components/ui/MrrChart';
 import { TopSociosList } from '@/components/ui/TopSociosList';
+import { ProvinciasPieChart } from '@/components/ui/ProvinciasPieChart';
 
 const SuscripcionesMetricasPage = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -17,14 +18,16 @@ const SuscripcionesMetricasPage = () => {
     // Estados para la data real que viene de tu backend
     const [metricasEstados, setMetricasEstados] = useState({ Activo: 0, Pendiente: 0, Vencido: 0, Cancelado: 0, Total: 0 });
     const [topCiudades, setTopCiudades] = useState<any[]>([]);
+    const [topProvincias, setTopProvincias] = useState<any[]>([])
 
     useEffect(() => {
         const cargarMetricas = async () => {
             try {
                 // Hacemos las llamadas a tu API real para alimentar los gráficos base
-                const [resSuscripciones, resCiudades] = await Promise.all([
+                const [resSuscripciones, resCiudades, resProvincias] = await Promise.all([
                     api.get('/suscripcion/admin/metricas/suscripciones').catch(() => ({ data: [] })),
-                    api.get('/suscripcion/admin/metricas/ciudades').catch(() => ({ data: [] }))
+                    api.get('/suscripcion/admin/metricas/ciudades').catch(() => ({ data: [] })),
+                    api.get('/suscripcion/admin/metricas/provincias').catch(() => ({ data: [] }))
                 ]);
 
                 // 1. Procesar Estados
@@ -39,8 +42,9 @@ const SuscripcionesMetricasPage = () => {
                     Total: listaSuscripciones.reduce((acc: number, curr: any) => acc + Number(curr.cantidad), 0)
                 });
 
-                // 2. Procesar Ciudades
-                setTopCiudades(resCiudades.data || []);
+                // 2. Procesar Ciudades y Provincias
+                setTopCiudades(resCiudades.data || []);                
+                setTopProvincias(resProvincias.data || []);
 
             } catch (err) {
                 console.error("Error al cargar métricas:", err);
@@ -95,8 +99,8 @@ const SuscripcionesMetricasPage = () => {
             {/* TABLERO PRINCIPAL */}
             <div className="space-y-6">
                 
-                {/* FILA 1: VISIÓN GENERAL (3 Columnas) */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* FILA 1: VISIÓN GENERAL (2 Columnas ahora) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Gráfico 1: Dona de Estados (Data Real) */}
                     <div className="h-full">
                         <SuscripcionesDonutChart metricasEstados={metricasEstados} />
@@ -106,26 +110,31 @@ const SuscripcionesMetricasPage = () => {
                     <div className="h-full">
                         <FansRadialChart activos={metricasEstados.Activo} />
                     </div>
-
-                    {/* Lista 3: Top Socios (Data Mockeada por ahora) */}
-                    <div className="h-full lg:row-span-2">
-                        <TopSociosList />
-                    </div>
                 </div>
 
                 {/* FILA 2: RENDIMIENTO Y RETENCIÓN (2 Columnas) */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Gráfico 4: Altas vs Bajas (Data Mockeada) */}
+                    {/* Gráfico 3: Altas vs Bajas (Data Mockeada) */}
                     <AltasBajasChart />
 
-                    {/* Gráfico 5: MRR Proyección de Ingresos (Data Mockeada) */}
+                    {/* Gráfico 4: MRR Proyección de Ingresos (Data Mockeada) */}
                     <MrrChart />
                 </div>
 
-                {/* FILA 3: TABLAS INFORMATIVAS */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Tabla 6: Demografía (Data Real) */}
-                    <CiudadesTable ciudades={topCiudades} />
+                {/* FILA 3: TABLAS INFORMATIVAS (2 Columnas) */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                    
+                    {/* Columna Izquierda: Apilamos Ciudades y Provincias con flex-col */}
+                    <div className="flex flex-col gap-6 w-full">
+                        <ProvinciasPieChart provincias={topProvincias} />
+                        <CiudadesTable ciudades={topCiudades} />
+                    </div>
+                    
+                    {/* Lista 6: Top Socios (Columna Derecha) */}
+                    <div className="w-full h-full">
+                        <TopSociosList />
+                    </div>
+                    
                 </div>
 
             </div>
