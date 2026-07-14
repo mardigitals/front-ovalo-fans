@@ -8,6 +8,7 @@ import { FinanzasBarChart } from '@/components/ui/FinanzasBarChart';
 import { ChicanasPieChart } from '@/components/ui/ChicanasPieChart';
 import { FansRadialChart } from '@/components/ui/FansRadialChart';
 import { SuscripcionesDonutChart } from '@/components/ui/SuscripcionesDonutChart';
+import { ClimaInfo } from '@/components/ui/ClimaInfo';
 
 const ResumenPage = () => {
     const [perfil, setPerfil] = useState<any>(null);
@@ -36,6 +37,7 @@ const ResumenPage = () => {
 
                 const rolStr = res.data?.rol?.toLowerCase() || '';
                 const esStaffCheck = ['superadmin', 'administrativo', 'prensa'].includes(rolStr);
+                const esPrensaCheck = ['prensa'].includes(rolStr);
 
                 if (esStaffCheck) {
                     const [resSuscripciones, resChicanas, resCiudades, resIngresos] = await Promise.all([
@@ -115,6 +117,7 @@ const ResumenPage = () => {
     }
 
     const esStaff = ['superadmin', 'administrativo', 'prensa'].includes(perfil?.rol?.toLowerCase());
+    const esPrensa = ['prensa'].includes(perfil?.rol?.toLowerCase());
 
     return (
         <div className="max-w-7xl mx-auto space-y-8 pb-12 animate-in fade-in duration-500">
@@ -135,8 +138,15 @@ const ResumenPage = () => {
                 </div>
             </div>
 
+            {/* VISTA 0: GENERICO (CLIMA) */}
+            <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex-1">
+                    <ClimaInfo />
+                </div>
+            </div>
+
             {/* 🏎️ VISTA 1: TABLERO PARA FANS (INTACTA) */}
-            {!esStaff && (
+            {!esStaff && !esPrensa && (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     
                     {/* Tarjeta de Perfil del Fan */}
@@ -258,6 +268,25 @@ const ResumenPage = () => {
 
                 </div>
             )}
+
+            {/* 📊 VISTA 3: TABLERO SHADCN UI + RECHARTS (PRENSA)                          */}
+            {/* ========================================================================= */}
+            {/* {esPrensa && (
+                <div className="space-y-6">
+                    
+                   
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <EventosPieChart tipos={metricasTipo} />
+                        <PublicacionesRadarChart publicaciones={metricasPublicaciones} />
+                    </div>
+
+                  
+                    <VisualizacionesBarChart metricasVisualizaciones={metricasVisualizaciones} />
+
+                </div>
+            )} */}
+
+
         </div>
     );
 };
