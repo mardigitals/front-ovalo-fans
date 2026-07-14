@@ -23,6 +23,7 @@ import ResumenPage from '@/pages/dashboard/ResumenPage';
 import ComerciosFanPage from '@/pages/dashboard/ComerciosFanPage';
 import EventosPage from '@/pages/dashboard/EventosPage';
 import CalendarPage from '@/pages/public/CalendarPage';
+import SuscripcionesMetricasPage from '@/pages/dashboard/SuscripcionMetricasPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -80,6 +81,7 @@ const AppRoutes = () => (
           <Route element={<RoleGuard allowedRoles={['superadmin', 'administrativo']} />}>
             <Route path="comercios" element={<ComerciosPage />} />
             <Route path="eventos" element={<EventosPage />} />
+            <Route path="metricas" element={<SuscripcionesMetricasPage />} />
           </Route>
 
           {/*  SuperAdmin y Prensa */}
