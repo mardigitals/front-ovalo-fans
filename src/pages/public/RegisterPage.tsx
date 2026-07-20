@@ -23,7 +23,12 @@ const RegisterPage = () => {
 
     const [provincias, setProvincias] = useState<any[]>([]);
     const [ciudades, setCiudades] = useState<any[]>([]);
-    const [paises, setPaises] = useState<string[]>([]);
+    const [paises] = useState<string[]>([
+        'Alemania', 'Bolivia', 'Brasil', 'Canadá', 'Chile', 'Colombia', 
+        'Costa Rica', 'Ecuador', 'El Salvador', 'España', 'Estados Unidos', 
+        'Francia', 'Guatemala', 'Honduras', 'Italia', 'México', 'Nicaragua', 
+        'Panamá', 'Paraguay', 'Perú', 'Reino Unido', 'Uruguay', 'Venezuela', 'Otro'
+    ]);
 
     // 1. CARGAR PROVINCIAS (Desde API del Gobierno)
     useEffect(() => {
@@ -58,32 +63,6 @@ const RegisterPage = () => {
         fetchCiudades();
     }, [formData.provincia, formData.pais]); // <-- Agregamos formData.pais a las dependencias
 
-    // 3. CARGAR PAÍSES DEL MUNDO (REST Countries API)
-    React.useEffect(() => {
-        const fetchPaises = async () => {
-            try {
-                // Pedimos solo los nombres y traducciones para que cargue rapidísimo
-                const response = await fetch('https://restcountries.com/v3.1/all?fields=name,translations');
-                const data = await response.json();
-                
-                // Extraemos el nombre en español
-                let listaPaises = data.map((pais: any) => pais.translations?.spa?.common || pais.name.common);
-                
-                // Ordenamos alfabéticamente
-                listaPaises.sort((a: string, b: string) => a.localeCompare(b, 'es'));
-                
-                // Filtramos "Argentina" porque la vamos a poner fija al principio
-                listaPaises = listaPaises.filter((p: string) => p !== 'Argentina');
-                
-                setPaises(listaPaises);
-            } catch (error) {
-                console.error("Error al cargar países:", error);
-                // Fallback de emergencia por si la API falla
-                setPaises(['Bolivia', 'Brasil', 'Chile', 'Paraguay', 'Uruguay', 'Otro']);
-            }
-        };
-        fetchPaises();
-    }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
@@ -309,12 +288,27 @@ const RegisterPage = () => {
                                 </div>
 
                                 {/* --- INPUT DE NACIONALIDAD  --- */}
-                                <div>
-                                    <label className="label-fan">Nacionalidad </label>
-                                    <input type="text" name="nacionalidad" placeholder="Argentina" value={formData.nacionalidad} onChange={handleInputChange} className="input-fan" 
-                                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras" />
+                                <div className="md:col-span-3">
+                                    <label className="label-fan">Nacionalidad</label>
+                                    <select 
+                                        name="nacionalidad" 
+                                        required 
+                                        value={formData.nacionalidad} 
+                                        onChange={handleInputChange} className="input-fan"
+                                    >
+                                        {/* Argentina fija al principio por UX */}
+                                        <option value="Argentina">Argentina</option>
+                                        
+                                        <option disabled>──────────</option>
+                                        
+                                        {/* Resto del mundo dinámico */}
+                                        {paises.map(pais => (
+                                            <option key={pais} value={pais}>{pais}</option>
+                                        ))}
+                                    </select>
                                 </div>
-                                
+
+
                                 {/* Le agregamos pattern solo números */}
                                 <div>
                                     <label className="label-fan">Teléfono</label>

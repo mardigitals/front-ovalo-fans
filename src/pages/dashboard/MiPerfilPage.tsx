@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Camera, Edit2, Save, X, Flag, MapPin, UserIcon } from 'lucide-react';
 import FullScreenLoader from '@/components/ui/FullScreenLoader';
 import FormField from '@/components/ui/FormField';
@@ -15,6 +15,16 @@ const MiPerfilPage = () => {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
+  const [provincias, setProvincias] = useState<any[]>([]);
+  const [ciudades, setCiudades] = useState<any[]>([]);
+  const [paises] = useState<string[]>([
+    'Alemania', 'Bolivia', 'Brasil', 'Canadá', 'Chile', 'Colombia', 
+    'Costa Rica', 'Ecuador', 'El Salvador', 'España', 'Estados Unidos', 
+    'Francia', 'Guatemala', 'Honduras', 'Italia', 'México', 'Nicaragua', 
+    'Panamá', 'Paraguay', 'Perú', 'Reino Unido', 'Uruguay', 'Venezuela', 'Otro'
+  ]);
+
+
   // Estados para los campos del formulario
   const [formData, setFormData] = useState({
     //Datos de tabla Usuario
@@ -22,7 +32,7 @@ const MiPerfilPage = () => {
     nombre: '',
     apellido: '',
     telefono: '',
-    fecha_nacimiento: '', genero: '', nacionalidad: '',
+    fecha_nacimiento: '', genero: '', nacionalidad: '', pais: '',
     provincia: '', ciudad: '', cp: '',
     calle: '', numero: '', piso: '', depto: '',
 
@@ -33,6 +43,40 @@ const MiPerfilPage = () => {
     chicana_favorita: '',
   });
 
+  // 1. CARGAR PROVINCIAS (Desde API del Gobierno)
+  useEffect(() => {
+      const fetchProvincias = async () => {
+          try {
+              const response = await fetch('https://apis.datos.gob.ar/georef/api/provincias?orden=nombre');
+              const data = await response.json();
+              setProvincias(data.provincias);
+          } catch (error) {
+              console.error("Error al cargar provincias:", error);
+          }
+      };
+      fetchProvincias();
+  }, []);
+
+  // 2. CARGAR CIUDADES (Solo si es Argentina)
+  useEffect(() => {
+      // Si no hay provincia elegida, O el país NO es Argentina, cortamos acá.
+      if (!formData.provincia || formData.pais !== 'Argentina') {
+          setCiudades([]);
+          return;
+      }
+      const fetchCiudades = async () => {
+          try {
+              const response = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?provincia=${formData.provincia}&max=2000&orden=nombre`);
+              const data = await response.json();
+              setCiudades(data.localidades);
+          } catch (error) {
+              console.error("Error al cargar ciudades:", error);
+          }
+      };
+      fetchCiudades();
+  }, [formData.provincia, formData.pais]); // <-- Agregamos formData.pais a las dependencias
+
+  
   useEffect(() => {
     const fetchPerfil = async () => {
       try {
@@ -53,6 +97,7 @@ const MiPerfilPage = () => {
             fecha_nacimiento: data.usuario?.fecha_nacimiento ? new Date(data.usuario.fecha_nacimiento).toISOString().split('T')[0] : '',
             genero: data.usuario?.genero || '',
             nacionalidad: data.usuario?.nacionalidad || '',
+            pais: data.usuario?.pais || '',
             provincia: data.usuario?.provincia || '',
             ciudad: data.usuario?.ciudad || '',
             cp: data.usuario?.cp || '',
@@ -254,7 +299,7 @@ const MiPerfilPage = () => {
               <FormField label="DNI (No editable)" value={datosPerfil?.usuario?.dni || ''} disabled={true} />
               <FormField label="Nombre" name="nombre" value={formData.nombre} onChange={handleInputChange} disabled={!isEditing} />
               <FormField label="Apellido" name="apellido" value={formData.apellido} onChange={handleInputChange} disabled={!isEditing} />
-              <FormField label="Fecha de Nacimiento" name="fecha_nacimiento" type="date" value={formData.fecha_nacimiento} onChange={handleInputChange} disabled={!isEditing} />
+              <FormField label="Fecha de Nacimiento (No editable)" name="fecha_nacimiento" value={datosPerfil?.usuario?.fecha_nacimiento || ''} disabled={true} />
               <FormField label="Género" name="genero" value={formData.genero} onChange={handleInputChange} disabled={!isEditing} options={[
                   { value: 'M', label: 'Masculino' },
                   { value: 'F', label: 'Femenino' },
@@ -270,9 +315,86 @@ const MiPerfilPage = () => {
               <MapPin size={20} className="text-institucional-celeste"/> Domicilio
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              <FormField label="Nacionalidad" name="nacionalidad" value={formData.nacionalidad} onChange={handleInputChange} disabled={!isEditing} />
-              <FormField label="Provincia" name="provincia" value={formData.provincia} onChange={handleInputChange} disabled={!isEditing} />
-              <FormField label="Ciudad" name="ciudad" value={formData.ciudad} onChange={handleInputChange} disabled={!isEditing} />
+              <FormField label="Nacionalidad" name="nacionalidad" value={datosPerfil?.usuario?.nacionalidad || ''} disabled={true} />
+              {/* --- RENDERIZADO DE PAÍS --- */}
+              {isEditing ? (
+                <div className="md:col-span-1">
+                  <label className="label-fan block mb-1 text-sm font-semibold">País</label>
+                  <select
+                    name="pais"
+                    required
+                    value={formData.pais || 'Argentina'} // Valor por defecto seguro
+                    onChange={(e) => {
+                      handleInputChange(e);
+                      setFormData((prev) => ({ ...prev, provincia: '', ciudad: '' }));
+                    }}
+                    className="input-fan w-full"
+                  >
+                    <option value="Argentina">Argentina</option>
+                    <option disabled>──────────</option>
+                    {paises.map((pais) => (
+                      <option key={pais} value={pais}>{pais}</option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <FormField label="País" name="pais" value={formData.pais || datosPerfil?.usuario?.pais || ''} disabled={true} />
+              )}
+
+              {/* --- RENDERIZADO CONDICIONAL DE PROVINCIA Y CIUDAD --- */}
+              {formData.pais === 'Argentina' ? (
+                <>
+                  {/* ARGENTINA: SELECT CON API */}
+                  {isEditing ? (
+                    <>
+                      <div className="md:col-span-1">
+                        <label className="label-fan block mb-1 text-sm font-semibold">Provincia</label>
+                        <select name="provincia" required value={formData.provincia} onChange={(e) => { handleInputChange(e); setFormData(prev => ({ ...prev, ciudad: '' })); }} className="input-fan w-full">
+                          <option value="">Seleccioná...</option>
+                          {provincias.map(prov => (
+                            <option key={prov.id} value={prov.nombre}>{prov.nombre}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="md:col-span-1">
+                        <label className="label-fan block mb-1 text-sm font-semibold">Ciudad / Localidad</label>
+                        <select name="ciudad" required value={formData.ciudad} onChange={handleInputChange} className="input-fan w-full disabled:opacity-50 disabled:cursor-not-allowed" disabled={!formData.provincia || ciudades.length === 0}>
+                          <option value="">{formData.provincia ? 'Seleccioná tu ciudad...' : 'Primero elegí una provincia'}</option>
+                          {ciudades.map(ciudad => (
+                            <option key={ciudad.id} value={ciudad.nombre}>{ciudad.nombre}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <FormField label="Provincia" name="provincia" value={formData.provincia} disabled={true} />
+                      <FormField label="Ciudad" name="ciudad" value={formData.ciudad} disabled={true} />
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  {/* RESTO DEL MUNDO: INPUTS LIBRES */}
+                  {isEditing ? (
+                    <>
+                      <div className="md:col-span-1">
+                        <label className="label-fan block mb-1 text-sm font-semibold">Estado / Provincia</label>
+                        <input type="text" name="provincia" required placeholder="Ej: Indiana" value={formData.provincia} onChange={handleInputChange} className="input-fan w-full" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo letras" />
+                      </div>
+                      <div className="md:col-span-1">
+                        <label className="label-fan block mb-1 text-sm font-semibold">Ciudad / Localidad</label>
+                        <input type="text" name="ciudad" required placeholder="Ej: Indianapolis" value={formData.ciudad} onChange={handleInputChange} className="input-fan w-full" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo letras" />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <FormField label="Estado / Provincia" name="provincia" value={formData.provincia} disabled={true} />
+                      <FormField label="Ciudad" name="ciudad" value={formData.ciudad} disabled={true} />
+                    </>
+                  )}
+                </>
+              )}
               <FormField label="Código Postal" name="cp" value={formData.cp} onChange={handleInputChange} disabled={!isEditing} />
               <div className="md:col-span-2">
                 <FormField label="Calle" name="calle" value={formData.calle} onChange={handleInputChange} disabled={!isEditing} />
