@@ -16,6 +16,7 @@ interface FormFieldProps {
   options?: Option[];
   isTextarea?: boolean;
   placeholder?: string;
+  error?: string;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -27,7 +28,8 @@ const FormField: React.FC<FormFieldProps> = ({
   disabled = false,
   options,
   isTextarea = false,
-  placeholder = ""
+  placeholder = "",
+  error
 }) => {
   // Unificamos tu lógica de Tailwind: si está bloqueado, se pone gris; si no, brilla celeste
   const baseClasses = `w-full border rounded-xl px-4 py-2 transition-colors ${
@@ -75,6 +77,11 @@ const FormField: React.FC<FormFieldProps> = ({
           placeholder={placeholder}
           className={baseClasses} 
         />
+      )}
+      {error && (
+        <span className="text-red-500 text-xs font-bold mt-1">
+          {error}
+        </span>
       )}
     </div>
   );

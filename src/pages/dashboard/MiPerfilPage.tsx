@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Camera, Edit2, Save, X, Flag, MapPin, UserIcon } from 'lucide-react';
+import { Camera, Edit2, Save, X, Flag, MapPin, UserIcon, Check } from 'lucide-react';
 import FullScreenLoader from '@/components/ui/FullScreenLoader';
 import FormField from '@/components/ui/FormField';
 
@@ -8,7 +8,10 @@ const MiPerfilPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [datosPerfil, setDatosPerfil] = useState<any>(null);
   const [guardando, setGuardando] = useState(false);
-
+  // Estado para manejar los errores de cada campo individualmente
+  const [errores, setErrores] = useState<Record<string, string>>({});
+  // Estado para errores generales del servidor
+  const [errorGlobal, setErrorGlobal] = useState<string>('');
   // // Referencia para el input de archivo oculto
   const fileInputRef = useRef<HTMLInputElement>(null);
   // Estado para la previsualización de la foto seleccionada
@@ -87,30 +90,30 @@ const MiPerfilPage = () => {
         const data = await res.json();
         setDatosPerfil(data);
         
-        // Pre-cargamos los datos del Fan en el formulario
-        if (data.perfil_fan) {
-          setFormData({
-            nombre: data.usuario?.nombre || '',
-            email: data.usuario?.email || '',
-            apellido: data.usuario?.apellido || '',
-            telefono: data.usuario?.telefono || '',
-            fecha_nacimiento: data.usuario?.fecha_nacimiento ? new Date(data.usuario.fecha_nacimiento).toISOString().split('T')[0] : '',
-            genero: data.usuario?.genero || '',
-            nacionalidad: data.usuario?.nacionalidad || '',
-            pais: data.usuario?.pais || '',
-            provincia: data.usuario?.provincia || '',
-            ciudad: data.usuario?.ciudad || '',
-            cp: data.usuario?.cp || '',
-            calle: data.usuario?.calle || '',
-            numero: data.usuario?.numero || '',
-            piso: data.usuario?.piso || '',
-            depto: data.usuario?.depto || '',
-            alias: data.perfil_fan.alias || '',
-            bio: data.perfil_fan.bio || '',
-            hincha_marca_tc: data.perfil_fan.hincha_marca_tc || '',
-            chicana_favorita: data.perfil_fan.chicana_favorita || '',
-          });
-        }
+       
+        // Pre-cargamos los datos SIEMPRE, sin importar si es Fan o Staff
+        setFormData({
+          nombre: data.usuario?.nombre || '',
+          email: data.usuario?.email || '',
+          apellido: data.usuario?.apellido || '',
+          telefono: data.usuario?.telefono || '',
+          fecha_nacimiento: data.usuario?.fecha_nacimiento ? new Date(data.usuario.fecha_nacimiento).toISOString().split('T')[0] : '',
+          genero: data.usuario?.genero || '',
+          nacionalidad: data.usuario?.nacionalidad || '',
+          pais: data.usuario?.pais || '',
+          provincia: data.usuario?.provincia || '',
+          ciudad: data.usuario?.ciudad || '',
+          cp: data.usuario?.cp || '',
+          calle: data.usuario?.calle || '',
+          numero: data.usuario?.numero || '',
+          piso: data.usuario?.piso || '',
+          depto: data.usuario?.depto || '',
+          // Los datos de fan pueden venir nulos si es Staff, usamos ?.
+          alias: data.perfil_fan?.alias || '',
+          bio: data.perfil_fan?.bio || '',
+          hincha_marca_tc: data.perfil_fan?.hincha_marca_tc || '',
+          chicana_favorita: data.perfil_fan?.chicana_favorita || '',
+        });
       } catch (error) {
         console.error('Error al cargar perfil:', error);
       } finally {
@@ -135,8 +138,11 @@ const MiPerfilPage = () => {
     }
   };
 
-  const guardarCambios = async () => {
+const guardarCambios = async () => {
     setGuardando(true);
+    setErrores({}); // Limpiamos errores anteriores
+    setErrorGlobal(''); // Limpiamos error global anterior
+
     try {
       const token = localStorage.getItem('token');      
       const usuarioId = datosPerfil?.usuario?.id;
@@ -145,9 +151,8 @@ const MiPerfilPage = () => {
       const rol = datosPerfil?.rol; 
       const esStaff = rol && rol !== 'fan';
 
-      // Validación de IDs corregida según el tipo de usuario
       if (!usuarioId || (esStaff && !perfilStaffId) || (!esStaff && !perfilFanId)) {
-        console.error("Bandera negra: Faltan los IDs necesarios para actualizar.", { usuarioId, perfilFanId, perfilStaffId, esStaff });
+        setErrorGlobal("Error interno: Faltan IDs para actualizar.");
         setGuardando(false);
         return;
       }
@@ -172,7 +177,7 @@ const MiPerfilPage = () => {
       };
 
       if (esStaff) {
-        // --- SI ES ADMIN / PRENSA: SOLO ACTUALIZAMOS USUARIO ---
+        // --- LOGICA ADMIN / PRENSA ---
         const resUsuario = await fetch(`http://localhost:3000/usuario/${usuarioId}`, {
           method: 'PATCH',
           headers: { 
@@ -189,12 +194,18 @@ const MiPerfilPage = () => {
           }));
           setIsEditing(false);
         } else {
+          // ACÁ ATRAPAMOS EL ERROR 400 DE NESTJS
           const errorUsr = await resUsuario.json();
-          console.error("❌ Error al actualizar Usuario:", errorUsr.message || errorUsr);
+          if (errorUsr.errores) {
+            setErrores(errorUsr.errores);
+            setErrorGlobal('Por favor, revisá los campos marcados en rojo.');
+          } else {
+            setErrorGlobal(errorUsr.message || 'Error al actualizar el perfil.');
+          }
         }
 
       } else {
-        // --- SI ES FAN: ACTUALIZAMOS AMBAS TABLAS ---
+        // --- LOGICA FAN ---
         const datosPerfilFan = {
           alias: formData.alias, 
           bio: formData.bio, 
@@ -224,13 +235,31 @@ const MiPerfilPage = () => {
           }));
           setIsEditing(false);
         } else {
-          if (!resUsuario.ok) console.error("❌ Error en Usuario:", await resUsuario.json());
-          if (!resPerfil.ok) console.error("❌ Error en Perfil Fan:", await resPerfil.json());
+           // ACÁ ATRAPAMOS LOS ERRORES SI FALLA EL FAN (Puede fallar Usuario o PerfilFan)
+           let erroresCombinados = {};
+           
+           if (!resUsuario.ok) {
+              const errUsr = await resUsuario.json();
+              if (errUsr.errores) erroresCombinados = { ...erroresCombinados, ...errUsr.errores };
+           }
+           if (!resPerfil.ok) {
+              const errPerf = await resPerfil.json();
+              if (errPerf.errores) erroresCombinados = { ...erroresCombinados, ...errPerf.errores };
+           }
+
+           if (Object.keys(erroresCombinados).length > 0) {
+              setErrores(erroresCombinados);
+              setErrorGlobal('Por favor, revisá los campos marcados en rojo.');
+           } else {
+              setErrorGlobal('Hubo un problema al guardar tus datos.');
+           }
         }
       }
 
     } catch (error) {
-      console.error("Error de red al guardar:", error);
+      // El catch solo atrapa si el servidor está apagado o no hay internet
+      console.error("Error de red:", error);
+      setErrorGlobal("Error de conexión. Intentá nuevamente más tarde.");
     } finally {
       setGuardando(false);
     }
@@ -292,11 +321,9 @@ const MiPerfilPage = () => {
               </button>
             ) : (
               <div className="flex gap-2">
-                {/* Le agregamos el disabled y una opacidad cuando está guardando */}
                 <button onClick={() => setIsEditing(false)} disabled={guardando} className="p-2 text-slate-500 hover:text-red-500 transition-colors disabled:opacity-50">
                   <X size={24} />
                 </button>
-                {/* Le agregamos el disabled y cambiamos el texto dinámicamente */}
                 <button onClick={guardarCambios} disabled={guardando} className="flex items-center gap-2 bg-institucional-celeste text-white px-4 py-2 rounded-xl hover:bg-blue-600 transition-colors disabled:opacity-70">
                   <Save size={18} /> {guardando ? 'Guardando...' : 'Guardar'}
                 </button>
@@ -304,7 +331,7 @@ const MiPerfilPage = () => {
             )}
           </div>
         </div>
-
+        <p className="text-red-500 font-bold text-center">{errorGlobal}</p>
         {/* Formulario de Datos */}
         <div className="gap-6 relative z-10">
           {/* --- SECCIÓN 1: DATOS PERSONALES --- */}
@@ -314,15 +341,15 @@ const MiPerfilPage = () => {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <FormField label="DNI (No editable)" value={datosPerfil?.usuario?.dni || ''} disabled={true} />
-              <FormField label="Nombre" name="nombre" value={formData.nombre} onChange={handleInputChange} disabled={!isEditing} />
-              <FormField label="Apellido" name="apellido" value={formData.apellido} onChange={handleInputChange} disabled={!isEditing} />
-              <FormField label="Fecha de Nacimiento (No editable)" name="fecha_nacimiento" value={datosPerfil?.usuario?.fecha_nacimiento || ''} disabled={true} />
+              <FormField label="Nombre" name="nombre" value={formData.nombre} onChange={handleInputChange} disabled={!isEditing} error={errores.nombre} />
+              <FormField label="Apellido" name="apellido" value={formData.apellido} onChange={handleInputChange} disabled={!isEditing} error={errores.apellido} />
+              <FormField type="date" label= "Fecha de Nacimiento" name="fecha_nacimiento" value={formData.fecha_nacimiento}  onChange={handleInputChange} disabled={!isEditing} />
               <FormField label="Género" name="genero" value={formData.genero} onChange={handleInputChange} disabled={!isEditing} options={[
                   { value: 'M', label: 'Masculino' },
                   { value: 'F', label: 'Femenino' },
                   { value: 'X', label: 'Otro' }
                 ]} />
-              <FormField label="Teléfono" name="telefono" value={formData.telefono} onChange={handleInputChange} disabled={!isEditing} />
+              <FormField label="Teléfono" name="telefono" value={formData.telefono} onChange={handleInputChange} disabled={!isEditing} error={errores.telefono} />
             </div>
           </div>
 
@@ -332,15 +359,14 @@ const MiPerfilPage = () => {
               <MapPin size={20} className="text-institucional-celeste"/> Domicilio
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              <FormField label="Nacionalidad" name="nacionalidad" value={datosPerfil?.usuario?.nacionalidad || ''} disabled={true} />
+              <FormField label="Nacionalidad" name="nacionalidad" value={formData.nacionalidad} onChange={handleInputChange} disabled={!isEditing} error={errores.nacionalidad} />
               {/* --- RENDERIZADO DE PAÍS --- */}
               {isEditing ? (
                 <div className="md:col-span-1">
                   <label className="label-fan block mb-1 text-sm font-semibold">País</label>
                   <select
                     name="pais"
-                    required
-                    value={formData.pais || 'Argentina'} // Valor por defecto seguro
+                    value={formData.pais} 
                     onChange={(e) => {
                       handleInputChange(e);
                       setFormData((prev) => ({ ...prev, provincia: '', ciudad: '' }));
@@ -406,20 +432,20 @@ const MiPerfilPage = () => {
                     </>
                   ) : (
                     <>
-                      <FormField label="Estado / Provincia" name="provincia" value={formData.provincia} disabled={true} />
-                      <FormField label="Ciudad" name="ciudad" value={formData.ciudad} disabled={true} />
+                      <FormField label="Estado / Provincia" name="provincia" value={formData.provincia} disabled={true} error={errores.provincia} />
+                      <FormField label="Ciudad" name="ciudad" value={formData.ciudad} disabled={true} error={errores.ciudad} />
                     </>
                   )}
                 </>
               )}
-              <FormField label="Código Postal" name="cp" value={formData.cp} onChange={handleInputChange} disabled={!isEditing} />
+              <FormField label="Código Postal" name="cp" value={formData.cp} onChange={handleInputChange} disabled={!isEditing} error={errores.cp} />
               <div className="md:col-span-2">
-                <FormField label="Calle" name="calle" value={formData.calle} onChange={handleInputChange} disabled={!isEditing} />
+                <FormField label="Calle" name="calle" value={formData.calle} onChange={handleInputChange} disabled={!isEditing} error={errores.calle} />
               </div>
-              <FormField label="Número" name="numero" value={formData.numero} onChange={handleInputChange} disabled={!isEditing} />
+              <FormField label="Número" name="numero" value={formData.numero} onChange={handleInputChange} disabled={!isEditing} error={errores.numero} />
               <div className="grid grid-cols-2 gap-2">
-                <FormField label="Piso" name="piso" value={formData.piso} onChange={handleInputChange} disabled={!isEditing} />
-                <FormField label="Depto" name="depto" value={formData.depto} onChange={handleInputChange} disabled={!isEditing} />
+                <FormField label="Piso" name="piso" value={formData.piso} onChange={handleInputChange} disabled={!isEditing} error={errores.piso} />
+                <FormField label="Depto" name="depto" value={formData.depto} onChange={handleInputChange} disabled={!isEditing} error={errores.depto} />
               </div>
             </div>
           </div>
@@ -433,7 +459,6 @@ const MiPerfilPage = () => {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <FormField label="Rol staff (No editable)" value={datosPerfil?.rol || ''} disabled={true} />
-                <FormField label="Nombre de Usuario (No editable)" value={datosPerfil?.usuario?.nombre || ''} disabled={true} />
               </div>
             </div>  
           )}
@@ -467,6 +492,24 @@ const MiPerfilPage = () => {
               </div>
             </div>
           )}
+
+          {/* Botón 2 Editar/Guardar */}
+          <div className="sm:ml-auto justify-end flex mt-6">
+            {!isEditing ? (
+              <button disabled={true} className="flex items-center gap-2 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-800 dark:text-white px-4 py-2 rounded-xl transition-colors">
+                <Check size={18} /> Perfil actualizado
+              </button>
+            ) : (
+              <div className="flex gap-2">
+                <button onClick={() => setIsEditing(false)} disabled={guardando} className="p-2 text-slate-500 hover:text-red-500 transition-colors disabled:opacity-50">
+                  <X size={24} />
+                </button>
+                <button onClick={guardarCambios} disabled={guardando} className="flex items-center gap-2 bg-institucional-celeste text-white px-4 py-2 rounded-xl hover:bg-blue-600 transition-colors disabled:opacity-70">
+                  <Save size={18} /> {guardando ? 'Guardando...' : 'Guardar'}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -474,3 +517,6 @@ const MiPerfilPage = () => {
 };
 
 export default MiPerfilPage;
+
+      
+   
