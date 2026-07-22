@@ -21,6 +21,11 @@ const ResumenPage = () => {
     // Mock states para las métricas de Fan
     const [ultimosBeneficios, setUltimosBeneficios] = useState<any[]>([]);
     const [proximosBeneficios, setProximosBeneficios] = useState<any[]>([]);
+    
+    const [totalBeneficiosUsados, setTotalBeneficiosUsados] = useState(0);
+    const formatearBeneficio = (tipo: string) => {
+    return tipo.split('_').map(word => word.charAt(0) + word.slice(1).toLowerCase()).join(' ');
+};
 
     //Mock states para las metricas de Prensa
     const [Tipos] = useState<any[]>([]);
@@ -48,7 +53,7 @@ const ResumenPage = () => {
 
                 const rolStr = res.data?.rol?.toLowerCase() || '';
                 const esStaffCheck = ['superadmin', 'administrativo'].includes(rolStr);
-                const esPrensaCheck = ['prensa'].includes(rolStr);
+                // const esPrensaCheck = ['prensa'].includes(rolStr);
 
                 if (esStaffCheck) {
                     const [resSuscripciones, resChicanas, resCiudades, resIngresos] = await Promise.all([
@@ -94,8 +99,48 @@ const ResumenPage = () => {
                     }));
 
                     setMetricasFinanzas(finanzasFormateadas);
+                }else if (!esStaffCheck) {
+                    // === LÓGICA PARA FANS ===try {
+                    const resUsos = await api.get('/uso-beneficio/mis-usos');
+                    const usos = resUsos.data || [];
+
+                    // Filtramos por estado según tu DB
+                    const completados = usos.filter((u: any) => u.estado === 'Completado');
+                    const pendientes = usos.filter((u: any) => u.estado === 'Pendiente');
+
+                    // A. Total de beneficios usados
+                    setTotalBeneficiosUsados(completados.length);
+
+                    // B. Último Uso (Ordenamos completados por fecha_uso descendente y agarramos 1)
+                    if (completados.length > 0) {
+                        const ultimos = completados.sort((a: any, b: any) => 
+                            new Date(b.fecha_uso).getTime() - new Date(a.fecha_uso).getTime()
+                        ).slice(0, 1);
+
+                        setUltimosBeneficios(ultimos.map((u: any) => ({
+                            id: u.id,
+                            nombre: formatearBeneficio(u.tipo_beneficio),
+                            fecha: new Date(u.fecha_uso).toLocaleDateString('es-AR')
+                        })));
+                    } else {
+                        setUltimosBeneficios([]);
+                    }
+
+                    // C. Próximas Citas (Ordenamos pendientes por fecha_solicitud y agarramos 1)
+                    if (pendientes.length > 0) {
+                        const proximos = pendientes.sort((a: any, b: any) => 
+                            new Date(a.fecha_solicitud).getTime() - new Date(b.fecha_solicitud).getTime()
+                        ).slice(0, 1);
+
+                        setProximosBeneficios(proximos.map((u: any) => ({
+                            id: u.id,
+                            nombre: formatearBeneficio(u.tipo_beneficio),
+                            fecha: new Date(u.fecha_solicitud).toLocaleDateString('es-AR')
+                        })));
+                    } else {
+                        setProximosBeneficios([]);
+                    }
                 }
-                
                 // if (esPrensaCheck) {
                 //     const [resTipos, resPublicaciones, resMetricasVisualizaciones] = await Promise.all([
                 //         api.get('/prensa/admin/metricas/tipos').catch(() => ({ data: [] })),
@@ -106,7 +151,6 @@ const ResumenPage = () => {
 
 
                 // }
-
             }catch (err) {
                 console.error("Error al cargar el resumen:", err);
                 setError("No se pudo cargar el tablero principal.");
@@ -222,7 +266,9 @@ const ResumenPage = () => {
                                 </div>
                                 <div>
                                     <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">Beneficios Usados</p>
-                                    <p className="text-2xl font-black text-slate-800 dark:text-white">12 Beneficios</p>
+                                    <p className="text-2xl font-black text-slate-800 dark:text-white">
+                                        {totalBeneficiosUsados} {totalBeneficiosUsados === 1 ? 'Beneficio' : 'Beneficios'}
+                                    </p>
                                 </div>
                             </div>
                             <div className="bg-white dark:bg-[#161024] border border-slate-200 dark:border-white/5 rounded-2xl p-5 flex items-center gap-4 shadow-sm">
@@ -293,7 +339,7 @@ const ResumenPage = () => {
                 </div>
             )}
 
-            {/* 📊 VISTA 3: TABLERO SHADCN UI + RECHARTS (PRENSA)                          */}
+            {/* 📊 VISTA 3: TABLERO SHADCN UI + RECHARTS (PRENSA)     MOCKS                     */}
             {/* ========================================================================= */}
             {esPrensa && (
                 <div className="space-y-6">
