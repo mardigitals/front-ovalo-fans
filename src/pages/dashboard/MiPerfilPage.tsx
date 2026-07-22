@@ -138,81 +138,97 @@ const MiPerfilPage = () => {
   const guardarCambios = async () => {
     setGuardando(true);
     try {
-      const token = localStorage.getItem('token');
-      
-      // 1. Rescatamos los IDs exactos de la memoria (los trajimos en el GET inicial)
+      const token = localStorage.getItem('token');      
       const usuarioId = datosPerfil?.usuario?.id;
       const perfilFanId = datosPerfil?.perfil_fan?.id;
+      const perfilStaffId = datosPerfil?.perfil_staff?.id;
+      const rol = datosPerfil?.rol; 
+      const esStaff = rol && rol !== 'fan';
 
-      if (!usuarioId || !perfilFanId) {
-        console.error("Bandera negra: Faltan los IDs para actualizar.");
+      // Validación de IDs corregida según el tipo de usuario
+      if (!usuarioId || (esStaff && !perfilStaffId) || (!esStaff && !perfilFanId)) {
+        console.error("Bandera negra: Faltan los IDs necesarios para actualizar.", { usuarioId, perfilFanId, perfilStaffId, esStaff });
         setGuardando(false);
         return;
       }
 
-      // 1. (OPCIONAL) Si hay una foto nueva, deberías mandarla a una ruta especial de NestJS acá.
-       let nuevaUrlAvatar = datosPerfil?.perfil_fan?.avatar;
+      let nuevaUrlAvatar = datosPerfil?.perfil_fan?.avatar || datosPerfil?.usuario?.avatar;
       
-      if (avatarFile) {
+      if (avatarFile && perfilFanId) {
         const formDataAvatar = new FormData();
         formDataAvatar.append('file', avatarFile);
         const resFoto = await fetch(`http://localhost:3000/perfil-fan/${perfilFanId}/avatar`, {
           method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: formDataAvatar
         });
         const dataFoto = await resFoto.json();
-        nuevaUrlAvatar = dataFoto.url; // Reemplazamos por la URL final que nos de el backend
+        nuevaUrlAvatar = dataFoto.url; 
       }
-      
 
-      // 2. Separamos datos
       const datosUsuario = {
         nombre: formData.nombre, apellido: formData.apellido, telefono: formData.telefono,
-        fecha_nacimiento: formData.fecha_nacimiento, genero: formData.genero, nacionalidad: formData.nacionalidad,
-        provincia: formData.provincia, ciudad: formData.ciudad, cp: formData.cp,
+        fecha_nacimiento: formData.fecha_nacimiento || datosPerfil?.usuario?.fecha_nacimiento, genero: formData.genero, nacionalidad: formData.nacionalidad || datosPerfil?.usuario?.nacionalidad,
+        pais: formData.pais, provincia: formData.provincia, ciudad: formData.ciudad, cp: formData.cp,
         calle: formData.calle, numero: formData.numero, piso: formData.piso, depto: formData.depto
       };
 
-      const datosPerfilFan = {
-        alias: formData.alias, bio: formData.bio, 
-        hincha_marca_tc: formData.hincha_marca_tc, chicana_favorita: formData.chicana_favorita,
-        avatar: nuevaUrlAvatar 
-      };
-
-      // 3. Disparamos las DOS peticiones en paralelo usando tus controladores
-      const [resUsuario, resPerfil] = await Promise.all([
-        fetch(`http://localhost:3000/usuario/${usuarioId}`, {
+      if (esStaff) {
+        // --- SI ES ADMIN / PRENSA: SOLO ACTUALIZAMOS USUARIO ---
+        const resUsuario = await fetch(`http://localhost:3000/usuario/${usuarioId}`, {
           method: 'PATCH',
           headers: { 
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}` 
           },
           body: JSON.stringify(datosUsuario)
-        }),
-        fetch(`http://localhost:3000/perfil-fan/${perfilFanId}`, {
-          method: 'PATCH',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}` 
-          },
-          body: JSON.stringify(datosPerfilFan)
-        })
-      ]);
+        });
 
-      // 4. Chequeamos que las dos hayan cruzado la meta bien
-      if (resUsuario.ok && resPerfil.ok) {
-        console.log("¡Ambas tablas actualizadas con éxito!");
-        
-        // Actualizamos los datos visuales al instante
-        setDatosPerfil((prev: any) => ({
-          ...prev,
-          usuario: { ...prev.usuario, ...datosUsuario },
-          perfil_fan: { ...prev.perfil_fan, ...datosPerfilFan }
-        }));
-        
-        setIsEditing(false);
+        if (resUsuario.ok) {
+          setDatosPerfil((prev: any) => ({
+            ...prev,
+            usuario: { ...prev.usuario, ...datosUsuario }
+          }));
+          setIsEditing(false);
+        } else {
+          const errorUsr = await resUsuario.json();
+          console.error("❌ Error al actualizar Usuario:", errorUsr.message || errorUsr);
+        }
+
       } else {
-        console.error("Hubo un error al guardar en una de las rutas", resUsuario.status, resPerfil.status);
+        // --- SI ES FAN: ACTUALIZAMOS AMBAS TABLAS ---
+        const datosPerfilFan = {
+          alias: formData.alias, 
+          bio: formData.bio, 
+          hincha_marca_tc: formData.hincha_marca_tc, 
+          chicana_favorita: formData.chicana_favorita,
+          avatar: nuevaUrlAvatar 
+        };
+
+        const [resUsuario, resPerfil] = await Promise.all([
+          fetch(`http://localhost:3000/usuario/${usuarioId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify(datosUsuario)
+          }),
+          fetch(`http://localhost:3000/perfil-fan/${perfilFanId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify(datosPerfilFan)
+          })
+        ]);
+
+        if (resUsuario.ok && resPerfil.ok) {
+          setDatosPerfil((prev: any) => ({
+            ...prev,
+            usuario: { ...prev.usuario, ...datosUsuario },
+            perfil_fan: { ...prev.perfil_fan, ...datosPerfilFan }
+          }));
+          setIsEditing(false);
+        } else {
+          if (!resUsuario.ok) console.error("❌ Error en Usuario:", await resUsuario.json());
+          if (!resPerfil.ok) console.error("❌ Error en Perfil Fan:", await resPerfil.json());
+        }
       }
+
     } catch (error) {
       console.error("Error de red al guardar:", error);
     } finally {
@@ -263,7 +279,8 @@ const MiPerfilPage = () => {
               {datosPerfil?.usuario?.nombre} {datosPerfil?.usuario?.apellido}
             </h2>
             <p className="text-institucional-celeste font-semibold mb-2">
-              {datosPerfil?.perfil_fan?.es_socio_club ? 'Socio Atlético Rafaela' : 'Fan del Óvalo'}
+              {datosPerfil?.rol === 'fan' ? 'Fan del Óvalo' : ''}
+              {datosPerfil?.rol !== 'fan' ? 'Staff del Ovalo' : ''}
             </p>
           </div>
 
@@ -407,34 +424,49 @@ const MiPerfilPage = () => {
             </div>
           </div>
         
-          {/* --- SECCIÓN 3: PERFIL FAN --- */}
-          <div className="p-3 border-t border-slate-200 dark:border-white/10">
-            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4">
-              <Flag size={20} className="text-institucional-celeste"/> Perfil Fan
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField label="Alias Fan" name="alias" value={formData.alias} onChange={handleInputChange} disabled={!isEditing} />
-              
-              <FormField label="Marca de TC preferida" name="hincha_marca_tc" value={formData.hincha_marca_tc} onChange={handleInputChange} disabled={!isEditing} options={[
-                  { value: 'Ford', label: 'Ford' }, { value: 'Chevrolet', label: 'Chevrolet' },
-                  { value: 'Dodge', label: 'Dodge' }, { value: 'Torino', label: 'Torino' },
-                  { value: 'Toyota', label: 'Toyota' }, { value: 'Bmw', label: 'Bmw' },
-                  { value: 'Mercedes', label: 'Mercedes' }
-                ]} />
+          {/* --- SECCIÓN 3: PERFIL FAN / STAFF--- */}
+          {datosPerfil?.rol !== 'fan' && (
 
-              <div className="md:col-span-2">
-                <FormField label="Chicana Favorita" name="chicana_favorita" value={formData.chicana_favorita} onChange={handleInputChange} disabled={!isEditing} options={[
-                  { value: '1 de adentro', label: '1 de adentro' }, { value: '1 de afuera', label: '1 de afuera' },
-                  { value: '2 de adentro', label: '2 de adentro' }, { value: '2 de afuera', label: '2 de afuera' },
-                  { value: '3', label: '3' }
-                ]} />
+            <div className="p-3 border-t border-slate-200 dark:border-white/10">
+              <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4">
+                <Flag size={20} className="text-institucional-celeste"/> Perfil Staff / Prensa / Admin
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <FormField label="Rol staff (No editable)" value={datosPerfil?.rol || ''} disabled={true} />
+                <FormField label="Nombre de Usuario (No editable)" value={datosPerfil?.usuario?.nombre || ''} disabled={true} />
               </div>
+            </div>  
+          )}
 
-              <div className="md:col-span-2">
-                <FormField label="Biografía (Tu historia en las pistas)" name="bio" value={formData.bio} onChange={handleInputChange} disabled={!isEditing} isTextarea={true} />
+          {datosPerfil?.rol === 'fan' && (
+            <div className="p-3 border-t border-slate-200 dark:border-white/10">
+              <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-4">
+                <Flag size={20} className="text-institucional-celeste"/> Perfil Fan
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormField label="Alias Fan" name="alias" value={formData.alias} onChange={handleInputChange} disabled={!isEditing} />
+                
+                <FormField label="Marca de TC preferida" name="hincha_marca_tc" value={formData.hincha_marca_tc} onChange={handleInputChange} disabled={!isEditing} options={[
+                    { value: 'Ford', label: 'Ford' }, { value: 'Chevrolet', label: 'Chevrolet' },
+                    { value: 'Dodge', label: 'Dodge' }, { value: 'Torino', label: 'Torino' },
+                    { value: 'Toyota', label: 'Toyota' }, { value: 'Bmw', label: 'Bmw' },
+                    { value: 'Mercedes', label: 'Mercedes' }
+                  ]} />
+
+                <div className="md:col-span-2">
+                  <FormField label="Chicana Favorita" name="chicana_favorita" value={formData.chicana_favorita} onChange={handleInputChange} disabled={!isEditing} options={[
+                    { value: '1 de adentro', label: '1 de adentro' }, { value: '1 de afuera', label: '1 de afuera' },
+                    { value: '2 de adentro', label: '2 de adentro' }, { value: '2 de afuera', label: '2 de afuera' },
+                    { value: '3', label: '3' }
+                  ]} />
+                </div>
+
+                <div className="md:col-span-2">
+                  <FormField label="Biografía (Tu historia en las pistas)" name="bio" value={formData.bio} onChange={handleInputChange} disabled={!isEditing} isTextarea={true} />
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
