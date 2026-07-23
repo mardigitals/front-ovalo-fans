@@ -14,7 +14,7 @@ const PitStopOverlay = () => {
   useEffect(() => {
     const verificarPase = async () => {
       const rol = userProfile?.rol?.toLowerCase();
-      if (['superadmin', 'administrativo', 'prensa'].includes(rol || '')) {
+      if (['superadmin', 'administrativo', 'prensa', 'comercio'].includes(rol || '')) {
         setAccesoPermitido(true);
         return;
       }
