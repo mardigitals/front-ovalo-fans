@@ -44,6 +44,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     if (rol === 'fan') {
       items.push({ to: '/dashboard/pagos', icon: <BadgeDollarSign size={20} />, label: 'Mi Billetera' });
       items.push({ to: '/dashboard/beneficios', icon: <PercentIcon size={20} />, label: 'Beneficios' });
+      items.push({ to: '/dashboard/comercios-fan', icon: <ShoppingBasket size={20} />, label: 'Comercios' });
       items.push({ to: '/dashboard/pruebas', icon: <Road size={20} />, label: 'Pruebas' });
       items.push({ to: '/dashboard/eventos', icon: <Calendar size={20} />, label: 'Eventos' });
       
