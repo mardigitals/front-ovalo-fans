@@ -24,6 +24,7 @@ import ComerciosFanPage from '@/pages/dashboard/ComerciosFanPage';
 import EventosPage from '@/pages/dashboard/EventosPage';
 import CalendarPage from '@/pages/public/CalendarPage';
 import SuscripcionesMetricasPage from '@/pages/dashboard/SuscripcionMetricasPage';
+import PruebasPage from '@/pages/dashboard/PruebasPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -62,6 +63,7 @@ const AppRoutes = () => (
             {/* Cuando crees los componentes, los ponés acá */}
             <Route path="beneficios" element={<ComerciosFanPage />} />
             <Route path="eventos" element={<EventosPage />} />
+            <Route path="pruebas" element={<PruebasPage />} />
             {/* <Route path="promociones" element={<PromocionesPage />} /> */}
           </Route>
           
