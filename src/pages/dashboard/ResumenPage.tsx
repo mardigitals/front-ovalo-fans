@@ -221,12 +221,12 @@ const ResumenPage = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     
                     {/* Tarjeta de Perfil del Fan */}
-                    <div className="bg-gradient-to-br from-[#1b1429] to-[#110c1b] border border-white/5 rounded-3xl p-6 flex flex-col items-center text-center shadow-xl relative overflow-hidden">
+                    <div className="bg-grey dark:bg-[#161024] border border-slate-200 dark:border-white/5  rounded-3xl p-6 flex flex-col items-center text-center shadow-xl relative overflow-hidden"> 
                         <div className="absolute top-4 right-4">
                             <span className={`px-3 py-1 rounded-full text-xs font-black uppercase border ${
                                 perfil?.nivelFan === 'P1' ? 'bg-amber-500/10 border-amber-500 text-amber-400' :
                                 perfil?.nivelFan === 'P2' ? 'bg-institucional-celeste/10 border-institucional-celeste text-institucional-celeste' :
-                                'bg-slate-500/10 border-slate-500 text-slate-400'
+                                'bg-slate-500/10 border-slate-500 text-black-400'
                             }`}>
                                 Socio {perfil?.nivelFan || 'Nivel P3'}
                             </span>
@@ -237,16 +237,16 @@ const ResumenPage = () => {
                             {perfil?.perfil_fan?.avatar ? (
                                 <img src={perfil.perfil_fan.avatar} alt="Avatar" className="w-full h-full object-cover rounded-full" />
                             ) : (
-                                <div className="w-full h-full bg-slate-800 rounded-full flex items-center justify-center text-slate-400">
+                                <div className="w-full h-full bg-slate-800 rounded-full flex items-center justify-center text-black-400">
                                     <User size={40} />
                                 </div>
                             )}
                         </div>
 
-                        <h2 className="text-2xl font-black text-white uppercase tracking-tight">{perfil?.nombre}</h2>
+                        <h2 className="text-2xl font-black text-black dark:text-white uppercase tracking-tight">{perfil?.nombre}</h2>
                         <p className="text-institucional-celeste font-mono text-sm mb-4">@{perfil?.perfil_fan?.alias || 'sin_apodo'}</p>
                         
-                        <div className="w-full border-t border-white/5 pt-4 mt-2 space-y-3 text-left text-sm text-slate-400">
+                        <div className="w-full border-t border-white/5 pt-4 mt-2 space-y-3 text-left text-sm text-black-400">
                             <div className="flex justify-between items-center">
                                 <span>Estado Suscripción:</span>
                                 <span className={`font-bold flex items-center gap-1 ${perfil?.estadoSuscripcion === 'Activo' ? 'text-green-400' : 'text-red-400'}`}>
@@ -255,7 +255,7 @@ const ResumenPage = () => {
                             </div>
                             <div className="flex justify-between items-center">
                                 <span>Marca de Corazón:</span>
-                                <span className="font-bold text-white uppercase">{perfil?.perfil_fan?.hincha_marca_tc || 'No definido'}</span>
+                                <span className="font-bold text-black dark:text-white uppercase">{perfil?.perfil_fan?.hincha_marca_tc || 'No definido'}</span>
                             </div>
                         </div>
                     </div>
