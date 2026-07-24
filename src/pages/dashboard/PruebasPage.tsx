@@ -35,9 +35,9 @@ const PruebasPage = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8 p-4 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/5">
           <Phone size={24} className="text-slate-400" />
           <span className="text-slate-700 dark:text-slate-300 font-medium text-center sm:text-left">
-            Para más info comunicate al{' '}
-            <a href="tel:3492123456" className="font-bold text-sky-500 hover:text-sky-400 hover:underline transition-colors">
-              3492-123456
+            Para reservar o para obtener más info comunicate al{' '}
+            <a href="tel:3492-247130" className="font-bold text-sky-500 hover:text-sky-400 hover:underline transition-colors">
+              3492-247130
             </a>
           </span>
         </div>

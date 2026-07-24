@@ -12,6 +12,7 @@ import { ClimaInfo } from '@/components/ui/ClimaInfo';
 import { EventosPieChart } from '@/components/ui/EventosPieChart';
 import { PublicacionesRadarChart } from '@/components/ui/PublicacionesRadarChart';
 import { VisualizacionesBarChart } from '@/components/ui/VisualizacionesBarChart';
+import VerificadorSuscripcion from '@/components/ui/VerificadorSuscripcion';
 
 const ResumenPage = () => {
     const [perfil, setPerfil] = useState<any>(null);
@@ -184,6 +185,7 @@ const ResumenPage = () => {
 
     const esStaff = ['superadmin', 'administrativo'].includes(perfil?.rol?.toLowerCase());
     const esPrensa = ['prensa'].includes(perfil?.rol?.toLowerCase());
+    const esComercio = ['comercio'].includes(perfil?.rol?.toLowerCase());
 
     return (
         <div className="max-w-7xl mx-auto space-y-8 pb-12 animate-in fade-in duration-500">
@@ -198,7 +200,8 @@ const ResumenPage = () => {
                     <p className="text-slate-500">
                         {esPrensa ? `Bienvenido al centro de prensa` : ''}
                         {esStaff ? `Bienvenido al centro de operaciones` : ''}
-                        {!esStaff && !esPrensa ? `Bienvenido de nuevo, Fan del Óvalo` : ''}
+                        {!esStaff && !esPrensa && !esComercio ? `Bienvenido de nuevo, Fan del Óvalo` : ''}
+                        {esComercio ? `Bienvenido al centro de comercios` : ''}
                     </p>
                 </div>
                 <div className="text-sm text-slate-400 font-mono">
@@ -214,7 +217,7 @@ const ResumenPage = () => {
             </div>
 
             {/* 🏎️ VISTA 1: TABLERO PARA FANS (INTACTA) */}
-            {!esStaff && !esPrensa && (
+            {!esStaff && !esPrensa && !esComercio && (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     
                     {/* Tarjeta de Perfil del Fan */}
@@ -355,6 +358,19 @@ const ResumenPage = () => {
                 </div>
             )}
 
+             {/* 📊 VISTA 4: Visual para Comercios */}
+            {esComercio && (
+                <div className="space-y-6">
+                    <h2 className="text-xl font-bold text-slate-800 dark:text-white">
+                        <button className="p-2 bg-institucional-celeste/10 text-institucional-celeste rounded-lg mr-2">
+                            <CheckCircle size={20} />
+                            <VerificadorSuscripcion tituloContexto="Descuento en Comercios" />
+                        </button>
+    
+                    </h2>
+                </div>
+            )}
+            
 
         </div>
     );

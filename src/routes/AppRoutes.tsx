@@ -94,7 +94,7 @@ const AppRoutes = () => (
           {/*aca van las rutas de prensa */}
             <Route path="eventos" element={<EventosPage />} />
           </Route>
-          
+
           {/* Solo SuperAdmin */}
           <Route element={<RoleGuard allowedRoles={['superadmin']} />}>
             <Route path="cuentas" element={<CuentasPage />} />  
