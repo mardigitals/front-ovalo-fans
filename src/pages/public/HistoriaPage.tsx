@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import ModalHistoria from '@/components/ui/ModalHistoria';
 import heroImage2 from '@/assets/images/hero-image-2.jpg';
 
+
 // --- DATA HISTÓRICA DEL AUTÓDROMO ---
 const ETAPAS_HISTORIA = [
   {
@@ -15,19 +16,26 @@ El grupo de audaces pilotos se alineó sobre bulevar Lehmann y calle Alem, ese f
 Así fue el principio del automovilismo en Atlético de Rafaela. Una de las historias más ricas de este deporte en Argentina. En este proceso genuino, y siempre ejemplar, está la clave para comprender cómo fue posible que desde este club del interior del país, un buen día todo Indianápolis, sus pilotos, sus máquinas y hasta su propio estilo competitivo llegara a la Argentina, atraído por una convocatoria que no reconoce igual.
 Así surgía la pasión por los fierros, la que pronto destacaría al club y a la ciudad en los más altos conceptos y niveles del país y el mundo`,
     fotos: [
-      { url: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80', epigrafe: 'Primeras máquinas preparadas en talleres locales de Rafaela.' },
-      { url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80', epigrafe: 'Público disfrutando a la vera de los caminos de tierra.' }
+      { url: '/images/modals/caballo-largada-1919.jpg', epigrafe: 'Grilla de largada en el centro de Rafaela.' },
+      { url: '/images/modals/largada-1919.jpg', epigrafe: 'Largada en calle Alem y Bv. Lehmann, ambos caminos de tierra.' },
+      { url: '/images/modals/catedral-rafaela-1919.jpg', epigrafe: 'Vista histórica de la 1 Carrera.' },
+      { url: '/images/modals/cohen-1919.jpg', epigrafe: 'Corredor J. Cohen, en 1919.' },
+      { url: '/images/modals/piovano-1919.jpg', epigrafe: 'O. Piovano, ganador de la histórica  Carrera.' },
+      { url: '/images/modals/recorte-diario-1919.jpg', epigrafe: 'Recorte de diario alusivo a la primera Carrera.' }
     ]
   },
   {
     id: 'etapa-2',
-    periodo: '1926 - 1975',
+    periodo: '1926 - 1970',
     titulo: '500 Millas Argentinas',
-    resumen: 'La consagración nacional y la mítica competencia en el óvalo de tierra.',
-    descripcionLarga: `Las 500 Millas Argentinas se convirtieron en la prueba automovilística más importante y desafiante del país. Pilotos de talla nacional e internacional llegaban a Rafaela para desafiar el óvalo de tierra en una prueba de resistencia extrema para hombres y máquinas. El esfuerzo organizativo del Club Atlético Rafaela consolidó al circuito en el corazón de todo el deporte motor sudamericano.`,
+    resumen: 'La consagración nacional y la mítica competencia en el óvalo de distintos tamaños.',
+    descripcionLarga: `La posibilidad de las 500 Millas Argentinas cobró fuerza y su realización fue abordada por la Comisión Directiva. El 3 de marzo de 1926 se dispuso definitivamente encarar la atrevida idea y el 27 de marzo en el libro de actas del club se deja asentado que: “estando todo dispuesto favorablemente se correrán las primeras 500 Millas Argentinas».
+El 6 de junio de 1926 a las 7 de la mañana 29 autos hacían tronar el piso de tierra. Más de 40 mil personas esperaban la largada. La carrera se disputaría en un circuito de caminos vecinales, ubicado a 2.000 metros al Oeste de la hoy Ruta 34, en la prolongación del Bulevar Roca, Un dibujo de aproximadamente 37 Km que debía ser recorrido en 21 oportunidades y así encontrar una equivalencia gaucha de las 500 Millas Gringas en Indianápolis.
+Se pusieron en marcha los cronómetros desde un vagón de tren que a un costado constituía un lugar preferencial para las autoridades de la competencia entre ellos los fiscalizadores enviados desde Buenos Aires por el ACA (Automóvil Club Argentino). Ruido de motores, gritos, aplausos, huellas, tierra por el aire, se largaron las 500 millas, la gran historia empezaba a escribirse. A las 2 horas de carrera se desató un temporal para que la competencia fuera más dramática en la lluvia y el barro. Domingo Bucci, quien figuró como el primer inscripto en la nómina se había situado en el liderazgo con su automóvil Hudson y ahí permaneció hasta que finalmente llegó la suspensión. El reloj marcaba 2 horas, 15 minutos y 1 segundo de carrera.
+Pasarían semanas para que se retome la prueba deportiva, se produce una fuerte ruptura de relaciones entre Atlético y el Automóvil Club Argentino. La confusión ganó a muchos y las desprolijidades propias de la inexperiencia hicieron que se cometieran muchos errores al reanudar la prueba después de muchos intentos y postergaciones. Recién el 29 de agosto de 1926 se reanudan las 500 Millas Argentinas. Fue ese entonces el momento donde Raúl Riganti, piloto que llegó desde Buenos Aires y se convirtió en el memorable ganador del primer gran carrerón de la República Argentina.`,
     fotos: [
-      { url: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80', epigrafe: 'Largada histórica de las 500 Millas.' },
-      { url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80', epigrafe: 'Repleto de fanáticos en las tribunas de madera originales.' }
+      { url: '/images/modals/largada-1926.jpg', epigrafe: 'Largada histórica de la 1 500 Millas Argentinas.' },
+      { url: '/images/modals/llegada-1926.jpg', epigrafe: 'Bandera a cuadros para Riganti.' }
     ]
   },
   {

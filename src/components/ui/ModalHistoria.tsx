@@ -29,33 +29,33 @@ const ModalHistoria = ({ etapa, onClose }: ModalHistoriaProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
-      <div className="w-full max-w-3xl bg-[#110c1b] border border-white/10 rounded-2xl shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-[999] flex items-center justify-center p-2 md:p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
+      <div className="w-full max-w-4xl bg-[#110c1b] border border-white/10 rounded-2xl shadow-2xl relative overflow-hidden flex flex-col max-h-[95vh] md:max-h-[90vh]">
         
         {/* BOTÓN CERRAR */}
         <button 
           onClick={onClose} 
-          className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors bg-white/5 p-2 rounded-full z-20"
+          className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors bg-black/50 backdrop-blur-md p-2 rounded-full z-20"
         >
           <X size={20} />
         </button>
 
         {/* ENCABEZADO MODAL */}
-        <div className="p-6 border-b border-white/10 bg-black/40">
+        <div className="p-4 md:p-6 border-b border-white/10 bg-black/40 flex-shrink-0">
           <div className="flex items-center gap-2 text-institucional-celeste font-mono text-xs uppercase tracking-widest mb-1">
             <Calendar size={14} /> {etapa.periodo}
           </div>
-          <h2 className="text-2xl font-black text-white uppercase tracking-tight">
+          <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight">
             {etapa.titulo}
           </h2>
         </div>
 
         {/* CAROUSEL DE FOTOS */}
-        <div className="relative w-full h-[320px] bg-black flex items-center justify-center group overflow-hidden">
+        <div className="relative w-full h-[300px] md:h-[300px] lg:h-[300px] flex-shrink-0 bg-black flex items-center justify-center group overflow-hidden">
           <img 
             src={etapa.fotos[currentIndex].url} 
             alt={etapa.fotos[currentIndex].epigrafe}
-            className="w-full h-full object-cover transition-all duration-500"
+            className="w-full h-full object-contain transition-all duration-500"
           />
           
           {/* Controles de navegación del Carousel */}
@@ -83,12 +83,13 @@ const ModalHistoria = ({ etapa, onClose }: ModalHistoriaProps) => {
         </div>
 
         {/* HISTORIA ESCRITA ABAJO Y EPÍGRAFE */}
-        <div className="p-6 overflow-y-auto space-y-4 bg-[#110c1b] flex-grow">
+        {/* CAMBIO: Reducimos padding a p-4 para dejarle más lugar visual a la foto */}
+        <div className="p-4 md:p-6 overflow-y-auto space-y-4 bg-[#110c1b] flex-grow custom-scrollbar">
           <div className="text-xs text-institucional-celeste italic font-medium bg-institucional-celeste/10 p-2 rounded-lg border border-institucional-celeste/20">
-            📷 <strong>Foto actual:</strong> {etapa.fotos[currentIndex].epigrafe}
+            {etapa.fotos[currentIndex].epigrafe}
           </div>
           
-          <div className="text-slate-300 text-sm leading-relaxed space-y-3 whitespace-pre-line">
+          <div className="text-slate-300 text-sm leading-relaxed space-y-3 whitespace-pre-line pb-4">
             {etapa.descripcionLarga}
           </div>
         </div>
