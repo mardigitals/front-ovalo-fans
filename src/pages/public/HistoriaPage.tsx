@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import ModalHistoria from '@/components/ui/ModalHistoria';
+import heroImage2 from '@/assets/images/hero-image-2.jpg';
 
 // --- DATA HISTÓRICA DEL AUTÓDROMO ---
 const ETAPAS_HISTORIA = [
@@ -96,7 +97,7 @@ const HistoriaPage = () => {
         
         {/* 1. Textura de Tierra (Arriba) - Corregido para cubrir sin repetir */}
         <div 
-          className="absolute top-0 left-0 w-full h-[800px] bg-cover opacity-30"
+          className="absolute top-0 left-0 w-full h-[800px] bg-cover opacity-40"
           style={{ 
             backgroundImage: `url('public/bg/tierra-fondo.webp')`, 
             maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)',
@@ -121,24 +122,37 @@ const HistoriaPage = () => {
         {/* ENCABEZADO CON LOGO DEL AUTÓDROMO */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
           
-          {/* Logo adaptable - Le sumamos un pequeño scale al hacer hover para darle interactividad */}
-          <div className="inline-flex justify-center p-5 bg-white dark:bg-institucional-celeste/10 border border-slate-200 dark:border-institucional-celeste/30 rounded-3xl shadow-md dark:shadow-[0_0_20px_rgba(14,165,233,0.2)] mb-2 transition-all duration-300 hover:scale-105"> 
+            {/* Logo adaptable - Le sumamos un pequeño scale al hacer hover para darle interactividad */}
+            <div className="inline-flex justify-center p-5 bg-white dark:bg-institucional-celeste/10 border border-slate-200 dark:border-institucional-celeste/30 rounded-3xl shadow-md dark:shadow-[0_0_20px_rgba(14,165,233,0.2)] mb-2 transition-all duration-300 hover:scale-105"> 
                <img src="src/assets/icons/logo-autodromo-horizontal-color.png" alt="Logo Autódromo Rafaela" className="justify-center" />
-          </div>
-          {/* Textos con adaptabilidad dark/light */}
-        <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-slate-900 dark:text-white transition-colors">
-            Historia del <span className="text-institucional-celeste inline-flex justify-center px-4 py-4 shadow-[0_0_20px_rgba(14,165,233,0.2)] m-4 rounded-3xl border-slate-200 "> Automovilismo de </span> Rafaela
-        </h1>
-          <p className="text-slate-600 dark:text-slate-400 text-lg transition-colors">
-            Desde la tierra y los paraísos, hasta el asfalto entre paredones.
-          </p>
-          <p className="text-slate-600 dark:text-slate-400 text-lg transition-colors">
-           <em><strong> Rafaela, cumbre del automovilismo argentino.</strong></em>
-          </p>
-          <p className="text-slate-600 dark:text-slate-400 text-lg transition-colors">
-             Más de un siglo de pasión, velocidad y gloria.
-          </p>
+            </div>
+            {/* Textos con adaptabilidad dark/light */}
+            <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-slate-900 dark:text-white transition-colors">
+                Historia del <span className="text-institucional-celeste inline-flex justify-center px-4 py-4 shadow-[0_0_20px_rgba(14,165,233,0.2)] m-4 rounded-3xl border-slate-200 "> Automovilismo de </span> Rafaela
+            </h1>
+            <p className="text-slate-600 dark:text-slate-600 text-lg transition-colors">
+                Desde la tierra y los paraísos, hasta el asfalto entre paredones.
+            </p>
+            <h2 className="subtitle-fan">Rafaela, cumbre del automovilismo argentino</h2>
+            <p className="text-slate-600 dark:text-slate-600 text-lg transition-colors">
+                <em>Más de un siglo de pasión, velocidad y gloria.</em>
+            </p> 
         </div>
+        
+       {/* Foto hero histórica fundida en el fondo */}
+        <div className="relative w-full mx-auto h-[70vh] md:h-[70vh] mt-4 mb-32 flex items-center justify-center pointer-events-none">
+            <img 
+              src={heroImage2} 
+              alt="Pista Circuito antiguo de Rafaela" 
+              // opacity-30 la hace transparente. mix-blend-luminosity hace que tome el color de la tierra de fondo.
+              className="w-full h-full object-cover opacity-30 dark:opacity-25 mix-blend-luminosity grayscale" 
+              style={{
+                // Esto crea un difuminado perfecto: sólido en el centro, transparente en los bordes
+                maskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 70%)',
+                WebkitMaskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 70%)'
+              }}
+            />
+        </div>   
 
         {/* GRILLA DE TARJETAS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:pb-12">
