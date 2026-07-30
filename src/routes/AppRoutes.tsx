@@ -26,6 +26,7 @@ import CalendarPage from '@/pages/public/CalendarPage';
 import SuscripcionesMetricasPage from '@/pages/dashboard/SuscripcionMetricasPage';
 import PruebasPage from '@/pages/dashboard/PruebasPage';
 import BeneficiosPage from '@/pages/dashboard/BeneficiosPage';
+import HistoriaPage from '@/pages/public/HistoriaPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -41,6 +42,7 @@ const AppRoutes = () => (
       <Route path="/terms-conditions" element={<TermsConditionsPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/calendario" element={<CalendarPage />} />
+      <Route path="/historia" element={<HistoriaPage  />} />
       {/* RUTAS DE RETORNO DE MERCADO PAGO (Públicas) */}
       <Route path="/pago/exito" element={<PagoExitoPage />} />
       <Route path="/pago/error" element={<PagoErrorPage />} />

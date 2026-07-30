@@ -21,6 +21,8 @@ export default {
         'firma': ['"Playwrite US Modern"', 'cursive'],
       },
     },
-    plugins: [],
+    plugins: [
+      require("tailwindcss-animate"), // <-- Agregás esta línea
+    ],
   }
 }
