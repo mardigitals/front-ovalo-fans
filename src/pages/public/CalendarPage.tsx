@@ -27,7 +27,7 @@ const CalendarPage = () => {
   }, []);
 
   return (
-    <main className="flex flex-col min-h-screen bg-zinc dark:bg-[#08060d] transition-colors duration-300">
+    <main className="flex flex-col pt-16 min-h-screen bg-zinc dark:bg-[#08060d] transition-colors duration-300">
       
       {/* HEADER HERO (Adaptado a menor altura para dar espacio al calendario) */}
       <header className="absolute top-0 w-full h-[50vh] flex-shrink-0 overflow-hidden bg-gradient-to-r from-transparent via-white/20 to-transparent z-0">

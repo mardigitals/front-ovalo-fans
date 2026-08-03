@@ -4,7 +4,7 @@ import { FacebookIcon, InstagramIcon, TikTokIcon } from '@/components/ui/SocialI
 
 const ContactoPage = () => {
   return (
-    <main className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#08060d] transition-colors duration-300">
+    <main className="flex flex-col pt-16 min-h-screen bg-slate-50 dark:bg-[#08060d] transition-colors duration-300">
       
       <div className="flex-grow flex flex-col items-center justify-center p-4 py-16 md:py-24 animate-in fade-in duration-500 relative z-10">
         

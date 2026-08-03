@@ -97,7 +97,7 @@ const HistoriaPage = () => {
   const [etapaSeleccionada, setEtapaSeleccionada] = useState<any>(null);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-black transition-colors duration-300 relative overflow-hidden">
+    <div className="min-h-screen pt-16 bg-slate-50 dark:bg-black transition-colors duration-300 relative overflow-hidden">
       
       {/* 🏁 FONDO DINÁMICO (SOLO VISIBLE EN DARK MODE) */}
       <div className="hidden dark:block absolute inset-0 z-0 pointer-events-none overflow-hidden">
