@@ -69,7 +69,7 @@ const PublicLayout = () => {
             
             <div className="flex justify-center py-2">
               <button onClick={toggleTheme} className="p-2 rounded-full bg-slate-100 dark:bg-white/5 transition-colors text-xl">
-                {isDark ? '☀️ Modo Claro' : '🌙 Modo Oscuro'}
+                {isDark ? '☀️' : '🌙'}
               </button>
             </div>
             
@@ -90,8 +90,8 @@ const PublicLayout = () => {
         &copy; {new Date().getFullYear()} Autódromo Rafaela.  Todos los derechos reservados. 
         <p className="flex items-center justify-center gap-2">
           Desarrollado por 
-          <img src={logoMar} alt="Logo MAR digitals" className="h-20 w-auto dark:hidden" />
-          <img src={logoDark} alt="Logo MAR digitals" className="h-20 w-auto hidden dark:block" />
+          <img src={logoMar} alt="Logo MAR digitals" className="h-10 md:h-20 w-auto dark:hidden" />
+          <img src={logoDark} alt="Logo MAR digitals" className="h-10 md:h-20 w-auto hidden dark:block" />
         </p>
       </footer>
     </div>

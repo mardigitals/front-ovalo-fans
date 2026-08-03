@@ -35,14 +35,16 @@ const AppRoutes = () => (
       {/* Rutas Públicas */}
       <Route path="/" element={<PublicLayout />}>
         <Route index element={<HomePage />} />
+        <Route path="/calendario" element={<CalendarPage />} />
+        <Route path="/historia" element={<HistoriaPage  />} />
       </Route>
+      
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/terms-conditions" element={<TermsConditionsPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="/calendario" element={<CalendarPage />} />
-      <Route path="/historia" element={<HistoriaPage  />} />
+     
       {/* RUTAS DE RETORNO DE MERCADO PAGO (Públicas) */}
       <Route path="/pago/exito" element={<PagoExitoPage />} />
       <Route path="/pago/error" element={<PagoErrorPage />} />
