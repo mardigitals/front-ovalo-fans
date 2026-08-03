@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import ModalHistoria from '@/components/ui/ModalHistoria';
 import heroImage2 from '@/assets/images/hero-image-2.jpg';
 import ButtonHome from '@/components/ui/ButtonHome'; 
+import Footer from '@/components/ui/Footer';
 
 
 // --- DATA HISTÓRICA DEL AUTÓDROMO ---
@@ -228,9 +229,10 @@ const HistoriaPage = () => {
       />
       
       {/* BOTÓN FLOTANTE PARA VOLVER A LA WEB */}
+      <ButtonHome />
       
-        <ButtonHome />
-     
+      {/* FOOTER */ }
+      <Footer />    
 
     </div>
   );
