@@ -107,7 +107,7 @@ const HistoriaPage = () => {
         <div 
           className="absolute top-0 left-0 w-full h-[800px] bg-cover opacity-40"
           style={{ 
-            backgroundImage: `url('public/bg/tierra-fondo.webp')`, 
+            backgroundImage: `url('/bg/tierra-fondo.webp')`, 
             maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)',
             WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)'
           }}
@@ -117,7 +117,7 @@ const HistoriaPage = () => {
         <div 
           className="absolute bottom-0 left-0 w-full h-[800px] bg-cover opacity-50"
           style={{ 
-            backgroundImage: `url('public/bg/asfalto-fondo.webp')`, 
+            backgroundImage: `url('/bg/asfalto-fondo.webp')`, 
             maskImage: 'linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)',
             WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)'
           }}
