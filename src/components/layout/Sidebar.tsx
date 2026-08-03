@@ -121,8 +121,9 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
             {rol === 'fan' ? `Socio Nivel ${nivelFan}` : `Staff: ${userProfile?.rol}`}
           </span>
 
-        {/* BOTON VOLVER A LA WEB*/ }
-          <ButtonHome />
+          {/* BOTON VOLVER A LA WEB*/ }
+          <ButtonHome />          
+
         </div>
 
         {/* MENÚ DE NAVEGACIÓN */}
