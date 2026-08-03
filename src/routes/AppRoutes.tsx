@@ -27,6 +27,8 @@ import SuscripcionesMetricasPage from '@/pages/dashboard/SuscripcionMetricasPage
 import PruebasPage from '@/pages/dashboard/PruebasPage';
 import BeneficiosPage from '@/pages/dashboard/BeneficiosPage';
 import HistoriaPage from '@/pages/public/HistoriaPage';
+import ContactoPage from '@/pages/public/ContactoPage';
+// import GaleriaPage from '@/pages/public/GaleriaPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -37,8 +39,11 @@ const AppRoutes = () => (
         <Route index element={<HomePage />} />
         <Route path="/calendario" element={<CalendarPage />} />
         <Route path="/historia" element={<HistoriaPage  />} />
+        <Route path="/contacto" element={<ContactoPage />} />
+        {/* <Route path="/galeria" element={<GaleriaPage />} /> */}
+
       </Route>
-      
+
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
