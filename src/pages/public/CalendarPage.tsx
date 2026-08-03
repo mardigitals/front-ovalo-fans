@@ -43,9 +43,7 @@ const CalendarPage = () => {
       </header>  
 
       {/* BOTÓN FLOTANTE PARA VOLVER A LA WEB */}
-      <div className="fixed top-6 left-6 z-50">
-        <ButtonHome />
-      </div>
+      <ButtonHome />
 
       <section className="relative z-10 flex flex-col items-center px-4 py-16 md:py-20 w-full max-w-6xl mx-auto flex-grow">
         

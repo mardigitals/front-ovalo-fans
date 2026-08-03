@@ -228,9 +228,9 @@ const HistoriaPage = () => {
       />
       
       {/* BOTÓN FLOTANTE PARA VOLVER A LA WEB */}
-      <div className="fixed top-6 left-6 z-50">
+      
         <ButtonHome />
-      </div>
+     
 
     </div>
   );
