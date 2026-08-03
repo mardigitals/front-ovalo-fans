@@ -4,6 +4,7 @@ import logo from '@/assets/icons/logo-autodromo-negro.png';
 import logoDark from '@/assets/icons/logo-autodromo-blanco.png';
 import api from '@/api/axios';
 import CalendarioVisualizador from '@/components/ui/Calendar';
+import ButtonHome from '@/components/ui/ButtonHome';
 
 const CalendarPage = () => {
   const [eventos, setEventos] = useState<any[]>([]);
@@ -40,6 +41,11 @@ const CalendarPage = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc/80 to-zinc dark:via-[#08060d]/80 dark:to-[#08060d]" />
         </div>
       </header>  
+
+      {/* BOTÓN FLOTANTE PARA VOLVER A LA WEB */}
+      <div className="fixed top-6 left-6 z-50">
+        <ButtonHome />
+      </div>
 
       <section className="relative z-10 flex flex-col items-center px-4 py-16 md:py-20 w-full max-w-6xl mx-auto flex-grow">
         

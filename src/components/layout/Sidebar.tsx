@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, FileChartColumn, BadgeDollarSign, ShieldUser, Calendar, Film, Gift, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, ChevronLeft, X, Shield, Camera, Star, Settings, PercentIcon, FastForward, LockKeyholeOpen, Flag, Info, UserRoundKey, ShoppingBasket, Check, ChartCandlestick, ShieldCheck } from 'lucide-react';
+import { FileChartColumn, BadgeDollarSign, ShieldUser, Calendar, Film, Gift, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, X, Shield, Camera, Star, Settings, PercentIcon, FastForward, LockKeyholeOpen, Flag, Info, UserRoundKey, ShoppingBasket, Check, ChartCandlestick, ShieldCheck } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import { useTheme } from '@/hooks/useTheme'; // <-- Importamos el hook
+import { useTheme } from '@/hooks/useTheme'; 
+import ButtonHome from '@/components/ui/ButtonHome'; 
 
 // 1. Subcomponente para los botones del menú
 const SidebarItem = ({ to, icon, label, isActive, onClick }: { to: string; icon: React.ReactNode; label: string; isActive?: boolean; onClick?: () => void }) => (
@@ -121,14 +122,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
           </span>
 
         {/* BOTON VOLVER A LA WEB*/ }
-          <button 
-            onClick={() => window.location.href = '/'} 
-            className="flex items-center mt-2 gap-3 text-slate-600 dark:text-institucional-gris w-full px-4 py-1 rounded-lg glass-neon-btn group"
-          >
-            <ChevronLeft size={20} className="group-hover:text-institucional-celeste transition-colors" />
-            <Home size={20} className="group-hover:text-institucional-celeste transition-colors" />
-            <span className="font-small transition-colors">Inicio</span>
-          </button>
+          <ButtonHome />
         </div>
 
         {/* MENÚ DE NAVEGACIÓN */}

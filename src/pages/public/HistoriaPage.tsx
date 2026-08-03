@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import ModalHistoria from '@/components/ui/ModalHistoria';
 import heroImage2 from '@/assets/images/hero-image-2.jpg';
+import ButtonHome from '@/components/ui/ButtonHome'; 
 
 
 // --- DATA HISTÓRICA DEL AUTÓDROMO ---
@@ -225,6 +226,11 @@ const HistoriaPage = () => {
         etapa={etapaSeleccionada} 
         onClose={() => setEtapaSeleccionada(null)} 
       />
+      
+      {/* BOTÓN FLOTANTE PARA VOLVER A LA WEB */}
+      <div className="fixed top-6 left-6 z-50">
+        <ButtonHome />
+      </div>
 
     </div>
   );
