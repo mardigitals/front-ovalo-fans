@@ -28,7 +28,7 @@ import PruebasPage from '@/pages/dashboard/PruebasPage';
 import BeneficiosPage from '@/pages/dashboard/BeneficiosPage';
 import HistoriaPage from '@/pages/public/HistoriaPage';
 import ContactoPage from '@/pages/public/ContactoPage';
-// import GaleriaPage from '@/pages/public/GaleriaPage';
+import GaleriaPage from '@/pages/public/GaleriaPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -40,7 +40,7 @@ const AppRoutes = () => (
         <Route path="/calendario" element={<CalendarPage />} />
         <Route path="/historia" element={<HistoriaPage  />} />
         <Route path="/contacto" element={<ContactoPage />} />
-        {/* <Route path="/galeria" element={<GaleriaPage />} /> */}
+        <Route path="/galeria" element={<GaleriaPage />} />
 
       </Route>
 

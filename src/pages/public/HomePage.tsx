@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/images/hero-image.png';
 import Footer from '@/components/ui/Footer';
+import videoHero from '@/assets/videos/ovalo-animacion.mp4';
+import videoHeroDark from '@/assets/videos/ovalo-animacion-dark.mp4';
 
 const HomePage = () => (
   <main className="flex flex-col min-h-screen bg-zinc dark:bg-[#08060d] transition-colors duration-300">
@@ -40,7 +42,20 @@ const HomePage = () => (
             </p>
         </div>
       </div>
+    </section>
 
+    {/* video hero */}
+    <div className="relative w-full h-[40vh] md:h-screen flex-shrink-0 overflow-hidden">
+      <div className="absolute inset-0">
+        <video src={videoHero} autoPlay loop muted playsInline className="w-full h-full dark:hidden object-cover" />
+        <video src={videoHeroDark} autoPlay loop muted playsInline className="w-full h-full object-cover hidden dark:block" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#f4f4f5] dark:to-[#08060d]" />
+      </div>
+    </div>
+    
+    {/* <section> */}
+    <section className="relative z-10 flex flex-col items-center text-center px-6 py-16 md:py-24 max-w-4xl mx-auto">
+    
       {/* Navegación de acción */}
       <nav className="flex flex-col items-center gap-8">
         <Link 
