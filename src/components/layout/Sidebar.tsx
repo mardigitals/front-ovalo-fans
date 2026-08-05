@@ -53,7 +53,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       
       if (nivelFan === 'P1' || nivelFan === 'P2') {
         items.push({ to: '/dashboard/fast-pass', icon: <FastForward size={20} />, label: 'Fast Access' });
-        items.push({ to: '/dashboard/fotos-exclusivas', icon: <LockKeyholeOpen size={20} />, label: 'Fotos inéditas' });
+        items.push({ to: '/galeria', icon: <LockKeyholeOpen size={20} />, label: 'Fotos inéditas' });
         items.push({ to: '/dashboard/visitas', icon: <Camera size={20} />, label: 'Visitas guiadas' });
         items.push({ to: '/dashboard/descuentos', icon: <Gift size={20} />, label: 'Regalo SUPERFAN' });
       }

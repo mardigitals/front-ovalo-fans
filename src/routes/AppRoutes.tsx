@@ -82,7 +82,7 @@ const AppRoutes = () => (
           <Route element={<NivelGuard allowedNiveles={['P1', 'P2']} />}>
             {/* Cuando crees los componentes, los ponés acá */}
             <Route path="fast-pass" element={<FastPassPage />} />
-            {/* <Route path="fotos-exclusivas" element={<FotosExclusivasPage />} /> */}
+            <Route path="galeria" element={<GaleriaPage />} />
           </Route>
 
           {/*  SECTOR ALTO (P1) */}
