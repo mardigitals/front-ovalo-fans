@@ -180,7 +180,7 @@ const HistoriaPage = () => {
                 key={etapa.id}
                 onClick={() => setEtapaSeleccionada(etapa)}
                 // Fondo blanco en light, negro/gris en dark
-                className={`bg-white dark:bg-[#111] backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-institucional-celeste/50 hover:shadow-lg dark:hover:shadow-[0_0_25px_rgba(14,165,233,0.2)] transition-all duration-300 group relative flex flex-col h-full overflow-hidden cursor-pointer ${escalonadoClass}`}
+                className={`bg-zinc-200 dark:bg-[#111] backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-institucional-celeste/50 hover:shadow-lg dark:hover:shadow-[0_0_25px_rgba(14,165,233,0.2)] transition-all duration-300 group relative flex flex-col h-full overflow-hidden cursor-pointer ${escalonadoClass}`}
               >
                 {/* Bandera a cuadros superior */}
                 <div className="absolute top-0 left-0 w-full h-2 bg-[conic-gradient(#ffffff_90deg,#1e293b_90deg_180deg,#ffffff_180deg_270deg,#1e293b_270deg)] bg-[length:12px_12px] opacity-80"></div>

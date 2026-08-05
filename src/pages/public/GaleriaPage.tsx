@@ -81,7 +81,7 @@ const GaleriaPage = () => {
   }, [contenidos, searchTerm]);
 
   return (
-    <main className="min-h-screen bg-slate-50 dark:bg-[#08060d] transition-colors duration-300 pt-20 pb-12">
+    <main className="min-h-screen bg-slate-200 dark:bg-[#08060d] transition-colors duration-300 pt-20 pb-12">
       
       {/* Fondo decorativo global */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -133,9 +133,9 @@ const GaleriaPage = () => {
                 return (
                   <article 
                     key={item.id} 
-                    className="flex flex-col bg-white/40 dark:bg-[#ffffff05] backdrop-blur-xl border border-white/50 dark:border-white/10 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(14,165,233,0.1)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] transition-all duration-300 group"
+                    className="flex flex-col bg-white/90 dark:bg-[#ffffff05] backdrop-blur-xl border border-slate-200 dark:border-white/20 rounded-2xl overflow-hidden shadow-xl hover:shadow-[0_8px_30px_rgba(14,165,233,0.8)] dark:hover:shadow-[0_8px_30px_rgba(14,165,233,0.8)] transition-all duration-300 group"
                   >
-                    
+                  
                     {/* CONTENEDOR DE IMAGEN */}
                     <div className="relative aspect-video w-full overflow-hidden bg-slate-200 dark:bg-black/50">
                       
@@ -206,7 +206,7 @@ const GaleriaPage = () => {
                         ) : (
                           <Link 
                             to={`/galeria/${item.id}`} // Enrutamos al detalle o abrimos modal
-                            className="w-full flex items-center justify-center gap-2 py-3 bg-sky-500/10 text-sky-600 dark:text-sky-400 hover:bg-sky-500 hover:text-white rounded-xl font-bold transition-colors border border-sky-500/20"
+                            className="w-full flex items-center justify-center gap-2 py-3 bg-sky-500/10 text-sky-600 dark:text-sky-400 dark:hover:text-sky-100 hover:bg-sky-500  hover:text-white rounded-xl font-bold transition-colors border border-sky-500/20"
                           >
                             Ver {item.tipo.toLowerCase()}
                           </Link>
