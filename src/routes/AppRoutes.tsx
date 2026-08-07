@@ -29,6 +29,7 @@ import BeneficiosPage from '@/pages/dashboard/BeneficiosPage';
 import HistoriaPage from '@/pages/public/HistoriaPage';
 import ContactoPage from '@/pages/public/ContactoPage';
 import GaleriaPage from '@/pages/public/GaleriaPage';
+import GestionContenidoPage from '@/pages/dashboard/GestionContenidoPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -73,7 +74,6 @@ const AppRoutes = () => (
             {/* Cuando crees los componentes, los ponés acá */}
             <Route path="beneficios" element={<BeneficiosPage />} />
             <Route path="comercios-fan" element={<ComerciosFanPage />} />
-            <Route path="eventos" element={<EventosPage />} />
             <Route path="pruebas" element={<PruebasPage />} />
             {/* <Route path="promociones" element={<PromocionesPage />} /> */}
           </Route>
@@ -102,6 +102,7 @@ const AppRoutes = () => (
           <Route element={<RoleGuard allowedRoles={['superadmin', 'prensa']} />}>
           {/*aca van las rutas de prensa */}
             <Route path="eventos" element={<EventosPage />} />
+            <Route path="contenido" element={<GestionContenidoPage />} />
           </Route>
 
           {/* Solo SuperAdmin */}

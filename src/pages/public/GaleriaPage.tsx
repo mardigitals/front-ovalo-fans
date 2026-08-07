@@ -236,12 +236,14 @@ const GaleriaPage = () => {
                             <Lock size={16} /> Subir de Nivel
                           </Link>
                         ) : (
-                          <Link 
-                            to={`/galeria/${item.id}`}
+                          <a 
+                            href={item.url_recurso}
+                            target="_blank" 
+                            rel="noopener noreferrer"
                             className="w-full flex items-center justify-center gap-2 py-3 bg-sky-500/10 text-sky-600 dark:text-sky-400 dark:hover:text-sky-100 hover:bg-sky-500 hover:text-white rounded-xl font-bold transition-colors border border-sky-500/20"
                           >
                             Ver {item.tipo}
-                          </Link>
+                          </a>
                         )}
                       </div>
                     </div>
