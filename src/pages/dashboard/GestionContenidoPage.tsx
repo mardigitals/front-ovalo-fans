@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GenericCrud from '@/components/ui/GenericCrud';
 import { useAuth } from '@/hooks/useAuth';
-import { X, AlertTriangle, Upload, Link as LinkIcon } from 'lucide-react'; 
+import { X, AlertTriangle, Upload, Link as LinkIcon, HardDrive } from 'lucide-react'; 
 import api from '@/api/axios';
 
 const initialState = {
@@ -24,6 +24,10 @@ const GestionContenidoPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   
+  // 🔥 ESTADO PARA ARCHIVOS Y ENLACES EXTERNOS
+  const [archivoFisico, setArchivoFisico] = useState<File | null>(null);
+  const [usarEnlace, setUsarEnlace] = useState(true); // Arranca true porque el initial es 'noticia'
+  
   // Paginación
   const [paginaActual, setPaginaActual] = useState(1);
   const limitePorPagina = 10;
@@ -36,7 +40,6 @@ const GestionContenidoPage = () => {
 
   const fetchContenidos = async () => {
     try {
-      // Reemplazá la ruta si tu api/axios usa otro prefijo
       const response = await api.get('/contenido-multimedia');
       setContenidos(response.data);
     } catch (error) {
@@ -46,26 +49,32 @@ const GestionContenidoPage = () => {
 
   useEffect(() => { fetchContenidos(); }, []);
 
-  // Resetear a la página 1 al buscar
   useEffect(() => {
     setPaginaActual(1);
   }, [searchTerm]);
 
-  // 1. Filtrado
   const datosFiltrados = contenidos.filter(c =>
     c.titulo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     c.tipo?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // 2. Paginación
   const indiceUltimoItem = paginaActual * limitePorPagina;
   const indicePrimerItem = indiceUltimoItem - limitePorPagina;
   const contenidosPaginados = datosFiltrados.slice(indicePrimerItem, indiceUltimoItem);
   const totalPaginas = Math.ceil(datosFiltrados.length / limitePorPagina);
 
-  // Handlers del Formulario
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
+    
+    // Lógica para alternar inputs automáticamente según el tipo de contenido
+    if (name === 'tipo') {
+      if (value === 'noticia') {
+        setUsarEnlace(true);
+      } else {
+        setUsarEnlace(false);
+      }
+    }
+
     if (type === 'checkbox') {
       const checked = (e.target as HTMLInputElement).checked;
       setFormData(prev => ({ ...prev, [name]: checked }));
@@ -74,9 +83,17 @@ const GestionContenidoPage = () => {
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setArchivoFisico(e.target.files[0]);
+    }
+  };
+
   const handleAdd = () => {
     setContenidoEditando(null); 
     setFormData(initialState); 
+    setArchivoFisico(null); 
+    setUsarEnlace(true); // Porque initialState es 'noticia'
     setError(''); 
     setIsModalOpen(true);
   };
@@ -90,6 +107,9 @@ const GestionContenidoPage = () => {
       nivel_acceso_requerido: contenido.nivel_acceso_requerido || 0,
       es_destacado: Boolean(contenido.es_destacado),
     });
+    setArchivoFisico(null); 
+    // Si estamos editando y el tipo no es noticia, asumimos que puede querer subir archivo salvo que diga lo contrario
+    setUsarEnlace(contenido.tipo === 'noticia'); 
     setError(''); 
     setIsModalOpen(true);
   };
@@ -118,10 +138,23 @@ const GestionContenidoPage = () => {
     setIsLoading(true); 
     setError('');
 
-    const payload = {
-      ...formData,
-      nivel_acceso_requerido: Number(formData.nivel_acceso_requerido),
-    };
+    const payload = new FormData();
+    payload.append('titulo', formData.titulo);
+    payload.append('tipo', formData.tipo);
+    payload.append('nivel_acceso_requerido', String(formData.nivel_acceso_requerido));
+    payload.append('es_destacado', formData.es_destacado ? '1' : '0');
+
+    // 🔥 Lógica limpia y corregida para URLs y Archivos
+    if (formData.tipo === 'noticia' || usarEnlace) {
+      if (formData.url_recurso) {
+        payload.append('url_recurso', formData.url_recurso);
+      }
+    } else if (archivoFisico) {
+      payload.append('archivo', archivoFisico); 
+    } else if (contenidoEditando && formData.url_recurso) {
+      // Mantiene la URL/Foto vieja si está editando y no subió nada nuevo
+      payload.append('url_recurso', formData.url_recurso);
+    }
 
     try {
       if (contenidoEditando) {
@@ -134,74 +167,46 @@ const GestionContenidoPage = () => {
       setIsModalOpen(false);
     } catch (err: any) {
       const msg = err.response?.data?.message || 'Error al guardar el contenido';
-      setError(Array.isArray(msg) ? msg[0] : msg);
+      setError(Array.isArray(msg) ? msg.join(', ') : msg);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Configuración de las columnas para GenericCrud
   const columns = [
     { key: 'titulo', label: 'Título' },
     { 
-      key: 'tipo', 
-      label: 'Tipo',
-      render: (item: any) => (
-        <span className="uppercase text-xs font-bold text-slate-500">
-          {item.tipo}
-        </span>
-      )
+      key: 'tipo', label: 'Tipo',
+      render: (item: any) => <span className="uppercase text-xs font-bold text-slate-500">{item.tipo}</span>
     },
     { 
-      key: 'nivel_acceso_requerido', 
-      label: 'Acceso',
+      key: 'nivel_acceso_requerido', label: 'Acceso',
       render: (item: any) => (
-        <span className={`px-2 py-1 rounded text-xs font-black ${
-          item.nivel_acceso_requerido === 1 
-            ? 'bg-amber-500/20 text-amber-500' 
-            : 'bg-green-500/20 text-green-500'
-        }`}>
+        <span className={`px-2 py-1 rounded text-xs font-black ${item.nivel_acceso_requerido === 1 ? 'bg-amber-500/20 text-amber-500' : 'bg-green-500/20 text-green-500'}`}>
           {item.nivel_acceso_requerido === 1 ? 'VIP (P1/P2)' : 'PÚBLICO'}
         </span>
       )
     },
     { 
-      key: 'es_destacado', 
-      label: 'Destacado',
-      render: (item: any) => (
-        item.es_destacado ? <span className="text-amber-500 font-bold text-lg">★</span> : <span className="text-slate-400">-</span>
-      )
+      key: 'es_destacado', label: 'Destacado',
+      render: (item: any) => item.es_destacado ? <span className="text-amber-500 font-bold text-lg">★</span> : <span className="text-slate-400">-</span>
     },
     { 
-      key: 'autor', 
-      label: 'Autor',
-      render: (item: any) => (
-        <span className="text-sm text-slate-400">
-          {item.autor?.nombre} {item.autor?.apellido}
-        </span>
-      )
+      key: 'autor', label: 'Autor',
+      render: (item: any) => <span className="text-sm text-slate-400">{item.autor?.nombre} {item.autor?.apellido}</span>
     },
   ];
 
   return (
     <div className="relative h-full">
       <GenericCrud
-        title="GESTIÓN MULTIMEDIA" 
-        subtitle="Administrá las fotos, videos y noticias de la galería del club."
-        columns={columns} 
-        data={contenidosPaginados}
-        searchTerm={searchTerm}
-        onSearchChange={(e) => setSearchTerm(e.target.value)}
-        onAdd={handleAdd} 
-        onEdit={handleEdit} 
-        onDelete={handleDeleteClick} 
-        canEdit={esStaffAutorizado} 
-        currentPage={paginaActual}
-        totalPages={totalPaginas}
-        onPageChange={(page) => setPaginaActual(page)}
+        title="GESTIÓN MULTIMEDIA" subtitle="Administrá las fotos, videos y noticias de la galería del club."
+        columns={columns} data={contenidosPaginados} searchTerm={searchTerm}
+        onSearchChange={(e) => setSearchTerm(e.target.value)} onAdd={handleAdd} onEdit={handleEdit} 
+        onDelete={handleDeleteClick} canEdit={esStaffAutorizado} currentPage={paginaActual}
+        totalPages={totalPaginas} onPageChange={(page) => setPaginaActual(page)}
       />
 
-      {/* --- MODAL DE FORMULARIO (NUEVO/EDITAR) --- */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm md:pl-64 transition-all duration-300">
           <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white/90 dark:bg-[#08060d]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl relative p-6 animate-in zoom-in-95 duration-300">
@@ -211,14 +216,8 @@ const GestionContenidoPage = () => {
             </button>
 
             <div className="flex items-center gap-3 mb-6 border-b border-slate-200 dark:border-white/10 pb-4">
-              <div className="bg-sky-500/10 p-3 rounded-xl text-sky-500">
-                <Upload size={24} />
-              </div>
-              <div>
-                <h2 className="title-fan text-2xl text-slate-800 dark:text-white uppercase tracking-tight">
-                  {contenidoEditando ? 'Editar Contenido' : 'Subir Contenido'}
-                </h2>
-              </div>
+              <div className="bg-sky-500/10 p-3 rounded-xl text-sky-500"><Upload size={24} /></div>
+              <div><h2 className="title-fan text-2xl text-slate-800 dark:text-white uppercase tracking-tight">{contenidoEditando ? 'Editar Contenido' : 'Subir Contenido'}</h2></div>
             </div>
 
             {error && <div className="mb-4 bg-red-500/10 border border-red-500/20 text-red-500 text-sm p-3 rounded font-bold">{error}</div>}
@@ -227,79 +226,111 @@ const GestionContenidoPage = () => {
               
               <div>
                 <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Título del material</label>
-                <input
-                  type="text"
-                  name="titulo"
-                  required
-                  value={formData.titulo}
-                  onChange={handleInputChange}
-                  placeholder="Ej: Cámara a bordo TC..."
-                  className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all"
-                />
+                <input type="text" name="titulo" required value={formData.titulo} onChange={handleInputChange} placeholder="Ej: Cámara a bordo TC..." className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Formato</label>
-                  <select
-                    name="tipo"
-                    value={formData.tipo}
-                    onChange={handleInputChange}
-                    className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all appearance-none"
-                  >
+                  <select name="tipo" value={formData.tipo} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all appearance-none">
                     <option value="noticia">Noticia (Texto/Link)</option>
                     <option value="imagen">Imagen (Foto)</option>
                     <option value="video">Video</option>
                   </select>
                 </div>
-
                 <div>
                   <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Nivel de Acceso</label>
-                  <select
-                    name="nivel_acceso_requerido"
-                    value={formData.nivel_acceso_requerido}
-                    onChange={handleInputChange}
-                    className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all appearance-none"
-                  >
+                  <select name="nivel_acceso_requerido" value={formData.nivel_acceso_requerido} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all appearance-none">
                     <option value="0">Contenido Público</option>
                     <option value="1">Exclusivo VIP (P1 / P2)</option>
                   </select>
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2">
-                  <LinkIcon size={14} /> URL del Archivo (Temporal)
-                </label>
-                <input
-                  type="url"
-                  name="url_recurso"
-                  required
-                  value={formData.url_recurso}
-                  onChange={handleInputChange}
-                  placeholder="https://ejemplo.com/mifoto.jpg"
-                  className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all"
-                />
-              </div>
+              {/* 🔥 INPUT DINÁMICO (URL, ARCHIVO FISICO O DRIVE) */}
+              {formData.tipo === 'noticia' ? (
+                <div>
+                  <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2"><LinkIcon size={14} /> URL de la Noticia</label>
+                  <input type="url" name="url_recurso" required value={formData.url_recurso} onChange={handleInputChange} placeholder="https://diario.com/noticia" className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all" />
+                </div>
+              ) : (
+                <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-white/10">
+                  <div className="flex justify-between items-center mb-4 border-b border-slate-200 dark:border-white/10 pb-2">
+                    <label className="text-xs font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                      {usarEnlace ? <LinkIcon size={14} /> : <Upload size={14} />} 
+                      {usarEnlace ? 'Enlace Externo (Drive/Web)' : `Subir Archivo de ${formData.tipo === 'video' ? 'Video' : 'Imagen'}`}
+                    </label>
+                    <button 
+                      type="button" 
+                      onClick={() => setUsarEnlace(!usarEnlace)} 
+                      className="text-[10px] text-sky-500 font-bold uppercase hover:text-sky-400 bg-sky-500/10 px-3 py-1 rounded-full transition-colors"
+                    >
+                      {usarEnlace ? 'Cambiar a subir archivo' : 'Usar enlace externo'}
+                    </button>
+                  </div>
+
+                  {usarEnlace ? (
+                    <input 
+                      type="url" 
+                      name="url_recurso" 
+                      required={!contenidoEditando} 
+                      value={formData.url_recurso} 
+                      onChange={handleInputChange} 
+                      placeholder="https://drive.google.com/..." 
+                      className="w-full bg-white dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all" 
+                    />
+                  ) : (
+                    <>
+                      <input 
+                        type="file" 
+                        accept={formData.tipo === 'video' ? 'video/*' : 'image/*'}
+                        onChange={handleFileChange}
+                        required={!contenidoEditando && !formData.url_recurso} 
+                        className="w-full text-slate-800 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-sky-500/10 file:text-sky-500 hover:file:bg-sky-500/20" 
+                      />
+                      {contenidoEditando && !archivoFisico && formData.url_recurso && (
+                        <p className="text-[10px] text-amber-500 mt-3 font-bold uppercase tracking-wide flex items-center gap-1">
+                          <HardDrive size={12} /> Ya hay un recurso guardado.
+                        </p>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
+
+              {/* VISTA PREVIA */}
+              {(archivoFisico || (contenidoEditando && formData.url_recurso) || (usarEnlace && formData.url_recurso)) && (
+                <div className="p-4 bg-slate-100 dark:bg-black/30 rounded-xl border border-slate-200 dark:border-white/5 flex flex-col items-center justify-center mt-4">
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 w-full text-left">Vista Previa</label>
+                  
+                  {formData.tipo === 'imagen' && (!usarEnlace || formData.url_recurso.match(/\.(jpeg|jpg|gif|png|webp)$/i) != null) ? (
+                    <img 
+                      src={archivoFisico ? URL.createObjectURL(archivoFisico) : formData.url_recurso} 
+                      alt="Vista previa" 
+                      className="max-h-40 w-auto object-cover rounded-lg shadow-md"
+                      onError={(e) => (e.currentTarget.src = 'https://via.placeholder.com/400x200?text=Vista+No+Disponible')}
+                    />
+                  ) : formData.tipo === 'video' && (!usarEnlace || formData.url_recurso.match(/\.(mp4|webm|ogg)$/i) != null) ? (
+                    <video 
+                      src={archivoFisico ? URL.createObjectURL(archivoFisico) : formData.url_recurso} 
+                      controls 
+                      className="max-h-40 w-auto rounded-lg shadow-md"
+                    />
+                  ) : (
+                    <a href={formData.url_recurso} target="_blank" rel="noopener noreferrer" className="text-sky-500 font-bold flex items-center gap-2 text-sm bg-sky-500/10 px-4 py-2 rounded-lg">
+                      <LinkIcon size={16} /> Abrir enlace en nueva pestaña
+                    </a>
+                  )}
+                </div>
+              )}
 
               <div className="flex items-center gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-xl">
-                <input
-                  type="checkbox"
-                  name="es_destacado"
-                  id="destacado"
-                  checked={formData.es_destacado}
-                  onChange={handleInputChange}
-                  className="w-5 h-5 rounded text-sky-500 bg-black/50 border-white/20 focus:ring-sky-500 focus:ring-offset-black"
-                />
-                <label htmlFor="destacado" className="text-sm font-medium text-slate-700 dark:text-slate-300 select-none">
-                  Marcar como <span className="font-bold text-amber-500 uppercase tracking-wider">Destacado</span>
-                </label>
+                <input type="checkbox" name="es_destacado" id="destacado" checked={formData.es_destacado} onChange={handleInputChange} className="w-5 h-5 rounded text-sky-500 bg-black/50 border-white/20 focus:ring-sky-500 focus:ring-offset-black" />
+                <label htmlFor="destacado" className="text-sm font-medium text-slate-700 dark:text-slate-300 select-none">Marcar como <span className="font-bold text-amber-500 uppercase tracking-wider">Destacado</span></label>
               </div>
 
               <div className="pt-6 border-t border-slate-200 dark:border-white/10 flex gap-3">
-                <button type="button" onClick={() => setIsModalOpen(false)} disabled={isLoading} className="flex-1 py-3 bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-800 dark:text-white rounded-lg transition-colors font-bold">
-                  Cancelar
-                </button>
+                <button type="button" onClick={() => setIsModalOpen(false)} disabled={isLoading} className="flex-1 py-3 bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-800 dark:text-white rounded-lg transition-colors font-bold">Cancelar</button>
                 <button type="submit" disabled={isLoading} className="flex-1 py-3 bg-sky-500 hover:bg-cyan-400 text-black rounded-lg transition-colors font-black shadow-[0_0_15px_rgba(14,165,233,0.3)] disabled:opacity-50">
                   {isLoading ? 'Guardando...' : 'Guardar'}
                 </button>
@@ -313,235 +344,20 @@ const GestionContenidoPage = () => {
       {contenidoAEliminar && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm md:pl-64 transition-all duration-300">
           <div className="w-full max-w-md bg-white/90 dark:bg-[#08060d]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl p-6 text-center animate-in zoom-in-95 duration-300">
-            
             <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4 text-red-500">
               <AlertTriangle size={32} />
             </div>
-            
             <h3 className="title-fan text-2xl mb-2 text-slate-800 dark:text-white">¿Eliminar Contenido?</h3>
-            <p className="text-slate-500 dark:text-slate-400 mb-6">
-              Estás a punto de eliminar <strong>"{contenidoAEliminar.titulo}"</strong>. Esta acción no se puede deshacer.
-            </p>
-            
+            <p className="text-slate-500 dark:text-slate-400 mb-6">Estás a punto de eliminar <strong>"{contenidoAEliminar.titulo}"</strong>. Esta acción no se puede deshacer.</p>
             <div className="flex gap-3">
-              <button 
-                onClick={() => setContenidoAEliminar(null)} 
-                className="flex-1 py-3 bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-800 dark:text-white rounded-lg transition-colors font-bold"
-              >
-                Cancelar
-              </button>
-              <button 
-                onClick={confirmarEliminacion} 
-                className="flex-1 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors font-black shadow-[0_0_15px_rgba(239,68,68,0.4)]"
-              >
-                Sí, Eliminar
-              </button>
+              <button onClick={() => setContenidoAEliminar(null)} className="flex-1 py-3 bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-800 dark:text-white rounded-lg transition-colors font-bold">Cancelar</button>
+              <button onClick={confirmarEliminacion} className="flex-1 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors font-black shadow-[0_0_15px_rgba(239,68,68,0.4)]">Sí, Eliminar</button>
             </div>
           </div>
         </div>
       )}
-
     </div>
   );
 };
 
 export default GestionContenidoPage;
-
-// import { useState } from 'react';
-// import { Upload, Save, AlertCircle, Link as LinkIcon } from 'lucide-react';
-
-// const CargarContenidoPage = () => {
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [mensaje, setMensaje] = useState<{ tipo: 'exito' | 'error', texto: string } | null>(null);
-
-//   // Estado del formulario DTO
-//   const [formData, setFormData] = useState({
-//     titulo: '',
-//     tipo: 'noticia', // Valor por defecto
-//     url_recurso: '', // LA TRAMPA: Input de texto por ahora
-//     nivel_acceso_requerido: '0', // 0 = Público, 1 = VIP
-//     es_destacado: false,
-//   });
-
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-//     const { name, value, type } = e.target;
-    
-//     // Manejo especial para el checkbox (es_destacado)
-//     if (type === 'checkbox') {
-//       const checked = (e.target as HTMLInputElement).checked;
-//       setFormData(prev => ({ ...prev, [name]: checked }));
-//     } else {
-//       setFormData(prev => ({ ...prev, [name]: value }));
-//     }
-//   };
-
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     setIsLoading(true);
-//     setMensaje(null);
-
-//     try {
-//       const token = localStorage.getItem('token');
-      
-//       // Parseamos los datos para enviarlos al backend (aseguramos que el nivel sea numérico)
-//       const payload = {
-//         ...formData,
-//         nivel_acceso_requerido: Number(formData.nivel_acceso_requerido),
-//       };
-
-//       const res = await fetch('http://localhost:3000/contenido-multimedia', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': `Bearer ${token}`
-//         },
-//         body: JSON.stringify(payload)
-//       });
-
-//       if (!res.ok) {
-//         const errorData = await res.json();
-//         throw new Error(errorData.message || 'Error al crear el contenido');
-//       }
-
-//       setMensaje({ tipo: 'exito', texto: '¡Contenido subido exitosamente al óvalo!' });
-      
-//       // Limpiamos el form si fue exitoso
-//       setFormData({
-//         titulo: '',
-//         tipo: 'noticia',
-//         url_recurso: '',
-//         nivel_acceso_requerido: '0',
-//         es_destacado: false,
-//       });
-
-//     } catch (error: any) {
-//       setMensaje({ tipo: 'error', texto: error.message });
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   return (
-//     <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-2xl shadow-xl mt-10">
-      
-//       <div className="flex items-center gap-3 mb-8 border-b border-slate-200 dark:border-white/10 pb-4">
-//         <div className="bg-sky-500/10 p-3 rounded-xl text-sky-500">
-//           <Upload size={24} />
-//         </div>
-//         <div>
-//           <h2 className="text-2xl font-black text-slate-800 dark:text-white uppercase tracking-tight">
-//             Subir Contenido
-//           </h2>
-//           <p className="text-sm text-slate-500">Añadir nueva foto, video o noticia a la galería.</p>
-//         </div>
-//       </div>
-
-//       {mensaje && (
-//         <div className={`p-4 rounded-xl mb-6 flex items-center gap-3 font-medium ${
-//           mensaje.tipo === 'exito' ? 'bg-green-500/10 text-green-600 border border-green-500/20' : 'bg-red-500/10 text-red-500 border border-red-500/20'
-//         }`}>
-//           <AlertCircle size={20} />
-//           {mensaje.texto}
-//         </div>
-//       )}
-
-//       <form onSubmit={handleSubmit} className="space-y-6">
-        
-//         {/* TÍTULO */}
-//         <div>
-//           <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Título del material</label>
-//           <input
-//             type="text"
-//             name="titulo"
-//             required
-//             value={formData.titulo}
-//             onChange={handleChange}
-//             placeholder="Ej: Cámara a bordo TC..."
-//             className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all"
-//           />
-//         </div>
-
-//         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-//           {/* TIPO */}
-//           <div>
-//             <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Formato</label>
-//             <select
-//               name="tipo"
-//               value={formData.tipo}
-//               onChange={handleChange}
-//               className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all appearance-none"
-//             >
-//               <option value="noticia">Noticia (Texto/Link)</option>
-//               <option value="imagen">Imagen (Foto)</option>
-//               <option value="video">Video</option>
-//             </select>
-//           </div>
-
-//           {/* NIVEL REQUERIDO (Actualizado a 0 o 1) */}
-//           <div>
-//             <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Nivel de Acceso</label>
-//             <select
-//               name="nivel_acceso_requerido"
-//               value={formData.nivel_acceso_requerido}
-//               onChange={handleChange}
-//               className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all appearance-none"
-//             >
-//               <option value="0">Contenido Público</option>
-//               <option value="1">Exclusivo VIP (P1 / P2)</option>
-//             </select>
-//           </div>
-//         </div>
-
-//         {/* LA TRAMPA: URL DEL RECURSO */}
-//         <div>
-//           <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2">
-//             <LinkIcon size={14} /> URL del Archivo (Temporal)
-//           </label>
-//           <input
-//             type="url"
-//             name="url_recurso"
-//             required
-//             value={formData.url_recurso}
-//             onChange={handleChange}
-//             placeholder="https://ejemplo.com/mifoto.jpg"
-//             className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all"
-//           />
-//           <p className="text-xs text-slate-400 mt-2">
-//             *Pegá un link directo a una imagen. Más adelante reemplazaremos esto por la subida a Cloudinary.
-//           </p>
-//         </div>
-
-//         {/* ES DESTACADO */}
-//         <div className="flex items-center gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-xl">
-//           <input
-//             type="checkbox"
-//             name="es_destacado"
-//             id="destacado"
-//             checked={formData.es_destacado}
-//             onChange={handleChange}
-//             className="w-5 h-5 rounded text-sky-500 bg-black/50 border-white/20 focus:ring-sky-500 focus:ring-offset-black"
-//           />
-//           <label htmlFor="destacado" className="text-sm font-medium text-slate-700 dark:text-slate-300 select-none">
-//             Marcar como <span className="font-bold text-amber-500 uppercase tracking-wider">Destacado</span>
-//           </label>
-//         </div>
-
-//         {/* BOTÓN SUBMIT */}
-//         <button
-//           type="submit"
-//           disabled={isLoading}
-//           className="w-full flex items-center justify-center gap-2 py-4 bg-sky-500 hover:bg-sky-400 text-white font-black uppercase tracking-widest rounded-xl transition-colors disabled:opacity-50"
-//         >
-//           {isLoading ? 'Guardando en boxes...' : (
-//             <>
-//               <Save size={20} /> Publicar Contenido
-//             </>
-//           )}
-//         </button>
-
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default CargarContenidoPage;
