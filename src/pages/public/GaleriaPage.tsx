@@ -1,24 +1,26 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Search, Lock, Eye, Image as ImageIcon, Play, Star, Loader2, FileText } from 'lucide-react';
+import { Search, Lock, Eye, Image as ImageIcon, Play, Star, Loader2, FileText, FolderOpen, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// INTERFAZ EXACTA BASADA EN TU MYSQL 'contenido_multimedia'
 interface ContenidoMultimedia {
   id: number;
   titulo: string;
-  tipo: 'noticia' | 'video' | 'imagen'; // Mapeado al ENUM de MySQL
-  url_recurso: string; // Mapeado a la columna real
-  nivel_acceso_requerido: number | null; // NULL, 1, 2, o 3
+  tipo: 'noticia' | 'video' | 'imagen'; 
+  url_recurso: string; 
+  nivel_acceso_requerido: number | null; 
+  carpeta?: string; 
   autor_staff_id: number;
   fecha_publicacion: string;
   vistas: number;
-  es_destacado: number | boolean; // tinyint suele llegar como 0/1 o boolean
-  autor?: { // Objeto inyectado por tu backend NestJS
+  es_destacado: number | boolean; 
+  autor?: { 
     nombre: string;
     apellido: string;
     area: string;
     cargo: string;
   };
+  isFolder?: boolean; 
+  cantidad?: number;  
 }
 
 const GaleriaPage = () => {
@@ -26,6 +28,11 @@ const GaleriaPage = () => {
   const [userRole, setUserRole] = useState<string>('GUEST');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState('');
+  
+  const [carpetaActiva, setCarpetaActiva] = useState<string | null>(null);
+  const [paginaActual, setPaginaActual] = useState(1);
+  // 🔥 Ajustado a 9 cards por página
+  const limitePorPagina = 9; 
 
   useEffect(() => {
     const fetchDatos = async () => {
@@ -34,33 +41,27 @@ const GaleriaPage = () => {
         const token = localStorage.getItem('token');
         const headers: HeadersInit = {};
         
-       if (token) {
+        if (token) {
           headers['Authorization'] = `Bearer ${token}`;
-
-         }
-       // 1. Buscar Perfil del Usuario
-          const resPerfil = await fetch('http://localhost:3000/usuario-auth/perfil', { headers });
-          if (resPerfil.ok) {
-            const dataPerfil = await resPerfil.json();
-            
-            let rolFinal = 'GUEST';
-            
-            if (dataPerfil.rol === 'fan') {
-              // Verificamos si tiene un plan P1, P2 o P3 y si además está Activo
-              if (dataPerfil.nivelFan && dataPerfil.nivelFan !== 'Inactivo' && dataPerfil.estadoSuscripcion === 'Activo') {
-                rolFinal = dataPerfil.nivelFan; // Asigna "P1", "P2" o "P3"
-              } else {
-                rolFinal = 'FAN'; // Fan logueado pero inactivo/sin pagar
-              }
-            } else if (dataPerfil.rol) {
-              // Acá entran los roles del Staff: "SuperAdmin", "Administrativo", "Prensa", "Comercio"
-              rolFinal = dataPerfil.rol;
+        }
+        
+        const resPerfil = await fetch('http://localhost:3000/usuario-auth/perfil', { headers });
+        if (resPerfil.ok) {
+          const dataPerfil = await resPerfil.json();
+          let rolFinal = 'GUEST';
+          
+          if (dataPerfil.rol === 'fan') {
+            if (dataPerfil.nivelFan && dataPerfil.nivelFan !== 'Inactivo' && dataPerfil.estadoSuscripcion === 'Activo') {
+              rolFinal = dataPerfil.nivelFan; 
+            } else {
+              rolFinal = 'FAN'; 
             }
-
-            setUserRole(rolFinal.toUpperCase());
+          } else if (dataPerfil.rol) {
+            rolFinal = dataPerfil.rol;
           }
+          setUserRole(rolFinal.toUpperCase());
+        }
 
-        // 2. Buscar Contenido Multimedia
         const resContenido = await fetch('http://localhost:3000/contenido-multimedia', { headers });
         if (resContenido.ok) {
           const dataContenido = await resContenido.json();
@@ -77,51 +78,125 @@ const GaleriaPage = () => {
     fetchDatos();
   }, []);
 
-  // LÓGICA DE NIVELES (Mapeo exacto contra tu JSON)
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [searchTerm, carpetaActiva]);
+
   const obtenerNivelUsuario = (rol: string) => {
     switch (rol.toUpperCase()) {
       case 'SUPERADMIN':
       case 'ADMINISTRATIVO':
       case 'PRENSA':
-        return 99; // Tienen poder absoluto, ven todo
+        return 99; 
       
       case 'P2':
-        return 1;
       case 'P1':
         return 1;
       case 'P3':
-      case 'FAN': // Logueado pero sin suscripción paga
-      case 'COMERCIO': // Staff sin permisos multimedia VIP
+      case 'FAN': 
+      case 'COMERCIO': 
       case 'GUEST':
       default:
-        return 0; // Solo ven lo que tenga nivel_acceso_requerido en NULL
+        return 0; 
     }
   };
   const nivelUsuario = obtenerNivelUsuario(userRole);
 
-  // BUSCADOR (Filtrando solo por título, ya que 'descripcion' no está en la BD)
-  const contenidoFiltrado = useMemo(() => {
-    return contenidos.filter((item) => {
-      return item.titulo.toLowerCase().includes(searchTerm.toLowerCase());
+  const getThumbnail = (url: string, tipo: string) => {
+    if (tipo !== 'video' || !url) return url;
+    const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/);
+    if (ytMatch && ytMatch[1]) return `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
+    if (url.includes('cloudinary.com') && url.includes('/video/')) return url.replace(/\.[^/.]+$/, ".jpg");
+    return 'https://via.placeholder.com/600x400?text=Video';
+  };
+
+  const itemsAMostrar = useMemo(() => {
+    const search = searchTerm.toLowerCase().trim();
+
+    const filtrados = contenidos.filter(item => {
+      const matchTitulo = item.titulo?.toLowerCase().includes(search) ?? false;
+      const matchCarpeta = item.carpeta?.toLowerCase().includes(search) ?? false;
+      return matchTitulo || matchCarpeta;
     });
-  }, [contenidos, searchTerm]);
+
+    if (carpetaActiva) {
+      return filtrados.filter(c => c.carpeta === carpetaActiva);
+    }
+
+    const carpetasMap = new Map<string, number>();
+    const archivosSueltos: ContenidoMultimedia[] = [];
+
+    filtrados.forEach(item => {
+      const nombreCarpeta = item.carpeta?.trim();
+      
+      if (nombreCarpeta && nombreCarpeta.toLowerCase() !== 'null' && nombreCarpeta.toLowerCase() !== 'undefined') {
+        carpetasMap.set(nombreCarpeta, (carpetasMap.get(nombreCarpeta) || 0) + 1);
+      } else {
+        archivosSueltos.push(item);
+      }
+    });
+
+    const carpetasCards: any[] = Array.from(carpetasMap.entries()).map(([nombre, cantidad]) => ({
+      id: `folder-${nombre}`,
+      isFolder: true,
+      titulo: nombre,
+      carpeta: nombre,
+      tipo: 'imagen', 
+      url_recurso: '',
+      nivel_acceso_requerido: 0,
+      autor_staff_id: 0,
+      fecha_publicacion: '',
+      vistas: 0,
+      es_destacado: 0,
+      cantidad: cantidad,
+      autor: undefined 
+    }));
+
+    return [...carpetasCards, ...archivosSueltos];
+  }, [contenidos, searchTerm, carpetaActiva]);
+
+  const indiceUltimoItem = paginaActual * limitePorPagina;
+  const indicePrimerItem = indiceUltimoItem - limitePorPagina;
+  const itemsPaginados = itemsAMostrar.slice(indicePrimerItem, indiceUltimoItem);
+  const totalPaginas = Math.ceil(itemsAMostrar.length / limitePorPagina);
+
+  const registrarVista = async (id: number) => {
+    try {
+      const token = localStorage.getItem('token');
+      const headers: HeadersInit = {};
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+
+      // 1. Avisamos al backend que sume 1
+      await fetch(`http://localhost:3000/contenido-multimedia/${id}/vista`, {
+        method: 'PATCH',
+        headers
+      });
+
+      // 2. Actualizamos el estado de React al instante para que el "ojito" cambie sin recargar la página
+      setContenidos(prevContenidos => 
+        prevContenidos.map(item => 
+          item.id === id ? { ...item, vistas: item.vistas + 1 } : item
+        )
+      );
+    } catch (error) {
+      console.error("Error sumando vista:", error);
+    }
+  };
 
   return (
-    <main className="min-h-screen bg-slate-200 dark:bg-[#08060d] transition-colors duration-300 pt-20 pb-12">
+    <main className="min-h-screen bg-slate-200 dark:bg-[#08060d] transition-colors duration-300 pt-20 pb-12 flex flex-col">
       
-      {/* Fondo decorativo global */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-sky-500/10 rounded-full blur-[120px]"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-sky-400/10 rounded-full blur-[100px]"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 relative z-10 w-full flex-grow">
         
-        {/* ENCABEZADO Y BUSCADOR */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 mt-8">
           <div>
-            <h1 className="title-fan text-4xl md:text-5xl text-slate-800 dark:text-white mb-2">
-              Galería <span className="text-sky-500">Multimedia</span>
+            <h1 className="title-fan text-4xl md:text-5xl text-slate-800 dark:text-white mb-2 uppercase">
+              {carpetaActiva ? `ÁLBUM: ${carpetaActiva}` : <><span className="text-sky-500">Galería</span> Multimedia</>}
             </h1>
             <p className="text-slate-600 dark:text-slate-400 text-lg">
               Explorá el archivo histórico y exclusivo del óvalo.
@@ -134,7 +209,7 @@ const GaleriaPage = () => {
             </div>
             <input
               type="text"
-              placeholder="Buscar por título..."
+              placeholder="Buscar por título o carpeta..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-11 pr-4 py-3 bg-white/60 dark:bg-white/5 backdrop-blur-md border border-white/40 dark:border-white/10 text-slate-800 dark:text-white rounded-2xl focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all outline-none shadow-sm placeholder:text-slate-400"
@@ -142,29 +217,54 @@ const GaleriaPage = () => {
           </div>
         </div>
 
-        {/* ESTADO DE CARGA */}
+        {carpetaActiva && (
+          <button 
+            onClick={() => setCarpetaActiva(null)}
+            className="flex items-center gap-2 text-sky-600 dark:text-sky-400 hover:text-sky-500 font-bold text-sm mb-8 bg-sky-500/10 px-4 py-2 rounded-xl transition-colors w-fit border border-sky-500/20"
+          >
+            <ArrowLeft size={16} /> Volver 
+          </button>
+        )}
+
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-32">
+          <div className="flex flex-col items-center justify-center py-32 flex-grow">
             <Loader2 className="w-12 h-12 text-sky-500 animate-spin mb-4" />
             <p className="text-slate-500 dark:text-slate-400 font-medium">Cargando archivos desde boxes...</p>
           </div>
         ) : (
-          /* GRILLA DE TARJETAS VIDRIADAS */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {contenidoFiltrado.length > 0 ? (
-              contenidoFiltrado.map((item) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+            {itemsPaginados.length > 0 ? (
+              itemsPaginados.map((item) => {
                 
-                // LÓGICA DE BLOQUEO: Si pide más nivel del que tiene el usuario actual, se bloquea.
+                if (item.isFolder) {
+                  return (
+                    <article 
+                      key={item.id} 
+                      onClick={() => setCarpetaActiva(item.carpeta || null)}
+                      className="flex flex-col items-center justify-center bg-white/90 dark:bg-[#ffffff05] backdrop-blur-xl border border-slate-200 dark:border-white/20 rounded-2xl overflow-hidden shadow-xl hover:shadow-[0_8px_30px_rgba(14,165,233,0.3)] hover:border-sky-500/50 transition-all duration-300 cursor-pointer group h-full min-h-[400px]"
+                    >
+                      <div className="bg-sky-500/10 p-6 rounded-full text-sky-500 group-hover:scale-110 transition-transform duration-300 mb-4 border border-sky-500/20">
+                        <FolderOpen size={56} />
+                      </div>
+                      <h3 className="text-2xl font-black text-slate-800 dark:text-white uppercase tracking-tight text-center px-6">
+                        {item.titulo}
+                      </h3>
+                      <p className="text-slate-500 font-bold mt-2 bg-slate-100 dark:bg-black/30 px-3 py-1 rounded-full text-sm">
+                        {item.cantidad} elementos
+                      </p>
+                    </article>
+                  );
+                }
+
                 const isLocked = item.nivel_acceso_requerido !== null && item.nivel_acceso_requerido > nivelUsuario;
 
                 return (
                   <article 
                     key={item.id} 
-                    className="flex flex-col bg-white/90 dark:bg-[#ffffff05] backdrop-blur-xl border border-slate-200 dark:border-white/20 rounded-2xl overflow-hidden shadow-xl hover:shadow-[0_8px_30px_rgba(14,165,233,0.8)] dark:hover:shadow-[0_8px_30px_rgba(14,165,233,0.8)] transition-all duration-300 group"
+                    className="flex flex-col bg-white/90 dark:bg-[#ffffff05] backdrop-blur-xl border border-slate-200 dark:border-white/20 rounded-2xl overflow-hidden shadow-xl hover:shadow-[0_8px_30px_rgba(14,165,233,0.3)] transition-all duration-300 group h-full"
                   >
-                  
-                    {/* CONTENEDOR DE IMAGEN */}
-                    <div className="relative aspect-video w-full overflow-hidden bg-slate-200 dark:bg-black/50">
+                    
+                    <div className="relative aspect-video w-full overflow-hidden bg-slate-200 dark:bg-black/50 shrink-0">
                       
                       {Boolean(item.es_destacado) && (
                         <div className="absolute top-3 left-3 z-20 bg-amber-500/90 backdrop-blur-sm text-white text-xs font-black uppercase px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-lg">
@@ -179,10 +279,10 @@ const GaleriaPage = () => {
                       </div>
 
                       <img
-                        src={item.url_recurso}
+                        src={getThumbnail(item.url_recurso, item.tipo)}
                         alt={item.titulo}
                         className={`w-full h-full object-cover transition-all duration-700 
-                          ${isLocked ? 'scale-110 blur-xl opacity-80' : 'group-hover:scale-105'}`}
+                          ${isLocked ? 'scale-300 blur-xl opacity-90' : 'group-hover:scale-105'}`}
                       />
 
                       {isLocked && (
@@ -191,22 +291,20 @@ const GaleriaPage = () => {
                             <Lock className="text-white w-8 h-8" />
                           </div>
                           <span className="text-white font-black tracking-widest uppercase text-sm drop-shadow-md">
-                             P2-P1 REQUERIDO 
+                            P1/P2 REQUERIDO 
                           </span>
                         </div>
                       )}
                     </div>
 
-                    {/* CUERPO DE LA TARJETA */}
                     <div className="p-6 flex flex-col flex-grow">
                       <div className="flex-grow">
                         <h3 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-tight mb-2 line-clamp-2">
                           {item.titulo}
                         </h3>
                         {isLocked && (
-                          
                           <p className="text-red-600 font-bold text-sm leading-relaxed line-clamp-2 mb-4">
-                            EXCLUSIVO <span  className="text-sky-200 font-bold text-sm leading-relaxed line-clamp-2 mb-4">Mejorá tu plan a P{item.nivel_acceso_requerido} para disfrutar de este material exclusivo.</span>
+                            EXCLUSIVO <span className="text-sky-600 dark:text-sky-200 font-bold text-sm leading-relaxed line-clamp-2 mb-4">Mejorá tu plan a P1/P2 para disfrutar de este material.</span>
                           </p>
                         )}
                       </div>
@@ -221,7 +319,7 @@ const GaleriaPage = () => {
                           </span>
                         </div>
 
-                        <div className="flex items-center gap-1.5 text-slate-400 bg-white/50 dark:bg-black/20 px-2.5 py-1 rounded-lg">
+                        <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-white/5 px-2.5 py-1 rounded-lg">
                           <Eye size={14} />
                           <span className="text-xs font-bold">{item.vistas}</span>
                         </div>
@@ -231,7 +329,7 @@ const GaleriaPage = () => {
                         {isLocked ? (
                           <Link 
                             to="/dashboard/pagos" 
-                            className="w-full flex items-center justify-center gap-2 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-sky-500 dark:hover:bg-sky-500 hover:text-white transition-colors"
+                            className="w-full flex items-center justify-center gap-2 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-sky-500 dark:hover:bg-sky-500 hover:text-white transition-colors shadow-lg"
                           >
                             <Lock size={16} /> Subir de Nivel
                           </Link>
@@ -240,6 +338,7 @@ const GaleriaPage = () => {
                             href={item.url_recurso}
                             target="_blank" 
                             rel="noopener noreferrer"
+                            onClick={() => registrarVista(item.id)}
                             className="w-full flex items-center justify-center gap-2 py-3 bg-sky-500/10 text-sky-600 dark:text-sky-400 dark:hover:text-sky-100 hover:bg-sky-500 hover:text-white rounded-xl font-bold transition-colors border border-sky-500/20"
                           >
                             Ver {item.tipo}
@@ -259,6 +358,31 @@ const GaleriaPage = () => {
             )}
           </div>
         )}
+
+        {!isLoading && totalPaginas > 1 && (
+          <div className="flex justify-center items-center gap-4 mt-12 pb-8">
+            <button 
+              onClick={() => setPaginaActual(p => Math.max(1, p - 1))}
+              disabled={paginaActual === 1}
+              className="p-3 bg-white/50 dark:bg-slate-800 rounded-xl text-slate-800 dark:text-white disabled:opacity-30 hover:bg-white dark:hover:bg-slate-700 transition-colors shadow-sm"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            
+            <span className="text-sm font-bold text-slate-500 dark:text-slate-400">
+              Página <span className="text-slate-800 dark:text-white text-base">{paginaActual}</span> de {totalPaginas}
+            </span>
+            
+            <button 
+              onClick={() => setPaginaActual(p => Math.min(totalPaginas, p + 1))}
+              disabled={paginaActual === totalPaginas}
+              className="p-3 bg-white/50 dark:bg-slate-800 rounded-xl text-slate-800 dark:text-white disabled:opacity-30 hover:bg-white dark:hover:bg-slate-700 transition-colors shadow-sm"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        )}
+
       </div>
     </main>
   );

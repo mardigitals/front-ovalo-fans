@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GenericCrud from '@/components/ui/GenericCrud';
 import { useAuth } from '@/hooks/useAuth';
-import { X, AlertTriangle, Upload, Link as LinkIcon, HardDrive } from 'lucide-react'; 
+import { X, AlertTriangle, Upload, Link as LinkIcon, HardDrive, FolderOpen, FileImage } from 'lucide-react'; 
 import api from '@/api/axios';
 
 const initialState = {
@@ -10,12 +10,12 @@ const initialState = {
   url_recurso: '',
   nivel_acceso_requerido: 0,
   es_destacado: false,
+  carpeta: '', // 🔥 Nuevo campo para agrupar fotos
 };
 
 const GestionContenidoPage = () => {
   const { userProfile } = useAuth();
   
-  // Validamos si es Admin o Prensa para habilitar edición
   const rolUsuario = userProfile?.rol?.toLowerCase();
   const esStaffAutorizado = rolUsuario === 'superadmin' || rolUsuario === 'prensa';
 
@@ -24,15 +24,14 @@ const GestionContenidoPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   
-  // 🔥 ESTADO PARA ARCHIVOS Y ENLACES EXTERNOS
-  const [archivoFisico, setArchivoFisico] = useState<File | null>(null);
-  const [usarEnlace, setUsarEnlace] = useState(true); // Arranca true porque el initial es 'noticia'
+  // 🔥 ESTADOS PARA MULTICARGA
+  const [archivosFisicos, setArchivosFisicos] = useState<File[]>([]);
+  // Modos: 'archivos' (sueltos), 'carpeta' (masivo), 'enlace' (drive/web)
+  const [modoCarga, setModoCarga] = useState<'archivos' | 'carpeta' | 'enlace'>('archivos');
   
-  // Paginación
   const [paginaActual, setPaginaActual] = useState(1);
   const limitePorPagina = 10;
   
-  // Modales
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contenidoEditando, setContenidoEditando] = useState<any>(null);
   const [formData, setFormData] = useState(initialState);
@@ -48,14 +47,12 @@ const GestionContenidoPage = () => {
   };
 
   useEffect(() => { fetchContenidos(); }, []);
-
-  useEffect(() => {
-    setPaginaActual(1);
-  }, [searchTerm]);
+  useEffect(() => { setPaginaActual(1); }, [searchTerm]);
 
   const datosFiltrados = contenidos.filter(c =>
     c.titulo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    c.tipo?.toLowerCase().includes(searchTerm.toLowerCase())
+    c.tipo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    c.carpeta?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const indiceUltimoItem = paginaActual * limitePorPagina;
@@ -66,13 +63,10 @@ const GestionContenidoPage = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     
-    // Lógica para alternar inputs automáticamente según el tipo de contenido
-    if (name === 'tipo') {
-      if (value === 'noticia') {
-        setUsarEnlace(true);
-      } else {
-        setUsarEnlace(false);
-      }
+    if (name === 'tipo' && value === 'noticia') {
+      setModoCarga('enlace');
+    } else if (name === 'tipo' && formData.tipo === 'noticia') {
+      setModoCarga('archivos'); // Vuelve a archivos por defecto al cambiar a foto/video
     }
 
     if (type === 'checkbox') {
@@ -83,17 +77,20 @@ const GestionContenidoPage = () => {
     }
   };
 
+  // 🔥 HANDLER QUE ACEPTA 1 O MÁS ARCHIVOS
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setArchivoFisico(e.target.files[0]);
+    if (e.target.files && e.target.files.length > 0) {
+      setArchivosFisicos(Array.from(e.target.files));
+    } else {
+      setArchivosFisicos([]);
     }
   };
 
   const handleAdd = () => {
     setContenidoEditando(null); 
     setFormData(initialState); 
-    setArchivoFisico(null); 
-    setUsarEnlace(true); // Porque initialState es 'noticia'
+    setArchivosFisicos([]); 
+    setModoCarga('archivos'); 
     setError(''); 
     setIsModalOpen(true);
   };
@@ -106,10 +103,10 @@ const GestionContenidoPage = () => {
       url_recurso: contenido.url_recurso || '',
       nivel_acceso_requerido: contenido.nivel_acceso_requerido || 0,
       es_destacado: Boolean(contenido.es_destacado),
+      carpeta: contenido.carpeta || '',
     });
-    setArchivoFisico(null); 
-    // Si estamos editando y el tipo no es noticia, asumimos que puede querer subir archivo salvo que diga lo contrario
-    setUsarEnlace(contenido.tipo === 'noticia'); 
+    setArchivosFisicos([]); 
+    setModoCarga(contenido.tipo === 'noticia' ? 'enlace' : 'archivos'); 
     setError(''); 
     setIsModalOpen(true);
   };
@@ -124,7 +121,6 @@ const GestionContenidoPage = () => {
       await api.delete(`/contenido-multimedia/${contenidoAEliminar.id}`);
       await fetchContenidos(); 
       setContenidoAEliminar(null);
-      
       if (contenidosPaginados.length === 1 && paginaActual > 1) {
         setPaginaActual(paginaActual - 1);
       }
@@ -143,16 +139,24 @@ const GestionContenidoPage = () => {
     payload.append('tipo', formData.tipo);
     payload.append('nivel_acceso_requerido', String(formData.nivel_acceso_requerido));
     payload.append('es_destacado', formData.es_destacado ? '1' : '0');
+    if (formData.carpeta) payload.append('carpeta', formData.carpeta);
 
-    // 🔥 Lógica limpia y corregida para URLs y Archivos
-    if (formData.tipo === 'noticia' || usarEnlace) {
-      if (formData.url_recurso) {
-        payload.append('url_recurso', formData.url_recurso);
+    // LÓGICA DE ENVÍO DE ARCHIVOS O ENLACES
+    if (formData.tipo === 'noticia' || modoCarga === 'enlace') {
+      if (formData.url_recurso) payload.append('url_recurso', formData.url_recurso);
+    } 
+    else if (archivosFisicos.length > 0) {
+      if (contenidoEditando) {
+        // En Patch (Editar) mandamos un solo archivo con la llave 'archivo'
+        payload.append('archivo', archivosFisicos[0]); 
+      } else {
+        // En Post (Crear) mandamos el array con la llave 'archivos'
+        archivosFisicos.forEach(file => {
+          payload.append('archivos', file);
+        });
       }
-    } else if (archivoFisico) {
-      payload.append('archivo', archivoFisico); 
-    } else if (contenidoEditando && formData.url_recurso) {
-      // Mantiene la URL/Foto vieja si está editando y no subió nada nuevo
+    } 
+    else if (contenidoEditando && formData.url_recurso) {
       payload.append('url_recurso', formData.url_recurso);
     }
 
@@ -175,26 +179,11 @@ const GestionContenidoPage = () => {
 
   const columns = [
     { key: 'titulo', label: 'Título' },
-    { 
-      key: 'tipo', label: 'Tipo',
-      render: (item: any) => <span className="uppercase text-xs font-bold text-slate-500">{item.tipo}</span>
-    },
-    { 
-      key: 'nivel_acceso_requerido', label: 'Acceso',
-      render: (item: any) => (
-        <span className={`px-2 py-1 rounded text-xs font-black ${item.nivel_acceso_requerido === 1 ? 'bg-amber-500/20 text-amber-500' : 'bg-green-500/20 text-green-500'}`}>
-          {item.nivel_acceso_requerido === 1 ? 'VIP (P1/P2)' : 'PÚBLICO'}
-        </span>
-      )
-    },
-    { 
-      key: 'es_destacado', label: 'Destacado',
-      render: (item: any) => item.es_destacado ? <span className="text-amber-500 font-bold text-lg">★</span> : <span className="text-slate-400">-</span>
-    },
-    { 
-      key: 'autor', label: 'Autor',
-      render: (item: any) => <span className="text-sm text-slate-400">{item.autor?.nombre} {item.autor?.apellido}</span>
-    },
+    { key: 'carpeta', label: 'Carpeta', render: (item: any) => item.carpeta ? <span className="text-xs text-sky-500 font-bold bg-sky-500/10 px-2 py-1 rounded">{item.carpeta}</span> : '-' },
+    { key: 'tipo', label: 'Tipo', render: (item: any) => <span className="uppercase text-xs font-bold text-slate-500">{item.tipo}</span> },
+    { key: 'nivel_acceso_requerido', label: 'Acceso', render: (item: any) => <span className={`px-2 py-1 rounded text-xs font-black ${item.nivel_acceso_requerido === 1 ? 'bg-amber-500/20 text-amber-500' : 'bg-green-500/20 text-green-500'}`}>{item.nivel_acceso_requerido === 1 ? 'VIP (P1/P2)' : 'PÚBLICO'}</span> },
+    { key: 'es_destacado', label: 'Destacado', render: (item: any) => item.es_destacado ? <span className="text-amber-500 font-bold text-lg">★</span> : <span className="text-slate-400">-</span> },
+    { key: 'autor', label: 'Autor', render: (item: any) => <span className="text-sm text-slate-400">{item.autor?.nombre} {item.autor?.apellido}</span> },
   ];
 
   return (
@@ -209,7 +198,7 @@ const GestionContenidoPage = () => {
 
       {isModalOpen && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm md:pl-64 transition-all duration-300">
-          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white/90 dark:bg-[#08060d]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl relative p-6 animate-in zoom-in-95 duration-300">
+          <div className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white/90 dark:bg-[#08060d]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl relative p-6 animate-in zoom-in-95 duration-300">
             
             <button onClick={() => setIsModalOpen(false)} className="absolute top-4 right-4 text-slate-500 hover:text-sky-500 transition-colors bg-slate-100 dark:bg-white/5 p-2 rounded-full z-10">
               <X size={20} />
@@ -224,9 +213,16 @@ const GestionContenidoPage = () => {
 
             <form onSubmit={handleGuardar} className="space-y-6">
               
-              <div>
-                <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Título del material</label>
-                <input type="text" name="titulo" required value={formData.titulo} onChange={handleInputChange} placeholder="Ej: Cámara a bordo TC..." className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Título del material</label>
+                  <input type="text" name="titulo" required={archivosFisicos.length <= 1} value={formData.titulo} onChange={handleInputChange} placeholder="Ej: Cámara a bordo TC..." className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all" />
+                  {archivosFisicos.length > 1 && <p className="text-[10px] text-sky-500 mt-1">*Se usará el nombre original de cada archivo como título.</p>}
+                </div>
+                <div>
+                  <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2"><FolderOpen size={14}/> Carpeta (Opcional)</label>
+                  <input type="text" name="carpeta" value={formData.carpeta} onChange={handleInputChange} placeholder="Ej: 500 Millas 1926" className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all" />
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -247,7 +243,7 @@ const GestionContenidoPage = () => {
                 </div>
               </div>
 
-              {/* 🔥 INPUT DINÁMICO (URL, ARCHIVO FISICO O DRIVE) */}
+              {/* 🔥 ZONA DE CARGA DINÁMICA */}
               {formData.tipo === 'noticia' ? (
                 <div>
                   <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2"><LinkIcon size={14} /> URL de la Noticia</label>
@@ -255,40 +251,31 @@ const GestionContenidoPage = () => {
                 </div>
               ) : (
                 <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-white/10">
-                  <div className="flex justify-between items-center mb-4 border-b border-slate-200 dark:border-white/10 pb-2">
-                    <label className="text-xs font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                      {usarEnlace ? <LinkIcon size={14} /> : <Upload size={14} />} 
-                      {usarEnlace ? 'Enlace Externo (Drive/Web)' : `Subir Archivo de ${formData.tipo === 'video' ? 'Video' : 'Imagen'}`}
-                    </label>
-                    <button 
-                      type="button" 
-                      onClick={() => setUsarEnlace(!usarEnlace)} 
-                      className="text-[10px] text-sky-500 font-bold uppercase hover:text-sky-400 bg-sky-500/10 px-3 py-1 rounded-full transition-colors"
-                    >
-                      {usarEnlace ? 'Cambiar a subir archivo' : 'Usar enlace externo'}
-                    </button>
-                  </div>
+                  {/* SELECTOR DE MODO */}
+                  {!contenidoEditando && (
+                    <div className="flex gap-2 mb-4 p-1 bg-slate-200 dark:bg-black/40 rounded-lg overflow-hidden">
+                      <button type="button" onClick={() => {setModoCarga('archivos'); setArchivosFisicos([]);}} className={`flex-1 py-2 text-xs font-bold rounded-md transition-all flex items-center justify-center gap-2 ${modoCarga === 'archivos' ? 'bg-sky-500 text-white shadow' : 'text-slate-500 hover:text-slate-700 dark:hover:text-white'}`}><FileImage size={14}/> Archivos Sueltos</button>
+                      <button type="button" onClick={() => {setModoCarga('carpeta'); setArchivosFisicos([]);}} className={`flex-1 py-2 text-xs font-bold rounded-md transition-all flex items-center justify-center gap-2 ${modoCarga === 'carpeta' ? 'bg-sky-500 text-white shadow' : 'text-slate-500 hover:text-slate-700 dark:hover:text-white'}`}><FolderOpen size={14}/> Carpeta Masiva</button>
+                      <button type="button" onClick={() => setModoCarga('enlace')} className={`flex-1 py-2 text-xs font-bold rounded-md transition-all flex items-center justify-center gap-2 ${modoCarga === 'enlace' ? 'bg-sky-500 text-white shadow' : 'text-slate-500 hover:text-slate-700 dark:hover:text-white'}`}><LinkIcon size={14}/> Enlace YouTube/Drive</button>
+                    </div>
+                  )}
 
-                  {usarEnlace ? (
-                    <input 
-                      type="url" 
-                      name="url_recurso" 
-                      required={!contenidoEditando} 
-                      value={formData.url_recurso} 
-                      onChange={handleInputChange} 
-                      placeholder="https://drive.google.com/..." 
-                      className="w-full bg-white dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all" 
-                    />
+                  {/* INPUTS SEGÚN MODO */}
+                  {modoCarga === 'enlace' ? (
+                    <input type="url" name="url_recurso" required={!contenidoEditando} value={formData.url_recurso} onChange={handleInputChange} placeholder="https://example.com/..." className="w-full bg-white dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all" />
                   ) : (
                     <>
                       <input 
                         type="file" 
+                        multiple={modoCarga === 'archivos'}
+                        // @ts-ignore: webkitdirectory es un atributo especial no estándar pero 100% funcional
+                        webkitdirectory={modoCarga === 'carpeta' ? "true" : undefined}
                         accept={formData.tipo === 'video' ? 'video/*' : 'image/*'}
                         onChange={handleFileChange}
                         required={!contenidoEditando && !formData.url_recurso} 
                         className="w-full text-slate-800 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-sky-500/10 file:text-sky-500 hover:file:bg-sky-500/20" 
                       />
-                      {contenidoEditando && !archivoFisico && formData.url_recurso && (
+                      {contenidoEditando && !archivosFisicos.length && formData.url_recurso && (
                         <p className="text-[10px] text-amber-500 mt-3 font-bold uppercase tracking-wide flex items-center gap-1">
                           <HardDrive size={12} /> Ya hay un recurso guardado.
                         </p>
@@ -298,27 +285,25 @@ const GestionContenidoPage = () => {
                 </div>
               )}
 
-              {/* VISTA PREVIA */}
-              {(archivoFisico || (contenidoEditando && formData.url_recurso) || (usarEnlace && formData.url_recurso)) && (
+              {/* 🔥 VISTA PREVIA MEJORADA PARA MASIVOS */}
+              {(archivosFisicos.length > 0 || (contenidoEditando && formData.url_recurso) || (modoCarga === 'enlace' && formData.url_recurso)) && (
                 <div className="p-4 bg-slate-100 dark:bg-black/30 rounded-xl border border-slate-200 dark:border-white/5 flex flex-col items-center justify-center mt-4">
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 w-full text-left">Vista Previa</label>
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 w-full text-left">
+                    {archivosFisicos.length > 1 ? `Archivos Seleccionados (${archivosFisicos.length})` : 'Vista Previa'}
+                  </label>
                   
-                  {formData.tipo === 'imagen' && (!usarEnlace || formData.url_recurso.match(/\.(jpeg|jpg|gif|png|webp)$/i) != null) ? (
-                    <img 
-                      src={archivoFisico ? URL.createObjectURL(archivoFisico) : formData.url_recurso} 
-                      alt="Vista previa" 
-                      className="max-h-40 w-auto object-cover rounded-lg shadow-md"
-                      onError={(e) => (e.currentTarget.src = 'https://via.placeholder.com/400x200?text=Vista+No+Disponible')}
-                    />
-                  ) : formData.tipo === 'video' && (!usarEnlace || formData.url_recurso.match(/\.(mp4|webm|ogg)$/i) != null) ? (
-                    <video 
-                      src={archivoFisico ? URL.createObjectURL(archivoFisico) : formData.url_recurso} 
-                      controls 
-                      className="max-h-40 w-auto rounded-lg shadow-md"
-                    />
+                  {archivosFisicos.length > 1 ? (
+                    <div className="w-full text-sm text-slate-600 dark:text-slate-400 flex items-center gap-2">
+                      <FolderOpen size={20} className="text-sky-500" />
+                      Has seleccionado <strong>{archivosFisicos.length}</strong> archivos para subir a la carpeta.
+                    </div>
+                  ) : formData.tipo === 'imagen' && (modoCarga !== 'enlace' || formData.url_recurso.match(/\.(jpeg|jpg|gif|png|webp)$/i) != null) ? (
+                    <img src={archivosFisicos[0] ? URL.createObjectURL(archivosFisicos[0]) : formData.url_recurso} alt="Vista previa" className="max-h-40 w-auto object-cover rounded-lg shadow-md" onError={(e) => (e.currentTarget.src = 'https://via.placeholder.com/400x200?text=Vista+No+Disponible')} />
+                  ) : formData.tipo === 'video' && (modoCarga !== 'enlace' || formData.url_recurso.match(/\.(mp4|webm|ogg)$/i) != null) ? (
+                    <video src={archivosFisicos[0] ? URL.createObjectURL(archivosFisicos[0]) : formData.url_recurso} controls className="max-h-40 w-auto rounded-lg shadow-md" />
                   ) : (
                     <a href={formData.url_recurso} target="_blank" rel="noopener noreferrer" className="text-sky-500 font-bold flex items-center gap-2 text-sm bg-sky-500/10 px-4 py-2 rounded-lg">
-                      <LinkIcon size={16} /> Abrir enlace en nueva pestaña
+                      <LinkIcon size={16} /> Abrir enlace externo
                     </a>
                   )}
                 </div>
@@ -340,7 +325,7 @@ const GestionContenidoPage = () => {
         </div>
       )}
 
-      {/* --- MODAL DE CONFIRMACIÓN DE ELIMINACIÓN --- */}
+      {/* MODAL CONFIRMAR ELIMINAR */}
       {contenidoAEliminar && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm md:pl-64 transition-all duration-300">
           <div className="w-full max-w-md bg-white/90 dark:bg-[#08060d]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl p-6 text-center animate-in zoom-in-95 duration-300">
