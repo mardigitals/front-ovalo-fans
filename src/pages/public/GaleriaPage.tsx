@@ -31,7 +31,6 @@ const GaleriaPage = () => {
   
   const [carpetaActiva, setCarpetaActiva] = useState<string | null>(null);
   const [paginaActual, setPaginaActual] = useState(1);
-  // 🔥 Ajustado a 9 cards por página
   const limitePorPagina = 9; 
 
   useEffect(() => {
@@ -110,9 +109,11 @@ const GaleriaPage = () => {
     return 'https://via.placeholder.com/600x400?text=Video';
   };
 
+  //  LÓGICA DE FILTRADO, CARPETAS Y ARCHIVOS SUELTOS 
   const itemsAMostrar = useMemo(() => {
     const search = searchTerm.toLowerCase().trim();
 
+    // 1. Filtrar por búsqueda
     const filtrados = contenidos.filter(item => {
       const matchTitulo = item.titulo?.toLowerCase().includes(search) ?? false;
       const matchCarpeta = item.carpeta?.toLowerCase().includes(search) ?? false;
@@ -120,38 +121,48 @@ const GaleriaPage = () => {
     });
 
     if (carpetaActiva) {
+      // ESTAMOS ADENTRO DE UNA CARPETA
       return filtrados.filter(c => c.carpeta === carpetaActiva);
     }
 
+    // ESTAMOS EN LA RAÍZ
     const carpetasMap = new Map<string, number>();
     const archivosSueltos: ContenidoMultimedia[] = [];
 
     filtrados.forEach(item => {
       const nombreCarpeta = item.carpeta?.trim();
       
+      // Evitamos que strings vacíos o la palabra "null" literal se conviertan en carpetas
       if (nombreCarpeta && nombreCarpeta.toLowerCase() !== 'null' && nombreCarpeta.toLowerCase() !== 'undefined') {
+        // Es un archivo dentro de una carpeta (sumamos 1 al contador)
         carpetasMap.set(nombreCarpeta, (carpetasMap.get(nombreCarpeta) || 0) + 1);
       } else {
+        // Es un archivo suelto real
         archivosSueltos.push(item);
       }
     });
 
-    const carpetasCards: any[] = Array.from(carpetasMap.entries()).map(([nombre, cantidad]) => ({
-      id: `folder-${nombre}`,
-      isFolder: true,
-      titulo: nombre,
-      carpeta: nombre,
-      tipo: 'imagen', 
-      url_recurso: '',
-      nivel_acceso_requerido: 0,
-      autor_staff_id: 0,
-      fecha_publicacion: '',
-      vistas: 0,
-      es_destacado: 0,
-      cantidad: cantidad,
-      autor: undefined 
-    }));
+    // Armamos las tarjetas de las carpetas Y LAS ORDENAMOS
+    const carpetasCards: any[] = Array.from(carpetasMap.entries())
+      .map(([nombre, cantidad]) => ({
+        id: `folder-${nombre}`,
+        isFolder: true,
+        titulo: nombre,
+        carpeta: nombre,
+        tipo: 'imagen', // Default para que no rompa el tipado
+        url_recurso: '',
+        nivel_acceso_requerido: 0,
+        autor_staff_id: 0,
+        fecha_publicacion: '',
+        vistas: 0,
+        es_destacado: 0,
+        cantidad: cantidad,
+        autor: undefined 
+      }))
+      // ORDENAMIENTO INTELIGENTE: Menor a Mayor (Números) y A-Z (Letras)
+      .sort((a, b) => a.titulo.localeCompare(b.titulo, undefined, { numeric: true, sensitivity: 'base' }));
 
+    // Retornamos primero las carpetas (ya ordenadas) y después los archivos sueltos
     return [...carpetasCards, ...archivosSueltos];
   }, [contenidos, searchTerm, carpetaActiva]);
 

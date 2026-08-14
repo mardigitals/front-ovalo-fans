@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import GenericCrud from '@/components/ui/GenericCrud';
 import { useAuth } from '@/hooks/useAuth';
-import { X, AlertTriangle, Upload, Link as LinkIcon, HardDrive, FolderOpen, FileImage } from 'lucide-react'; 
+import { X, AlertTriangle, Upload, Link as LinkIcon, HardDrive, FolderOpen, FileImage, ChevronDown } from 'lucide-react'; 
 import api from '@/api/axios';
 
 const initialState = {
   titulo: '',
-  tipo: 'noticia',
+  tipo: 'imagen',
   url_recurso: '',
   nivel_acceso_requerido: 0,
   es_destacado: false,
-  carpeta: '', // 🔥 Nuevo campo para agrupar fotos
+  carpeta: '', 
 };
 
 const GestionContenidoPage = () => {
@@ -228,22 +228,30 @@ const GestionContenidoPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Formato</label>
-                  <select name="tipo" value={formData.tipo} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all appearance-none">
-                    <option value="noticia">Noticia (Texto/Link)</option>
-                    <option value="imagen">Imagen (Foto)</option>
-                    <option value="video">Video</option>
-                  </select>
+                  <div className="relative">
+                    <select name="tipo" value={formData.tipo} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all appearance-none">
+                      <option value="imagen">Imagen (Foto)</option>
+                      <option value="noticia">Noticia (Texto/Link)</option>
+                      <option value="video">Video</option>
+                    </select>
+                    <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                  </div>
                 </div>
+                
                 <div>
                   <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Nivel de Acceso</label>
-                  <select name="nivel_acceso_requerido" value={formData.nivel_acceso_requerido} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all appearance-none">
-                    <option value="0">Contenido Público</option>
-                    <option value="1">Exclusivo VIP (P1 / P2)</option>
-                  </select>
+                  <div className="relative">
+                    <select name="nivel_acceso_requerido" value={formData.nivel_acceso_requerido} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all appearance-none">
+                      <option value="0">Contenido Público</option>
+                      <option value="1">Exclusivo VIP (P1 / P2)</option>
+                    </select>
+                    <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                  </div>
                 </div>
               </div>
+            
 
-              {/* 🔥 ZONA DE CARGA DINÁMICA */}
+              {/*  ZONA DE CARGA DINÁMICA */}
               {formData.tipo === 'noticia' ? (
                 <div>
                   <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2"><LinkIcon size={14} /> URL de la Noticia</label>
@@ -285,7 +293,7 @@ const GestionContenidoPage = () => {
                 </div>
               )}
 
-              {/* 🔥 VISTA PREVIA MEJORADA PARA MASIVOS */}
+              {/*  VISTA PREVIA MEJORADA PARA MASIVOS */}
               {(archivosFisicos.length > 0 || (contenidoEditando && formData.url_recurso) || (modoCarga === 'enlace' && formData.url_recurso)) && (
                 <div className="p-4 bg-slate-100 dark:bg-black/30 rounded-xl border border-slate-200 dark:border-white/5 flex flex-col items-center justify-center mt-4">
                   <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 w-full text-left">
