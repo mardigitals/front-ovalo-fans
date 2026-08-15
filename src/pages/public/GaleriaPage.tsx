@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Search, Lock, Eye, Image as ImageIcon, Play, Star, Loader2, FileText, FolderOpen, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Lock, Eye, Image as ImageIcon, Play, Star, Loader2, FolderOpen, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface ContenidoMultimedia {
@@ -115,6 +115,10 @@ const GaleriaPage = () => {
 
     // 1. Filtrar por búsqueda
     const filtrados = contenidos.filter(item => {
+          
+      if (item.tipo === 'noticia') {
+          return false; 
+        }
       const matchTitulo = item.titulo?.toLowerCase().includes(search) ?? false;
       const matchCarpeta = item.carpeta?.toLowerCase().includes(search) ?? false;
       return matchTitulo || matchCarpeta;
@@ -286,7 +290,6 @@ const GaleriaPage = () => {
                       <div className="absolute top-3 right-3 z-20 bg-black/50 backdrop-blur-md text-white p-2 rounded-lg">
                         {item.tipo === 'video' && <Play size={16} />}
                         {item.tipo === 'imagen' && <ImageIcon size={16} />}
-                        {item.tipo === 'noticia' && <FileText size={16} />}
                       </div>
 
                       <img
