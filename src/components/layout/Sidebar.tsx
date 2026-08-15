@@ -50,6 +50,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       items.push({ to: '/dashboard/comercios-fan', icon: <ShoppingBasket size={20} />, label: 'Comercios' });
       items.push({ to: '/dashboard/pruebas', icon: <Road size={20} />, label: 'Pruebas' });
       items.push({ to: '/calendario', icon: <Calendar size={20} />, label: 'Eventos' });
+      items.push({ to: '/noticia', icon: <Info size={20} />, label: 'Noticias' });
       
       if (nivelFan === 'P1' || nivelFan === 'P2') {
         items.push({ to: '/dashboard/fast-pass', icon: <FastForward size={20} />, label: 'Fast Access' });
@@ -72,9 +73,10 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
         items.push({ to: '/dashboard/comercios', icon: <ShoppingBasket size={20} />, label: 'Comercios' });
       }
       if (rol === 'superadmin' || rol === 'prensa') {
-        items.push({ to: '/dashboard/noticias', icon: <Info size={20} />, label: 'Noticias' });
+        items.push({ to: '/noticia', icon: <Info size={20} />, label: 'Noticias' });
         items.push({ to: '/dashboard/galeria', icon: <Film size={20} />, label: 'Galería' });
         items.push({ to: '/dashboard/contenido', icon: <Upload size={20} />, label: 'Cargar Contenido' });
+        items.push({ to: '/dashboard/noticias', icon: <Info size={20} />, label: 'Crear Noticia' });
        
       }
 

@@ -30,6 +30,9 @@ import HistoriaPage from '@/pages/public/HistoriaPage';
 import ContactoPage from '@/pages/public/ContactoPage';
 import GaleriaPage from '@/pages/public/GaleriaPage';
 import GestionContenidoPage from '@/pages/dashboard/GestionContenidoPage';
+import NoticiaPage from '@/pages/public/NoticiaPage';
+import GestionNoticiaPage from '@/pages/dashboard/GestionNoticiaPage';
+import NoticiaDetallePage from '@/pages/public/NoticiaDetallePage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -42,7 +45,8 @@ const AppRoutes = () => (
         <Route path="/historia" element={<HistoriaPage  />} />
         <Route path="/contacto" element={<ContactoPage />} />
         <Route path="/galeria" element={<GaleriaPage />} />
-
+        <Route path="/noticia" element={<NoticiaPage />} />
+        <Route path="/noticias/:id" element={<NoticiaDetallePage />} />
       </Route>
 
       <Route path="/login" element={<LoginPage />} />
@@ -103,6 +107,7 @@ const AppRoutes = () => (
           {/*aca van las rutas de prensa */}
             <Route path="eventos" element={<EventosPage />} />
             <Route path="contenido" element={<GestionContenidoPage />} />
+            <Route path="noticias" element={<GestionNoticiaPage />} />
           </Route>
 
           {/* Solo SuperAdmin */}
