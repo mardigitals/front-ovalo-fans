@@ -39,7 +39,7 @@ const NoticiaDetallePage = () => {
       <div className="min-h-screen bg-slate-50 dark:bg-[#08060d] flex flex-col items-center justify-center pt-20 text-center px-4">
         <h2 className="title-fan text-4xl text-slate-800 dark:text-white mb-4">Noticia no encontrada</h2>
         <p className="text-slate-500 mb-8">El artículo que buscás no existe o fue eliminado.</p>
-        <Link to="/noticias" className="px-6 py-3 bg-sky-500 text-black font-black uppercase rounded-xl hover:bg-sky-400 transition-colors">
+        <Link to="/noticia" className="px-6 py-3 bg-sky-500 text-black font-black uppercase rounded-xl hover:bg-sky-400 transition-colors">
           Volver a Noticias
         </Link>
       </div>
@@ -59,7 +59,7 @@ const NoticiaDetallePage = () => {
         {/* BOTÓN VOLVER (Ahora arriba y fuera de la foto) */}
         <div className="mb-6">
           <Link 
-            to="/noticias" 
+            to="/noticia" 
             className="inline-flex items-center gap-2 bg-white dark:bg-[#0f151e] hover:bg-sky-500 text-slate-700 hover:text-white dark:text-slate-300 px-5 py-2.5 rounded-xl transition-all font-bold text-sm border border-slate-200 dark:border-white/5 shadow-sm"
           >
             <ArrowLeft size={16} /> Volver a Noticias
