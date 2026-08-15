@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import GenericCrud from '@/components/ui/GenericCrud';
 import { useAuth } from '@/hooks/useAuth';
-import { X, AlertTriangle, Calendar as CalendarIcon, Clock } from 'lucide-react'; 
+import { X, Calendar as CalendarIcon, Clock } from 'lucide-react'; 
 import api from '@/api/axios';
 import Calendar from '@/components/ui/Calendar'; 
+import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
 
 const initialState = {
   titulo: '', 
@@ -11,7 +12,7 @@ const initialState = {
   fecha_evento: '', 
   fecha_evento_fin: '', 
   tipo_evento: 'Carrera', 
-  categoria_carrera: 'TC'
+  categoria_carrera: 'Otros'
 };
 
 const obtenerEstadoDinamico = (fechaStr: string) => {
@@ -84,7 +85,7 @@ const EventosPage = () => {
         fecha_evento: formatearFecha(evento.fecha_evento),
         fecha_evento_fin: formatearFecha(evento.fecha_evento_fin), 
         tipo_evento: evento.tipo_evento || 'Carrera', 
-        categoria_carrera: evento.categoria_carrera || 'TC'
+        categoria_carrera: evento.categoria_carrera || 'Otros'
     });
     setError(''); setIsModalOpen(true);
     };
@@ -277,29 +278,14 @@ const EventosPage = () => {
       )}
 
       {/* --- MODAL DE CONFIRMACIÓN DE ELIMINACIÓN --- */}
-      {eventoAEliminar && (
-        <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm md:pl-64 transition-all duration-300">
-          <div className="w-full max-w-md bg-white/90 dark:bg-[#08060d]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl p-6 text-center animate-in zoom-in-95 duration-300">
-            <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4 text-red-500">
-              <AlertTriangle size={32} />
-            </div>
-            
-            <h3 className="title-fan text-2xl mb-2 text-slate-800 dark:text-white">¿Eliminar Evento?</h3>
-            <p className="text-slate-500 dark:text-slate-400 mb-6">
-                Estás a punto de eliminar <strong>"{eventoAEliminar.titulo}"</strong>. Esta acción no se puede deshacer.
-            </p>
-            
-            <div className="flex gap-3">
-              <button onClick={() => setEventoAEliminar(null)} className="flex-1 py-3 bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-800 dark:text-white rounded-lg transition-colors font-bold">
-                Cancelar
-              </button>
-              <button onClick={confirmarEliminacion} className="flex-1 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors font-black shadow-[0_0_15px_rgba(239,68,68,0.4)]">
-                Sí, Eliminar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmDeleteModal
+        isOpen={!!eventoAEliminar}
+        onClose={() => setEventoAEliminar(null)}
+        onConfirm={confirmarEliminacion}
+        title="Eliminar Evento"   
+        itemName={eventoAEliminar?.titulo || ''}
+        warningText="Esta acción no se puede deshacer y borrará el evento del calendario."
+      />
     </div>
   );
 };

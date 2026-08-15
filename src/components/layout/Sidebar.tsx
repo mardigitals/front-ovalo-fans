@@ -69,14 +69,14 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
          items.push({ to: '/dashboard/metricas', icon: <ChartCandlestick size={20} />, label: 'Métricas de suscrip.' });
         items.push({ to: '/dashboard/socios', icon: <Users size={20} />, label: 'Socios' });       
         items.push({ to: '/dashboard/solicitudes', icon: <Check size={20} />, label: 'Solicitudes' });
-        items.push({ to: '/dashboard/eventos', icon: <Calendar size={20} />, label: 'Calendario' });
+        items.push({ to: '/dashboard/eventos', icon: <Calendar size={20} />, label: 'Cargar evento' });
         items.push({ to: '/dashboard/comercios', icon: <ShoppingBasket size={20} />, label: 'Comercios' });
       }
       if (rol === 'superadmin' || rol === 'prensa') {
         items.push({ to: '/noticia', icon: <Info size={20} />, label: 'Noticias' });
         items.push({ to: '/dashboard/galeria', icon: <Film size={20} />, label: 'Galería' });
-        items.push({ to: '/dashboard/contenido', icon: <Upload size={20} />, label: 'Cargar Contenido' });
-        items.push({ to: '/dashboard/noticias', icon: <Info size={20} />, label: 'Crear Noticia' });
+        items.push({ to: '/dashboard/contenido', icon: <Upload size={20} />, label: 'Cargar contenido' });
+        items.push({ to: '/dashboard/noticias', icon: <Info size={20} />, label: 'Crear noticia' });
        
       }
 
