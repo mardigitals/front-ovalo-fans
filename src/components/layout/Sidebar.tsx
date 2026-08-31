@@ -86,7 +86,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
 
       if (rol === 'superadmin') {
         items.push({ to: '/dashboard/cuentas', icon: <ShieldUser size={20} />, label: 'Cuentas' });
-        items.push({ to: '/dashboard/roles', icon: <UserRoundKey size={20} />, label: 'Staff' });
+        items.push({ to: '/dashboard/staff', icon: <UserRoundKey size={20} />, label: 'Staff' });
         items.push({ to: '/dashboard/membresias', icon: <Pyramid size={20} />, label: 'Membresías' });  
         items.push({ to: '/dashboard/config', icon: <Settings size={20} />, label: 'Configuración y roles' });
         items.push({ to: '/dashboard/seguridad', icon: <Shield size={20} />, label: 'Seguridad' });

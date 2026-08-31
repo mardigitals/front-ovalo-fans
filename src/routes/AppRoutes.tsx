@@ -33,6 +33,7 @@ import GestionContenidoPage from '@/pages/dashboard/GestionContenidoPage';
 import NoticiaPage from '@/pages/public/NoticiaPage';
 import GestionNoticiaPage from '@/pages/dashboard/GestionNoticiaPage';
 import NoticiaDetallePage from '@/pages/public/NoticiaDetallePage';
+import GestionStaffPage from '@/pages/dashboard/GestionStaffPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -112,7 +113,8 @@ const AppRoutes = () => (
 
           {/* Solo SuperAdmin */}
           <Route element={<RoleGuard allowedRoles={['superadmin']} />}>
-            <Route path="cuentas" element={<CuentasPage />} />  
+            <Route path="cuentas" element={<CuentasPage />} />
+            <Route path="staff" element={<GestionStaffPage />} />  
           </Route>
 
         </Route>
