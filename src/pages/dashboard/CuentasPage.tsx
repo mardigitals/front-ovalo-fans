@@ -172,8 +172,8 @@ const CuentasPage = () => {
                 </div>
                 <div className="flex justify-between border-b border-slate-200 dark:border-white/5 pb-2">
                     <span className="text-slate-500 font-bold uppercase">Estado Actual:</span>
-                    <span className={`font-black uppercase ${cuentaSeleccionada.estado_cuenta === 'Activo' ? 'text-green-500' : 'text-red-500'}`}>
-                    {cuentaSeleccionada.estado_cuenta}
+                    <span className={`font-black uppercase ${cuentaSeleccionada.eliminado_en ? 'text-blue-500' : 'text-yellow-500'}`}>
+                        {cuentaSeleccionada.eliminado_en ? 'Eliminado' : cuentaSeleccionada.estado_cuenta}
                     </span>
                 </div>
                 <div className="flex justify-between border-b border-slate-200 dark:border-white/5 pb-2">
