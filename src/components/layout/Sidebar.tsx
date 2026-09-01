@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { FileChartColumn, BadgeDollarSign, ShieldUser, Calendar, Upload, Film, Gift, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, X, Shield, Camera, Star, Settings, PercentIcon, FastForward, LockKeyholeOpen, Flag, Info, UserRoundKey, ShoppingBasket, Check, ChartCandlestick, ShieldCheck } from 'lucide-react';
+import { FileChartColumn, BadgeDollarSign, ShieldUser, Calendar, Upload, Film, Gift, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, X, Camera, Star, PercentIcon, FastForward, LockKeyholeOpen, Flag, Info, UserRoundKey, ShoppingBasket, Check, ChartCandlestick, ShieldCheck } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/hooks/useTheme'; 
 import ButtonHome from '@/components/ui/ButtonHome'; 
@@ -88,8 +88,6 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
         items.push({ to: '/dashboard/cuentas', icon: <ShieldUser size={20} />, label: 'Cuentas' });
         items.push({ to: '/dashboard/staff', icon: <UserRoundKey size={20} />, label: 'Staff' });
         items.push({ to: '/dashboard/membresias', icon: <Pyramid size={20} />, label: 'Membresías' });  
-        items.push({ to: '/dashboard/config', icon: <Settings size={20} />, label: 'Configuración y roles' });
-        items.push({ to: '/dashboard/seguridad', icon: <Shield size={20} />, label: 'Seguridad' });
       }
     }
 
