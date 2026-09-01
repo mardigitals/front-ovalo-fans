@@ -34,6 +34,7 @@ import NoticiaPage from '@/pages/public/NoticiaPage';
 import GestionNoticiaPage from '@/pages/dashboard/GestionNoticiaPage';
 import NoticiaDetallePage from '@/pages/public/NoticiaDetallePage';
 import GestionStaffPage from '@/pages/dashboard/GestionStaffPage';
+import GestionMembresiasPage from '@/pages/dashboard/GestionMembresiasPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -115,6 +116,7 @@ const AppRoutes = () => (
           <Route element={<RoleGuard allowedRoles={['superadmin']} />}>
             <Route path="cuentas" element={<CuentasPage />} />
             <Route path="staff" element={<GestionStaffPage />} />  
+            <Route path="membresias" element={<GestionMembresiasPage />} />
           </Route>
 
         </Route>
