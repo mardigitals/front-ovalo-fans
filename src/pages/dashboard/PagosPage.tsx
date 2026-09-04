@@ -11,9 +11,6 @@ const PagosPage = () => {
     const [historialPagos, setHistorialPagos] = useState<any[]>([]);
     const [membresiasActivas, setMembresiasActivas] = useState<any[]>([]); // 🔥 NUEVO ESTADO
     const [cargandoDatos, setCargandoDatos] = useState(true);
-    
-    const [tituloPay, setTituloPay] = useState("Elegí tu Nivel de FAN");
-    const [subtituloPay, setSubtituloPay] = useState("Asegurá tu lugar y accedé a los beneficios.");
 
     useEffect(() => {
         const fetchDatosFinancieros = async () => {
@@ -23,18 +20,7 @@ const PagosPage = () => {
                 const estado = perfilRes.data.estadoSuscripcion || 'Pendiente';
                 setEstadoSuscripcion(estado);
 
-                // 2. Textos dinámicos
-                if (estado === 'Activo') {
-                    setTituloPay("¿Querés modificar tu plan?");
-                    setSubtituloPay("Elegí una nueva membresía para subir de nivel.");
-                } else if (estado === 'Vencido' || estado === 'Cancelado') {
-                    setTituloPay("Renová tu suscripción");
-                    setSubtituloPay("Regularizá tu pago para seguir disfrutando del Autódromo.");
-                } else {
-                    setTituloPay("Elegí tu Nivel de FAN");
-                    setSubtituloPay("Asegurá tu lugar y accedé a los beneficios.");
-                }
-
+        
                 // 3. Promesas en paralelo para Pagos y Membresías (Más rápido)
                 const [pagosRes, membresiasRes] = await Promise.all([
                     api.get('/pagos/mis-pagos').catch(() => ({ data: [] })),
@@ -90,7 +76,7 @@ const PagosPage = () => {
         if (estadoSuscripcion === 'Activo') {
             return (
                 <div className="text-center space-y-2 mb-8">
-                    <h2 className="title-fan text-center text-3xl md:text-5xl text-institucional-celeste">¿Querés modificar tu plan?</h2>
+                    <h2 className="title-fan text-center text-3xl pb-4 md:text-5xl">¿Querés modificar tu plan?</h2>
                     <p className="text-slate-500 font-medium">Elegí una nueva membresía para subir de nivel.</p>
                 </div>
             );
@@ -99,7 +85,7 @@ const PagosPage = () => {
         if (estadoSuscripcion === 'Vencido' || estadoSuscripcion === 'Cancelado') {
             return (
                 <div className="text-center space-y-2 mb-8">
-                    <h2 className="title-fan text-center text-3xl md:text-5xl text-red-500">Renová tu suscripción</h2>
+                    <h2 className="title-fan text-center text-3xl pb-4 md:text-5xl">Renová tu suscripción</h2>
                     <p className="text-slate-500 font-medium">Regularizá tu pago para seguir disfrutando del Autódromo.</p>
                 </div>
             );
@@ -127,7 +113,7 @@ const PagosPage = () => {
                 </div>
             )}
 
-            <section className="bg-white/5 p-4 md:p-8 rounded-3xl border border-white/5">
+           <section className="bg-white/5 p-4 md:p-8 rounded-3xl border border-white/5">
                 {renderizarTitulos()}
                 
                 {/* 🔥 LE PASAMOS LAS MEMBRESÍAS DINÁMICAS AL COMPONENTE */}
@@ -135,9 +121,8 @@ const PagosPage = () => {
                     <GenericPay 
                         onSelectPlan={handlePayment} 
                         isLoading={isLoading} 
-                        titulo={tituloPay}         
-                        subtitulo={subtituloPay}    
                         membresias={membresiasActivas} 
+                        // 🔥 Eliminamos las líneas de titulo y subtitulo acá para que no se dupliquen
                     />
                 ) : !cargandoDatos && (
                     <div className="text-center py-10 text-slate-500 border-2 border-dashed border-slate-200 dark:border-white/10 rounded-2xl">
@@ -145,7 +130,7 @@ const PagosPage = () => {
                     </div>
                 )}
             </section>
-
+            
             <section className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-xl">
                 <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-white/5">
                     <Receipt className="text-institucional-celeste" />

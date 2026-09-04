@@ -6,7 +6,7 @@ interface GenericPayProps {
   isLoading?: boolean; 
   titulo?: string; 
   subtitulo?: string; 
-  membresias: any[]; // 🔥 NUEVO PROP: Recibimos la lista real
+  membresias: any[]; 
 }
 
 const GenericPay = ({ onSelectPlan, isLoading = false, titulo, subtitulo, membresias }: GenericPayProps) => {
@@ -46,7 +46,7 @@ const GenericPay = ({ onSelectPlan, isLoading = false, titulo, subtitulo, membre
         {/* TÍTULOS (Solo se muestran si vienen por prop y el estado base lo permite) */}
         {(titulo || subtitulo) && (
             <div className="text-center space-y-2">
-            <h2 className="title-fan text-center text-3xl md:text-5xl">{titulo}</h2>
+            <h2 className="title-fan text-center text-3xl md:text-5xl text-slate-500">{titulo}</h2>
             <p className="text-fan text-slate-600 dark:text-slate-400">{subtitulo}</p>
             </div>
         )}
