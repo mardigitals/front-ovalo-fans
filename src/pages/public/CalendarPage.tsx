@@ -49,7 +49,7 @@ const CalendarPage = () => {
       <section className="relative z-10 flex flex-col items-center px-4 py-16 md:py-20 w-full max-w-6xl mx-auto flex-grow">
         
         <div className="text-center mb-10">
-          <h2 className="title-fan text-4xl md:text-5xl uppercase drop-shadow-lg">
+          <h2 className="title-fan text-4xl p-3 md:text-5xl uppercase drop-shadow-lg">
             CALENDARIO DE EVENTOS
           </h2>
           <h3 className="subtitle-fan text-lg md:text-xl text-slate-700 dark:text-slate-300 mt-2">
