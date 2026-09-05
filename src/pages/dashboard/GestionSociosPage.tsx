@@ -36,7 +36,7 @@ const GestionSociosPage = () => {
     setSocioSeleccionado(socio);
     setIsLoadingPagos(true);
     setPagosSocio([]);
-
+// hay que traer suscripcione no solamente pagos
     try {
       const response = await api.get(`/pagos/suscripcion/${socio.id}`);
       setPagosSocio(response.data || []);
