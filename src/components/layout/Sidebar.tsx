@@ -66,8 +66,8 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       }
     } else {
       if (rol === 'superadmin' || rol === 'administrativo') {
-         items.push({ to: '/dashboard/metricas', icon: <ChartCandlestick size={20} />, label: 'Métricas de suscrip.' });
-        items.push({ to: '/dashboard/socios', icon: <Users size={20} />, label: 'Socios' });       
+         items.push({ to: '/dashboard/metricas', icon: <ChartCandlestick size={20} />, label: 'Métricas' });
+        items.push({ to: '/dashboard/socios', icon: <Users size={20} />, label: 'Suscripciones' });       
         items.push({ to: '/dashboard/solicitudes', icon: <Check size={20} />, label: 'Solicitudes' });
         items.push({ to: '/dashboard/eventos', icon: <Calendar size={20} />, label: 'Cargar evento' });
         items.push({ to: '/dashboard/comercios', icon: <ShoppingBasket size={20} />, label: 'Comercios' });

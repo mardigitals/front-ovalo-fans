@@ -68,7 +68,7 @@ const GestionSociosPage = () => {
         <div>
           <h1 className="text-3xl font-black uppercase tracking-tight text-slate-800 dark:text-white title-fan flex items-center gap-3">
             <Users className="text-sky-500" size={32} />
-            Gestión de <span className="text-sky-500">Socios</span>
+            Listado de <span className="text-sky-500">Suscripciones</span>
           </h1>
           <p className="text-slate-500 mt-1">Monitoreá el estado de las membresías y el historial de pagos.</p>
         </div>
