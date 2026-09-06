@@ -23,7 +23,7 @@ export function ChicanasPieChart({ chicanas }: { chicanas: any[] }) {
         <CardTitle className="dark:text-white text-sm font-black uppercase tracking-wider">Sectores Favoritos</CardTitle>
         <CardDescription>Top Chicanas elegidas</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="flex-1">
         <ChartContainer config={configSectores} className="mx-auto aspect-square max-h-[250px]">
           <PieChart>
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
@@ -33,7 +33,7 @@ export function ChicanasPieChart({ chicanas }: { chicanas: any[] }) {
                   if (viewBox && "cx" in viewBox && "cy" in viewBox) {
                     return (
                       <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                        <tspan x={viewBox.cx} y={viewBox.cy} className="fill-institucional-celeste text-xl font-bold">
+                        <tspan x={viewBox.cx} y={viewBox.cy} className="fill-institucional-celeste text-lg font-bold">
                           {datosSectoresShadcn[0]?.browser || "-"}
                         </tspan>
                         <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 20} className="fill-slate-500 text-[10px] uppercase">
