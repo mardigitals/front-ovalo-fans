@@ -36,6 +36,7 @@ import NoticiaDetallePage from '@/pages/public/NoticiaDetallePage';
 import GestionStaffPage from '@/pages/dashboard/GestionStaffPage';
 import GestionMembresiasPage from '@/pages/dashboard/GestionMembresiasPage';
 import GestionSociosPage from '@/pages/dashboard/GestionSociosPage';
+import GestionSolicitudesPage from '@/pages/dashboard/GestionSolicitudesPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -104,6 +105,7 @@ const AppRoutes = () => (
             <Route path="eventos" element={<EventosPage />} />
             <Route path="metricas" element={<SuscripcionesMetricasPage />} />
             <Route path="socios" element={<GestionSociosPage />} />
+            <Route path="solicitudes" element={<GestionSolicitudesPage />} />
           </Route>
 
           {/*  SuperAdmin y Prensa */}

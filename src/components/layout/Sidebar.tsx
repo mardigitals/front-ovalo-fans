@@ -3,6 +3,7 @@ import { FileChartColumn, BadgeDollarSign, ShieldUser, Calendar, Upload, Film, G
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/hooks/useTheme'; 
 import ButtonHome from '@/components/ui/ButtonHome'; 
+import logoAutodromo from '@/assets/icons/logo-autodromo-color.png';
 
 // 1. Subcomponente para los botones del menú
 const SidebarItem = ({ to, icon, label, isActive, onClick }: { to: string; icon: React.ReactNode; label: string; isActive?: boolean; onClick?: () => void }) => (
@@ -111,10 +112,11 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
         
         <div className="p-6 flex justify-between items-center">
           <div>
-            <h2 className="subtitle-fan text-xl">ÓVALO FANS</h2>
-            <p className="text-[10px] text-slate-500 dark:text-institucional-gris uppercase tracking-widest mt-1">
-              Club Atlético Rafaela
+            <img src={logoAutodromo} alt="Logo Autódromo Rafaela" className="h-12 w-auto opacity-80 px-10" />
+            <p className="text-[12px] title-fan uppercase tracking-widest mt-1">
+              Sistema Óvalo Fans
             </p>
+            
           </div>
           <button className="md:hidden text-slate-500 dark:text-slate-400 p-1" onClick={() => setIsOpen(false)}>
             <X size={24} />
@@ -133,7 +135,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
         </div>
 
         {/* MENÚ DE NAVEGACIÓN */}
-        <nav className="flex-1 px-4 space-y-2 mt-4 overflow-y-auto">
+        <nav className="flex-1 px-4 space-y-2 mt-4 overflow-y-auto bg-slate-100  dark:bg-neutral-950 rounded-lg shadow-inner">
           {navItems.map((item, index) => (
             <SidebarItem 
               key={index} 
