@@ -88,31 +88,31 @@ const HomePage = () => {
         <div className="space-y-6">
           <div className="space-y-3">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div className="glass-neon-btn bg-gradient-to-br from-white/60 via-cyan-600 to-cyan-600 border border-slate-300 dark:border-white/30 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-stone-500/30">
+              <div className="glass-neon-btn bg-gradient-to-br from-white/60 via-cyan-600 to-cyan-600  border border-slate-400 dark:border-slate-300  p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-stone-50">
                 <div className="text-5xl font-bold text-white">12</div>
-                <p className="md:text-3xl text-2xl font-black text-slate-800 dark:text-white leading-none">Beneficios exclusivos</p>
+                <p className="md:text-3xl text-2xl font-bold text-white leading-none">Beneficios exclusivos</p>
                 <p className="text-sm md:p-4 pt-3 text-white">Vip, fast access y más</p>
               </div>
-              <div className="glass-neon-btn bg-gradient-to-br from-white/60 via-gray-500 to-gray-500 border border-slate-300 dark:border-white/30 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-stone-500/30">
+              <div className="glass-neon-btn bg-gradient-to-br from-white/60 via-gray-500 to-gray-500  border border-slate-400 dark:border-slate-300  p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-stone-50">
                 <div className="md:pr-8 text-5xl font-bold text-white">+1000</div>
-                <p className="md:text-3xl text-2xl pb-3 font-black text-slate-800 dark:text-white leading-none">Fotos videos</p>
+                <p className="md:text-3xl text-2xl pb-3 font-bold text-white leading-none">Fotos videos</p>
                 <p className="text-sm md:p-1 text-white">Automovilismo inédito</p>
               </div>
-              <div className="glass-neon-btn bg-gradient-to-br from-white/60 via-cyan-600 to-cyan-600 border border-slate-300 dark:border-white/30 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-stone-500/30">
+              <div className="glass-neon-btn bg-gradient-to-br from-white/60 via-cyan-600 to-cyan-600  border border-slate-400 dark:border-slate-300  p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-stone-50">
                 <div className="md:pr-8 text-5xl font-bold text-white">+300</div>
-                <p className="md:text-3xl text-2xl font-black text-slate-800 dark:text-white leading-none">km/h</p>
+                <p className="md:text-3xl text-2xl font-bold text-white leading-none">km/h</p>
                 <p className="text-sm md:p-3 text-white">Probá en el circuito más veloz de Sudamérica</p>
               </div>
             
-              <div className="glass-neon-btn bg-gradient-to-tl from-white/60 via-gray-600 to-gray-600 border border-slate-300 dark:border-white/30 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-stone-500/30">
+              <div className="glass-neon-btn bg-gradient-to-tl from-white/60 via-gray-600 to-gray-600 border border-slate-400 dark:border-slate-300 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-stone-50">
                 <div className="p-1 text-5xl font-bold text-white"><Percent size={40}/></div>
-                <p className="md:text-3xl text-2xl  md:pb-4 font-black text-slate-800 dark:text-white leading-none">Descuentos</p>
+                <p className="md:text-3xl text-2xl md:pb-4 font-bold text-white leading-none">Descuentos</p>
                 <p className="text-sm md:p-3 text-white">Comercios, talleres y repuesteras</p>
               </div>
 
-              <div className="glass-neon-btn bg-gradient-to-br from-white/60 via-gray-500 to-gray-500 border border-slate-300 dark:border-white/30 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-stone-500/30">
+              <div className="glass-neon-btn bg-gradient-to-br from-white/60 via-gray-500 to-gray-500  border border-slate-400 dark:border-slate-300 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-stone-50">
                 <div className="pr-1 text-5xl font-bold text-white">3</div>
-                <p className="md:text-3xl text-2xl font-black text-slate-800 dark:text-white leading-none">Niveles membresías</p>
+                <p className="md:text-3xl text-2xl font-bold text-white leading-none">Niveles membresías</p>
                 <p className="text-sm md:p-3 text-white">P1-P2-P3</p>
               </div>
             </div>
