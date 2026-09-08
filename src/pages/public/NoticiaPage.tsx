@@ -86,13 +86,17 @@ const NoticiaPage = () => {
                   <h2 className="text-2xl font-black uppercase tracking-widest text-slate-800 dark:text-white">Lo más destacado</h2>
                 </div>
                 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                   {destacadas.map((noticia, index) => (
                     <Link 
                       to={noticia.cuerpo ? `/noticias/${noticia.id}` : noticia.url_recurso}
                       target={noticia.cuerpo ? "_self" : "_blank"}
                       key={noticia.id} 
-                      className={`group relative rounded-3xl overflow-hidden bg-black shadow-xl hover:shadow-[0_0_30px_rgba(14,165,233,0.3)] transition-all duration-500 ${index === 0 ? 'lg:col-span-8 aspect-[16/9] lg:aspect-auto min-h-[400px]' : 'lg:col-span-4 aspect-[4/3] lg:aspect-auto min-h-[250px]'}`}
+                      className={`group relative rounded-3xl overflow-hidden bg-black shadow-xl hover:shadow-[0_0_30px_rgba(14,165,233,0.3)] transition-all duration-500 flex flex-col 
+                      ${index === 0 
+                        ? 'md:col-span-12 lg:col-span-8 min-h-[350px] md:min-h-[400px]' 
+                        : 'md:col-span-6 lg:col-span-4 min-h-[250px] md:min-h-[300px]'
+                      }`}
                     >
                       {/* Imagen de Fondo */}
                       <img 
@@ -105,16 +109,20 @@ const NoticiaPage = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
 
                       {/* Contenido Texto */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex flex-col justify-end">
-                        <div className="flex items-center gap-3 mb-3 text-sky-400 text-xs font-black uppercase tracking-wider">
+                      <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
+                        <div className="flex flex-wrap items-center gap-2 mb-3 text-sky-400 text-[10px] md:text-xs font-black uppercase tracking-wider">
                           <span className="bg-sky-500/20 px-3 py-1 rounded-full border border-sky-500/30">Destacado</span>
                           <span className="flex items-center gap-1 text-slate-300"><Calendar size={14}/> {formatearFecha(noticia.fecha_publicacion)}</span>
                         </div>
-                        <h3 className={`font-black text-white uppercase leading-tight mb-2 ${index === 0 ? 'text-3xl md:text-5xl' : 'text-xl md:text-2xl'}`}>
+                        
+                        <h3 className={`font-black text-white uppercase leading-tight mb-2 line-clamp-3 md:line-clamp-none
+                          ${index === 0 ? 'text-2xl md:text-4xl lg:text-5xl' : 'text-xl md:text-2xl'}
+                        `}>
                           {noticia.titulo}
                         </h3>
+                        
                         {index === 0 && noticia.descripcion_breve && (
-                          <p className="text-slate-300 md:text-lg line-clamp-2 max-w-3xl">
+                          <p className="text-slate-300 text-sm md:text-base lg:text-lg line-clamp-2 md:line-clamp-3 max-w-3xl">
                             {noticia.descripcion_breve}
                           </p>
                         )}
