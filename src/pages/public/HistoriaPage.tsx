@@ -137,15 +137,15 @@ const HistoriaPage = () => {
                <img src="src/assets/icons/logo-autodromo-horizontal-color.png" alt="Logo Autódromo Rafaela" className="justify-center" />
             </div>
             {/* Textos con adaptabilidad dark/light */}
-            <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-slate-900 dark:text-white transition-colors">
-                Historia del <span className="text-institucional-celeste inline-flex justify-center px-4 py-4 shadow-[0_0_20px_rgba(14,165,233,0.2)] m-4 rounded-3xl border-slate-200 "> Automovilismo de </span> Rafaela
-            </h1>
-            <p className="text-slate-600 dark:text-slate-600 text-lg transition-colors">
+            <h2 className="title-fan inline-flex px-4 py-4 shadow-[0_0_20px_rgba(14,165,233,0.2)] m-4 rounded-3xl border-slate-200 ">
+                Historia 
+            </h2>
+            <p className="text-fan">
                 Desde la tierra y los paraísos, hasta el asfalto entre paredones.
             </p>
-            <h2 className="subtitle-fan">Rafaela, cumbre del automovilismo argentino</h2>
-            <p className="text-slate-600 dark:text-slate-600 text-lg transition-colors">
-                <em>Más de un siglo de pasión, velocidad y gloria.</em>
+            <h2 className="subtitle-fan">Rafaela, Cumbre del Automovilismo Argentino</h2>
+            <p className="text-fan">
+                <em className="font-bold">Más de un siglo de pasión, velocidad y gloria.</em>
             </p> 
         </div>
         
