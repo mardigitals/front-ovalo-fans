@@ -63,7 +63,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
         items.push({ to: '/dashboard/vip', icon: <Star size={20} />, label: 'VIP Boxes' });
         items.push({ to: '/dashboard/sala', icon: <Warehouse size={20} />, label: 'Sala de Prensa' });
         items.push({ to: '/dashboard/placa', icon: <PenLine size={20} />, label: 'Placa grabada' });
-        items.push({ to: '/dashboard/experience-race', icon: <Flag size={20} />, label: 'Race experience' });
+        items.push({ to: '/dashboard/pacecar', icon: <Flag size={20} />, label: 'Race experience' });
       }
     } else {
       if (rol === 'superadmin' || rol === 'administrativo') {
