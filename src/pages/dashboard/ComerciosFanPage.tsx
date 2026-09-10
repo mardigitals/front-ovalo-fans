@@ -65,6 +65,9 @@ const ComerciosFanPage = () => {
           <p className="text-slate-500">
             Descubrí todos los comercios donde tenés beneficios exclusivos por ser Fan.
           </p>
+          <p className="text-xl font-extrabold title-fan dark:sub-title-fan dark:text-xl dark:font-extra-bold uppercase tracking-tighter flex items-center gap-2">
+             No te olvides de presentar tu DNI o QR-FAN en el comercio adherido.
+          </p>
         </div>
       </div>
 
