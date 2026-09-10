@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { QrCode, Download, Share2, Ticket, AlertTriangle, FastForward } from 'lucide-react';
+import { QrCode, Download, Share2, Ticket, AlertTriangle, FastForward, ChevronLeft } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 const FastPassPage = () => {
     const { userProfile } = useAuth();
@@ -107,7 +108,13 @@ const FastPassPage = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto space-y-6 pb-12">
+        <div className="max-w-2xl mx-auto space-y-6 pb-12 animate-in fade-in duration-500">
+            
+            {/* BOTÓN VOLVER (NUEVO) */}
+            <Link to="/dashboard/beneficios" className="inline-flex items-center gap-2 text-slate-500 hover:text-institucional-celeste transition-colors font-bold uppercase text-xs tracking-widest">
+              <ChevronLeft size={16} /> Volver a Beneficios
+            </Link>
+
             <h1 className="text-3xl font-extrabold text-slate-800 dark:text-white uppercase tracking-tighter flex items-center gap-3">
                 <FastForward className="text-institucional-celeste" size={32} />
                 Fast Access

@@ -7,7 +7,7 @@ import {
 import api from '@/api/axios';
 import NotificationBadge from '@/components/ui/NotificationBadge';
 
-type TipoSolicitudManual = 'PACECAR_RESCATE' | 'SALA_PRENSA' | 'VISITAS_GUIADAS' | 'PLACA_RECTA' | 'REGALO_SUPERFAN';
+type TipoSolicitudManual = 'PACECAR_RESCATE' | 'SALA_PRENSA' | 'VISITAS_GUIADAS' | 'PLACA_RECTA' | 'REGALO_SUPERFAN' | 'VIP_BOXES';
 
 const TABS_MANUALES: { id: TipoSolicitudManual; label: string }[] = [
   { id: 'PACECAR_RESCATE', label: 'Rescates' },
@@ -15,6 +15,7 @@ const TABS_MANUALES: { id: TipoSolicitudManual; label: string }[] = [
   { id: 'VISITAS_GUIADAS', label: 'Visitas Guiadas' },
   { id: 'PLACA_RECTA', label: 'Placas' },
   { id: 'REGALO_SUPERFAN', label: 'Regalos' },
+  { id: 'VIP_BOXES', label: 'VIP Boxes' }
 ];
 
 const GestionSolicitudesPage = () => {

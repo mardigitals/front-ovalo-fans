@@ -42,6 +42,7 @@ import SalaPrensaPage from '@/pages/dashboard/beneficios/SalaPrensaPage';
 import PlacaRectaPage from '@/pages/dashboard/beneficios/PlacaRectaPage';
 import VisitasGuiadasPage from '@/pages/dashboard/beneficios/VisitasGuiadasPage';
 import RegaloSuperfanPage from '@/pages/dashboard/beneficios/RegaloSuperFanPage';
+import VipBoxesPage from '@/pages/dashboard/beneficios/VipBoxesPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -102,7 +103,7 @@ const AppRoutes = () => (
 
           {/*  SECTOR ALTO (P1) */}
           <Route element={<NivelGuard allowedNiveles={['P1']} />}>
-            {/* <Route path="vip" element={<VipBoxesPage />} /> */}
+            <Route path="vip-boxes" element={<VipBoxesPage />} /> 
             <Route path="sala" element={<SalaPrensaPage />} />
             <Route path="pacecar" element={<PacecarPage />} />
             <Route path="placa" element={<PlacaRectaPage />} />
