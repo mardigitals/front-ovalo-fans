@@ -84,7 +84,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
         items.push({ to: '/dashboard/fast-pass', icon: <FastForward size={20} />, label: 'Fast Access' });
         items.push({ to: '/galeria', icon: <LockKeyholeOpen size={20} />, label: 'Fotos inéditas' });
         items.push({ to: '/dashboard/visitas', icon: <Camera size={20} />, label: 'Visitas guiadas' });
-        items.push({ to: '/dashboard/descuentos', icon: <Gift size={20} />, label: 'Regalo SUPERFAN' });
+        items.push({ to: '/dashboard/regalo-superfan', icon: <Gift size={20} />, label: 'Regalo SUPERFAN' });
       }
       if (nivelFan === 'P1') {
         items.push({ to: '/dashboard/vip', icon: <Star size={20} />, label: 'VIP Boxes' });

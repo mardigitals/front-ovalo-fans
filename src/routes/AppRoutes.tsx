@@ -40,6 +40,8 @@ import GestionSolicitudesPage from '@/pages/dashboard/GestionSolicitudesPage';
 import PacecarPage from '@/pages/dashboard/beneficios/PaceCarPage';
 import SalaPrensaPage from '@/pages/dashboard/beneficios/SalaPrensaPage';
 import PlacaRectaPage from '@/pages/dashboard/beneficios/PlacaRectaPage';
+import VisitasGuiadasPage from '@/pages/dashboard/beneficios/VisitasGuiadas';
+import RegaloSuperfanPage from '@/pages/dashboard/beneficios/RegaloSuperFanPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -94,6 +96,8 @@ const AppRoutes = () => (
             {/* Cuando crees los componentes, los ponés acá */}
             <Route path="fast-pass" element={<FastPassPage />} />
             <Route path="galeria" element={<GaleriaPage />} />
+            <Route path="visitas" element={<VisitasGuiadasPage />} />
+            <Route path="regalo-superfan" element={<RegaloSuperfanPage />} />
           </Route>
 
           {/*  SECTOR ALTO (P1) */}

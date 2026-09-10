@@ -67,7 +67,7 @@ const LISTA_BENEFICIOS = [
     color: 'text-slate-500', // <-- Corregido text-grey-500 a text-slate-500
     bgIcono: 'bg-slate-500/10',
     nivelesPermitidos: ['P1', 'P2'], 
-    ruta: '/dashboard/visitas-guiadas'
+    ruta: '/dashboard/visitas'
   },
   {
     tipo: 'REGALO_SUPERFAN',
