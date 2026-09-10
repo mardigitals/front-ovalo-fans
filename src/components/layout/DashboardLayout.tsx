@@ -5,6 +5,7 @@ import Sidebar from '@/components/layout/Sidebar';
 import FullScreenLoader from '@/components/ui/FullScreenLoader';
 import { useAuth } from '@/hooks/useAuth';
 import PitStopOverlay from '@/components/auth/PitStopOverlay';
+import logoAutodromo from '@/assets/icons/logo-autodromo-color.png';
 
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -26,8 +27,9 @@ const DashboardLayout = () => {
         
         <PitStopOverlay />
         {/* Cabecera Móvil */}
-        <header className="md:hidden flex items-center justify-between p-4 border-b border-slate-200 dark:border-white/10 bg-white/50 dark:bg-black/20 backdrop-blur-md z-10 sticky top-0">
-           <h2 className="subtitle-fan text-lg">ÓVALO FANS</h2>
+        <header className="md:hidden sticky top-0 z-40 flex items-center justify-between p-4 bg-white/80 dark:bg-[#08060d]/80 backdrop-blur-xl border-b border-slate-200 dark:border-white/10">
+           <img src={logoAutodromo} alt="Logo Autódromo Rafaela" className="h-6 md:h-16 opacity-80" />
+           <h2 className="subtitle-fan text-lg">Óvalo Fans</h2>
            <button onClick={() => setIsSidebarOpen(true)} className="text-slate-600 dark:text-slate-300 p-1">
              <Menu size={28} />
            </button>
