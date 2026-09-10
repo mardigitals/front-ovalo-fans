@@ -38,6 +38,8 @@ import GestionMembresiasPage from '@/pages/dashboard/GestionMembresiasPage';
 import GestionSociosPage from '@/pages/dashboard/GestionSociosPage';
 import GestionSolicitudesPage from '@/pages/dashboard/GestionSolicitudesPage';
 import PacecarPage from '@/pages/dashboard/beneficios/PaceCarPage';
+import SalaPrensaPage from '@/pages/dashboard/beneficios/SalaPrensaPage';
+import PlacaRectaPage from '@/pages/dashboard/beneficios/PlacaRectaPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -97,7 +99,9 @@ const AppRoutes = () => (
           {/*  SECTOR ALTO (P1) */}
           <Route element={<NivelGuard allowedNiveles={['P1']} />}>
             {/* <Route path="vip" element={<VipBoxesPage />} /> */}
+            <Route path="sala" element={<SalaPrensaPage />} />
             <Route path="pacecar" element={<PacecarPage />} />
+            <Route path="placa" element={<PlacaRectaPage />} />
           </Route>
 
           {/*  SuperAdmin y Administrativo */}

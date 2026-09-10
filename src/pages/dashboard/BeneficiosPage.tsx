@@ -27,7 +27,7 @@ const LISTA_BENEFICIOS = [
     color: 'text-yellow-500',
     bgIcono: 'bg-yellow-500/10',
     nivelesPermitidos: ['P1'],
-    ruta: '/dashboard/sala-prensa'
+    ruta: '/dashboard/sala'
   },
   {
     tipo: 'PACECAR_RESCATE',
@@ -47,7 +47,7 @@ const LISTA_BENEFICIOS = [
     color: 'text-yellow-500',
     bgIcono: 'bg-yellow-500/10',
     nivelesPermitidos: ['P1'], 
-    ruta: '/dashboard/placa-recta'
+    ruta: '/dashboard/placa'
   },
   {
     tipo: 'FAST_ACCESS',
