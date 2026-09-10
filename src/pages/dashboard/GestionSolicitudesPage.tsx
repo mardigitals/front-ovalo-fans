@@ -5,6 +5,7 @@ import {
   Zap, Crown, Wrench, Ticket, Database
 } from 'lucide-react';
 import api from '@/api/axios';
+import NotificationBadge from '@/components/ui/NotificationBadge';
 
 type TipoSolicitudManual = 'PACECAR_RESCATE' | 'SALA_PRENSA' | 'VISITAS_GUIADAS' | 'PLACA_RECTA' | 'REGALO_SUPERFAN';
 
@@ -24,6 +25,7 @@ const GestionSolicitudesPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isProcessing, setIsProcessing] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [conteosPendientes, setConteosPendientes] = useState<Record<string, number>>({});
 
   // Estados del Modal
   const [modalOpen, setModalOpen] = useState(false);
@@ -36,15 +38,24 @@ const GestionSolicitudesPage = () => {
   const fetchDatos = async () => {
     setIsLoading(true);
     try {
-      const [resSolicitudes, resMetricas, resLog] = await Promise.all([
+      const [resSolicitudes, resMetricas, resLog, resTodosPendientes] = await Promise.all([
         api.get('/uso-beneficio', { params: { tipo_beneficio: activeTab, estado: 'Pendiente', limite: 50 } }),
         api.get('/uso-beneficio/metricas'),
-        api.get('/uso-beneficio', { params: { limite: 100 } })
+        api.get('/uso-beneficio', { params: { limite: 100 } }),
+        api.get('/uso-beneficio', { params: { estado: 'Pendiente', limite: 500 } }) 
       ]);
       
       setSolicitudes(resSolicitudes.data.data || []);
       setMetricas(resMetricas.data || {});
       setLogGeneral(resLog.data.data || []);
+
+      // Agrupamos y contamos cuántos hay de cada tipo
+      const conteos = (resTodosPendientes.data.data || []).reduce((acc: any, curr: any) => {
+        acc[curr.tipo_beneficio] = (acc[curr.tipo_beneficio] || 0) + 1;
+        return acc;
+      }, {});
+      setConteosPendientes(conteos);
+
     } catch (error) {
       console.error('Error al cargar datos:', error);
     } finally {
@@ -200,19 +211,26 @@ const GestionSolicitudesPage = () => {
         </div>
 
         <div className="flex overflow-x-auto border-b border-slate-200 dark:border-white/10 custom-scrollbar">
-          {TABS_MANUALES.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-4 text-sm font-black uppercase tracking-wider whitespace-nowrap transition-colors border-b-2 ${
-                activeTab === tab.id 
-                  ? 'border-institucional-celeste text-institucional-celeste bg-institucional-celeste/5' 
-                  : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+          {TABS_MANUALES.map(tab => {
+            const cantidad = conteosPendientes[tab.id] || 0;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`relative px-6 py-4 text-sm font-black uppercase tracking-wider whitespace-nowrap transition-colors border-b-2 flex items-center gap-2 ${
+                  activeTab === tab.id 
+                    ? 'border-institucional-celeste text-institucional-celeste bg-institucional-celeste/5' 
+                    : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                }`}
+              >
+                {tab.label}
+                
+                {/* LA BURBUJA EN LA PESTAÑA */}
+                <NotificationBadge count={cantidad} />
+                
+              </button>
+            )
+          })}
         </div>
 
         <div className="min-h-[300px] relative">
