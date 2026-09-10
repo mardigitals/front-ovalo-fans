@@ -40,7 +40,7 @@ import GestionSolicitudesPage from '@/pages/dashboard/GestionSolicitudesPage';
 import PacecarPage from '@/pages/dashboard/beneficios/PaceCarPage';
 import SalaPrensaPage from '@/pages/dashboard/beneficios/SalaPrensaPage';
 import PlacaRectaPage from '@/pages/dashboard/beneficios/PlacaRectaPage';
-import VisitasGuiadasPage from '@/pages/dashboard/beneficios/VisitasGuiadas';
+import VisitasGuiadasPage from '@/pages/dashboard/beneficios/VisitasGuiadasPage';
 import RegaloSuperfanPage from '@/pages/dashboard/beneficios/RegaloSuperFanPage';
 
 const AppRoutes = () => (
