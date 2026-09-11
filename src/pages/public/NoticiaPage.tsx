@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Calendar, User, ChevronLeft, ChevronRight, ArrowRight, Eye, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import api from '@/api/axios';
+import ButtonHome from '@/components/ui/ButtonHome';
 
 const NoticiaPage = () => {
   const [noticias, setNoticias] = useState<any[]>([]);
@@ -62,13 +63,19 @@ const NoticiaPage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* HERO SECTION */}
-        <div className="mb-12 border-b border-slate-300 dark:border-white/10 pb-8">
-          <h1 className="title-fan text-5xl md:text-7xl text-slate-900 dark:text-white uppercase tracking-tighter mb-4">
-            Noticias <span className="text-sky-500">Autódromo Rafaela</span>
+        <div className="mb-12 pt-4 border-b border-slate-300 dark:border-white/10 pb-8">
+          <h1 className="title-fan text-5xl md:text-5xl dark:text-white uppercase tracking-tighter mb-4">
+            Noticias <span className="title-fan">Autódromo Rafaela</span>
           </h1>
-          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl font-medium">
-            Toda la actualidad, comunicados oficiales y coberturas recientes del ÚNICO óvalo de Sudamérica.
-          </p>
+        
+            <h3 className="subtitle-fan text-lg md:text-xl text-slate-700 dark:text-slate-300 mt-2">
+            Toda la actualidad, comunicados oficiales y coberturas recientes del <em className="not-italic subtitle-fan">único óvalo en Sudamérica. </em>
+          </h3>
+        </div>
+
+        {/* BOTÓN FLOTANTE PARA VOLVER A LA WEB */}
+        <div className="fixed bottom-6 right-6 z-50">
+          <ButtonHome />
         </div>
 
         {isLoading ? (
