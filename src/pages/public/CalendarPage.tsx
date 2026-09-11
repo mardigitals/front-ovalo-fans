@@ -35,7 +35,7 @@ const CalendarPage = () => {
           <img 
             src={logo} 
             alt="Logo Autódromo de Rafaela" 
-            className="w-full h-full object-cover opacity-20 dark:opacity-40" 
+            className="w-full h-full object-cover opacity-10 dark:opacity-90" 
           />          
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc/80 to-zinc dark:via-[#08060d]/80 dark:to-[#08060d]" />
         </div>
@@ -45,15 +45,16 @@ const CalendarPage = () => {
       <div className="fixed bottom-6 right-6 z-50">
         <ButtonHome />
       </div>
-
-      <section className="relative z-10 flex flex-col items-center px-4 py-16 md:py-20 w-full max-w-6xl mx-auto flex-grow">
-        
-        <div className="text-center pt-9 mb-10">
-          <h2 className="title-fan text-4xl p-3 md:text-5xl uppercase drop-shadow-lg">
-            CALENDARIO DE EVENTOS
-          </h2>
-          <h3 className="subtitle-fan text-lg md:text-xl text-slate-700 dark:text-slate-300 mt-2">
-            Seguí de cerca la actividad del <em className="not-italic subtitle-fan">templo de la velocidad.</em>
+    
+      <section className="relative z-10 flex flex-col px-4 py-16 md:py-20 w-full max-w-6xl mx-auto flex-grow">
+     
+        {/* HERO SECTION */}
+        <div className="w-full mb-12 border-b border-slate-300 dark:border-white/10 pb-8">
+          <h1 className="title-fan text-4xl md:text-5xl dark:text-white uppercase tracking-tighter mb-4">
+            Calendario <span className="title-fan">de eventos</span>
+          </h1>
+            <h3 className="subtitle-fan text-lg md:text-xl text-slate-700 dark:text-slate-300 mt-2">
+            Seguí de cerca la actividad del <em className="not-italic subtitle-fan">templo de la velocidad. </em>
           </h3>
         </div>
 
@@ -71,7 +72,6 @@ const CalendarPage = () => {
           )}
         </div>
       </section>
-
       {/* FOOTER */}
       <Footer />
     </main>

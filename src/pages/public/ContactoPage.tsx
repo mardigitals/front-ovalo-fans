@@ -17,11 +17,11 @@ const ContactoPage = () => {
 
           {/* ENCABEZADO */}
           <div className="text-center mb-10 border-b border-slate-200 dark:border-white/10 pb-8 relative z-10">
-            <h1 className="title-fan text-4xl md:text-5xl text-slate-800 dark:text-white mb-4 uppercase">
+            <h1 className="title-fan text-4xl md:text-5xl  dark:title-fan mb-4 uppercase">
               Contacto
             </h1>
             <p className="text-slate-600 dark:text-slate-300 text-lg md:text-xl leading-relaxed">
-              ¿Tenés dudas sobre Óvalo Fans? Comunicate de manera directa con el equipo del <strong className="text-sky-500 font-bold">Autódromo de Rafaela</strong>.
+              ¿Tenés dudas sobre Óvalo Fans? Comunicate de manera directa con el equipo del <strong className="subtitle-fan font-bold">Autódromo de Rafaela</strong>.
             </p>
           </div>
 

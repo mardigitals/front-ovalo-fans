@@ -64,7 +64,7 @@ const NoticiaPage = () => {
         
         {/* HERO SECTION */}
         <div className="mb-12 pt-4 border-b border-slate-300 dark:border-white/10 pb-8">
-          <h1 className="title-fan text-5xl md:text-5xl dark:text-white uppercase tracking-tighter mb-4">
+          <h1 className="title-fan text-4xl md:text-5xl dark:text-white uppercase tracking-tighter mb-4">
             Noticias <span className="title-fan">Autódromo Rafaela</span>
           </h1>
         

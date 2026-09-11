@@ -210,17 +210,19 @@ const GaleriaPage = () => {
         
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 mt-8">
           <div>
-            <h1 className="title-fan text-4xl md:text-5xl text-slate-800 dark:text-white mb-2 uppercase">
-              {carpetaActiva ? `ÁLBUM: ${carpetaActiva}` : <><span className="text-sky-500">Galería</span> Multimedia</>}
+            <h1 className="title-fan text-4xl md:text-5xl dark:title-fan mb-2 uppercase">
+              {carpetaActiva ? `ÁLBUM: ${carpetaActiva}` : <><span className="dark:text-white">Galería</span> Multimedia</>}
             </h1>
-            <p className="text-slate-600 dark:text-slate-400 text-lg">
-              Explorá el archivo histórico y exclusivo del óvalo.
-            </p>
+           <h3 className="subtitle-fan text-lg md:text-xl text-slate-700 dark:text-slate-300 mt-2">
+              Explorá el archivo histórico y exclusivo <em className="not-italic subtitle-fan">del óvalo.</em>
+            </h3>
           </div>
+        </div>
 
+        <div className="flex gap-4 mb-8">
           <div className="relative w-full md:w-96">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-slate-400" />
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center z-10 pointer-events-none">
+              <Search className="h-5 w-5 dark:text-cyan-400 text-cyan-900" />
             </div>
             <input
               type="text"
