@@ -51,10 +51,10 @@ const CalendarPage = () => {
         {/* HERO SECTION */}
         <div className="w-full mb-12 border-b border-slate-300 dark:border-white/10 pb-8">
           <h1 className="title-fan text-4xl md:text-5xl dark:text-white uppercase tracking-tighter mb-4">
-            Calendario <span className="title-fan">de eventos</span>
+            Calendario <span className="title-fan text-4xl md:text-5xl">de eventos</span>
           </h1>
-            <h3 className="subtitle-fan text-lg md:text-xl text-slate-700 dark:text-slate-300 mt-2">
-            Seguí de cerca la actividad del <em className="not-italic subtitle-fan">templo de la velocidad. </em>
+          <h3 className="text-slate-600 dark:text-slate-300 text-lg md:text-xl leading-relaxed">
+            Seguí de cerca la actividad del <em className="not-italic subtitle-fan">templo de la velocidad</em>
           </h3>
         </div>
 

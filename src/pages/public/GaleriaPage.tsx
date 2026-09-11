@@ -213,8 +213,8 @@ const GaleriaPage = () => {
             <h1 className="title-fan text-4xl md:text-5xl dark:title-fan mb-2 uppercase">
               {carpetaActiva ? `ÁLBUM: ${carpetaActiva}` : <><span className="dark:text-white">Galería</span> Multimedia</>}
             </h1>
-           <h3 className="subtitle-fan text-lg md:text-xl text-slate-700 dark:text-slate-300 mt-2">
-              Explorá el archivo histórico y exclusivo <em className="not-italic subtitle-fan">del óvalo.</em>
+           <h3 className="text-slate-600 dark:text-slate-300 text-lg md:text-xl leading-relaxed">
+              Explorá el archivo histórico y exclusivo del circuito <em className="not-italic subtitle-fan">más veloz de Sudamérica</em>
             </h3>
           </div>
         </div>

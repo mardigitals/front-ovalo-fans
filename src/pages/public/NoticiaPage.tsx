@@ -65,11 +65,11 @@ const NoticiaPage = () => {
         {/* HERO SECTION */}
         <div className="mb-12 pt-4 border-b border-slate-300 dark:border-white/10 pb-8">
           <h1 className="title-fan text-4xl md:text-5xl dark:text-white uppercase tracking-tighter mb-4">
-            Noticias <span className="title-fan">Autódromo Rafaela</span>
+            Noticias <span className="title-fan text-4xl md:text-5xl">Autódromo Rafaela</span>
           </h1>
         
-            <h3 className="subtitle-fan text-lg md:text-xl text-slate-700 dark:text-slate-300 mt-2">
-            Toda la actualidad, comunicados oficiales y coberturas recientes del <em className="not-italic subtitle-fan">único óvalo en Sudamérica. </em>
+            <h3 className="text-slate-600 dark:text-slate-300 text-lg md:text-xl leading-relaxed">
+            Toda la actualidad, comunicados oficiales y coberturas recientes del <em className="not-italic subtitle-fan">óvalo rafaelino</em>
           </h3>
         </div>
 
