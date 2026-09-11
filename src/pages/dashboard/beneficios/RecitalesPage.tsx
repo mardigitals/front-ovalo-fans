@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { QrCode, Download, Ticket, AlertTriangle, ChevronLeft, Music } from 'lucide-react';
+import { QrCode, AlertTriangle, ChevronLeft, Music } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import api from '@/api/axios';

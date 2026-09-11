@@ -358,13 +358,13 @@ const ResumenPage = () => {
                 </div>
             )}
 
-             {/* 📊 VISTA 4: Visual para Comercios */}
+             {/* 📊 VISTA 4: Visual para Comercios-Boleteros */}
             {esComercio && (
                 <div className="space-y-6">
                     <h2 className="text-xl font-bold text-slate-800 dark:text-white">
                         <button className="p-2 bg-institucional-celeste/10 text-institucional-celeste rounded-lg mr-2">
                             <CheckCircle size={20} />
-                            <ValidadorDni tituloContexto="Descuento en Comercios" />
+                            <ValidadorDni tituloContexto="Descuento en Comercios, Carreras o Recitales" />
                         </button>
     
                     </h2>

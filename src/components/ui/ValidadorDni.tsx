@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { Search, CheckCircle, XCircle, User, CreditCard, ShieldAlert } from 'lucide-react';
 import api from '@/api/axios';
 
-interface VerificadorProps {
+interface ValidadorProps {
   tituloContexto: string;
 }
 
-const VerificadorSuscripcion = ({ tituloContexto }: VerificadorProps) => {
+const ValidadorDni = ({ tituloContexto }: ValidadorProps) => {
   const [dni, setDni] = useState('');
   const [loading, setLoading] = useState(false);
   const [resultado, setResultado] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleVerificar = async (e: React.FormEvent) => {
+  const handleValidar = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!dni.trim()) return;
 
@@ -66,7 +66,7 @@ const VerificadorSuscripcion = ({ tituloContexto }: VerificadorProps) => {
           </div>
         </div>
 
-        <form onSubmit={handleVerificar} className="flex gap-3">
+        <form onSubmit={handleValidar} className="flex gap-3">
           <input
             type="number"
             placeholder="Ingresar DNI"
@@ -145,4 +145,4 @@ const VerificadorSuscripcion = ({ tituloContexto }: VerificadorProps) => {
   );
 };
 
-export default VerificadorSuscripcion;
+export default ValidadorDni;
