@@ -43,6 +43,8 @@ import PlacaRectaPage from '@/pages/dashboard/beneficios/PlacaRectaPage';
 import VisitasGuiadasPage from '@/pages/dashboard/beneficios/VisitasGuiadasPage';
 import RegaloSuperfanPage from '@/pages/dashboard/beneficios/RegaloSuperFanPage';
 import VipBoxesPage from '@/pages/dashboard/beneficios/VipBoxesPage';
+import EntradasPage from '@/pages/dashboard/beneficios/EntradasPage';
+import RecitalesPage from '@/pages/dashboard/beneficios/RecitalesPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -89,6 +91,8 @@ const AppRoutes = () => (
             <Route path="beneficios" element={<BeneficiosPage />} />
             <Route path="comercios-fan" element={<ComerciosFanPage />} />
             <Route path="pruebas" element={<PruebasPage />} />
+            <Route path="descuentos-carreras" element={<EntradasPage />} />
+            <Route path="descuentos-recitales" element={<RecitalesPage />} />
             {/* <Route path="promociones" element={<PromocionesPage />} /> */}
           </Route>
           

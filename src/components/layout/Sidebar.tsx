@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   FileChartColumn, BadgeDollarSign, ShieldUser, Calendar, Upload, Film, 
-  Gift, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, X, 
+  Gift, Ticket, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, X, 
   Camera, Star, PercentIcon, FastForward, LockKeyholeOpen, Flag, Info, 
   UserRoundKey, ShoppingBasket, Check, ChartCandlestick, ShieldCheck 
 } from 'lucide-react';
@@ -77,6 +77,8 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       items.push({ to: '/dashboard/beneficios', icon: <PercentIcon size={20} />, label: 'Beneficios' });
       items.push({ to: '/dashboard/comercios-fan', icon: <ShoppingBasket size={20} />, label: 'Comercios' });
       items.push({ to: '/dashboard/pruebas', icon: <Road size={20} />, label: 'Pruebas' });
+      items.push({ to: '/dashboard/descuentos-carreras', icon: <Ticket size={20} />, label: 'Descuento Carreras' });
+      items.push({ to: '/dashboard/descuentos-recitales', icon: <Ticket size={20} />, label: 'Descuento Recitales' });
       items.push({ to: '/calendario', icon: <Calendar size={20} />, label: 'Eventos' });
       items.push({ to: '/noticia', icon: <Info size={20} />, label: 'Noticias' });
       

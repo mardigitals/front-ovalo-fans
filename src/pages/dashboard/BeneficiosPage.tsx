@@ -107,7 +107,7 @@ const LISTA_BENEFICIOS = [
     color: 'text-orange-500',
     bgIcono: 'bg-orange-500/10',
     nivelesPermitidos: ['P1', 'P2', 'P3'],
-    ruta: '/dashboard/entradas'
+    ruta: '/dashboard/descuentos-carreras'
   },
   {
     tipo: 'DESC_RECITALES',
@@ -117,7 +117,7 @@ const LISTA_BENEFICIOS = [
     color: 'text-orange-500',
     bgIcono: 'bg-orange-500/10',
     nivelesPermitidos: ['P1', 'P2', 'P3'],
-    ruta: '/dashboard/recitales'
+    ruta: '/dashboard/descuentos-recitales'
   },
   {
     tipo: 'DESC_COMERCIOS',

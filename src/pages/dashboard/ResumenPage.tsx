@@ -12,7 +12,7 @@ import { ClimaInfo } from '@/components/ui/ClimaInfo';
 import { EventosPieChart } from '@/components/ui/EventosPieChart';
 import { PublicacionesRadarChart } from '@/components/ui/PublicacionesRadarChart';
 import { VisualizacionesBarChart } from '@/components/ui/VisualizacionesBarChart';
-import VerificadorSuscripcion from '@/components/ui/VerificadorSuscripcion';
+import ValidadorDni from '@/components/ui/ValidadorDni';
 
 const ResumenPage = () => {
     const [perfil, setPerfil] = useState<any>(null);
@@ -364,7 +364,7 @@ const ResumenPage = () => {
                     <h2 className="text-xl font-bold text-slate-800 dark:text-white">
                         <button className="p-2 bg-institucional-celeste/10 text-institucional-celeste rounded-lg mr-2">
                             <CheckCircle size={20} />
-                            <VerificadorSuscripcion tituloContexto="Descuento en Comercios" />
+                            <ValidadorDni tituloContexto="Descuento en Comercios" />
                         </button>
     
                     </h2>
