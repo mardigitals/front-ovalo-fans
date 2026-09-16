@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { QrCode, Download, Share2, Ticket, AlertTriangle, FastForward, ChevronLeft } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import api from '@/api/axios';
 
 const FastPassPage = () => {
     const { userProfile } = useAuth();
@@ -11,26 +12,41 @@ const FastPassPage = () => {
     const [errorBackend, setErrorBackend] = useState<string | null>(null);
     const [eventosTC, setEventosTC] = useState<any[]>([]);
     const [eventoSeleccionado, setEventoSeleccionado] = useState<string>('');
+    const [historial, setHistorial] = useState<any[]>([]);
 
-    const fetchEventos = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            // Asegurate de mandar el token si tu ruta en NestJS tiene @UseGuards(JwtAuthGuard)
-            const res = await fetch('http://localhost:3000/evento/tc-disponibles', {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (!res.ok) throw new Error('Error al obtener eventos disponibles');
-            
-            const data = await res.json();
-            setEventosTC(data); 
-        } catch (error) {
-            console.error("Error cargando eventos TC disponibles:", error);
-        }
-    };
+    useEffect(() => {
+        const cargarDatos = async () => {
+            try {
+                // 1. Cargamos los eventos de TC disponibles
+                const resEventos = await api.get('/evento/tc-disponibles');
+                setEventosTC(resEventos.data);
 
-    useEffect (() => {
-        fetchEventos();
+                // 2. Cargamos el historial de beneficios del usuario
+                const resHistorial = await api.get('/uso-beneficio/mis-usos');
+                const misFastPasses = resHistorial.data.filter((u: any) => u.tipo_beneficio === 'FAST_ACCESS');
+                setHistorial(misFastPasses);
+            } catch (error) {
+                console.error("Error cargando datos:", error);
+            }
+        };
+        cargarDatos();
     }, []);
+
+    // Si cambia el evento seleccionado, revisamos si ya tiene un QR
+    useEffect(() => {
+        if (eventoSeleccionado) {
+            const qrExistente = historial.find(uso => uso.evento?.id === Number(eventoSeleccionado));
+            if (qrExistente) {
+                // Si ya lo tiene, saltamos al paso 2 y mostramos su código
+                setQrData(qrExistente.codigo_qr || `FASTPASS-${qrExistente.id}-${userProfile?.id}`);
+                setPaso(2);
+                setErrorBackend(null);
+            } else {
+                setPaso(1);
+                setQrData('');
+            }
+        }
+    }, [eventoSeleccionado, historial]);
 
     const generarFastPass = async () => {
         if (!eventoSeleccionado) {
@@ -41,32 +57,19 @@ const FastPassPage = () => {
         setGenerando(true);
         setErrorBackend(null);
         try {
-            const token = localStorage.getItem('token');
-      
-            const res = await fetch('http://localhost:3000/uso-beneficio', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    tipo_beneficio: 'FAST_ACCESS', 
-                    evento_id: Number(eventoSeleccionado)
-                })
+            const res = await api.post('/uso-beneficio', {
+                tipo_beneficio: 'FAST_ACCESS', 
+                evento_id: Number(eventoSeleccionado)
             });
 
-            const data = await res.json();
-
-            if (!res.ok) {
-                throw new Error(data.message || 'Error al registrar el beneficio en el backend');
-            }
-      
-            const codigoUnico = data.codigo_qr || `OVALO-FASTPASS-${userProfile?.id || 'VIP'}-${Date.now()}`;
+            const codigoUnico = res.data.codigo_qr || `OVALO-FASTPASS-${userProfile?.id}-${Date.now()}`;
             setQrData(codigoUnico);
+            
+            // Actualizamos el historial localmente para que ya quede registrado en la vista
+            setHistorial(prev => [...prev, { ...res.data, evento: { id: Number(eventoSeleccionado) }, codigo_qr: codigoUnico }]);
             setPaso(2);
         } catch (error: any) {
-            console.error("Falla de telemetría:", error);
-            setErrorBackend(error.message);
+            setErrorBackend(error.response?.data?.message || 'Error al registrar el beneficio.');
         } finally {
             setGenerando(false);
         }
@@ -109,8 +112,6 @@ const FastPassPage = () => {
 
     return (
         <div className="max-w-2xl mx-auto space-y-6 pb-12 animate-in fade-in duration-500">
-            
-            {/* BOTÓN VOLVER (NUEVO) */}
             <Link to="/dashboard/beneficios" className="inline-flex items-center gap-2 text-slate-500 hover:text-institucional-celeste transition-colors font-bold uppercase text-xs tracking-widest">
               <ChevronLeft size={16} /> Volver a Beneficios
             </Link>
@@ -126,18 +127,17 @@ const FastPassPage = () => {
                 </div>
 
                 {paso === 1 ? (
-                    <div className="relative z-10 flex flex-col items-center py-8 animate-in fade-in zoom-in duration-500">
+                    <div className="relative z-10 flex flex-col items-center py-8">
                         <div className="bg-institucional-celeste/10 p-6 rounded-full mb-6 border-2 border-institucional-celeste/20">
                             <Ticket className="text-institucional-celeste" size={64} />
                         </div>
                         <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-4">
-                            Tu Pase VIP Directo a Pista
+                            Tu PASE rápido Directo a Pista
                         </h2>
                         <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-sm">
                             Generá tu código QR único para saltarte las filas e ingresar al Autódromo de forma rápida y exclusiva.
                         </p>
 
-                        {/* SELECTOR DE EVENTOS */}
                         <div className="w-full max-w-md mb-8">
                             <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 text-left">
                                 Seleccioná la Fecha de la Carrera
@@ -150,7 +150,6 @@ const FastPassPage = () => {
                                 >
                                     <option value="" disabled>Elegí una fecha de TC...</option>
                                     {eventosTC.map(evento => {
-                                        // Formateamos la fecha para que se vea linda (ej: 15/08/2026)
                                         const fechaFormateada = new Date(evento.fecha_evento).toLocaleDateString('es-AR');
                                         return (
                                             <option key={evento.id} value={evento.id}>
@@ -167,7 +166,7 @@ const FastPassPage = () => {
                         </div>
 
                         {errorBackend && (
-                            <div className="bg-red-500/10 border-l-4 border-red-500 text-red-600 dark:text-red-400 p-4 rounded-r-xl mb-8 max-w-md w-full text-left flex items-start gap-3 animate-in fade-in">
+                            <div className="bg-red-500/10 border-l-4 border-red-500 text-red-600 dark:text-red-400 p-4 rounded-r-xl mb-8 max-w-md w-full text-left flex items-start gap-3">
                                 <AlertTriangle className="flex-shrink-0 mt-0.5" size={20} />
                                 <span className="text-sm font-medium leading-tight">{errorBackend}</span>
                             </div>
@@ -183,9 +182,9 @@ const FastPassPage = () => {
                         </button>
                     </div>
                 ) : (
-                    <div className="relative z-10 flex flex-col items-center animate-in slide-in-from-bottom-8 fade-in duration-500">
+                    <div className="relative z-10 flex flex-col items-center animate-in zoom-in duration-500">
                         <h2 className="text-xl font-black text-slate-800 dark:text-white mb-6 uppercase tracking-widest text-institucional-celeste">
-                            ¡Ticket Generado con Éxito!
+                            QR generado con éxito!
                         </h2>
                         
                         <div className="bg-white p-4 rounded-3xl border-4 border-slate-900 shadow-2xl mb-8 relative max-w-[280px] w-full">
@@ -220,11 +219,18 @@ const FastPassPage = () => {
                         <div className="bg-institucional-celeste/10 border-l-4 border-institucional-celeste p-4 rounded-r-xl text-left flex gap-4 max-w-lg w-full">
                             <AlertTriangle className="text-institucional-celeste flex-shrink-0 mt-1" size={24} />
                             <p className="text-sm text-slate-700 dark:text-slate-300">
-                                <strong className="text-institucional-celeste block mb-1 tracking-wider uppercase text-xs">Atención Piloto:</strong>
+                                <strong className="text-institucional-celeste block mb-1 tracking-wider uppercase text-xs">Atención Fan:</strong>
                                 Este QR solo será válido para fecha de Turismo Carretera con su entrada física correspondiente (ingresas 1 hora antes del ingreso general). <br/>
                                 <span className="font-bold mt-2 block text-slate-800 dark:text-white">¡Disfruta de tu ingreso VIP para encontrar tu mejor lugar!</span>
                             </p>
                         </div>
+
+                        <button 
+                            onClick={() => setPaso(1)}
+                            className="mt-6 text-sm font-bold text-slate-500 hover:text-institucional-celeste transition-colors underline"
+                        >
+                            Ver otra fecha de carrera
+                        </button>
                     </div>
                 )}
             </div>
