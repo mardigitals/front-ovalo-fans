@@ -6,6 +6,7 @@ import videoHeroDark from '@/assets/videos/ovalo-animacion-dark.mp4';
 import api from '@/api/axios';
 import { useState, useEffect } from 'react';
 import { Calendar, Percent, Star } from 'lucide-react';
+import CarouselEmpresas from '@/components/ui/CarouselEmpresas';
 
 const HomePage = () => {
   const [noticias, setNoticias] = useState<any[]>([]);
@@ -190,7 +191,9 @@ const HomePage = () => {
         </div>
       </div>
 
-        
+      <section className="w-full pt-16">
+        <CarouselEmpresas />
+      </section>
       
       {/* <section> */}
       <section className="relative z-10 flex flex-col items-center text-center px-6 py-16 md:py-24 max-w-4xl mx-auto">
