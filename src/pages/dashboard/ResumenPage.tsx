@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User, Shield, Calendar, CheckCircle, Clock, Award, Star } from 'lucide-react';
+import { User, Shield, Calendar, X, QrCode, CheckCircle, Clock, Award, Star } from 'lucide-react';
 import api from '@/api/axios';
 
 // --- IMPORTACIONES COMPONENTES UI CHARTS Y TABLE---
@@ -39,6 +39,7 @@ const ResumenPage = () => {
     const [topCiudades, setTopCiudades] = useState<any[]>([]);
     const [metricasFinanzas, setMetricasFinanzas] = useState<any[]>([]);
 
+    const [mostrarCredencial, setMostrarCredencial] = useState(false);
 
 
 
@@ -187,6 +188,9 @@ const ResumenPage = () => {
     const esPrensa = ['prensa'].includes(perfil?.rol?.toLowerCase());
     const esComercio = ['comercio'].includes(perfil?.rol?.toLowerCase());
 
+    const dniFan = perfil?.usuario?.dni;
+    const nombreCompletoFan = perfil?.usuario?.nombre ? `${perfil.usuario.nombre} ${perfil.usuario.apellido}` : perfil?.nombre;
+    
     return (
         <div className="max-w-7xl mx-auto space-y-8 pb-12 animate-in fade-in duration-500">
             
@@ -258,7 +262,69 @@ const ResumenPage = () => {
                                 <span className="font-bold text-black dark:text-white uppercase">{perfil?.perfil_fan?.hincha_marca_tc || 'No definido'}</span>
                             </div>
                         </div>
+                        <button 
+                            onClick={() => setMostrarCredencial(true)}
+                            className="mt-6 w-full py-3 bg-institucional-celeste hover:bg-sky-400 text-white rounded-xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-sky-500/20"
+                        >
+                            <QrCode size={18} /> Mostrar Credencial
+                        </button>
                     </div>
+                    
+                    {/* 👇 MODAL FLOTANTE DE LA CREDENCIAL 👇 */}
+                    {mostrarCredencial && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300">
+                            <div className="bg-white dark:bg-[#110c1b] w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-white/10 relative">
+                                {/* Botón Cerrar */}
+                                <button 
+                                    onClick={() => setMostrarCredencial(false)}
+                                    className="absolute top-4 right-4 p-2 bg-slate-100 dark:bg-white/10 rounded-full text-slate-500 hover:text-red-500 transition-colors z-10"
+                                >
+                                    <X size={20} />
+                                </button>
+
+                                <div className="p-8 text-center flex flex-col items-center">
+                                    <h3 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-tight mb-1">
+                                        Credencial Digital
+                                    </h3>
+                                    <p className="text-sm text-institucional-celeste font-bold mb-6">
+                                        Socio Nivel {perfil?.nivelFan || 'P3'}
+                                    </p>
+
+                                    {/* Generador de QR dinámico seguro */}
+                                    <div className="bg-white p-4 rounded-3xl border-4 border-slate-900 shadow-xl mb-4 w-[250px] h-[250px] flex items-center justify-center relative overflow-hidden">
+                                        {dniFan ? (
+                                            <img 
+                                                src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${dniFan}&margin=10`} 
+                                                alt="Credencial QR" 
+                                                className="w-full h-full object-cover rounded-xl"
+                                                // Le agregamos un fallback por si la API falla
+                                                onError={(e) => {
+                                                    e.currentTarget.onerror = null; 
+                                                    e.currentTarget.src = 'https://via.placeholder.com/250?text=Error+Cargando+QR';
+                                                }}
+                                            />
+                                        ) : (
+                                            <div className="text-slate-400 text-sm font-bold flex flex-col items-center gap-2">
+                                                <div className="w-8 h-8 border-4 border-slate-300 border-t-institucional-celeste rounded-full animate-spin"></div>
+                                                Generando QR...
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <h2 className="text-2xl font-black text-slate-800 dark:text-white uppercase mt-2">
+                                        {nombreCompletoFan || 'Cargando nombre...'}
+                                    </h2>
+                                    <p className="text-slate-500 font-mono tracking-widest mt-1">
+                                        DNI: {dniFan || 'Cargando...'}
+                                    </p>
+
+                                    <div className="mt-6 text-xs text-slate-400 bg-slate-50 dark:bg-white/5 p-3 rounded-lg">
+                                        Presentá este código en los comercios adheridos para validar tu estado activo y acceder a los descuentos.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Métricas e Historial del Fan */}
                     <div className="lg:col-span-2 space-y-6">
