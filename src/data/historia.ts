@@ -7,7 +7,7 @@ const ETAPAS_HISTORIA = [
 
     periodo: '1919 - 1925',
 
-    titulo: 'El despertar de una ',
+    titulo: 'El despertar de una pasión',
 
     resumen: 'Los primeros rugidos de velocidad en caminos de tierra.',
 
