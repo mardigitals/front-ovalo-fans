@@ -216,7 +216,7 @@ const GestionContenidoPage = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Título del material</label>
+                  <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Título del material (hasta 30 caracteres)</label>
                   <input type="text" name="titulo" required={archivosFisicos.length <= 1} value={formData.titulo} onChange={handleInputChange} placeholder="Ej: Cámara a bordo TC..." className="w-full bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none transition-all" />
                   {archivosFisicos.length > 1 && <p className="text-[10px] text-sky-500 mt-1">*Se usará el nombre original de cada archivo como título.</p>}
                 </div>

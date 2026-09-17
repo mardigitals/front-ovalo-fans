@@ -120,7 +120,23 @@ El 12 de enero de 1941 se realizan las "XII HORAS DE TURISMO CARRETERA". Es las 
 
 También fue la primera competencia de la ACTC disputada en un circuito cerrado de 11.776 metros, ubicada en la continuación del Bv. Roca.
 
-El ganador de la competencia fue Eusebio Marcilla, el Caballero del Camino, que recorrió 1528 km, a un promedio de 126,500 km/h.`,
+El ganador de la competencia fue Eusebio Marcilla, el Caballero del Camino, que recorrió 1528 km, a un promedio de 126,500 km/h.
+
+12 HORAS de RAFAELA – Resultados FINALES:
+
+1. 9- Eusebio C. Marcilla - Miguel Salem Chev. 12h.01m.09s.4 129 vueltas
+2. 4- Domingo Porporato - Mauricio B. Ronchetti Ford 12h.00m.38s.5 126 ''
+3. 3- Ernesto H. Blanco - Alberto E. Fava Ford 12h.04m.52s.7 125 ''
+4. 8- Héctor A. Barragan - Ignacio Janices Ford 12h.01m.24s.6 123 ''
+5. 22- Manuel Montes - Raul Marquez Chev. 12h.04m.33s.0 121 ''
+6. 12- Carlos Solveyra Tomkinson - Antonio Evolo Ford 12h.04m.11s.0 117 ''
+7. 27- Emilio Karstulovic Bonaci - Raul Cestac Mercury 12h.00m.09s.9 116 ''
+8. 11- Pedro Iraizos - Adolfo Trillini Chev. 12h.02m.29s.0 113 ''
+9. 7- Jaime B. Ortega - Ricardo Campanilla Ford 12h.04m.44s.0 108 ''
+10. 21- Angel L. Pacuali - Florentino F'z. Walker  Ford 12h.01m.48s.0 99 ''
+11. 19- Angel Teper - Napoleon Taborda Ford 12h.03m.00s.0 95 ''
+12. 15- Antonio A. D. Ochagavia - Domingo Diletti Ford 12h.02m.41s.0 89 ''
+Promedio del ganador Eusebio Marcilla 126,5 km/h.`,
 
     fotos: [
 
