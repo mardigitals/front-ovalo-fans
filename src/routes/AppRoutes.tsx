@@ -45,6 +45,7 @@ import RegaloSuperfanPage from '@/pages/dashboard/beneficios/RegaloSuperFanPage'
 import VipBoxesPage from '@/pages/dashboard/beneficios/VipBoxesPage';
 import EntradasPage from '@/pages/dashboard/beneficios/EntradasPage';
 import RecitalesPage from '@/pages/dashboard/beneficios/RecitalesPage';
+import ValidarAccesoPage from '@/pages/dashboard/ValidarAccesoPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -120,6 +121,7 @@ const AppRoutes = () => (
             <Route path="metricas" element={<SuscripcionesMetricasPage />} />
             <Route path="socios" element={<GestionSociosPage />} />
             <Route path="solicitudes" element={<GestionSolicitudesPage />} />
+            <Route path="validar" element={<ValidarAccesoPage />} />
           </Route>
 
           {/*  SuperAdmin y Prensa */}

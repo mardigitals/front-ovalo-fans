@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   FileChartColumn, BadgeDollarSign, ShieldUser, Calendar, Upload, Film, 
-  Gift, Ticket, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, X, 
+  Gift, QrCode, Ticket, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, X, 
   Camera, Star, PercentIcon, FastForward, LockKeyholeOpen, Flag, Info, 
   UserRoundKey, ShoppingBasket, Check, ChartCandlestick, ShieldCheck 
 } from 'lucide-react';
@@ -97,8 +97,8 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     } else {
       if (rol === 'superadmin' || rol === 'administrativo') {
         items.push({ to: '/dashboard/metricas', icon: <ChartCandlestick size={20} />, label: 'Métricas' });
+        items.push({ to: '/dashboard/validar', icon: <QrCode size={20} />, label: 'Validar Acceso' });
         items.push({ to: '/dashboard/socios', icon: <Users size={20} />, label: 'Suscripciones' });      
-        // ACÁ PASAMOS EL TOTAL COMO BADGE 👇
         items.push({ to: '/dashboard/solicitudes', icon: <Check size={20} />, label: 'Solicitudes', badge: totalPendientes });
         items.push({ to: '/dashboard/eventos', icon: <Calendar size={20} />, label: 'Cargar evento' });
         items.push({ to: '/dashboard/comercios', icon: <ShoppingBasket size={20} />, label: 'Comercios' });
