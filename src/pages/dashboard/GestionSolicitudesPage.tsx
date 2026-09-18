@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
 import { 
-  ClipboardList, CheckCircle, XCircle, Clock, Search, 
-  Eye, Mic, CarFront, MapPin, Gift, AlertCircle, Loader2,
-  Zap, Crown, Wrench, Ticket, Database
+  ClipboardList, CheckCircle, XCircle, Clock, Search,  
+  Eye, Gift, AlertCircle, Loader2,
+  Zap, Ticket, Database,
+  Gauge,
+  Warehouse,
+  CircleStar,
+  Road,
+  AudioLines,
+  PenLine
 } from 'lucide-react';
 import api from '@/api/axios';
 import NotificationBadge from '@/components/ui/NotificationBadge';
@@ -133,12 +139,12 @@ const GestionSolicitudesPage = () => {
           <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest pl-1">Beneficios Manuales Otorgados</h3>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div className="bg-slate-50 dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-sky-500/30">
-              <div className="bg-sky-500/10 p-3 rounded-full text-sky-500"><CarFront size={20} /></div>
+              <div className="bg-sky-500/10 p-3 rounded-full text-sky-500"><Gauge size={20} /></div>
               <p className="text-2xl font-black text-slate-800 dark:text-white leading-none">{metricas['PACECAR_RESCATE'] || 0}</p>
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Rescates</p>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Rescate/pacecar</p>
             </div>
             <div className="bg-slate-50 dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-emerald-500/30">
-              <div className="bg-emerald-500/10 p-3 rounded-full text-emerald-500"><Mic size={20} /></div>
+              <div className="bg-emerald-500/10 p-3 rounded-full text-emerald-500"><Warehouse size={20} /></div>
               <p className="text-2xl font-black text-slate-800 dark:text-white leading-none">{metricas['SALA_PRENSA'] || 0}</p>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Sala Prensa</p>
             </div>
@@ -148,7 +154,7 @@ const GestionSolicitudesPage = () => {
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">V. Guiadas</p>
             </div>
             <div className="bg-slate-50 dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-purple-500/30">
-              <div className="bg-purple-500/10 p-3 rounded-full text-purple-500"><MapPin size={20} /></div>
+              <div className="bg-purple-500/10 p-3 rounded-full text-purple-500"><PenLine size={20} /></div>
               <p className="text-2xl font-black text-slate-800 dark:text-white leading-none">{metricas['PLACA_RECTA'] || 0}</p>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Placas</p>
             </div>
@@ -169,12 +175,12 @@ const GestionSolicitudesPage = () => {
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Fast Access</p>
             </div>
             <div className="bg-slate-50 dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-yellow-500/30">
-              <div className="bg-yellow-500/10 p-3 rounded-full text-yellow-500"><Crown size={20} /></div>
+              <div className="bg-yellow-500/10 p-3 rounded-full text-yellow-500"><CircleStar size={20} /></div>
               <p className="text-2xl font-black text-slate-800 dark:text-white leading-none">{metricas['VIP_BOXES'] || 0}</p>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Boxes VIP</p>
             </div>
             <div className="bg-slate-50 dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-orange-500/30">
-              <div className="bg-orange-500/10 p-3 rounded-full text-orange-500"><Wrench size={20} /></div>
+              <div className="bg-orange-500/10 p-3 rounded-full text-orange-500"><Road size={20} /></div>
               <p className="text-2xl font-black text-slate-800 dark:text-white leading-none">{metricas['DESC_PRUEBAS'] || 0}</p>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Pruebas</p>
             </div>
@@ -184,7 +190,7 @@ const GestionSolicitudesPage = () => {
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Desc. Carreras</p>
             </div>
             <div className="bg-slate-50 dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 p-5 rounded-2xl flex flex-col items-center text-center gap-2 transition-all hover:border-indigo-500/30">
-              <div className="bg-indigo-500/10 p-3 rounded-full text-indigo-500"><Ticket size={20} /></div>
+              <div className="bg-indigo-500/10 p-3 rounded-full text-indigo-500"><AudioLines size={20} /></div>
               <p className="text-2xl font-black text-slate-800 dark:text-white leading-none">{metricas['DESC_RECITALES'] || 0}</p>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Desc. Recitales</p>
             </div>
