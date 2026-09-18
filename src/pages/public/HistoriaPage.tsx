@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowRight, Ellipse, Users, Award, LineDotRightHorizontal, UserStar } from 'lucide-react';
+import { ArrowRight, Ellipse, Award, LineDotRightHorizontal, UserStar } from 'lucide-react';
 import ModalHistoria from '@/components/ui/ModalHistoria';
 import heroImage2 from '@/assets/images/hero-image-2.jpg';
 import ButtonHome from '@/components/ui/ButtonHome'; 
