@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   FileChartColumn, BadgeDollarSign, ShieldUser, Calendar, Upload, Film, 
-  Gift, QrCode, Ticket, PenLine, Pyramid, Road, Users, Warehouse, User, LogOut, X, 
-  Camera, Star, PercentIcon, FastForward, LockKeyholeOpen, Flag, Info, 
-  UserRoundKey, ShoppingBasket, Check, ChartCandlestick, ShieldCheck 
+  Gift, CircleStar, QrCode, Ticket, AudioLines, PenLine, Pyramid, Gauge, Road, Users, Warehouse, User, LogOut, X, 
+  PercentIcon, LockKeyholeOpen, Info, 
+  UserRoundKey, ShoppingBasket, Check, ChartCandlestick, ShieldCheck, 
+  Eye,
+  Zap
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/hooks/useTheme'; 
@@ -78,21 +80,21 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       items.push({ to: '/dashboard/comercios-fan', icon: <ShoppingBasket size={20} />, label: 'Comercios' });
       items.push({ to: '/dashboard/pruebas', icon: <Road size={20} />, label: 'Pruebas' });
       items.push({ to: '/dashboard/descuentos-carreras', icon: <Ticket size={20} />, label: 'Carreras' });
-      items.push({ to: '/dashboard/descuentos-recitales', icon: <Ticket size={20} />, label: 'Recitales' });
+      items.push({ to: '/dashboard/descuentos-recitales', icon: <AudioLines size={20} />, label: 'Recitales' });
       items.push({ to: '/calendario', icon: <Calendar size={20} />, label: 'Eventos' });
       items.push({ to: '/noticia', icon: <Info size={20} />, label: 'Noticias' });
       
       if (nivelFan === 'P1' || nivelFan === 'P2') {
-        items.push({ to: '/dashboard/fast-pass', icon: <FastForward size={20} />, label: 'Fast Access' });
+        items.push({ to: '/dashboard/fast-pass', icon: <Zap size={20} />, label: 'Fast Access' });
         items.push({ to: '/galeria', icon: <LockKeyholeOpen size={20} />, label: 'Fotos inéditas' });
-        items.push({ to: '/dashboard/visitas', icon: <Camera size={20} />, label: 'Visitas guiadas' });
+        items.push({ to: '/dashboard/visitas', icon: <Eye size={20} />, label: 'Visitas guiadas' });
         items.push({ to: '/dashboard/regalo-superfan', icon: <Gift size={20} />, label: 'Regalo SUPERFAN' });
       }
       if (nivelFan === 'P1') {
-        items.push({ to: '/dashboard/vip-boxes', icon: <Star size={20} />, label: 'VIP Boxes' });
+        items.push({ to: '/dashboard/vip-boxes', icon: <CircleStar size={20} />, label: 'VIP Boxes' });
         items.push({ to: '/dashboard/sala', icon: <Warehouse size={20} />, label: 'Sala de Prensa' });
         items.push({ to: '/dashboard/placa', icon: <PenLine size={20} />, label: 'Placa grabada' });
-        items.push({ to: '/dashboard/pacecar', icon: <Flag size={20} />, label: 'Race experience' });
+        items.push({ to: '/dashboard/pacecar', icon: <Gauge size={20} />, label: 'Race experience' });
       }
     } else {
       if (rol === 'superadmin' || rol === 'administrativo') {

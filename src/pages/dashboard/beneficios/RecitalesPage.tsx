@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { QrCode, Download, Share2, AlertTriangle, ChevronLeft, Music } from 'lucide-react';
+import { QrCode, Download, Share2, AlertTriangle, ChevronLeft, AudioLines } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import api from '@/api/axios';
@@ -110,13 +110,13 @@ const RecitalesPage = () => {
             </Link>
 
             <h1 className="text-3xl font-extrabold text-slate-800 dark:text-white uppercase tracking-tighter flex items-center gap-3">
-                <Music className="text-purple-500" size={32} />
+                <AudioLines className="text-purple-500" size={32} />
                 Descuento Recitales
             </h1>
 
             <div className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-3xl p-6 sm:p-10 shadow-xl text-center relative overflow-hidden">
                 <div className="absolute top-0 right-0 -mt-10 -mr-10 opacity-5 pointer-events-none">
-                    <Music size={250} />
+                    <AudioLines size={250} />
                 </div>
 
                 {paso === 1 ? (

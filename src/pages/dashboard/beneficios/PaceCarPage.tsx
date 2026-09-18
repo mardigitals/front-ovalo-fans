@@ -1,5 +1,5 @@
 import PlantillaBeneficio from '@/components/ui/PlantillaBeneficio';
-import { CarFront } from 'lucide-react';
+import { Gauge } from 'lucide-react';
 
 const PacecarPage = () => {
   return (
@@ -7,7 +7,7 @@ const PacecarPage = () => {
       titulo="Pacecar / Rescate"
       descripcion="Sentí la adrenalina dando una vuelta en el vehículo oficial de rescate durante una actividad de pista."
       tipoBeneficio="PACECAR_RESCATE"
-      icono={CarFront}
+      icono={Gauge}
       colorBase="text-yellow-500"
       bgBase="bg-yellow-500/10"
       reglas={[

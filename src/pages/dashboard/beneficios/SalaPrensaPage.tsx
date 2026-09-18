@@ -1,5 +1,5 @@
 import PlantillaBeneficio from '@/components/ui/PlantillaBeneficio';
-import { Mic } from 'lucide-react';
+import { Warehouse } from 'lucide-react';
 
 const SalaPrensaPage = () => {
   return (
@@ -7,7 +7,7 @@ const SalaPrensaPage = () => {
       titulo="Sala de Prensa 'Leonelo Bellezze'"
       descripcion="Solicitá el uso de la sala de prensa del autódromo para tus eventos corporativos, reuniones o cenas especiales."
       tipoBeneficio="SALA_PRENSA"
-      icono={Mic}
+      icono={Warehouse}
       colorBase="text-yellow-500"
       bgBase="bg-yellow-500/10"
       reglas={[

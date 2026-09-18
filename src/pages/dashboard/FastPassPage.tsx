@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { QrCode, Download, Share2, Ticket, AlertTriangle, FastForward, ChevronLeft } from 'lucide-react';
+import { QrCode, Download, Share2, Ticket, AlertTriangle, ChevronLeft, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import api from '@/api/axios';
@@ -117,7 +117,7 @@ const FastPassPage = () => {
             </Link>
 
             <h1 className="text-3xl font-extrabold text-slate-800 dark:text-white uppercase tracking-tighter flex items-center gap-3">
-                <FastForward className="text-institucional-celeste" size={32} />
+                <Zap className="text-institucional-celeste" size={32} />
                 Fast Access
             </h1>
 

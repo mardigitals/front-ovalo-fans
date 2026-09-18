@@ -1,5 +1,5 @@
 import PlantillaBeneficio from '@/components/ui/PlantillaBeneficio';
-import { Crown } from 'lucide-react';
+import { CircleStar } from 'lucide-react';
 
 const VipBoxesPage = () => {
   return (
@@ -7,7 +7,7 @@ const VipBoxesPage = () => {
       titulo="VIP Boxes"
       descripcion="Viví la carrera desde adentro. Accedé a la zona exclusiva de boxes durante el fin de semana de Turismo Carretera."
       tipoBeneficio="VIP_BOXES"
-      icono={Crown}
+      icono={CircleStar}
       colorBase="text-yellow-500"
       bgBase="bg-yellow-500/10"
       requiereEvento={true} // <-- ACÁ ACTIVAS EL SELECTOR

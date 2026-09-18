@@ -1,5 +1,5 @@
 import PlantillaBeneficio from '@/components/ui/PlantillaBeneficio';
-import { MapPin } from 'lucide-react';
+import { PenLine } from 'lucide-react';
 
 const PlacaRectaPage = () => {
   return (
@@ -7,7 +7,7 @@ const PlacaRectaPage = () => {
       titulo="Tu Nombre en la Recta"
       descripcion="Inmortalizá tu pasión. Dejá tu huella grabada en una placa conmemorativa sobre el paredón de la mítica recta del autódromo."
       tipoBeneficio="PLACA_RECTA"
-      icono={MapPin}
+      icono={PenLine}
       colorBase="text-yellow-500"
       bgBase="bg-yellow-500/10"
       reglas={[

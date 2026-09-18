@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Crown, Mic, MapPin, CarFront, Zap, Eye, Gift, 
-  ImagePlay, Wrench, Ticket, ShoppingBag, Lock 
+  Crown, Gauge, Zap, Eye, Gift, Ticket, Lock, Warehouse,
+  AudioLines,
+  ShoppingBasket,
+  Road,
+  LockKeyholeOpen,
+  PenLine,
+  CircleStar
 } from 'lucide-react';
 import FullScreenLoader from '@/components/ui/FullScreenLoader';
 import api from '@/api/axios';
@@ -13,7 +18,7 @@ const LISTA_BENEFICIOS = [
     tipo: 'VIP_BOXES',
     titulo: 'VIP Boxes',
     descripcion: 'Acceso exclusivo a la zona de boxes durante las carreras.',
-    icono: Crown,
+    icono: CircleStar,
     color: 'text-yellow-500',
     bgIcono: 'bg-yellow-500/10',
     nivelesPermitidos: ['P1'], 
@@ -23,7 +28,7 @@ const LISTA_BENEFICIOS = [
     tipo: 'SALA_PRENSA',
     titulo: 'Sala de Prensa',
     descripcion: 'Solicitá el uso de la sala de prensa para eventos corporativos o cenas',
-    icono: Mic,
+    icono: Warehouse,
     color: 'text-yellow-500',
     bgIcono: 'bg-yellow-500/10',
     nivelesPermitidos: ['P1'],
@@ -33,7 +38,7 @@ const LISTA_BENEFICIOS = [
     tipo: 'PACECAR_RESCATE',
     titulo: 'Pacecar / Rescate',
     descripcion: 'Sentí la adrenalina dando una vuelta en el vehículo oficial.',
-    icono: CarFront,
+    icono: Gauge,
     color: 'text-yellow-500',
     bgIcono: 'bg-yellow-500/10',
     nivelesPermitidos: ['P1'],
@@ -43,7 +48,7 @@ const LISTA_BENEFICIOS = [
     tipo: 'PLACA_RECTA',
     titulo: 'Tu nombre en la Recta',
     descripcion: 'Dejá tu huella grabada en la mítica recta del autódromo.',
-    icono: MapPin,
+    icono: PenLine,
     color: 'text-yellow-500',
     bgIcono: 'bg-yellow-500/10',
     nivelesPermitidos: ['P1'], 
@@ -83,7 +88,7 @@ const LISTA_BENEFICIOS = [
     tipo: 'MULTIMEDIA_VIP',
     titulo: 'Contenido Inédito',
     descripcion: 'Acceso a fotos y videos exclusivos de las carreras.',
-    icono: ImagePlay,
+    icono: LockKeyholeOpen,
     color: 'text-orange-500',
     bgIcono: 'bg-orange-500/10',
     nivelesPermitidos: ['P1', 'P2', 'P3'],
@@ -93,7 +98,7 @@ const LISTA_BENEFICIOS = [
     tipo: 'DESC_PRUEBAS',
     titulo: 'Descuento Pruebas',
     descripcion: 'Ahorrá hasta un %20 en pruebas de autos, motos o karts.',
-    icono: Wrench,
+    icono: Road,
     color: 'text-orange-500',
     bgIcono: 'bg-orange-500/10',
     nivelesPermitidos: ['P1', 'P2', 'P3'],
@@ -113,7 +118,7 @@ const LISTA_BENEFICIOS = [
     tipo: 'DESC_RECITALES',
     titulo: 'Descuento Recitales',
     descripcion: 'Beneficios en los grandes eventos musicales del Autódromo.',
-    icono: Ticket,
+    icono: AudioLines,
     color: 'text-orange-500',
     bgIcono: 'bg-orange-500/10',
     nivelesPermitidos: ['P1', 'P2', 'P3'],
@@ -123,7 +128,7 @@ const LISTA_BENEFICIOS = [
     tipo: 'DESC_COMERCIOS',
     titulo: 'Descuento Comercios',
     descripcion: 'Ahorrá en la red de negocios adheridos de Rafaela.',
-    icono: ShoppingBag,
+    icono: ShoppingBasket,
     color: 'text-orange-500',
     bgIcono: 'bg-orange-500/10',
     nivelesPermitidos: ['P1', 'P2', 'P3'],
