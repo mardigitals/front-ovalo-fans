@@ -7,7 +7,8 @@ import {
   PercentIcon, LockKeyholeOpen, Info, 
   UserRoundKey, ShoppingBasket, Check, ChartCandlestick, ShieldCheck, 
   Eye,
-  Zap
+  Zap,
+  NotebookPen
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/hooks/useTheme'; 
@@ -106,10 +107,10 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
         items.push({ to: '/dashboard/comercios', icon: <ShoppingBasket size={20} />, label: 'Comercios' });
       }
       if (rol === 'superadmin' || rol === 'prensa') {
+        items.push({ to: '/dashboard/contenido', icon: <Upload size={20} />, label: 'Subir contenido' });
+        items.push({ to: '/dashboard/noticias', icon: <NotebookPen size={20} />, label: 'Redactar noticia' });
         items.push({ to: '/noticia', icon: <Info size={20} />, label: 'Noticias' });
         items.push({ to: '/dashboard/galeria', icon: <Film size={20} />, label: 'Galería' });
-        items.push({ to: '/dashboard/contenido', icon: <Upload size={20} />, label: 'Cargar contenido' });
-        items.push({ to: '/dashboard/noticias', icon: <Info size={20} />, label: 'Crear noticia' });
       }
 
       if (rol === 'prensa'){
