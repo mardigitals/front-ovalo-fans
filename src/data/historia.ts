@@ -326,3 +326,54 @@ export const LINEA_HISTORICA = [
   { year: 2019, important: true, etapaId: 'etapa-16' },
   { year: 2026, important: true, etapaId: 'etapa-17' },
 ];
+
+export const HOMENAJES = [
+  { 
+    id: 1, 
+    nombre: 'Domingo Bucci', 
+    rol: 'Piloto Histórico', 
+    foto: 'https://images.unsplash.com/photo-1541348263662-e0626628d0cf?w=400', 
+    descripcion: 'Pionero de la velocidad. Lideró las primeras 500 Millas Argentinas en 1926 marcando el camino para las futuras generaciones.' 
+  },
+  { 
+    id: 2, 
+    nombre: 'Ero Borgogno', 
+    rol: 'Dirigente Histórico', 
+    foto: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400', 
+    descripcion: 'Alma máter del autódromo. Su visión audaz fue clave para lograr la hazaña de traer la Indy 300 a Rafaela en 1971.' 
+  },
+  { 
+    id: 3, 
+    nombre: 'Jorge Ternengo', 
+    rol: 'Piloto Local', 
+    foto: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=400', 
+    descripcion: 'Ídolo rafaelino. Representó a la ciudad en las categorías más grandes del país, siendo profeta en su propia tierra.' 
+  },
+];
+
+export const CIRCUITOS = [
+  { 
+    id: 'circuito-1', 
+    nombre: 'El Trazado Original de Tierra', 
+    medida: '37.326 metros', 
+    epoca: '1926 - 1952', 
+    foto: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800', 
+    detalle: 'Formado por caminos vecinales de tierra que unían Rafaela con localidades vecinas. Aquí nacieron las míticas 500 Millas.' 
+  },
+  { 
+    id: 'circuito-2', 
+    nombre: 'El Óvalo Pavimentado', 
+    medida: '4.624 metros', 
+    epoca: '1953 - Actualidad', 
+    foto: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800', 
+    detalle: 'El diseño definitivo. Dos rectas interminables y dos curvones peraltados que lo convierten en el circuito más rápido de Sudamérica.' 
+  },
+  { 
+    id: 'circuito-3', 
+    nombre: 'Variante con Chicanas', 
+    medida: '4.750 metros', 
+    epoca: 'Años 90s - Actualidad', 
+    foto: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800', 
+    detalle: 'Para adaptar la pista a las potencias modernas, se implementaron chicanas que exigen frenadas brutales tras superar los 280 km/h.' 
+  },
+];
