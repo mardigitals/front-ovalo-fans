@@ -21,6 +21,7 @@ const RegisterPage = () => {
         alias: '', es_socio_club: false, hincha_marca_tc: 'Ford', chicana_favorita: '1 de adentro'
     });
 
+    const [membresias, setMembresias] = useState<any[]>([]);
     const [provincias, setProvincias] = useState<any[]>([]);
     const [ciudades, setCiudades] = useState<any[]>([]);
     const [paises] = useState<string[]>([
@@ -29,6 +30,18 @@ const RegisterPage = () => {
         'Francia', 'Guatemala', 'Honduras', 'Italia', 'México', 'Nicaragua', 
         'Panamá', 'Paraguay', 'Perú', 'Reino Unido', 'Uruguay', 'Venezuela', 'Otro'
     ]);
+
+    useEffect(() => {
+        const cargarMembresias = async () => {
+            try {
+                const response = await api.get('/membresia');
+                setMembresias(response.data);
+            } catch (error) {
+                console.error("Error al cargar planes:", error);
+            }
+        };
+        cargarMembresias();
+    }, []);
 
     // 1. CARGAR PROVINCIAS (Desde API del Gobierno)
     useEffect(() => {
@@ -450,7 +463,7 @@ const RegisterPage = () => {
 
                 {/* --- UI PASO 3: PAGO --- */}
                 {step === 3 && (
-                    <GenericPay onSelectPlan={handlePayment} isLoading={isLoading} />
+                    <GenericPay onSelectPlan={handlePayment} isLoading={isLoading} membresias={membresias} titulo="Membresías disponibles" subtitulo="Selecciona el plan que mejor se adapte a vos" />
                 )}
 
             </div>
