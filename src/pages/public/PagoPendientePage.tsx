@@ -15,7 +15,7 @@ const PagoPendientePage = () => {
 
                 <h1 className="title-fan text-4xl mb-2 text-slate-800 dark:text-white">PAGO EN REVISIÓN</h1>
                 <p className="text-slate-500 dark:text-slate-400 font-medium mb-8">
-                    Mercado Pago está procesando tu transacción. Esto puede demorar unos minutos o hasta 24 horas si pagaste en efectivo (Rapipago/PagoFácil).
+                    Mercado Pago está procesando tu transacción. Esto puede demorar unos minutos o hasta 24 horas si pagaste en efectivo.
                 </p>
 
                 <button 

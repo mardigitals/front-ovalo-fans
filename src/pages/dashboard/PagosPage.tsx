@@ -81,6 +81,16 @@ const PagosPage = () => {
                 </div>
             );
         }
+
+          if (estadoSuscripcion === 'Pendiente') {
+            return (
+                <div className="text-center space-y-2 mb-8">
+                    <h2 className="title-fan text-center text-3xl pb-4 md:text-5xl">Elegí una membresía</h2>
+                    <p className="text-slate-500 font-medium">Adherite para obtener los beneficios.</p>
+                </div>
+            );
+        }
+        
         
         if (estadoSuscripcion === 'Vencido' || estadoSuscripcion === 'Cancelado') {
             return (

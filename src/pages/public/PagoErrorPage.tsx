@@ -13,7 +13,7 @@ const PagoErrorPage = () => {
                     <AlertTriangle size={80} className="absolute opacity-20" />
                 </div>
 
-                <h1 className="title-fan text-4xl mb-2 text-slate-800 dark:text-white">FRENADA BRUSCA</h1>
+                <h1 className="title-fan text-4xl mb-2 text-slate-800 dark:text-white">FRENADA</h1>
                 <p className="text-slate-500 dark:text-slate-400 font-medium mb-8">
                     Tuvimos un problema al procesar tu pago. Puede que tu tarjeta haya sido rechazada o cerraste la ventana antes de tiempo. No se te ha cobrado nada.
                 </p>
