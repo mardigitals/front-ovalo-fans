@@ -1,16 +1,7 @@
 import { Award, ShieldCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
-// Mock de los socios más antiguos
-const topSocios = [
-  { id: 1, nombre: "Gustavo", apellido: "Belinde", plan: "P2 FAN", mesesActivo: 14 },
-  { id: 2, nombre: "Francisco", apellido: "Paravano", plan: "P3 FAN", mesesActivo: 14 },
-  { id: 3, nombre: "Nadia", apellido: "Ricotti", plan: "P2 FAN", mesesActivo: 13 },
-  { id: 4, nombre: "Mauro", apellido: "Medina", plan: "P2 FAN", mesesActivo: 12 },
-  { id: 5, nombre: "Lionel", apellido: "Messi", plan: "P3 FAN", mesesActivo: 11 },
-];
-
-export function TopSociosList() {
+export function TopSociosList({ data }: { data: any[] }) {
   return (
     <Card className="bg-white dark:bg-[#110c1b] border-slate-200 dark:border-white/10 shadow-lg flex flex-col h-full">
       <CardHeader>
@@ -21,7 +12,7 @@ export function TopSociosList() {
       </CardHeader>
       <CardContent className="flex-1 overflow-auto pr-2">
         <div className="space-y-4">
-          {topSocios.map((socio, index) => (
+          {data.map((socio, index) => (
             <div key={socio.id} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5">
               <div className="flex items-center gap-4">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm
@@ -35,7 +26,7 @@ export function TopSociosList() {
                     {socio.nombre} {socio.apellido}
                   </p>
                   <p className="text-xs text-slate-500 flex items-center gap-1">
-                    <ShieldCheck size={12} className={socio.plan === 'P2 FAN' ? 'text-institucional-celeste' : 'text-slate-400'}/>
+                    <ShieldCheck size={12} className={socio.plan.includes('P2') ? 'text-institucional-celeste' : 'text-slate-400'}/>
                     {socio.plan}
                   </p>
                 </div>

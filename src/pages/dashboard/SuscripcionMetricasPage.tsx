@@ -19,16 +19,18 @@ const SuscripcionesMetricasPage = () => {
     const [topProvincias, setTopProvincias] = useState<any[]>([]);
     const [datosRetencion, setDatosRetencion] = useState<any[]>([]);
     const [datosMrr, setDatosMrr] = useState<any[]>([]);
+    const [topSocios, setTopSocios] = useState<any[]>([]);
 
     useEffect(() => {
         const cargarMetricas = async () => {
             try {     
-                const [resSuscripciones, resCiudades, resProvincias, resRetencion, resMrr] = await Promise.all([
+                const [resSuscripciones, resCiudades, resProvincias, resRetencion, resMrr, resTopSocios] = await Promise.all([
                     api.get('/suscripcion/admin/metricas/suscripciones').catch(() => ({ data: [] })),
                     api.get('/suscripcion/admin/metricas/ciudades').catch(() => ({ data: [] })),
                     api.get('/suscripcion/admin/metricas/provincias').catch(() => ({ data: [] })),
                     api.get('/suscripcion/admin/metricas/retencion').catch(() => ({ data: [] })), 
-                    api.get('/pagos/admin/metricas/mrr').catch(() => ({ data: [] }))    
+                    api.get('/pagos/admin/metricas/mrr').catch(() => ({ data: [] })),
+                    api.get('/suscripcion/admin/metricas/top-socios').catch(() => ({ data: [] })) 
                 ]);
 
                 const rawSuscripciones = resSuscripciones.data;
@@ -48,6 +50,7 @@ const SuscripcionesMetricasPage = () => {
                 // 3. Guardamos la data real
                 setDatosRetencion(resRetencion.data || []);
                 setDatosMrr(resMrr.data || []);
+                setTopSocios(resTopSocios.data || []);
 
             } catch (err) {
                 console.error("Error al cargar métricas:", err);
@@ -121,7 +124,7 @@ const SuscripcionesMetricasPage = () => {
                     </div>
                     
                     <div className="w-full h-full">
-                        <TopSociosList />
+                        <TopSociosList data={topSocios} />
                     </div>
                 </div>
 
