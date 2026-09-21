@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { BarChart3, Activity } from 'lucide-react';
 import api from '@/api/axios';
 
-// --- IMPORTACIONES DE NUESTROS COMPONENTES UI EXTRAÍDOS ---
 import { SuscripcionesDonutChart } from '@/components/ui/SuscripcionesDonutChart';
 import { FansRadialChart } from '@/components/ui/FansRadialChart';
 import { CiudadesTable } from '@/components/ui/CiudadesTable';
@@ -15,22 +14,23 @@ const SuscripcionesMetricasPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // Estados para la data real que viene de tu backend
     const [metricasEstados, setMetricasEstados] = useState({ Activo: 0, Pendiente: 0, Vencido: 0, Cancelado: 0, Total: 0 });
     const [topCiudades, setTopCiudades] = useState<any[]>([]);
-    const [topProvincias, setTopProvincias] = useState<any[]>([])
+    const [topProvincias, setTopProvincias] = useState<any[]>([]);
+    const [datosRetencion, setDatosRetencion] = useState<any[]>([]);
+    const [datosMrr, setDatosMrr] = useState<any[]>([]);
 
     useEffect(() => {
         const cargarMetricas = async () => {
-            try {
-                // Hacemos las llamadas a tu API real para alimentar los gráficos base
-                const [resSuscripciones, resCiudades, resProvincias] = await Promise.all([
+            try {     
+                const [resSuscripciones, resCiudades, resProvincias, resRetencion, resMrr] = await Promise.all([
                     api.get('/suscripcion/admin/metricas/suscripciones').catch(() => ({ data: [] })),
                     api.get('/suscripcion/admin/metricas/ciudades').catch(() => ({ data: [] })),
-                    api.get('/suscripcion/admin/metricas/provincias').catch(() => ({ data: [] }))
+                    api.get('/suscripcion/admin/metricas/provincias').catch(() => ({ data: [] })),
+                    api.get('/suscripcion/admin/metricas/retencion').catch(() => ({ data: [] })), 
+                    api.get('/pagos/admin/metricas/mrr').catch(() => ({ data: [] }))    
                 ]);
 
-                // 1. Procesar Estados
                 const rawSuscripciones = resSuscripciones.data;
                 const listaSuscripciones = rawSuscripciones?.data || (Array.isArray(rawSuscripciones) ? rawSuscripciones : []);
 
@@ -42,9 +42,12 @@ const SuscripcionesMetricasPage = () => {
                     Total: listaSuscripciones.reduce((acc: number, curr: any) => acc + Number(curr.cantidad), 0)
                 });
 
-                // 2. Procesar Ciudades y Provincias
                 setTopCiudades(resCiudades.data || []);                
                 setTopProvincias(resProvincias.data || []);
+                
+                // 3. Guardamos la data real
+                setDatosRetencion(resRetencion.data || []);
+                setDatosMrr(resMrr.data || []);
 
             } catch (err) {
                 console.error("Error al cargar métricas:", err);
@@ -80,7 +83,6 @@ const SuscripcionesMetricasPage = () => {
     return (
         <div className="max-w-7xl mx-auto space-y-8 pb-12 animate-in fade-in duration-500">
             
-            {/* ENCABEZADO */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/10 pb-6">
                 <div>
                     <h1 className="text-3xl font-extrabold text-slate-800 dark:text-white uppercase tracking-tighter flex items-center gap-2">
@@ -96,45 +98,31 @@ const SuscripcionesMetricasPage = () => {
                 </div>
             </div>
 
-            {/* TABLERO PRINCIPAL */}
             <div className="space-y-6">
                 
-                {/* FILA 1: VISIÓN GENERAL (2 Columnas ahora) */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Gráfico 1: Dona de Estados (Data Real) */}
                     <div className="h-full">
                         <SuscripcionesDonutChart metricasEstados={metricasEstados} />
                     </div>
-                    
-                    {/* Gráfico 2: Radial de Activos (Data Real) */}
                     <div className="h-full">
                         <FansRadialChart activos={metricasEstados.Activo} />
                     </div>
                 </div>
 
-                {/* FILA 2: RENDIMIENTO Y RETENCIÓN (2 Columnas) */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Gráfico 3: Altas vs Bajas (Data Mockeada) */}
-                    <AltasBajasChart />
-
-                    {/* Gráfico 4: MRR Proyección de Ingresos (Data Mockeada) */}
-                    <MrrChart />
+                    <AltasBajasChart data={datosRetencion} />
+                    <MrrChart data={datosMrr} />
                 </div>
 
-                {/* FILA 3: TABLAS INFORMATIVAS (2 Columnas) */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-                    
-                    {/* Columna Izquierda: Apilamos Ciudades y Provincias con flex-col */}
                     <div className="flex flex-col gap-6 w-full">
                         <ProvinciasPieChart provincias={topProvincias} />
                         <CiudadesTable ciudades={topCiudades} />
                     </div>
                     
-                    {/* Lista 6: Top Socios (Columna Derecha) */}
                     <div className="w-full h-full">
                         <TopSociosList />
                     </div>
-                    
                 </div>
 
             </div>

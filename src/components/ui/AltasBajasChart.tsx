@@ -18,16 +18,6 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart";
 
-// Mock de datos (luego lo reemplazás con tu API)
-const chartData = [
-  { mes: "Ene", altas: 18, bajas: 2 },
-  { mes: "Feb", altas: 35, bajas: 5 },
-  { mes: "Mar", altas: 23, bajas: 8 },
-  { mes: "Abr", altas: 47, bajas: 3 },
-  { mes: "May", altas: 52, bajas: 10 },
-  { mes: "Jun", altas: 64, bajas: 4 },
-];
-
 const chartConfig = {
   altas: {
     label: "Nuevas Suscripciones",
@@ -41,7 +31,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function AltasBajasChart() {
+export function AltasBajasChart({ data }: { data: any[] }) {
   return (
     <Card className="bg-white dark:bg-[#110c1b] border-slate-200 dark:border-white/10 shadow-lg">
       <CardHeader>
@@ -54,12 +44,12 @@ export function AltasBajasChart() {
         <ChartContainer config={chartConfig} className="h-[300px] w-full">
           <AreaChart
             accessibilityLayer
-            data={chartData}
+            data={data}
             margin={{ left: 12, right: 12 }}
           >
             <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#334155" />
             <XAxis
-              dataKey="mes"
+              dataKey="name" // Cambiado de "mes" a "name" para coincidir con el backend
               tickLine={false}
               axisLine={false}
               tickMargin={8}
