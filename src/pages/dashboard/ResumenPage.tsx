@@ -10,7 +10,7 @@ import { FansRadialChart } from '@/components/ui/FansRadialChart';
 import { SuscripcionesDonutChart } from '@/components/ui/SuscripcionesDonutChart';
 import { ClimaInfo } from '@/components/ui/ClimaInfo';
 import { EventosPieChart } from '@/components/ui/EventosPieChart';
-import { PublicacionesRadarChart } from '@/components/ui/PublicacionesRadarChart';
+import { ContenidoRadarChart } from '@/components/ui/ContenidoRadarChart';
 import { VisualizacionesBarChart } from '@/components/ui/VisualizacionesBarChart';
 import ValidadorDni from '@/components/ui/ValidadorDni';
 
@@ -30,7 +30,7 @@ const ResumenPage = () => {
 
     //Mock states para las metricas de Prensa
     // const [Tipos] = useState<any[]>([]);
-    const [Publicaciones] = useState<any[]>([]);
+    // const [Publicaciones] = useState<any[]>([]);
     const [metricasVisualizaciones] = useState<any[]>([]);
 
     // --- ESTADOS STAFF ---
@@ -40,7 +40,7 @@ const ResumenPage = () => {
     const [metricasFinanzas, setMetricasFinanzas] = useState<any[]>([]);
     const [datosEventos, setDatosEventos] = useState<any[]>([]);
     const [mostrarCredencial, setMostrarCredencial] = useState(false);
-
+    const [datosContenido, setDatosContenido] = useState<any[]>([]);
 
 
     useEffect(() => {
@@ -98,10 +98,13 @@ const ResumenPage = () => {
                 // LÓGICA EXCLUSIVA PARA PRENSA (ACÁ ESTÁ EL CAMBIO)
                 // ==========================================
                 else if (esPrensaCheck) {
-                    const [resEventos] = await Promise.all([
+                    const [resEventos, resContenido] = await Promise.all([
                         api.get('/evento/prensa/metricas/tipos-eventos').catch(() => ({ data: [] })),
-                    ]);    
+                        api.get('/contenido-multimedia/prensa/metricas/vistas-por-tipo').catch(() => ({ data: [] }))
+                    ]);     
                     setDatosEventos(resEventos.data || []);
+                    setDatosContenido(resContenido.data || []);
+
                 } 
                 
                 // ==========================================
@@ -409,7 +412,7 @@ const ResumenPage = () => {
                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <EventosPieChart tipos={datosEventos} />
-                    <PublicacionesRadarChart publicaciones={Publicaciones} />
+                      <ContenidoRadarChart contenido={datosContenido} />
                     </div>
 
                   <VisualizacionesBarChart metricasVisualizaciones={metricasVisualizaciones} />
