@@ -332,7 +332,7 @@ export const HOMENAJES = [
     id: 1, 
     nombre: 'Domingo Bucci', 
     rol: 'Piloto Histórico', 
-    foto: 'https://images.unsplash.com/photo-1541348263662-e0626628d0cf?w=400', 
+   foto: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400', 
     descripcion: 'Pionero de la velocidad. Lideró las primeras 500 Millas Argentinas en 1926 marcando el camino para las futuras generaciones.' 
   },
   { 
@@ -354,26 +354,58 @@ export const HOMENAJES = [
 export const CIRCUITOS = [
   { 
     id: 'circuito-1', 
-    nombre: 'El Trazado Original de Tierra', 
-    medida: '37.326 metros', 
-    epoca: '1926 - 1952', 
-    foto: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800', 
-    detalle: 'Formado por caminos vecinales de tierra que unían Rafaela con localidades vecinas. Aquí nacieron las míticas 500 Millas.' 
+    nombre: 'El Trazado Original de 1919', 
+    medida: '320 km', 
+    epoca: '1919', 
+    foto: '/public/images/circuito 1919 .png', 
+    detalle: 'Formado por caminos de tierra que unían Rafaela con localidades vecinas. Aquí nació la pasión por la velocidad en la región, con los primeros rugidos de motores a más de 100 km/h.' 
   },
   { 
     id: 'circuito-2', 
-    nombre: 'El Óvalo Pavimentado', 
-    medida: '4.624 metros', 
-    epoca: '1953 - Actualidad', 
-    foto: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800', 
-    detalle: 'El diseño definitivo. Dos rectas interminables y dos curvones peraltados que lo convierten en el circuito más rápido de Sudamérica.' 
+    nombre: 'El Óvalo de 4 curvas', 
+    medida: '38 km', 
+    epoca: '1926 - 1953', 
+    foto: '/public/images/Circuito 500 Millas.jpg', 
+    detalle: 'La medida fue cambiando con el paso del tiempo. Comenzó en 1926 con 38.000 metros, reduciéndose a 11.800 metros en la decada del ´30, para terminar en el año 1951 de 8.746 metros. Siempre la misma esencia y un adjetivo en común que lo definía, VELOZ.' 
   },
   { 
     id: 'circuito-3', 
-    nombre: 'Variante con Chicanas', 
-    medida: '4.750 metros', 
-    epoca: 'Años 90s - Actualidad', 
-    foto: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800', 
-    detalle: 'Para adaptar la pista a las potencias modernas, se implementaron chicanas que exigen frenadas brutales tras superar los 280 km/h.' 
+    nombre: 'El Óvalo peraltado de tierra', 
+    medida: '4.662.60 metros', 
+    epoca: '1953-1965', 
+    foto: '/public/images/autodromo 1953.png', 
+    detalle: 'El óvalo de tierra de 4.662,60 metros, de 12 metros de ancho con dos rectas de 1.477,10 metros y dos curvones de 854,20 metros con un peralte del 7% en sus curvas. Fue inaugurado el 2 de agosto de 1953 con una competencia de Turismo Carretera.' 
   },
+  { 
+    id: 'circuito-4', 
+    nombre: 'El Óvalo peraltado de asfalto', 
+    medida: '4.624.46 metros', 
+    epoca: '1965-1982', 
+    foto: '/public/images/circuito 1966.png', 
+    detalle: 'El óvalo de asfalto de 4.624,46 metros con un circuito interno de 2.687,14 metros. El circuito principal, de 12 metros de ancho hasta el año 1971, que se extendió a 18 metros, contaba con 2 rectas de 1.181,01 metros y dos curvones especialmente diseñados, conformados por: 2 curvas clotoides de 361,52 m  y una curva circular de 408,18 m. Con un peralte máximo del 15% (8.5°). Fue inaugurado el 4 de septiembre de 1966 con una competencia de 500 Millas, ganador Jorge Cupeiro.' 
+  },
+  {
+    id: 'circuito-5',
+    nombre: 'Circuito N°2 "Ing. Juan R. Báscolo"',
+    medida: '3.050 metros',
+    epoca: '1982-actualidad',
+    foto: 'public/images/circuito 2 bascolo.jpg',
+    detalle: 'Es un circuito mixto de 3.050 metros, alternativo al óvalo, compartiendo el curvón norte. Con un ancho de 18 metros, cuenta con recta  principal de 710 metros. Inicialmente su sentido fue horario hasta los años 2000, cambiando a sentido antihorario en la actualidad. Fue inaugurado el 26 de septiembre de 1982 con una competencia de Datsun 280, resultando ganador Guillermo Kissling.'
+  },
+  {
+    id: 'circuito-6',
+    nombre: 'El Óvalo con 4 chicanas"',
+    medida: '4.780 metros',
+    epoca: 'en desuso',
+    foto: '/public/images/trazado 2013.png',
+    detalle: 'Este óvalo con 4 chicanas se utilizo en los años 2000, en 2 ocaciones.'
+  },
+  {
+    id: 'circuito-7',
+    nombre: 'El Óvalo con 2 o 3 chicanas',
+    medida: '4.740 metros',
+    epoca: 'Actualidad',
+    foto: '/public/images/circuito 3d 2026.png',
+    detalle: 'Este óvalo con 3 chicanas es el que usa actualmente el TC, añadiendo una capa adicional de complejidad y emoción a las carreras.'
+  }
 ];
