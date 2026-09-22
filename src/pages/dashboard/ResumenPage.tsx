@@ -19,7 +19,7 @@ const ResumenPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // Mock states para las métricas de Fan
+    // --- ESTADOS FANS ---
     const [ultimosBeneficios, setUltimosBeneficios] = useState<any[]>([]);
     const [proximosBeneficios, setProximosBeneficios] = useState<any[]>([]);
     
@@ -109,13 +109,10 @@ const ResumenPage = () => {
                 // LÓGICA EXCLUSIVA PARA FANS
                 // ==========================================
                 else {
-                    // Mocks Fan por defecto
-                    setUltimosBeneficios([{ id: 1, nombre: 'Descuento 20% Boxes', fecha: '28/5/2026' }]);
-                    setProximosBeneficios([{ id: 2, nombre: 'Acceso Anticipado TC Rafaela', fecha: '14/6/2026' }]);
-
                     try {
                         const resUsos = await api.get('/uso-beneficio/mis-usos');
                         const usos = resUsos.data || [];
+
                         const completados = usos.filter((u: any) => u.estado === 'Completado');
                         const pendientes = usos.filter((u: any) => u.estado === 'Pendiente');
 
@@ -125,22 +122,28 @@ const ResumenPage = () => {
                             const ultimos = completados.sort((a: any, b: any) => 
                                 new Date(b.fecha_uso).getTime() - new Date(a.fecha_uso).getTime()
                             ).slice(0, 1);
+                            
                             setUltimosBeneficios(ultimos.map((u: any) => ({
                                 id: u.id,
                                 nombre: formatearBeneficio(u.tipo_beneficio),
                                 fecha: new Date(u.fecha_uso).toLocaleDateString('es-AR')
                             })));
+                        } else {
+                            setUltimosBeneficios([]);
                         }
 
                         if (pendientes.length > 0) {
                             const proximos = pendientes.sort((a: any, b: any) => 
                                 new Date(a.fecha_solicitud).getTime() - new Date(b.fecha_solicitud).getTime()
                             ).slice(0, 1);
+                            
                             setProximosBeneficios(proximos.map((u: any) => ({
                                 id: u.id,
                                 nombre: formatearBeneficio(u.tipo_beneficio),
                                 fecha: new Date(u.fecha_solicitud).toLocaleDateString('es-AR')
                             })));
+                        } else {
+                            setProximosBeneficios([]);
                         }
                     } catch (e) {
                         console.error("Error cargando beneficios del fan", e);
@@ -352,6 +355,9 @@ const ResumenPage = () => {
                                 <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                                     <Clock size={16} className="text-institucional-celeste" /> Último Uso
                                 </h3>
+                                <p className="text-2xl font-black text-slate-800 dark:text-white">
+                                    {totalBeneficiosUsados === 0 ? 'Ninguno' : ''}
+                                </p>
                                 {ultimosBeneficios.map(b => (
                                     <div key={b.id} className="p-3 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5">
                                         <p className="font-bold text-slate-700 dark:text-slate-200 text-sm">{b.nombre}</p>
@@ -363,6 +369,9 @@ const ResumenPage = () => {
                                 <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                                     <Calendar size={16} className="text-green-400" /> Próximas Citas
                                 </h3>
+                                <p className="text-2xl font-black text-slate-800 dark:text-white">
+                                    {proximosBeneficios.length === 0 ? 'Ninguna' : ''}
+                                </p>
                                 {proximosBeneficios.map(b => (
                                     <div key={b.id} className="p-3 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5 flex justify-between items-center">
                                         <div>
@@ -402,7 +411,7 @@ const ResumenPage = () => {
                 </div>
             )}
 
-            {/* 📊 VISTA 3: TABLERO SHADCN UI + RECHARTS (PRENSA)     MOCKS                     */}
+            {/* 📊 VISTA 3: TABLERO SHADCN UI + RECHARTS (PRENSA)                       */}
             {/* ========================================================================= */}
             {esPrensa && (
                 <div className="space-y-6">
