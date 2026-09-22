@@ -25,13 +25,8 @@ const ResumenPage = () => {
     
     const [totalBeneficiosUsados, setTotalBeneficiosUsados] = useState(0);
     const formatearBeneficio = (tipo: string) => {
-    return tipo.split('_').map(word => word.charAt(0) + word.slice(1).toLowerCase()).join(' ');
-};
-
-    //Mock states para las metricas de Prensa
-    // const [Tipos] = useState<any[]>([]);
-    // const [Publicaciones] = useState<any[]>([]);
-    const [metricasVisualizaciones] = useState<any[]>([]);
+        return tipo.split('_').map(word => word.charAt(0) + word.slice(1).toLowerCase()).join(' ');
+    };
 
     // --- ESTADOS STAFF ---
     const [metricasEstados, setMetricasEstados] = useState({ Activo: 0, Pendiente: 0, Vencido: 0, Cancelado: 0, Total: 0 });
@@ -41,6 +36,7 @@ const ResumenPage = () => {
     const [datosEventos, setDatosEventos] = useState<any[]>([]);
     const [mostrarCredencial, setMostrarCredencial] = useState(false);
     const [datosContenido, setDatosContenido] = useState<any[]>([]);
+    const [alcance, setAlcance] = useState<any[]>([]);
 
 
     useEffect(() => {
@@ -95,15 +91,17 @@ const ResumenPage = () => {
                 } 
                 
                 // ==========================================
-                // LÓGICA EXCLUSIVA PARA PRENSA (ACÁ ESTÁ EL CAMBIO)
+                // LÓGICA EXCLUSIVA PARA PRENSA
                 // ==========================================
                 else if (esPrensaCheck) {
-                    const [resEventos, resContenido] = await Promise.all([
+                    const [resEventos, resContenido, resAlcance] = await Promise.all([
                         api.get('/evento/prensa/metricas/tipos-eventos').catch(() => ({ data: [] })),
-                        api.get('/contenido-multimedia/prensa/metricas/vistas-por-tipo').catch(() => ({ data: [] }))
+                        api.get('/contenido-multimedia/prensa/metricas/vistas-por-tipo').catch(() => ({ data: [] })),
+                        api.get('/contenido-multimedia/prensa/metricas/alcance-apilado').catch(() => ({ data: [] }))
                     ]);     
                     setDatosEventos(resEventos.data || []);
                     setDatosContenido(resContenido.data || []);
+                    setAlcance(resAlcance.data || []);
 
                 } 
                 
@@ -415,7 +413,7 @@ const ResumenPage = () => {
                       <ContenidoRadarChart contenido={datosContenido} />
                     </div>
 
-                  <VisualizacionesBarChart metricasVisualizaciones={metricasVisualizaciones} />
+                  <VisualizacionesBarChart metricas={alcance} />
 
                 </div>
             )}
