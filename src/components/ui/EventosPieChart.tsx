@@ -6,27 +6,20 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } f
 
 export function EventosPieChart({ tipos }: { tipos: any[] }) {
   // Paleta de colores para tipos de eventos
-  const colores = ["#0ea5e9", "#f59e0b", "#8b5cf6", "#22c55e", "#ef4444"];
+  const colores = ["#0ea5e9", "#f59e0b", "#8b5cf6", "#22c55e", "#ef4444", "#ec4899", "#14b8a6"];
 
   const chartData = useMemo(() => {
-    // Si no hay datos, usamos un mock temporal para poder maquetar
-    const data = tipos && tipos.length > 0 ? tipos : [
-      { tipo: "TC / Nacionales", cantidad: 4 },
-      { tipo: "Zonales", cantidad: 8 },
-      { tipo: "Pruebas Libres", cantidad: 12 },
-      { tipo: "Eventos Extra", cantidad: 2 }
-    ];
-
-    return data.map((item, index) => ({
+    return (tipos || []).map((item, index) => ({
       ...item,
       fill: colores[index % colores.length],
     }));
   }, [tipos]);
 
   const chartConfig = useMemo(() => {
-    const config: Record<string, any> = { cantidad: { label: "Eventos" } };
+    const config: Record<string, any> = { value: { label: "Eventos" } };
     chartData.forEach((item) => {
-      config[item.tipo] = { label: item.tipo, color: item.fill };
+      // Usamos item.name porque así lo estructuramos en la consulta del backend
+      config[item.name] = { label: item.name, color: item.fill };
     });
     return config satisfies ChartConfig;
   }, [chartData]);
@@ -40,22 +33,31 @@ export function EventosPieChart({ tipos }: { tipos: any[] }) {
         <CardDescription>Distribución del calendario anual</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[250px]">
-          <PieChart>
-            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-            <Pie
-              data={chartData}
-              dataKey="cantidad"
-              nameKey="tipo"
-              innerRadius={60}
-              strokeWidth={5}
-              activeIndex={0}
-              activeShape={(props: any) => (
-                <Sector {...props} outerRadius={(props.outerRadius || 0) + 10} />
-              )}
-            />
-          </PieChart>
-        </ChartContainer>
+        
+        {/* Renderizado condicional: si hay datos muestra el gráfico, sino un texto */}
+        {chartData.length > 0 ? (
+          <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[250px]">
+            <PieChart>
+              <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+              <Pie
+                data={chartData}
+                dataKey="value" // <-- Ajustado para coincidir con la DB
+                nameKey="name"  // <-- Ajustado para coincidir con la DB
+                innerRadius={60}
+                strokeWidth={5}
+                activeIndex={0}
+                activeShape={(props: any) => (
+                  <Sector {...props} outerRadius={(props.outerRadius || 0) + 10} />
+                )}
+              />
+            </PieChart>
+          </ChartContainer>
+        ) : (
+          <div className="flex items-center justify-center h-[250px] text-slate-400 text-xs font-bold uppercase tracking-widest">
+            Sin eventos registrados
+          </div>
+        )}
+
       </CardContent>
     </Card>
   );

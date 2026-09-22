@@ -29,7 +29,7 @@ const ResumenPage = () => {
 };
 
     //Mock states para las metricas de Prensa
-    const [Tipos] = useState<any[]>([]);
+    // const [Tipos] = useState<any[]>([]);
     const [Publicaciones] = useState<any[]>([]);
     const [metricasVisualizaciones] = useState<any[]>([]);
 
@@ -38,7 +38,7 @@ const ResumenPage = () => {
     const [topChicanas, setTopChicanas] = useState<any[]>([]);
     const [topCiudades, setTopCiudades] = useState<any[]>([]);
     const [metricasFinanzas, setMetricasFinanzas] = useState<any[]>([]);
-
+    const [datosEventos, setDatosEventos] = useState<any[]>([]);
     const [mostrarCredencial, setMostrarCredencial] = useState(false);
 
 
@@ -49,14 +49,13 @@ const ResumenPage = () => {
                 const res = await api.get('/usuario-auth/perfil');
                 setPerfil(res.data);
                 
-                // Mocks Fan
-                setUltimosBeneficios([{ id: 1, nombre: 'Descuento 20% Boxes', fecha: '28/5/2026' }]);
-                setProximosBeneficios([{ id: 2, nombre: 'Acceso Anticipado TC Rafaela', fecha: '14/6/2026' }]);
-
                 const rolStr = res.data?.rol?.toLowerCase() || '';
                 const esStaffCheck = ['superadmin', 'administrativo'].includes(rolStr);
-                // const esPrensaCheck = ['prensa'].includes(rolStr);
+                const esPrensaCheck = ['prensa'].includes(rolStr);
 
+                // ==========================================
+                // LÓGICA EXCLUSIVA PARA STAFF
+                // ==========================================
                 if (esStaffCheck) {
                     const [resSuscripciones, resChicanas, resCiudades, resIngresos] = await Promise.all([
                         api.get('/suscripcion/admin/metricas/suscripciones').catch(() => ({ data: [] })),
@@ -68,14 +67,11 @@ const ResumenPage = () => {
                     // 1. Estados
                     const rawSuscripciones = resSuscripciones.data;
                     const listaSuscripciones = rawSuscripciones?.data || (Array.isArray(rawSuscripciones) ? rawSuscripciones : []);
-
                     setMetricasEstados({
-                        // Buscamos el objeto donde el estado coincida y tomamos su propiedad cantidad
                         Activo: Number(listaSuscripciones.find((s: any) => s.estado === 'Activo')?.cantidad || 0),
                         Pendiente: Number(listaSuscripciones.find((s: any) => s.estado === 'Pendiente')?.cantidad || 0),
                         Vencido: Number(listaSuscripciones.find((s: any) => s.estado === 'Vencido')?.cantidad || 0),
                         Cancelado: Number(listaSuscripciones.find((s: any) => s.estado === 'Cancelado')?.cantidad || 0),
-                        // Para el total, sumamos las cantidades de todos los objetos recibidos
                         Total: listaSuscripciones.reduce((acc: number, curr: any) => acc + Number(curr.cantidad), 0)
                     });
 
@@ -91,69 +87,66 @@ const ResumenPage = () => {
                     
                     // 4. Finanzas
                     const nombresMeses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
- 
                     const finanzasFormateadas = (resIngresos.data || []).map((item: any) => ({
-                        // Traducimos el número de mes a texto (ej: 8 -> 'Ago'). Restamos 1 porque los arrays empiezan en 0.
                         mes: item.mes ? nombresMeses[item.mes - 1] : 'Desconocido',
-                        
-                        // Leemos 'total_ingresos' del backend y lo guardamos como 'ingresos' que es lo que espera el gráfico
                         ingresos: Number(item.total_ingresos || 0)
                     }));
-
                     setMetricasFinanzas(finanzasFormateadas);
-                }else if (!esStaffCheck) {
-                    // === LÓGICA PARA FANS ===try {
-                    const resUsos = await api.get('/uso-beneficio/mis-usos');
-                    const usos = resUsos.data || [];
+                } 
+                
+                // ==========================================
+                // LÓGICA EXCLUSIVA PARA PRENSA (ACÁ ESTÁ EL CAMBIO)
+                // ==========================================
+                else if (esPrensaCheck) {
+                    const [resEventos] = await Promise.all([
+                        api.get('/evento/prensa/metricas/tipos-eventos').catch(() => ({ data: [] })),
+                    ]);    
+                    setDatosEventos(resEventos.data || []);
+                } 
+                
+                // ==========================================
+                // LÓGICA EXCLUSIVA PARA FANS
+                // ==========================================
+                else {
+                    // Mocks Fan por defecto
+                    setUltimosBeneficios([{ id: 1, nombre: 'Descuento 20% Boxes', fecha: '28/5/2026' }]);
+                    setProximosBeneficios([{ id: 2, nombre: 'Acceso Anticipado TC Rafaela', fecha: '14/6/2026' }]);
 
-                    // Filtramos por estado según tu DB
-                    const completados = usos.filter((u: any) => u.estado === 'Completado');
-                    const pendientes = usos.filter((u: any) => u.estado === 'Pendiente');
+                    try {
+                        const resUsos = await api.get('/uso-beneficio/mis-usos');
+                        const usos = resUsos.data || [];
+                        const completados = usos.filter((u: any) => u.estado === 'Completado');
+                        const pendientes = usos.filter((u: any) => u.estado === 'Pendiente');
 
-                    // A. Total de beneficios usados
-                    setTotalBeneficiosUsados(completados.length);
+                        setTotalBeneficiosUsados(completados.length);
 
-                    // B. Último Uso (Ordenamos completados por fecha_uso descendente y agarramos 1)
-                    if (completados.length > 0) {
-                        const ultimos = completados.sort((a: any, b: any) => 
-                            new Date(b.fecha_uso).getTime() - new Date(a.fecha_uso).getTime()
-                        ).slice(0, 1);
+                        if (completados.length > 0) {
+                            const ultimos = completados.sort((a: any, b: any) => 
+                                new Date(b.fecha_uso).getTime() - new Date(a.fecha_uso).getTime()
+                            ).slice(0, 1);
+                            setUltimosBeneficios(ultimos.map((u: any) => ({
+                                id: u.id,
+                                nombre: formatearBeneficio(u.tipo_beneficio),
+                                fecha: new Date(u.fecha_uso).toLocaleDateString('es-AR')
+                            })));
+                        }
 
-                        setUltimosBeneficios(ultimos.map((u: any) => ({
-                            id: u.id,
-                            nombre: formatearBeneficio(u.tipo_beneficio),
-                            fecha: new Date(u.fecha_uso).toLocaleDateString('es-AR')
-                        })));
-                    } else {
-                        setUltimosBeneficios([]);
-                    }
-
-                    // C. Próximas Citas (Ordenamos pendientes por fecha_solicitud y agarramos 1)
-                    if (pendientes.length > 0) {
-                        const proximos = pendientes.sort((a: any, b: any) => 
-                            new Date(a.fecha_solicitud).getTime() - new Date(b.fecha_solicitud).getTime()
-                        ).slice(0, 1);
-
-                        setProximosBeneficios(proximos.map((u: any) => ({
-                            id: u.id,
-                            nombre: formatearBeneficio(u.tipo_beneficio),
-                            fecha: new Date(u.fecha_solicitud).toLocaleDateString('es-AR')
-                        })));
-                    } else {
-                        setProximosBeneficios([]);
+                        if (pendientes.length > 0) {
+                            const proximos = pendientes.sort((a: any, b: any) => 
+                                new Date(a.fecha_solicitud).getTime() - new Date(b.fecha_solicitud).getTime()
+                            ).slice(0, 1);
+                            setProximosBeneficios(proximos.map((u: any) => ({
+                                id: u.id,
+                                nombre: formatearBeneficio(u.tipo_beneficio),
+                                fecha: new Date(u.fecha_solicitud).toLocaleDateString('es-AR')
+                            })));
+                        }
+                    } catch (e) {
+                        console.error("Error cargando beneficios del fan", e);
                     }
                 }
-                // if (esPrensaCheck) {
-                //     const [resTipos, resPublicaciones, resMetricasVisualizaciones] = await Promise.all([
-                //         api.get('/prensa/admin/metricas/tipos').catch(() => ({ data: [] })),
-                //         api.get('/prensa/admin/metricas/publicaciones').catch(() => ({ data: [] })),
-                //         api.get('/prensa/admin/metricas/visualizaciones').catch(() => ({ data: [] }))
-                //     ]);
                 
-
-
-                // }
-            }catch (err) {
+            } catch (err) {
                 console.error("Error al cargar el resumen:", err);
                 setError("No se pudo cargar el tablero principal.");
             } finally {
@@ -415,7 +408,7 @@ const ResumenPage = () => {
                     
                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <EventosPieChart tipos={Tipos} />
+                      <EventosPieChart tipos={datosEventos} />
                     <PublicacionesRadarChart publicaciones={Publicaciones} />
                     </div>
 
