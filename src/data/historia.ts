@@ -330,25 +330,298 @@ export const LINEA_HISTORICA = [
 export const HOMENAJES = [
   { 
     id: 1, 
-    nombre: 'Domingo Bucci', 
-    rol: 'Piloto Histórico', 
-   foto: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400', 
-    descripcion: 'Pionero de la velocidad. Lideró las primeras 500 Millas Argentinas en 1926 marcando el camino para las futuras generaciones.' 
+    nombre: 'Juan Manuel Fangio', 
+    rol: 'Piloto', 
+    foto: '/public/images/historia/fama/juan-manuel-fangio.jpg', 
+    descripcion: 'El 5 veces campeón de F1, considerado el mejor piloto de la historia del mundo, sin dudas fue la persona más importante que ganó en Rafaela. Lideró las 500 Millas Argentinas en 1950 de punta a punta a bordo de un Talbot-lago F1 Internacional, marcando un récord de velocidad difícil de superar.' 
   },
   { 
-    id: 2, 
-    nombre: 'Ero Borgogno', 
-    rol: 'Dirigente Histórico', 
-    foto: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400', 
-    descripcion: 'Alma máter del autódromo. Su visión audaz fue clave para lograr la hazaña de traer la Indy 300 a Rafaela en 1971.' 
+    id: 2,
+    nombre: 'Lucio Casarín',
+    rol: 'Dirigente',
+    foto: '/public/images/historia/fama/lucio-casarin.jpg',
+    descripcion: 'Arquitecto y dirigente visionario que proyecto muchas obras en el Autódromo "Ciudad de Rafaela". Lamentablemente perdió la vida en un trágico accidente en la recta principal, pero su legado perdura en nuestra memoria.' 
   },
   { 
     id: 3, 
     nombre: 'Jorge Ternengo', 
-    rol: 'Piloto Local', 
-    foto: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=400', 
+    rol: 'Piloto', 
+    foto: '/public/images/historia/fama/jorge-ternengo.jpg', 
     descripcion: 'Ídolo rafaelino. Representó a la ciudad en las categorías más grandes del país, siendo profeta en su propia tierra.' 
   },
+  { 
+    id: 4, 
+    nombre: 'Eduardo Ricotti', 
+    rol: 'Dirigente', 
+    foto: '/public/images/historia/fama/eduardo-ricotti.jpg', 
+    descripcion: 'Ingeniero y dirigente, fue el alma máter del autódromo durante muchos años. Como presidente del club, su visión audaz fue clave para lograr la carrera más importante que Rafaela y Santa Fe tuvieron en toda su historia, la hazaña de traer las 300 Millas de Indy en 1971.' 
+  },
+  {
+    id: 5,
+    nombre: 'Juan María Traverso',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/juan-traverso.jpg',
+    descripcion: 'El "Flaco", uno de los mejores pilotos de Argentina. Es el máximo ganador en la historia del automovilismo a nivel nacional, cosechando 7 victorias históricas en el óvalo.'
+  },
+  { 
+    id: 6, 
+    nombre: 'Leonelo Bellezze', 
+    rol: 'Periodista', 
+    foto: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400', 
+    descripcion: 'La voz del automovilismo en Rafaela. Tuvo el histórico honor de transmitir al mundo la mítica carrera de las 300 Millas Indy en 1971 a través de LT28 Radio Rafaela.' 
+  },
+  {
+    id: 7,
+    nombre: 'Juan R. Báscolo',
+    rol: 'Dirigente',
+    foto: '/public/images/historia/fama/juan-bascolo.jpeg',
+    descripcion: 'Visionario del automovilismo. Su liderazgo y pasión por las 500 Millas fueron fundamentales para la inauguración del autódromo y la consolidación de Rafaela como un referente en el automovilismo argentino.'
+  },
+  {
+    id: 8,
+    nombre: 'Ero Borgogno',
+    rol: 'Dirigente',
+    foto: '/public/images/historia/fama/ero-borgogno.jpg',
+    descripcion: 'Para "Chispa", el autódromo era su segundo hogar. Fue un pilar histórico de la Subcomisión de Automovilismo de Atlético de Rafaela durante 45 años. En su honor, hoy un paseo con su nombre recorre el camino de la ciudad al autódromo.'
+  },
+  {
+    id: 9,
+    nombre: 'Al Unser',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/al-unser.jpg',
+    descripcion: 'Leyenda norteamericana. El 28 de febrero de 1971, dominó y ganó la mítica Indy 300 en Rafaela a más de 320 km/h, convirtiendo al autodromo en el más veloz del mundo. Fue la primer carrera del campeonato USAC en correr fuera de EEUU.'
+  },
+  {
+    id: 10,
+    nombre: 'Bernardo Kuschnir',
+    rol: 'Dirigente',
+    foto: '',
+    descripcion: 'Dirigente fundamental de Atlético de Rafaela. Su trabajo institucional fue clave para mantener al club y al autódromo en lo más alto del deporte nacional.'
+  },
+  {
+    id: 11,
+    nombre: 'Ruben Luis Di Palma',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/ruben-dipalma.jpg',
+    descripcion: 'El "Loco" de Arrecifes fue uno de los grandes protagonistas que desafió el peralte de Rafaela. Ganó la última edición de las 500 Millas Argentinas en 1975, como tambíen, aportando su manejo agresivo y espectacularidad al Turismo Carretera y Sport Prototipo.'
+  },
+  {
+    id: 12,
+    nombre: 'Mariano Werner',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/mariano-werner.jpg',
+    descripcion: 'Multicampeón del TC moderno que ha protagonizado definiciones infartantes en el óvalo, uno de los favoritos de la nueva generación de fans.'
+  },
+  {
+    id: 13,
+    nombre: 'René Zanatta',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/rene-zanatta.jpeg',
+    descripcion: 'Héroe local que marcó un hito en su propia tierra. Además de sus 7 victorias en carreras de auto y moto, rompió el récord sudamericano de velocidad en moto, alcanzando los 309,554 km/h.'
+  },
+  {
+    id: 14,
+    nombre: 'Lloyd Ruby',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/lloyd-ruby.jpg',
+    descripcion: 'Hizo historia en 1971 al marcar la pole position de la 300 Indy en el óvalo de Rafaela, logrando un tiempo (récord vigente) impresionante de 59´74´´ a 278,675 km/h con su Mongoose Ford Turbo.'
+  },
+  {
+    id: 15,
+    nombre: 'Facundo Ardusso',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/facundo-ardusso.jpg',
+    descripcion: 'Uno de los pilotos más queridos del TC y fiel representante del automovilismo santafesino, con victorias en TC2000, y récord sudamericano de velocidad promedio de vuelta a 264,796 km/h en el Templo de la Velocidad.'
+  },
+  {
+    id: 16,
+    nombre: 'Agustín Canapino',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/agustin-canapino.jpg',
+    descripcion: 'Múltiple campeón, se consagró corriendo en IndyCar, y que demostró su talento absoluto en Rafaela, logrando  varias victorias  en Súper TC2000 y en el Turismo Carretera.'
+  },
+  {
+    id: 17,
+    nombre: 'Gabriel Ponce de León',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/gabriel-poncedeleon.jpg',
+    descripcion: 'Entró en la historia del óvalo en 2005 al ganar la épica carrera de TC2000, última en el óvalo sin chicanas, y en 2012 marcó el récord absoluto de velocidad final en autos alcanzando 306,383 km/h.'
+  },
+  {
+    id: 18,
+    nombre: 'Luis Sojit',
+    rol: 'Periodista',
+    foto: '/public/images/historia/fama/luis-sojit.jpg',
+    descripcion: 'Persona fundamental para que las 500 Millas Argentinas sean posibles. Su voz inconfundible inmortalizó las épicas definiciones de las primeras grandes carreras de Rafaela para todo el país a través de la radio.'
+  },
+  {
+    id: 19,
+    nombre: 'Oberdán Piovano',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'Pionero absoluto. Fue el ganador y uno de los siete valientes que se animaron a largar la histórica primera carrera de automóviles en Rafaela.'
+  },
+  {
+    id: 20,
+    nombre: 'Raúl Riganti',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'Referente de los primeros años heroicos del automovilismo, ganador de la primera edición de las 500 Millas Argentinas.'
+  },
+  {
+    id: 21,
+    nombre: 'Oscar y Juan Gálvez',
+    rol: 'Pilotos',
+    foto: '',
+    descripcion: 'Leyendas del TC. Juan fue el primero en conseguir un doblete de victorias en Rafaela, triunfando en el estreno de 1953 y repitiendo la hazaña en 1955.'
+  },
+  {
+    id: 22,
+    nombre: 'Adolfo Scandroglio',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'Protagonista de las 500 Millas, manejando un auto con motor de avión que marcaba los mejores tiempos. Su nombre quedó grabado entre los valientes que desafiaban la velocidad en Rafaela.'
+  },
+  {
+    id: 23,
+    nombre: 'José Fanto',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'Piloto rafaelino que ganó las competencias del 1949 y 1951, donde ya era considerada la Cumbre del Automovilismo Nacional.'
+  },
+  {
+    id: 24,
+    nombre: 'Jorge Cupeiro',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'Dominó en Rafaela durante las décadas del 60 y 70, logrando grandes victorias y brillando especialmente al mando del revolucionario Chevitú.'
+  },
+  {
+    id: 25,
+    nombre: 'José Froilán González',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'El subcampeón del mundo de F1 engalanó a Rafaela con su presencia y talento en competencias de fuerza libre en las 500 Millas, antes de conquistar Europa.'
+  },
+  {
+    id: 26,
+    nombre: 'Eusebio Marcilla',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'El "Caballero del Camino". Hizo historia el 12 de enero de 1941 al ganar las extenuantes "12 Horas de Rafaela", primera visita del TC a la ciudad.'
+  },
+  {
+    id: 27,
+    nombre: 'Carlos Reutemann',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'El gran ídolo santafesino. Lole brilló y se fogueó en los circuitos locales, probando su enorme talento conductivo frente a la afición rafaelina antes de su consagración en Fórmula 1.'
+  },
+  {
+    id: 28,
+    nombre: 'Oreste Berta',
+    rol: 'Chasista',
+    foto: '',
+    descripcion: 'El "Mago" rafaelino. Los potentes motores y chasis preparados por él dominaron innumerables veces el asfalto de Rafaela en manos de los mejores pilotos del país.'
+  },
+  {
+    id: 29,
+    nombre: 'Domingo y Clemar Bucci',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'Representantes de una de las dinastías más importantes del automovilismo zonal. Su pasión y velocidad son parte de los cimientos históricos del club.'
+  },
+  {
+    id: 30,
+    nombre: 'Carlos Zatuszek',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'Volante histórico de la vieja escuela. Sus épicas batallas en las 500 Millas Argentinas lo convirtieron en un referente del circuito en las décadas de 1920 y 1930.'
+  },
+  {
+    id: 31,
+    nombre: 'Armando Romitelli',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'Destacado piloto de carreras en Rafaela, dejando su huella estampada en la gloria en 1921.'
+  },
+  {
+    id: 32,
+    nombre: 'Néstor García Veiga',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'Un piloto de gran jerarquía que deslumbró al público rafaelino por su velocidad.'
+  },
+  {
+    id: 33,
+    nombre: 'Carlos Pairetti',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/carlos-pairetti.png',
+    descripcion: 'El creador del famoso "Trueno Naranja". No solo compitió, sino que también fue el único piloto Argentino en la carrera de Indy en Rafaela.'
+  },
+  {
+    id: 34,
+    nombre: 'Eric Forrest Greene',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/eric-forrest-greene.jpg',
+    descripcion: 'Un caballero inglés de las pistas argentinas que supo acelerar y dejar su clase en las rudas competencias de la época fundacional de Rafaela, ganando en 1928.'
+  },
+  {
+    id: 35,
+    nombre: 'Omar Martínez',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'El "Gurí". Ídolo indiscutido de Ford y multicampeón que ha levantado a las multitudes en el óvalo rafaelino.'
+  },
+  {
+    id: 36,
+    nombre: 'Guillermo Ortelli',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'El Rey de Salto y máximo referente de Chevrolet. Hizo historia en el TC al lograr victorias memorables en el óvalo de Rafaela en 2003 y 2005.'
+  },
+  {
+    id: 37,
+    nombre: 'Norberto Fontana',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'El ex Fórmula 1 que dejó su sello en el asfalto rafaelino, logrando importantes triunfos, como su recordada victoria en el Súper TC2000 en 2014.'
+  },
+  {
+    id: 38,
+    nombre: 'Matías Rossi',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'El "Misil". Siempre protagonista en Rafaela, destacado por su precisión conductiva, fue la estrella del 2005, que sin haber ganado, cautivo al público doblando en los curvones al raz del paredón a mas de 200 km/h, lo llevó al podio en aquella histórica carrera de TC2000 sin chicanas en 2005.'
+  },
+  {
+    id: 39,
+    nombre: 'Martín Basso',
+    rol: 'Piloto',
+    foto: '',
+    descripcion: 'Piloto local que llevó la bandera de la ciudad a lo más alto en competencias nacionales y sudamericanas, representando el orgullo y la herencia pistera de Rafaela.'
+  },
+  {
+    id: 40,
+    nombre: 'Nicolás González',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/nicolas-gonzalez.jpeg',
+    descripcion: 'Referente contemporáneo del automovilismo rafaelino, fue el último rafaelino en correr en el TC, acelerando frente a su gente y manteniendo viva la pasión local en las categorías de la ACTC.'
+  },
+   {
+    id: 41,
+    nombre: 'Ricardo Santi',
+    rol: 'Dirigente',
+    foto: '',
+    descripcion: 'Pieza clave en la dirigencia de la Subcomisión de Automovilismo en los años ´50, dedicando su labor a la preservación y crecimiento de las históricas instalaciones del circuito.'
+  },
+  {
+     id: 42,
+    nombre: 'Miguel Ángel Guerra',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/miguel-guerra.jpg',
+    descripcion:'Uno de los pilotos que mejor representó a Argentina en la F1, fue el que mejor supo entender el circuito, ganando importantes carreras.'
+  }
 ];
 
 export const CIRCUITOS = [
@@ -363,16 +636,16 @@ export const CIRCUITOS = [
   { 
     id: 'circuito-2', 
     nombre: 'El Óvalo de 4 curvas', 
-    medida: '38 km', 
-    epoca: '1926 - 1953', 
+    medida: '1° Edición: 38.0000 metros - Última Edición: 8.746 metros', 
+    epoca: '1926 - 1951', 
     foto: '/public/images/Circuito 500 Millas.jpg', 
-    detalle: 'La medida fue cambiando con el paso del tiempo. Comenzó en 1926 con 38.000 metros, reduciéndose a 11.800 metros en la decada del ´30, para terminar en el año 1951 de 8.746 metros. Siempre la misma esencia y un adjetivo en común que lo definía, VELOZ.' 
+    detalle: 'La medida fue cambiando con el paso del tiempo. Comenzó en 1926 con 38.000 metros, reduciéndose a 11.776,55 metros en la decada del ´30, para terminar en el año 1951 de 8.746 metros. Los distintos formatos siempre tuvieron la misma esencia, una mística que lo hacía único y un adjetivo en común que lo definían, VELOZ.' 
   },
   { 
     id: 'circuito-3', 
     nombre: 'El Óvalo peraltado de tierra', 
     medida: '4.662.60 metros', 
-    epoca: '1953-1965', 
+    epoca: '1953-1966', 
     foto: '/public/images/autodromo 1953.png', 
     detalle: 'El óvalo de tierra de 4.662,60 metros, de 12 metros de ancho con dos rectas de 1.477,10 metros y dos curvones de 854,20 metros con un peralte del 7% en sus curvas. Fue inaugurado el 2 de agosto de 1953 con una competencia de Turismo Carretera.' 
   },
@@ -380,25 +653,25 @@ export const CIRCUITOS = [
     id: 'circuito-4', 
     nombre: 'El Óvalo peraltado de asfalto', 
     medida: '4.624.46 metros', 
-    epoca: '1965-1982', 
+    epoca: '1966-Actualidad', 
     foto: '/public/images/circuito 1966.png', 
-    detalle: 'El óvalo de asfalto de 4.624,46 metros con un circuito interno de 2.687,14 metros. El circuito principal, de 12 metros de ancho hasta el año 1971, que se extendió a 18 metros, contaba con 2 rectas de 1.181,01 metros y dos curvones especialmente diseñados, conformados por: 2 curvas clotoides de 361,52 m  y una curva circular de 408,18 m. Con un peralte máximo del 15% (8.5°). Fue inaugurado el 4 de septiembre de 1966 con una competencia de 500 Millas, ganador Jorge Cupeiro.' 
+    detalle: 'Constituido por el circuito N°1, conocido como el Óvalo Rafaelino, y por el circuito N° 2. El óvalo de asfalto tiene un recorrido de 4.624,46 metros, mientras que el circuito interno es de 2.687,14 metros. El óvalo, que en principio fue de 12 metros de ancho, hasta la extensión a 18 metros en el año 1971, contaba con 2 rectas de 1.181,01 metros y dos curvones especialmente diseñados, conformados por: 2 curvas clotoides de 361,52 m  y una curva circular de 408,18 m. Con un peralte máximo del 15% (8.5°). Máximo radio en curvas de 245 metros. Fue inaugurado el 4 de septiembre de 1966 con una competencia de 500 Millas, ganador Jorge Cupeiro. Récord de velocidad promedio: Lloyd Ruby a 278,675 km/h a 59´ 7´´.' 
   },
   {
     id: 'circuito-5',
     nombre: 'Circuito N°2 "Ing. Juan R. Báscolo"',
     medida: '3.050 metros',
-    epoca: '1982-actualidad',
+    epoca: '1982-Actualidad',
     foto: 'public/images/circuito 2 bascolo.jpg',
-    detalle: 'Es un circuito mixto de 3.050 metros, alternativo al óvalo, compartiendo el curvón norte. Con un ancho de 18 metros, cuenta con recta  principal de 710 metros. Inicialmente su sentido fue horario hasta los años 2000, cambiando a sentido antihorario en la actualidad. Fue inaugurado el 26 de septiembre de 1982 con una competencia de Datsun 280, resultando ganador Guillermo Kissling.'
+    detalle: 'Es un circuito mixto de 3.050 metros, alternativo al óvalo, compartiendo el curvón norte. Con un ancho de 18 metros, cuenta con una recta principal de 710 metros y 7 curvas. Inicialmente su sentido fue horario hasta el año 2000, cambiando a sentido antihorario en la actualidad. Fue inaugurado el 26 de septiembre de 1982 con una competencia de CAP-Datsun 280, resultando ganador Guillermo Kissling.'
   },
   {
     id: 'circuito-6',
     nombre: 'El Óvalo con 4 chicanas"',
     medida: '4.780 metros',
-    epoca: 'en desuso',
+    epoca: 'En desuso',
     foto: '/public/images/trazado 2013.png',
-    detalle: 'Este óvalo con 4 chicanas se utilizo en los años 2000, en 2 ocaciones.'
+    detalle: 'Este óvalo con 4 chicanas se utilizó solamente en abril y octubre del año 2000. Las 2 ocaciones fue con el Turismo Carretera, resultando ganadores Fabián Acuña y Marcos Di Palma.'
   },
   {
     id: 'circuito-7',
@@ -406,6 +679,6 @@ export const CIRCUITOS = [
     medida: '4.740 metros',
     epoca: 'Actualidad',
     foto: '/public/images/circuito 3d 2026.png',
-    detalle: 'Este óvalo con 3 chicanas es el que usa actualmente el TC, añadiendo una capa adicional de complejidad y emoción a las carreras.'
+    detalle: 'Este óvalo con 2 o 3 chicanas es el que usa actualmente el TC y el TC2000, añadiendo una capa adicional de complejidad y frenados a las carreras.'
   }
 ];
