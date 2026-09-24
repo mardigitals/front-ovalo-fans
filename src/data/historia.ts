@@ -333,35 +333,35 @@ export const HOMENAJES = [
     nombre: 'Juan Manuel Fangio', 
     rol: 'Piloto', 
     foto: '/public/images/historia/fama/juan-manuel-fangio.jpg', 
-    descripcion: 'El 5 veces campeón de F1, considerado el mejor piloto de la historia del mundo, sin dudas fue la persona más importante que ganó en Rafaela. Lideró las 500 Millas Argentinas en 1950 de punta a punta a bordo de un Talbot-lago F1 Internacional, marcando un récord de velocidad difícil de superar.' 
+    descripcion: 'El 5 veces campeón de F1, considerado el mejor piloto de la historia del mundo, sin dudas fue la persona más importante que ganó en Rafaela. Lideró las 500 Millas Argentinas en 1950 de punta a punta a bordo de un Talbot-lago F1 Internacional, marcando un récord de velocidad a 207 km/h de promedio de vuelta, que durante años, fue difícil de superar.' 
   },
   { 
     id: 2,
     nombre: 'Lucio Casarín',
     rol: 'Dirigente',
     foto: '/public/images/historia/fama/lucio-casarin.jpg',
-    descripcion: 'Arquitecto y dirigente visionario que proyecto muchas obras en el Autódromo "Ciudad de Rafaela". Lamentablemente perdió la vida en un trágico accidente en la recta principal, pero su legado perdura en nuestra memoria.' 
+    descripcion: 'Arquitecto y dirigente visionario que proyecto muchas obras en el Autódromo "Ciudad de Rafaela". Lamentablemente perdió la vida en un trágico accidente en la recta principal en el año 1985, pero su legado perdura en nuestra memoria.' 
   },
   { 
     id: 3, 
     nombre: 'Jorge Ternengo', 
     rol: 'Piloto', 
     foto: '/public/images/historia/fama/jorge-ternengo.jpg', 
-    descripcion: 'Ídolo rafaelino. Representó a la ciudad en las categorías más grandes del país, siendo profeta en su propia tierra.' 
+    descripcion: 'Ídolo rafaelino. Representó a la ciudad en las categorías más grandes del país, siendo profeta en su propia tierra, al ganar las 500 Millas Argentinas en 1969 a bordo de un Bravi-Tornado.' 
   },
   { 
     id: 4, 
     nombre: 'Eduardo Ricotti', 
     rol: 'Dirigente', 
     foto: '/public/images/historia/fama/eduardo-ricotti.png', 
-    descripcion: 'Ingeniero y dirigente, fue el alma máter del autódromo durante muchos años. Como presidente del club, su visión audaz fue clave para lograr la carrera más importante que Rafaela y Santa Fe tuvieron en toda su historia, la hazaña de traer las 300 Millas de Indy en 1971.' 
+    descripcion: 'Ingeniero y dirigente del club, fue el alma máter del autódromo durante los años de mayor crecimiento en cuanto a obras y seguridad del circuito. Como presidente del club, su visión audaz y su compromiso fue clave para lograr la carrera más importante que Rafaela y Santa Fe tuvieron en toda su historia, la hazaña de traer IndyCar en 1971.' 
   },
   {
     id: 5,
     nombre: 'Juan María Traverso',
     rol: 'Piloto',
     foto: '/public/images/historia/fama/juan-traverso.jpg',
-    descripcion: 'El "Flaco", uno de los mejores pilotos de Argentina. Es el máximo ganador en la historia del automovilismo a nivel nacional, cosechando 7 victorias históricas en el óvalo.'
+    descripcion: 'El "Flaco", uno de los mejores pilotos que dió Argentina. Es el máximo ganador en Rafaela a nivel nacional, cosechando 7 victorias históricas en el óvalo.'
   },
   { 
     id: 6, 
@@ -382,28 +382,28 @@ export const HOMENAJES = [
     nombre: 'Ero Borgogno',
     rol: 'Dirigente',
     foto: '/public/images/historia/fama/ero-borgogno.jpg',
-    descripcion: 'Para "Chispa", el autódromo era su segundo hogar. Fue un pilar histórico de la Subcomisión de Automovilismo de Atlético de Rafaela durante 45 años. En su honor, hoy un paseo con su nombre recorre el camino de la ciudad al autódromo.'
+    descripcion: 'Para "Chispa", el autódromo era su segundo hogar. Fue un pilar histórico de la Subcomisión de Automovilismo de Atlético de Rafaela durante 45 años. En su honor, hoy un paseo con su nombre recorre el camino de la ciudad hacia el autódromo.'
   },
   {
     id: 9,
     nombre: 'Al Unser',
     rol: 'Piloto',
     foto: '/public/images/historia/fama/al-unser.jpg',
-    descripcion: 'Leyenda norteamericana. El 28 de febrero de 1971, dominó y ganó la mítica Indy 300 en Rafaela a más de 320 km/h, convirtiendo al autodromo en el más veloz del mundo. Fue la primer carrera del campeonato USAC en correr fuera de EEUU.'
+    descripcion: 'Leyenda norteamericana. El 28 de febrero de 1971, dominó y ganó las míticas 300 Indy en Rafaela a más de 320 km/h, convirtiendo al Autódromo "Ciudad de Rafaela" en el más VELOZ del mundo. Fue la primer vez que IndyCar disputó una carrera oficial fuera de EEUU.'
   },
   {
     id: 10,
     nombre: 'Bernardo Kuschnir',
     rol: 'Dirigente',
     foto: '/public/images/historia/fama/bernardo-kuschnir.jpg',
-    descripcion: 'Dirigente fundamental de Atlético de Rafaela. Su trabajo institucional fue clave para mantener al club y al autódromo en lo más alto del deporte nacional.'
+    descripcion: 'Dirigente fundamental de Atlético de Rafaela y la Sub-Comisión de Automovilismo. Su trabajo institucional fue clave para mantener al club y al autódromo en lo más alto del deporte nacional.'
   },
   {
     id: 11,
     nombre: 'Ruben Luis Di Palma',
     rol: 'Piloto',
     foto: '/public/images/historia/fama/ruben-dipalma.jpg',
-    descripcion: 'El "Loco" de Arrecifes fue uno de los grandes protagonistas que desafió el peralte de Rafaela. Ganó la última edición de las 500 Millas Argentinas en 1975, como tambíen, aportando su manejo agresivo y espectacularidad al Turismo Carretera y Sport Prototipo.'
+    descripcion: 'El "Loco" de Arrecifes, ídolo del automovilismo nacional, fue uno de los grandes protagonistas que desafió el peralte de Rafaela. Ganó la última edición de las 500 Millas Argentinas en 1975, aportando su manejo agresivo y espectacularidad.'
   },
   {
     id: 12,
@@ -424,7 +424,7 @@ export const HOMENAJES = [
     nombre: 'Lloyd Ruby',
     rol: 'Piloto',
     foto: '/public/images/historia/fama/lloyd-ruby.jpg',
-    descripcion: 'Hizo historia en 1971 al marcar la pole position de la 300 Indy en el óvalo de Rafaela, logrando un tiempo (récord vigente) impresionante de 59´74´´ a 278,675 km/h con su Mongoose Ford Turbo.'
+    descripcion: 'Hizo historia en 1971 al marcar la pole position de la 300 Indy en el óvalo de Rafaela, logrando un tiempo impresionante de 59´74´´ a 278,675 km/h con su Mongoose Ford Turbo (récord aún vigente) .'
   },
   {
     id: 15,
@@ -445,7 +445,7 @@ export const HOMENAJES = [
     nombre: 'Gabriel Ponce de León',
     rol: 'Piloto',
     foto: '/public/images/historia/fama/gabriel-poncedeleon.jpg',
-    descripcion: 'Entró en la historia del óvalo en 2005 al ganar la épica carrera de TC2000, última en el óvalo sin chicanas, y en 2012 marcó el récord absoluto de velocidad final en autos alcanzando 306,383 km/h.'
+    descripcion: 'Entró en la historia del óvalo en 2005 al ganar la épica carrera de TC2000, última en el óvalo sin chicanas. En 2012 marcó el récord sudamericano de velocidad final alcanzando 306,383 km/h.'
   },
   {
     id: 18,
@@ -466,63 +466,63 @@ export const HOMENAJES = [
     nombre: 'Raúl Riganti',
     rol: 'Piloto',
      foto: '/public/images/historia/fama/raul-riganti.jpg',
-    descripcion: 'Referente de los primeros años heroicos del automovilismo, ganador de la primera edición de las 500 Millas Argentinas.'
+    descripcion: '"Polenta" fue un referente de los primeros años heroicos del automovilismo, ganador de la primera edición de las 500 Millas Argentinas.'
   },
   {
     id: 21,
     nombre: 'Oscar y Juan Gálvez',
     rol: 'Pilotos',
     foto: '/public/images/historia/fama/oscar-juan-galvez.jpg',
-    descripcion: 'Leyendas del TC. Juan fue el primero en conseguir un doblete de victorias en Rafaela, triunfando en el estreno de 1953 y repitiendo la hazaña en 1955.'
+    descripcion: 'Leyendas de LA  ACTC. Entre los dos, consiguieron 14 campeonatos. Juan con 2 victorias en Rafaela, triunfando en el estreno de 1953 y repitiendo la hazaña en 1955.'
   },
   {
     id: 22,
     nombre: 'Adolfo Scandroglio',
     rol: 'Piloto',
     foto: '/public/images/historia/fama/adolfo-scandroglio.jpg',
-    descripcion: 'Protagonista de las 500 Millas, manejando un auto con motor de avión que marcaba los mejores tiempos. Su nombre quedó grabado entre los valientes que desafiaban la velocidad en Rafaela.'
+    descripcion: 'Protagonista de las 500 Millas, piloteando un auto armado con un motor de avión 22 L., que marcaba los mejores tiempos. Su nombre quedó grabado entre los valientes que desafiaban la velocidad en Rafaela.'
   },
   {
     id: 23,
     nombre: 'José Fanto',
     rol: 'Piloto',
      foto: '/public/images/historia/fama/jose-fanto.jpg',
-    descripcion: 'Piloto rafaelino que ganó las competencias del 1949 y 1951, donde ya era considerada la Cumbre del Automovilismo Nacional.'
+    descripcion: 'Piloto rafaelino que ganó las 500 de 1949 y 1951, donde Rafaela ya era considerada la Cumbre del Automovilismo Nacional.'
   },
   {
     id: 24,
     nombre: 'Jorge Cupeiro',
     rol: 'Piloto',
      foto: '/public/images/historia/fama/jorge-cupeiro.jpg',
-    descripcion: 'Dominó en Rafaela durante las décadas del 60 y 70, logrando grandes victorias y brillando especialmente al mando del revolucionario Chevitú.'
+    descripcion: 'Dominó en Rafaela durante las décadas del 60 y 70, logrando 3 grandes victorias y brillando especialmente al mando del revolucionario Chevitú.'
   },
   {
     id: 25,
     nombre: 'José Froilán González',
     rol: 'Piloto',
      foto: '/public/images/historia/fama/jose-froilan-gonzalez.jpg',
-    descripcion: 'El subcampeón del mundo de F1 engalanó a Rafaela con su presencia y talento en competencias de fuerza libre en las 500 Millas, antes de conquistar Europa.'
+    descripcion: 'El subcampeón del mundo de F1 engalanó a Rafaela con su presencia y talento en competencias de fuerza libre en las 500 Millas. Fue ganador del Trofeo Challenger Rafaelino, antes de conquistar Europa.'
   },
   {
     id: 26,
     nombre: 'Eusebio Marcilla',
     rol: 'Piloto',
      foto: '/public/images/historia/fama/eusebio-marcilla.jpg',
-    descripcion: 'El "Caballero del Camino". Hizo historia el 12 de enero de 1941 al ganar las extenuantes "12 Horas de Rafaela", primera visita del TC a la ciudad.'
+    descripcion: 'El "Caballero del Camino". Hizo historia el 12 de enero de 1941 al ganar las extenuantes "12 Horas de Rafaela", primera visita del TC a la ciudad, y la primera carrera del TC en un circuito cerrado, fuera de las rutas.'
   },
   {
     id: 27,
     nombre: 'Carlos Reutemann',
     rol: 'Piloto',
      foto: '/public/images/historia/fama/carlos-reutemann.jpg',
-    descripcion: 'El gran ídolo santafesino. Lole brilló y se fogueó en los circuitos locales, probando su enorme talento conductivo frente a la afición rafaelina antes de su consagración en Fórmula 1.'
+    descripcion: 'El gran ídolo santafesino. Lole brilló y se fogueó en los circuitos locales, probando su enorme talento conductivo frente a la afición rafaelina antes de su consagración en Fórmula 1. Es memorable la carrera de empate técnico con Omar Franco, llegando los dos autos a la par, en el Turismo Anexo "J", hoy Turismo Nacional.'
   },
   {
     id: 28,
     nombre: 'Oreste Berta',
     rol: 'Chasista',
      foto: '/public/images/historia/fama/oreste-berta.webp',
-    descripcion: 'El "Mago" rafaelino. Los potentes motores y chasis preparados por él dominaron innumerables veces el asfalto de Rafaela en manos de los mejores pilotos del país.'
+    descripcion: 'Una de las personas mas influyentes en el deporte motor argentino, el "Mago", nacido en Rafaela, los potentes motores y chasis preparados por él dominaron innumerables veces el asfalto de Rafaela en manos de los mejores pilotos del país.'
   },
   {
     id: 29,
@@ -535,22 +535,22 @@ export const HOMENAJES = [
     id: 30,
     nombre: 'Carlos Zatuszek',
     rol: 'Piloto',
-    foto: '',
+    foto: '/public/images/historia/fama/carlos-zatuzek.jpg',
     descripcion: 'Volante histórico de la vieja escuela. Sus épicas batallas en las 500 Millas Argentinas lo convirtieron en un referente del circuito en las décadas de 1920 y 1930.'
   },
   {
     id: 31,
     nombre: 'Armando Romitelli',
     rol: 'Piloto',
-    foto: '',
-    descripcion: 'Destacado piloto de carreras en Rafaela, dejando su huella estampada en la gloria en 1921.'
+    foto: '/public/images/historia/fama/armando-romitelli.jpg',
+    descripcion: 'Destacado piloto rafaelino, dejando su huella estampada en la gloria en 1921.'
   },
   {
     id: 32,
     nombre: 'Néstor García Veiga',
     rol: 'Piloto',
     foto: '/public/images/historia/fama/nestor-garcia-veiga.jpg',
-    descripcion: 'Un piloto de gran jerarquía que deslumbró al público rafaelino por su velocidad.'
+    descripcion: 'Un piloto de gran jerarquía que deslumbró al público rafaelino por su velocidad, marcando un récord sudamericano promedio de 249,222 km/h en el año 1973. Esta marca fue imbatible hasta el record del SuperTC2000 en el 2012.'
   },
   {
     id: 33,
@@ -570,36 +570,36 @@ export const HOMENAJES = [
     id: 35,
     nombre: 'Omar Martínez',
     rol: 'Piloto',
-    foto: '',
-    descripcion: 'El "Gurí". Ídolo indiscutido de Ford y multicampeón que ha levantado a las multitudes en el óvalo rafaelino.'
+    foto: '/public/images/historia/fama/omar-martinez.jpg',
+    descripcion: 'El "Gurí". Ídolo indiscutido de Ford y bicampeón que ha levantado a las multitudes en el óvalo rafaelino.'
   },
   {
     id: 36,
     nombre: 'Guillermo Ortelli',
     rol: 'Piloto',
-    foto: '',
+    foto: '/public/images/historia/fama/guillermo-ortelli.jpg',
     descripcion: 'El Rey de Salto y máximo referente de Chevrolet. Hizo historia en el TC al lograr victorias memorables en el óvalo de Rafaela en 2003 y 2005.'
   },
   {
     id: 37,
     nombre: 'Norberto Fontana',
     rol: 'Piloto',
-    foto: '',
+    foto: '/public/images/historia/fama/norberto-fontana.webp',
     descripcion: 'El ex Fórmula 1 que dejó su sello en el asfalto rafaelino, logrando importantes triunfos, como su recordada victoria en el Súper TC2000 en 2014.'
   },
   {
     id: 38,
     nombre: 'Matías Rossi',
     rol: 'Piloto',
-    foto: '',
-    descripcion: 'El "Misil". Siempre protagonista en Rafaela, destacado por su precisión conductiva, fue la estrella del 2005, que sin haber ganado, cautivo al público doblando en los curvones al raz del paredón a mas de 200 km/h, lo llevó al podio en aquella histórica carrera de TC2000 sin chicanas en 2005.'
+    foto: '/public/images/historia/fama/matias-rossi.jpg',
+    descripcion: 'El "Misil". Siempre protagonista en Rafaela, destacado por su precisión conductiva, fue la estrella del 2005, que sin haber ganado, cautivo al público doblando en los curvones al raz del paredón a mas de 200 km/h, hazaña que lo llevó al podio en aquella histórica carrera de TC2000 sin chicanas.'
   },
   {
     id: 39,
     nombre: 'Martín Basso',
     rol: 'Piloto',
-    foto: '',
-    descripcion: 'Piloto local que llevó la bandera de la ciudad a lo más alto en competencias nacionales y sudamericanas, representando el orgullo y la herencia pistera de Rafaela.'
+    foto: '/public/images/historia/fama/martin-basso.webp',
+    descripcion: 'Piloto local que llevó la bandera de la ciudad a lo más alto en competencias nacionales y sudamericanas, representando el orgullo y la herencia fierrera de Rafaela.'
   },
   {
     id: 40,
@@ -610,10 +610,10 @@ export const HOMENAJES = [
   },
    {
     id: 41,
-    nombre: 'Ricardo Santi',
-    rol: 'Dirigente',
-    foto: '',
-    descripcion: 'Pieza clave en la dirigencia de la Subcomisión de Automovilismo en los años ´50, dedicando su labor a la preservación y crecimiento de las históricas instalaciones del circuito.'
+    nombre: 'Christian Ledesma',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/christian-ledesma.jpg',
+    descripcion: 'Piloto histórico del TC con Chevrolet. Christian, llegó a lo más alto del Automovilismo Nacional, conquistando el Autódromo Ciudad de Rafaela en 2 ocaciones.'
   },
   {
      id: 42,
@@ -621,6 +621,13 @@ export const HOMENAJES = [
     rol: 'Piloto',
     foto: '/public/images/historia/fama/miguel-guerra.jpg',
     descripcion:'Uno de los pilotos que mejor representó a Argentina en la F1, fue el que mejor supo entender el circuito, ganando importantes carreras.'
+  },
+  {
+    id: 43,
+    nombre: 'Fabián Acuña',
+    rol: 'Piloto',
+    foto: '/public/images/historia/fama/fabian-acuña.jpg',
+    descripcion: 'Referente del TC que supo conquistar 3 veces el óvalo rafaelino, con Ford y Chevrolet.'
   }
 ];
 
