@@ -367,7 +367,7 @@ export const HOMENAJES = [
     id: 6, 
     nombre: 'Leonelo Bellezze', 
     rol: 'Periodista', 
-    foto: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400', 
+    foto: '/public/images/historia/fama/leonelo-bellezze.webp', 
     descripcion: 'La voz del automovilismo en Rafaela. Tuvo el histórico honor de transmitir al mundo la mítica carrera de las 300 Millas Indy en 1971 a través de LT28 Radio Rafaela.' 
   },
   {
@@ -395,7 +395,7 @@ export const HOMENAJES = [
     id: 10,
     nombre: 'Bernardo Kuschnir',
     rol: 'Dirigente',
-    foto: '',
+    foto: '/public/images/historia/fama/bernardo-kuschnir.jpg',
     descripcion: 'Dirigente fundamental de Atlético de Rafaela. Su trabajo institucional fue clave para mantener al club y al autódromo en lo más alto del deporte nacional.'
   },
   {
@@ -458,77 +458,77 @@ export const HOMENAJES = [
     id: 19,
     nombre: 'Oberdán Piovano',
     rol: 'Piloto',
-    foto: '',
+    foto: '/public/images/historia/fama/oberdan-piovano.jpg',
     descripcion: 'Pionero absoluto. Fue el ganador y uno de los siete valientes que se animaron a largar la histórica primera carrera de automóviles en Rafaela.'
   },
   {
     id: 20,
     nombre: 'Raúl Riganti',
     rol: 'Piloto',
-    foto: '',
+     foto: '/public/images/historia/fama/raul-riganti.jpg',
     descripcion: 'Referente de los primeros años heroicos del automovilismo, ganador de la primera edición de las 500 Millas Argentinas.'
   },
   {
     id: 21,
     nombre: 'Oscar y Juan Gálvez',
     rol: 'Pilotos',
-    foto: '',
+    foto: '/public/images/historia/fama/oscar-juan-galvez.jpg',
     descripcion: 'Leyendas del TC. Juan fue el primero en conseguir un doblete de victorias en Rafaela, triunfando en el estreno de 1953 y repitiendo la hazaña en 1955.'
   },
   {
     id: 22,
     nombre: 'Adolfo Scandroglio',
     rol: 'Piloto',
-    foto: '',
+    foto: '/public/images/historia/fama/adolfo-scandroglio.jpg',
     descripcion: 'Protagonista de las 500 Millas, manejando un auto con motor de avión que marcaba los mejores tiempos. Su nombre quedó grabado entre los valientes que desafiaban la velocidad en Rafaela.'
   },
   {
     id: 23,
     nombre: 'José Fanto',
     rol: 'Piloto',
-    foto: '',
+     foto: '/public/images/historia/fama/jose-fanto.jpg',
     descripcion: 'Piloto rafaelino que ganó las competencias del 1949 y 1951, donde ya era considerada la Cumbre del Automovilismo Nacional.'
   },
   {
     id: 24,
     nombre: 'Jorge Cupeiro',
     rol: 'Piloto',
-    foto: '',
+     foto: '/public/images/historia/fama/jorge-cupeiro.jpg',
     descripcion: 'Dominó en Rafaela durante las décadas del 60 y 70, logrando grandes victorias y brillando especialmente al mando del revolucionario Chevitú.'
   },
   {
     id: 25,
     nombre: 'José Froilán González',
     rol: 'Piloto',
-    foto: '',
+     foto: '/public/images/historia/fama/jose-froilan-gonzalez.jpg',
     descripcion: 'El subcampeón del mundo de F1 engalanó a Rafaela con su presencia y talento en competencias de fuerza libre en las 500 Millas, antes de conquistar Europa.'
   },
   {
     id: 26,
     nombre: 'Eusebio Marcilla',
     rol: 'Piloto',
-    foto: '',
+     foto: '/public/images/historia/fama/eusebio-marcilla.jpg',
     descripcion: 'El "Caballero del Camino". Hizo historia el 12 de enero de 1941 al ganar las extenuantes "12 Horas de Rafaela", primera visita del TC a la ciudad.'
   },
   {
     id: 27,
     nombre: 'Carlos Reutemann',
     rol: 'Piloto',
-    foto: '',
+     foto: '/public/images/historia/fama/carlos-reutemann.jpg',
     descripcion: 'El gran ídolo santafesino. Lole brilló y se fogueó en los circuitos locales, probando su enorme talento conductivo frente a la afición rafaelina antes de su consagración en Fórmula 1.'
   },
   {
     id: 28,
     nombre: 'Oreste Berta',
     rol: 'Chasista',
-    foto: '',
+     foto: '/public/images/historia/fama/oreste-berta.webp',
     descripcion: 'El "Mago" rafaelino. Los potentes motores y chasis preparados por él dominaron innumerables veces el asfalto de Rafaela en manos de los mejores pilotos del país.'
   },
   {
     id: 29,
     nombre: 'Domingo y Clemar Bucci',
     rol: 'Piloto',
-    foto: '',
+     foto: '/public/images/historia/fama/clemar-bucci.jpg',
     descripcion: 'Representantes de una de las dinastías más importantes del automovilismo zonal. Su pasión y velocidad son parte de los cimientos históricos del club.'
   },
   {
@@ -549,7 +549,7 @@ export const HOMENAJES = [
     id: 32,
     nombre: 'Néstor García Veiga',
     rol: 'Piloto',
-    foto: '',
+    foto: '/public/images/historia/fama/nestro-garcia-veiga.jpg',
     descripcion: 'Un piloto de gran jerarquía que deslumbró al público rafaelino por su velocidad.'
   },
   {
