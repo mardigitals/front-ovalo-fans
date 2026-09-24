@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // 1. Creamos la instancia base
 const api = axios.create({
-  baseURL: 'http://localhost:3000', 
+  baseURL: 'http://192.168.0.3:3000', 
 });
 
 // 2. EL INTERCEPTOR 
