@@ -26,7 +26,6 @@ import CalendarPage from '@/pages/public/CalendarPage';
 import SuscripcionesMetricasPage from '@/pages/dashboard/SuscripcionMetricasPage';
 import PruebasPage from '@/pages/dashboard/PruebasPage';
 import BeneficiosPage from '@/pages/dashboard/BeneficiosPage';
-import HistoriaPage from '@/pages/public/HistoriaPage';
 import ContactoPage from '@/pages/public/ContactoPage';
 import GaleriaPage from '@/pages/public/GaleriaPage';
 import GestionContenidoPage from '@/pages/dashboard/GestionContenidoPage';
@@ -46,6 +45,10 @@ import VipBoxesPage from '@/pages/dashboard/beneficios/VipBoxesPage';
 import EntradasPage from '@/pages/dashboard/beneficios/EntradasPage';
 import RecitalesPage from '@/pages/dashboard/beneficios/RecitalesPage';
 import ValidarAccesoPage from '@/pages/dashboard/ValidarAccesoPage';
+import HistoriaLayout from '@/components/layout/HistoriaLayout';
+import SalonFamaPage from '@/pages/public/SalonFamaPage';
+import LineaHistoricaPage from '@/pages/public/LineaHistoricaPage';
+import EvolucionCircuitosPage from '@/pages/public/EvolucionCircuitosPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -55,7 +58,18 @@ const AppRoutes = () => (
       <Route path="/" element={<PublicLayout />}>
         <Route index element={<HomePage />} />
         <Route path="/calendario" element={<CalendarPage />} />
-        <Route path="/historia" element={<HistoriaPage  />} />
+        <Route path="/historia" element={<HistoriaLayout />}>
+          
+          {/* Redirección por defecto al entrar a /historia */}
+          <Route index element={<Navigate to="linea-historica" replace />} />     
+          {/* Las sub-páginas (se renderizan dentro del <Outlet /> del Layout) */}
+          <Route path="linea-historica" element={<LineaHistoricaPage />} />
+          <Route path="evolucion-circuitos" element={<EvolucionCircuitosPage />} />
+          <Route path="salon-fama" element={<SalonFamaPage />} />
+          <Route path="ganadores" element={<div>Próximamente: Ganadores</div>} />
+          <Route path="records" element={<div>Próximamente: Récords</div>} />
+        
+        </Route>
         <Route path="/contacto" element={<ContactoPage />} />
         <Route path="/galeria" element={<GaleriaPage />} />
         <Route path="/noticia" element={<NoticiaPage />} />
