@@ -353,7 +353,7 @@ export const HOMENAJES = [
     id: 4, 
     nombre: 'Eduardo Ricotti', 
     rol: 'Dirigente', 
-    foto: '/public/images/historia/fama/eduardo-ricotti.jpg', 
+    foto: '/public/images/historia/fama/eduardo-ricotti.png', 
     descripcion: 'Ingeniero y dirigente, fue el alma máter del autódromo durante muchos años. Como presidente del club, su visión audaz fue clave para lograr la carrera más importante que Rafaela y Santa Fe tuvieron en toda su historia, la hazaña de traer las 300 Millas de Indy en 1971.' 
   },
   {
@@ -549,7 +549,7 @@ export const HOMENAJES = [
     id: 32,
     nombre: 'Néstor García Veiga',
     rol: 'Piloto',
-    foto: '/public/images/historia/fama/nestro-garcia-veiga.jpg',
+    foto: '/public/images/historia/fama/nestor-garcia-veiga.jpg',
     descripcion: 'Un piloto de gran jerarquía que deslumbró al público rafaelino por su velocidad.'
   },
   {
