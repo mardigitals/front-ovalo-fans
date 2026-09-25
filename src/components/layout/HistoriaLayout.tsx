@@ -41,8 +41,8 @@ const HistoriaLayout = () => {
                 </div>
             </div>
 
-            <div className={`absolute inset-0 flex flex-col items-center justify-center text-center space-y-4 transition-all duration-1000 ease-in-out delay-[400ms] ${!mostrarLogo ? 'opacity-100 z-20 translate-y-0' : 'opacity-0 -z-10 translate-y-4'}`}>  
-                <p className="font-medium italic font-firma text-sm md:text-lg">Desde la tierra y los paraísos, hasta el asfalto entre paredones.</p>
+            <div className={`absolute inset-0 flex flex-col items-center justify-center text-center space-y-4 pt-6 transition-all duration-1000 ease-in-out delay-[400ms] ${!mostrarLogo ? 'opacity-100 z-20 translate-y-0' : 'opacity-0 -z-10 translate-y-4'}`}>  
+                <p className="font-medium italic font-firma text-sm md:text-lg">Desde la tierra entre paraísos, hasta el asfalto entre paredones.</p>
                 <h2 className="title-fan text-lg md:p-4 md:text-4xl uppercase p-1">Cumbre del Automovilismo Argentino</h2>
                 <p className="font-medium italic font-firma mb-3">Más de un siglo de pasión, velocidad y gloria.</p> 
                 <div className="md:block w-1 h-1 bg-slate-700 dark:bg-slate-300 rounded-full" />

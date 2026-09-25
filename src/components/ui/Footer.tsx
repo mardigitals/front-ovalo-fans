@@ -11,8 +11,8 @@ const Footer = () => {
             </div>
             <div className="hidden md:block w-1 h-1 bg-cyan-400 dark:bg-cyan-500 rounded-full" />
             <div className="flex items-center gap-2">
-                <img src={logo} alt="Logo Autódromo" className="h-5 w-auto dark:hidden opacity-40" />
-                <img src={logoDark} alt="Logo Autódromo" className="h-5 w-auto hidden dark:block opacity-70" />
+                <img src={logo} alt="Logo Autódromo" className="h-4 md:h-5 w-auto dark:hidden opacity-40" />
+                <img src={logoDark} alt="Logo Autódromo" className="h-4 md:h-5 w-auto hidden dark:block opacity-70" />
             </div>
         </footer>
     )
