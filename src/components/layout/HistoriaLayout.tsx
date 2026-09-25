@@ -3,6 +3,9 @@ import { NavLink, Outlet } from 'react-router-dom';
 import heroImage2 from '@/assets/images/hero-image-2.jpg';
 import ButtonHome from '@/components/ui/ButtonHome'; 
 import Footer from '@/components/ui/Footer';
+import LogoAutodromo from '@/assets/icons/logo-autodromo-horizontal-color.png';
+import logo from '@/assets/icons/logo-autodromo-negro.png';
+import logoDark from '@/assets/icons/logo-autodromo-blanco.png';
 
 const HistoriaLayout = () => {
   const [mostrarLogo, setMostrarLogo] = useState(true);
@@ -13,10 +16,10 @@ const HistoriaLayout = () => {
   }, []);
 
   const navClass = ({ isActive }: { isActive: boolean }) =>
-    `px-4 md:px-6 py-3 text-sm md:text-base font-black uppercase tracking-widest transition-all border-b-[3px] whitespace-nowrap ${
+    `px-4 md:px-6 py-3 text-sm md:text-base uppercase tracking-widest transition-all border-b-[3px] whitespace-nowrap ${
       isActive
-        ? 'border-institucional-celeste text-institucional-celeste bg-institucional-celeste/10' // Estilo activo (Celeste)
-        : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white hover:border-slate-400' // Inactivo
+        ? 'border-institucional-celeste title-fan bg-institucional-celeste/10' // Estilo activo (Celeste)
+        : 'border-transparent text-slate-400 hover:text-slate-800 text-slate-600 dark:hover:text-white hover:border-slate-400' // Inactivo
     }`;
 
   return (
@@ -34,17 +37,19 @@ const HistoriaLayout = () => {
         <div className="relative flex flex-col items-center justify-center w-full min-h-[350px] max-w-4xl mx-auto">
             <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ease-in-out ${mostrarLogo ? 'opacity-100 blur-none scale-100 z-20' : 'opacity-0 blur-xl scale-110 -z-10'}`}>
                 <div className="inline-flex justify-center p-5 bg-white dark:bg-institucional-celeste/10 border border-slate-200 dark:border-institucional-celeste/30 rounded-3xl shadow-md dark:shadow-[0_0_20px_rgba(14,165,233,0.2)] mb-2 transition-all duration-300 hover:scale-105"> 
-                    <img src="src/assets/icons/logo-autodromo-horizontal-color.png" alt="Logo Autódromo Rafaela" className="justify-center h-auto max-w-full" />
+                    <img src={LogoAutodromo} alt="Logo Autódromo Rafaela" className="justify-center h-auto max-w-full" />
                 </div>
             </div>
 
-            <div className={`absolute inset-0 flex flex-col items-center justify-center text-center space-y-4 transition-all duration-1000 ease-in-out delay-[400ms] ${!mostrarLogo ? 'opacity-100 z-20 translate-y-0' : 'opacity-0 -z-10 translate-y-4'}`}>
-                <h1 className="title-fan text-5xl md:text-7xl inline-flex px-4 py-4 shadow-[0_0_20px_rgba(14,165,233,0.2)] m-4 rounded-3xl border-slate-200 bg-white/5 backdrop-blur-sm">
-                    Historia 
-                </h1>
-                <p className="text-fan text-sm md:text-lg">Desde la tierra y los paraísos, hasta el asfalto entre paredones.</p>
-                <h2 className="subtitle-fan text-2xl md:text-3xl text-cyan-600 dark:text-cyan-400">Rafaela, Cumbre del Automovilismo Argentino</h2>
-                <p className="text-fan mb-6"><em className="font-bold">Más de un siglo de pasión, velocidad y gloria.</em></p> 
+            <div className={`absolute inset-0 flex flex-col items-center justify-center text-center space-y-4 transition-all duration-1000 ease-in-out delay-[400ms] ${!mostrarLogo ? 'opacity-100 z-20 translate-y-0' : 'opacity-0 -z-10 translate-y-4'}`}>  
+                <p className="font-medium italic font-firma text-sm md:text-lg">Desde la tierra y los paraísos, hasta el asfalto entre paredones.</p>
+                <h2 className="title-fan text-lg md:p-4 md:text-4xl uppercase p-1">Cumbre del Automovilismo Argentino</h2>
+                <p className="font-medium italic font-firma mb-3">Más de un siglo de pasión, velocidad y gloria.</p> 
+                <div className="md:block w-1 h-1 bg-slate-700 dark:bg-slate-300 rounded-full" />
+                    <div className="flex items-center gap-2">
+                    <img src={logo} alt="Logo Autódromo" className="h-7 w-auto dark:hidden opacity-70" />
+                    <img src={logoDark} alt="Logo Autódromo" className="h-7 w-auto hidden dark:block opacity-70" />
+                </div>
             </div>
         </div>
         
