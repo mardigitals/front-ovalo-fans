@@ -31,17 +31,17 @@ const ETAPAS_HISTORIA = [
 
     fotos: [
 
-      { url: '/images/modals/caballo-largada-1919.jpg', epigrafe: 'Grilla de largada en el centro de Rafaela.' },
+      { url: '/public/images/historia/linea/1919/caballo-largada-1919.jpg', epigrafe: 'Grilla de largada en el centro de Rafaela.' },
 
-      { url: '/images/modals/largada-1919.jpg', epigrafe: 'Largada en calle Alem y Bv. Lehmann, ambos caminos de tierra.' },
+      { url: '/public/images/historia/linea/1919/largada-1919.jpg', epigrafe: 'Largada en calle Alem y Bv. Lehmann, ambos caminos de tierra.' },
 
-      { url: '/images/modals/catedral-rafaela-1919.jpg', epigrafe: 'Vista histórica de la 1 Carrera.' },
+      { url: '/public/images/historia/linea/1919/catedral-rafaela-1919.jpg', epigrafe: 'Vista histórica de la 1 Carrera.' },
 
-      { url: '/images/modals/cohen-1919.jpg', epigrafe: 'Corredor J. Cohen, en 1919.' },
+      { url: '/public/images/historia/linea/1919/cohen-1919.jpg', epigrafe: 'Corredor J. Cohen, en 1919.' },
 
-      { url: '/images/modals/piovano-1919.jpg', epigrafe: 'O. Piovano, ganador de la histórica  Carrera.' },
+      { url: '/public/images/historia/linea/1919/piovano-1919.jpg', epigrafe: 'O. Piovano, ganador de la histórica  Carrera.' },
 
-      { url: '/images/modals/recorte-diario-1919.jpg', epigrafe: 'Recorte de diario alusivo a la primera Carrera.' }
+      { url: '/public/images/historia/linea/1919/recorte-diario-1919.jpg', epigrafe: 'Recorte de diario alusivo a la primera Carrera.' }
 
     ]
 
@@ -74,10 +74,18 @@ Pasarían semanas para que se retome la prueba deportiva, se produce una fuerte 
 
     fotos: [
 
-      { url: '/images/modals/largada-1926.jpg', epigrafe: 'Largada histórica de la 1 500 Millas Argentinas.' },
+      { url: '/public/images/historia/linea/1926/largada-1926.jpg', epigrafe: 'Largada histórica de la 1 500 Millas Argentinas.' },
 
-      { url: '/images/modals/llegada-1926.jpg', epigrafe: 'Bandera a cuadros para Riganti.' }
+      { url: '/public/images/historia/linea/1926/suspension-tren-1926.jpg', epigrafe: 'Mientras lideraba D. Bucci, se suspende por lluvia, a reanudarse el 29 de agosto de 1926'},
 
+      { url: '/public/images/historia/linea/1926/riganti-1926.jpg', epigrafe: 'Riganti ganador de la histórica carrera.'},
+
+      { url: '/public/images/historia/linea/1926/llegada-1926.jpg', epigrafe: 'Bandera a cuadros para "Polenta" Riganti.' },
+
+      { url: '/public/images/historia/linea/1926/largada500-1926.jpg', epigrafe: 'Largada en marcha de las 500 Millas de 1926' },
+
+      { url: '/public/images/historia/linea/1926/riganti-viglioni.jpg', epigrafe: 'Dupla ganadora: Riganti-Viglioni.' }
+      
     ]
 
   },
