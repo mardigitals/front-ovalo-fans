@@ -662,56 +662,70 @@ export const CIRCUITOS = [
     id: 'circuito-1', 
     nombre: 'El Trazado Original de 1919', 
     medida: '320 km', 
+    sentido: 'anti-horario',
+    pendiente: '-',
     epoca: '1919', 
-    foto: '/public/images/circuito 1919 .png', 
+    foto: '/public/images/historia/circuitos/circuito-1919 .png', 
     detalle: 'Formado por caminos de tierra que unían Rafaela con localidades vecinas. Aquí nació la pasión por la velocidad en la región, con los primeros rugidos de motores a más de 100 km/h.' 
   },
   { 
     id: 'circuito-2', 
     nombre: 'El Óvalo de 4 curvas', 
     medida: '1° Edición: 38.0000 metros - Última Edición: 8.746 metros', 
+    sentido: 'anti-horario',
+    pendiente: '-',
     epoca: '1926 - 1951', 
-    foto: '/public/images/Circuito 500 Millas.jpg', 
+    foto: '/public/images/historia/circuitos/circuito-500millas.jpg', 
     detalle: 'La medida fue cambiando con el paso del tiempo. Comenzó en 1926 con 38.000 metros, reduciéndose a 11.776,55 metros en la decada del ´30, para terminar en el año 1951 de 8.746 metros. Los distintos formatos siempre tuvieron la misma esencia, una mística que lo hacía único y un adjetivo en común que lo definían, VELOZ.' 
   },
   { 
     id: 'circuito-3', 
     nombre: 'El Óvalo peraltado de tierra', 
-    medida: '4.662.60 metros', 
+    medida: '4.662.60 metros',
+    pendiente: '7% (2,52°)',
+    sentido: 'horario',
     epoca: '1953-1966', 
-    foto: '/public/images/autodromo 1953.png', 
+    foto: '/public/images/historia/circuitos/autodromo-1953.png', 
     detalle: 'El óvalo de tierra de 4.662,60 metros, de 12 metros de ancho con dos rectas de 1.477,10 metros y dos curvones de 854,20 metros con un peralte del 7% en sus curvas. Fue inaugurado el 2 de agosto de 1953 con una competencia de Turismo Carretera.' 
   },
   { 
     id: 'circuito-4', 
     nombre: 'El Óvalo peraltado de asfalto', 
     medida: '4.624.46 metros', 
+    sentido: 'anti-horario',
+    pendiente: '15% (8,53°)',
     epoca: '1966-Actualidad', 
-    foto: '/public/images/circuito 1966.png', 
-    detalle: 'Constituido por el circuito N°1, conocido como el Óvalo Rafaelino, y por el circuito N° 2. El óvalo de asfalto tiene un recorrido de 4.624,46 metros, mientras que el circuito interno es de 2.687,14 metros. El óvalo, que en principio fue de 12 metros de ancho, hasta la extensión a 18 metros en el año 1971, contaba con 2 rectas de 1.181,01 metros y dos curvones especialmente diseñados, conformados por: 2 curvas clotoides de 361,52 m  y una curva circular de 408,18 m. Con un peralte máximo del 15% (8.5°). Máximo radio en curvas de 245 metros. Fue inaugurado el 4 de septiembre de 1966 con una competencia de 500 Millas, ganador Jorge Cupeiro. Récord de velocidad promedio: Lloyd Ruby a 278,675 km/h a 59´ 7´´.' 
+    foto: '/public/images/historia/circuitos/circuito-1966.png', 
+    detalle: 'Constituido por el circuito N°1, conocido como el Óvalo Rafaelino, y por el circuito N° 2. El óvalo de asfalto tiene un recorrido de 4.624,46 metros, mientras que el circuito interno es de 2.687,14 metros. El óvalo, que en principio fue de 12 metros de ancho, hasta la extensión a 18 metros en el año 1971, contaba con 2 rectas de 1.181,01 metros y dos curvones especialmente diseñados, conformados por: 2 curvas clotoides de 361,52 m  y una curva circular de 408,18 m. Con un peralte máximo del 15% (8.53°). Máximo radio en curvas de 245 metros. Fue inaugurado el 4 de septiembre de 1966 con una competencia de 500 Millas, ganador Jorge Cupeiro. Récord de velocidad promedio: Lloyd Ruby a 278,675 km/h a 59´ 7´´.' 
   },
   {
     id: 'circuito-5',
     nombre: 'Circuito N°2 "Ing. Juan R. Báscolo"',
     medida: '3.050 metros',
+    pendiente: '15% (8,53°)',
+    sentido: 'horario y anti-horario',
     epoca: '1982-Actualidad',
-    foto: 'public/images/circuito 2 bascolo.jpg',
+    foto: 'public/images/historia/circuitos/circuito-2-bascolo.jpg',
     detalle: 'Es un circuito mixto de 3.050 metros, alternativo al óvalo, compartiendo el curvón norte. Con un ancho de 18 metros, cuenta con una recta principal de 710 metros y 7 curvas. Inicialmente su sentido fue horario hasta el año 2000, cambiando a sentido antihorario en la actualidad. Fue inaugurado el 26 de septiembre de 1982 con una competencia de CAP-Datsun 280, resultando ganador Guillermo Kissling.'
   },
   {
     id: 'circuito-6',
     nombre: 'El Óvalo con 4 chicanas"',
     medida: '4.780 metros',
+    pendiente: '15% (8,53°)',
+    sentido: 'anti-horario',
     epoca: 'En desuso',
-    foto: '/public/images/trazado 2013.png',
+    foto: '/public/images/historia/circuitos/trazado-2013.png',
     detalle: 'Este óvalo con 4 chicanas se utilizó solamente en abril y octubre del año 2000. Las 2 ocaciones fue con el Turismo Carretera, resultando ganadores Fabián Acuña y Marcos Di Palma.'
   },
   {
     id: 'circuito-7',
     nombre: 'El Óvalo con 2 o 3 chicanas',
     medida: '4.740 metros',
+    pendiente: '15% (8,53°)',
+    sentido: 'anti-horario',
     epoca: 'Actualidad',
-    foto: '/public/images/circuito 3d 2026.png',
+    foto: '/public/images/historia/circuitos/circuito-2026.png',
     detalle: 'Este óvalo con 2 o 3 chicanas es el que usa actualmente el TC y el TC2000, añadiendo una capa adicional de complejidad y frenados a las carreras.'
   }
 ];

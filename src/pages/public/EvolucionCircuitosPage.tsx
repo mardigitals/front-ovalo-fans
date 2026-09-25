@@ -1,15 +1,15 @@
-import { Ellipse } from 'lucide-react';
+import logo from '/src/assets/icons/logo-autodromo-color.png';
 import { CIRCUITOS } from '@/data/historia';
 
 const EvolucionCircuitosPage = () => {
   return (
     <div className="w-full max-w-6xl mx-auto py-12">
       <div className="flex flex-col items-center justify-center gap-4 mb-20 text-center">
-        <Ellipse size={48} className="text-cyan-500 mb-2 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]" />
+        <img src={logo} className="text-cyan-500 h-14 mb-2 drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]" />
         <h2 className="title-fan text-5xl md:text-6xl text-slate-800 dark:text-white uppercase tracking-tighter">
-          Evolución del Óvalo
+          Evolución del Óvalo Rafaelino
         </h2>
-        <p className="subtitle-fan text-xl md:text-2xl text-cyan-600 dark:text-cyan-400">Los dibujos que marcaron épocas</p>
+        <p className="subtitle-fan text-xl md:text-2xl text-cyan-600 dark:text-cyan-400">Los distintos trazados que marcaron épocas</p>
       </div>
       
       <div className="space-y-32">

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Flag, CalendarDays, ChevronLeft, ChevronRight, Quote, ArrowRight } from 'lucide-react';
 import { ETAPAS_HISTORIA, LINEA_HISTORICA } from '@/data/historia';
+import logo from '/src/assets/icons/logo-autodromo-color.png';
 
 const LineaHistoricaPage = () => {
   const [etapaActiva, setEtapaActiva] = useState<any>(ETAPAS_HISTORIA[0]);
@@ -38,13 +39,17 @@ const LineaHistoricaPage = () => {
 
     return (
         <div className="w-full flex flex-col items-center">
-        
+
+            <img src={logo} className="text-cyan-500 mt-12 h-14 mb-2 drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]" />
             {/* 1. LÍNEA DE TIEMPO INTERACTIVA */}
             <div className="w-full py-8 px-4 md:px-12 m-2 relative mt-4 mb-10 overflow-x-auto custom-scrollbar">
-                <div className="min-w-[900px] md:max-w-[1200px] relative">
-                <div className="absolute top-1/2 left-4 right-4 h-1 bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 transform -translate-y-1/2 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.5)] z-0"></div>
                 
+                <div className="min-w-[900px] md:max-w-[1200px] relative">
+                    
+                <div className="absolute top-1/2 left-4 right-4 h-1 bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 transform -translate-y-1/2 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.5)] z-0"></div>
+                   
                 <div className="relative z-10 flex justify-between items-center w-full px-4">
+                    
                     {LINEA_HISTORICA.map((punto, idx) => (
                     <div 
                         key={idx}

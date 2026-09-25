@@ -62,7 +62,7 @@ const HistoriaLayout = () => {
         <div className="w-full flex justify-center border-b border-slate-200 dark:border-white/10 mt-8 sticky top-16 z-40 bg-slate-50/90 dark:bg-black/90 backdrop-blur-md">
           <nav className="flex overflow-x-auto custom-scrollbar mb-[-2px] w-full md:w-auto justify-start md:justify-center">
             <NavLink to="/historia/linea-historica" className={navClass}>Línea Histórica</NavLink>
-            <NavLink to="/historia/evolucion-circuitos" className={navClass}>Evolución</NavLink>
+            <NavLink to="/historia/evolucion-circuitos" className={navClass}>Circuito</NavLink>
             <NavLink to="/historia/salon-fama" className={navClass}>Salón de la Fama</NavLink>
             <NavLink to="/historia/ganadores" className={navClass}>Ganadores</NavLink>
             <NavLink to="/historia/records" className={navClass}>Récords</NavLink>
