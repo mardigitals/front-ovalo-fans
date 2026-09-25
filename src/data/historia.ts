@@ -5,6 +5,8 @@ const ETAPAS_HISTORIA = [
 
     id: 'etapa-1',
 
+    fecha:'25 de mayo 1919',
+
     periodo: '1919 - 1925',
 
     titulo: 'El despertar de una pasión',
@@ -49,6 +51,8 @@ const ETAPAS_HISTORIA = [
 
     id: 'etapa-2',
 
+    fecha:'6 de junio 1926',
+
     periodo: '1926',
 
     titulo: 'Primera "500 Millas Argentinas"',
@@ -83,6 +87,8 @@ Pasarían semanas para que se retome la prueba deportiva, se produce una fuerte 
 
     id: 'etapa-3',
 
+    fecha:'8 de septiembre 1935',
+
     periodo: '1935',
 
     titulo: '500 Millas, con el apoyo del ACA',
@@ -107,6 +113,8 @@ La consigna era reeditar las 500 Millas. Había que viajar a Buenos Aires. El vi
   {
 
     id: 'etapa-4',
+
+    fecha:'12 de enero 1941',
 
     periodo: '1941',
 
@@ -149,6 +157,7 @@ Promedio del ganador Eusebio Marcilla 126,5 km/h.`,
   {
 
     id: 'etapa-5',
+    fecha:'29 de marzo 1947',
 
     periodo: '1947',
 
@@ -173,6 +182,8 @@ Superado el trágico período de la Segunda Guerra Mundial, la actividad automov
   {
 
     id: 'etapa-6',
+
+    fecha:'23 de octubre 1949',
 
     periodo: '1949',
 
@@ -201,6 +212,8 @@ Superado el trágico período de la Segunda Guerra Mundial, la actividad automov
   {
 
     id: 'etapa-7',
+
+    fecha:'24 de diciembre 1950',
 
     periodo: '1950',
 
@@ -234,6 +247,8 @@ Superado el trágico período de la Segunda Guerra Mundial, la actividad automov
 
     id: 'etapa-8',
 
+    fecha:'2 de agosto 1953',
+
     periodo: '1953',
 
     titulo: 'Inauguración del Autódromo "Ciudad de Rafaela"',
@@ -262,6 +277,7 @@ El 2 de agosto de 1953 se inaugura el Autódromo "Ciudad de Rafaela", ubicado en
   },
   {
     id: 'etapa-9',
+    fecha:'23 de mayo 1954',
     periodo: '1954',
     titulo: 'Primera 500 Millas en el nuevo Autódromo "Ciudad de Rafaela"',
     resumen: 'La primera edición de las 500 Millas en el nuevo óvalo de tierra.',
@@ -282,6 +298,7 @@ El 2 de agosto de 1953 se inaugura el Autódromo "Ciudad de Rafaela", ubicado en
 
   {
     id: 'etapa-10',
+    fecha:'4 de septiembre 1966',
     periodo: '1966',
     titulo: 'Pavimentación del Autódromo "Ciudad de Rafaela"',
     resumen: 'El avance más importante que tuvo el Óvalo y un quiebre para llegar a lo más alto del Automovilsmo.',
@@ -318,13 +335,14 @@ export const LINEA_HISTORICA = [
   { year: 1953, important: true, etapaId: 'etapa-8' },
   { year: 1954, important: false, etapaId: 'etapa-9' },
   { year: 1966, important: true, etapaId: 'etapa-10' },
-  { year: 1973, important: false, etapaId: 'etapa-11' },
-  { year: 1982, important: false, etapaId: 'etapa-12' },
-  { year: 1998, important: false, etapaId: 'etapa-13' },
-  { year: 2005, important: true, etapaId: 'etapa-14' },
-  { year: 2012, important: false, etapaId: 'etapa-15' },
-  { year: 2019, important: true, etapaId: 'etapa-16' },
-  { year: 2026, important: true, etapaId: 'etapa-17' },
+  { year: 1971, important: true, etapaId: 'etapa-11' },
+  { year: 1973, important: false, etapaId: 'etapa-12' },
+  { year: 1982, important: false, etapaId: 'etapa-13' },
+  { year: 1998, important: false, etapaId: 'etapa-14' },
+  { year: 2005, important: true, etapaId: 'etapa-15' },
+  { year: 2012, important: false, etapaId: 'etapa-16' },
+  { year: 2019, important: true, etapaId: 'etapa-17' },
+  { year: 2026, important: true, etapaId: 'etapa-18' },
 ];
 
 export const HOMENAJES = [
