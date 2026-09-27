@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom';
 import { useState } from 'react';
-import { CheckCircle2, Navigation, TrendingUp, X, ZoomIn } from 'lucide-react';
+import { RulerDimensionLine, Gauge, TriangleRight, RotateCw, RotateCcw, X, ZoomIn, RefreshCw } from 'lucide-react';
 import logo from '/src/assets/icons/logo-autodromo-color.png';
 import { CIRCUITOS } from '@/data/historia';
 
@@ -32,7 +32,6 @@ const EvolucionCircuitosPage = () => {
               <img 
                 src={circuito.foto} 
                 alt={circuito.nombre} 
-                // w-full y h-auto hacen que la imagen dicte la altura sin deformarse ni cortarse
                 className="w-full h-auto block grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 opacity-95 group-hover:opacity-100 group-hover:scale-[1.02]" 
               />
               
@@ -56,22 +55,54 @@ const EvolucionCircuitosPage = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-6 w-full mb-6 md:mb-8">
                 <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
-                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><CheckCircle2 size={20} className="md:w-6 md:h-6" /></div>
+                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><RulerDimensionLine size={20} className="md:w-6 md:h-6" /></div>
                   <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Medida</span>
                   <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.medida}</span>
                 </div>
 
                 <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
-                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><TrendingUp size={20} className="md:w-6 md:h-6" /></div>
+                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><TriangleRight size={20} className="md:w-6 md:h-6" /></div>
                   <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Peralte</span>
                   <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.pendiente}</span>
                 </div>
 
                 <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
-                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Navigation size={20} className="md:w-6 md:h-6" /></div>
-                  <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Sentido</span>
-                  <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white capitalize leading-tight">{circuito.sentido}</span>
+
+                    <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]">
+                      {circuito.sentido === 'anti-horario' ? (<RotateCcw size={20} className="md:w-6 md:h-6" />)
+                       : circuito.sentido === 'horario' ? ((<RotateCw size={20} className="md:w-6 md:h-6" />)) 
+                       : (<RefreshCw size={20} className="md:w-6 md:h-6" />)
+                      }
+                    </div>
+                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Sentido</span>
+                    <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white capitalize leading-tight">{circuito.sentido}</span>
+                  
                 </div>
+
+                <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
+                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Gauge size={20} className="md:w-6 md:h-6" /></div>
+                  <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Récord de vuelta promedio</span>
+                  <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.record}</span>
+                </div>
+
+                <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
+                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Gauge size={20} className="md:w-6 md:h-6" /></div>
+                  <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Récord velocidad final</span>               
+                  <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.recordmax}</span>
+                </div>
+
+              <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
+                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Gauge size={20} className="md:w-6 md:h-6" /></div>
+                  <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Récord de velocidad final (moto)</span>
+                  <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.recordmoto}</span>
+                </div>
+          
+                <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">  
+                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Gauge size={20} className="md:w-6 md:h-6" /></div>
+                  <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Récord sudamericano de vuelta promedio</span>
+                  <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.recordsud}</span>
+                </div>
+
               </div>
               
               <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-4xl text-justify md:text-center mt-2 border-t border-slate-200 dark:border-white/10 pt-6 md:pt-8">
@@ -90,10 +121,10 @@ const EvolucionCircuitosPage = () => {
         ))}
       </div>
 
-     {/* 4. MODAL CON CREATE PORTAL */}
+     {/* 4. MODAL PARA AMPLIAR IMAGEN */}
       {imagenModal && createPortal(
         <div 
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-md p-4 md:p-8 animate-in fade-in duration-300"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-md p-4 md:p-12 animate-in fade-in duration-300"
           onClick={() => setImagenModal(null)}
         >
           <button 
@@ -109,11 +140,11 @@ const EvolucionCircuitosPage = () => {
           <img 
             src={imagenModal} 
             alt="Plano Ampliado" 
-            className="w-auto h-auto max-w-full max-h-full object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.1)] rounded-lg cursor-default"
+            className="w-full h-full object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.1)] rounded-lg cursor-default"
             onClick={(e) => e.stopPropagation()} 
           />
         </div>,
-        document.body // <-- Esto le dice a React que lo renderice por encima de todo el DOM
+        document.body
       )}
       
     </div>

@@ -665,6 +665,7 @@ export const CIRCUITOS = [
     pendiente: '-',
     sentido: 'anti-horario',
     epoca: '1919', 
+    record: 'Oberdán Piovano - 77,349 km/h (48.062 mph) - 1919 - Overland',
     foto: '/public/images/historia/circuitos/circuito-1919 .png', 
     detalle: 'Formado por caminos de tierra que unían Rafaela con localidades vecinas. Aquí nació la pasión por la velocidad en la región, con los primeros rugidos de motores a más de 100 km/h.' 
   },
@@ -675,6 +676,7 @@ export const CIRCUITOS = [
     pendiente: '-',
     sentido: 'anti-horario',
     epoca: '1926 - 1951', 
+    record: 'Juan Manuel Fangio - 207 km/h (128.623 mph) - 1950 - Talbot Lago T26C F1',
     foto: '/public/images/historia/circuitos/circuito-500millas.jpg', 
     detalle: 'La medida fue cambiando con el paso del tiempo. Comenzó en 1926 con 38.000 metros, reduciéndose a 11.776,55 metros en la decada del ´30, para terminar en el año 1951 de 8.746 metros. Los distintos formatos siempre tuvieron la misma esencia, una mística que lo hacía único y un adjetivo en común que lo definían, VELOZ.' 
   },
@@ -684,7 +686,8 @@ export const CIRCUITOS = [
     medida: '4.662.60 metros',
     pendiente: '7% (2,52°)',
     sentido: 'horario',
-    epoca: '1953-1966', 
+    epoca: '1953-1966',
+    record: 'Félix A. Peduzzi - 165 km/h (102.526 mph) - 1955 - Chevrolet',
     foto: '/public/images/historia/circuitos/autodromo-1953.png', 
     detalle: 'El óvalo de tierra de 4.662,60 metros, de 12 metros de ancho con dos rectas de 1.477,10 metros y dos curvones de 854,20 metros con un peralte del 7% en sus curvas. Fue inaugurado el 2 de agosto de 1953 con una competencia de Turismo Carretera.' 
   },
@@ -694,7 +697,11 @@ export const CIRCUITOS = [
     medida: '4.624.46 metros', 
     pendiente: '15% (8,53°)',
     sentido: 'anti-horario',
-    epoca: '1966-Actualidad', 
+    epoca: '1966-Actualidad',
+    record: 'Lloyd Ruby - 278.675 km/h (173.160 mph) - 1971 - Moongose Ford V8 Turbo',
+    recordmax:'Gabriel Ponce de León - 306,383 km/h (190.378 mph) - 2012 - Honda Civic ',
+    recordmoto:'René Zanatta - 309,544 km/h  (192.341 mph)- 2019 - Kawazaki H2R',
+    recordsud:'Facundo Ardusso - 264,796 km/h (164.537 mph) - 2012 - Peugeot 408',
     foto: '/public/images/historia/circuitos/circuito-1966.png', 
     detalle: 'Constituido por el circuito N°1, conocido como el Óvalo Rafaelino, y por el circuito N° 2. El óvalo de asfalto tiene un recorrido de 4.624,46 metros, mientras que el circuito interno es de 2.687,14 metros. El óvalo, que en principio fue de 12 metros de ancho, hasta la extensión a 18 metros en el año 1971, contaba con 2 rectas de 1.181,01 metros y dos curvones especialmente diseñados, conformados por: 2 curvas clotoides de 361,52 m  y una curva circular de 408,18 m. Con un peralte máximo del 15% (8.53°). Máximo radio en curvas de 245 metros. Fue inaugurado el 4 de septiembre de 1966 con una competencia de 500 Millas, ganador Jorge Cupeiro. Récord de velocidad promedio: Lloyd Ruby a 278,675 km/h a 59´ 7´´.' 
   },
@@ -705,7 +712,7 @@ export const CIRCUITOS = [
     pendiente: '15% (8,53°)',
     sentido: 'horario y anti-horario',
     epoca: '1982-Actualidad',
-    foto: 'public/images/historia/circuitos/circuito-2-bascolo.jpg',
+    foto: '/public/images/historia/circuitos/circuito-2-bascolo.jpg',
     detalle: 'Es un circuito mixto de 3.050 metros, alternativo al óvalo, compartiendo el curvón norte. Con un ancho de 18 metros, cuenta con una recta principal de 710 metros y 7 curvas. Inicialmente su sentido fue horario hasta el año 2000, cambiando a sentido antihorario en la actualidad. Fue inaugurado el 26 de septiembre de 1982 con una competencia de CAP-Datsun 280, resultando ganador Guillermo Kissling.'
   },
   {
@@ -733,7 +740,7 @@ export const CIRCUITOS = [
     id:'circuito-8',
     nombre:'Autódromo "Ciudad de Rafaela"',
     trazados:'5',
-    foto: '/public/images/historia/circuitos/circuito-2026.png',
-    detalle:'El autódromo con todas sus variantes y medidas de seguridad.'
+    foto: '/public/images/historia/circuitos/autodromo-rafaela.png',
+    detalle:'El Autódromo "Ciudad de Rafaela" con todas sus variantes.'
   }
 ];
