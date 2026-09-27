@@ -47,8 +47,8 @@ const HistoriaLayout = () => {
                 <p className="font-medium italic font-firma mb-3">Más de un siglo de pasión, velocidad y gloria.</p> 
                 <div className="md:block w-1 h-1 bg-slate-700 dark:bg-slate-300 rounded-full" />
                     <div className="flex items-center gap-2">
-                    <img src={logo} alt="Logo Autódromo" className="h-7 w-auto dark:hidden opacity-70" />
-                    <img src={logoDark} alt="Logo Autódromo" className="h-7 w-auto hidden dark:block opacity-70" />
+                    <img src={logo} alt="Logo Autódromo" className="h-10 w-auto dark:hidden opacity-70" />
+                    <img src={logoDark} alt="Logo Autódromo" className="h-10 w-auto hidden dark:block opacity-70" />
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@ const HistoriaLayout = () => {
             <img src={heroImage2} alt="Pista Circuito antiguo de Rafaela" className="w-full h-full object-cover opacity-30 dark:opacity-25 mix-blend-luminosity grayscale" style={{ maskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%)', WebkitMaskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%)'}} />
         </div>   
 
-        {/* NAVEGACIÓN ESTILO ACTC */}
+        {/* NAVEGACIÓN interna */}
         <div className="w-full flex justify-center border-b border-slate-200 dark:border-white/10 mt-8 sticky top-16 z-40 bg-slate-50/90 dark:bg-black/90 backdrop-blur-md">
           <nav className="flex overflow-x-auto custom-scrollbar mb-[-2px] w-full md:w-auto justify-start md:justify-center">
             <NavLink to="/historia/linea-historica" className={navClass}>Línea Histórica</NavLink>
