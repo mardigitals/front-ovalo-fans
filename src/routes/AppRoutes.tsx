@@ -49,9 +49,11 @@ import HistoriaLayout from '@/components/layout/HistoriaLayout';
 import SalonFamaPage from '@/pages/public/SalonFamaPage';
 import LineaHistoricaPage from '@/pages/public/LineaHistoricaPage';
 import EvolucionCircuitosPage from '@/pages/public/EvolucionCircuitosPage';
+import ScrollToTop from '@/components/ui/ScrollToTop';
 
 const AppRoutes = () => (
   <BrowserRouter>
+    <ScrollToTop />
     <Routes>
 
       {/* Rutas Públicas */}
