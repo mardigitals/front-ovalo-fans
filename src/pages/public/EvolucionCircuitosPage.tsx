@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom';
 import { useState } from 'react';
-import { RulerDimensionLine, Gauge, TriangleRight, RotateCw, RotateCcw, X, ZoomIn, RefreshCw } from 'lucide-react';
+import { RulerDimensionLine, Gauge, TriangleRight, RotateCw, RotateCcw, X, ZoomIn, RefreshCw, Road } from 'lucide-react';
 import logo from '/src/assets/icons/logo-autodromo-color.png';
 import { CIRCUITOS } from '@/data/historia';
 
@@ -54,6 +54,15 @@ const EvolucionCircuitosPage = () => {
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-6 w-full mb-6 md:mb-8">
+
+                {circuito.trazados && (
+                  <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
+                    <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Road size={20} className="md:w-6 md:h-6" /></div>
+                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Cantidad circuitos</span>
+                    <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.trazados}</span>
+                  </div>
+                )}
+
                 <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
                   <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><RulerDimensionLine size={20} className="md:w-6 md:h-6" /></div>
                   <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Medida</span>
@@ -78,30 +87,37 @@ const EvolucionCircuitosPage = () => {
                     <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white capitalize leading-tight">{circuito.sentido}</span>
                   
                 </div>
+                {circuito.record &&(
+                  <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
+                    <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Gauge size={20} className="md:w-6 md:h-6" /></div>
+                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Récord de vuelta promedio</span>
+                    <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.record}</span>
+                  </div>
+                )}
+                
+                {circuito.recordmax &&(
+                  <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
+                    <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Gauge size={20} className="md:w-6 md:h-6" /></div>
+                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Récord velocidad final</span>               
+                    <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.recordmax}</span>
+                  </div>
+                )}
 
-                <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
-                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Gauge size={20} className="md:w-6 md:h-6" /></div>
-                  <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Récord de vuelta promedio</span>
-                  <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.record}</span>
-                </div>
-
-                <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
-                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Gauge size={20} className="md:w-6 md:h-6" /></div>
-                  <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Récord velocidad final</span>               
-                  <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.recordmax}</span>
-                </div>
-
-              <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
-                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Gauge size={20} className="md:w-6 md:h-6" /></div>
-                  <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Récord de velocidad final (moto)</span>
-                  <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.recordmoto}</span>
-                </div>
+                {circuito.recordmoto && (
+                  <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">
+                    <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Gauge size={20} className="md:w-6 md:h-6" /></div>
+                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Récord de velocidad final (moto)</span>
+                    <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.recordmoto}</span>
+                  </div>
+                )}
           
-                <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">  
-                  <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Gauge size={20} className="md:w-6 md:h-6" /></div>
-                  <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Récord sudamericano de vuelta promedio</span>
-                  <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.recordsud}</span>
-                </div>
+                {circuito.recordsud && (
+                  <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl md:rounded-2xl group hover:border-cyan-500/50 transition-colors">  
+                    <div className="text-cyan-600 dark:text-cyan-400 mb-1 md:mb-2 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"><Gauge size={20} className="md:w-6 md:h-6" /></div>
+                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Récord sudamericano de vuelta promedio</span>
+                    <span className="text-xs sm:text-sm md:text-base font-black text-slate-800 dark:text-white leading-tight">{circuito.recordsud}</span>
+                  </div>
+                )}
 
               </div>
               
