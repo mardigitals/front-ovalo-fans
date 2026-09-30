@@ -50,6 +50,7 @@ import SalonFamaPage from '@/pages/public/SalonFamaPage';
 import LineaHistoricaPage from '@/pages/public/LineaHistoricaPage';
 import EvolucionCircuitosPage from '@/pages/public/EvolucionCircuitosPage';
 import ScrollToTop from '@/components/ui/ScrollToTop';
+import RecordsPage from '@/pages/public/RecordsPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -69,7 +70,7 @@ const AppRoutes = () => (
           <Route path="evolucion-circuitos" element={<EvolucionCircuitosPage />} />
           <Route path="salon-fama" element={<SalonFamaPage />} />
           <Route path="ganadores" element={<div>Próximamente: Ganadores</div>} />
-          <Route path="records" element={<div>Próximamente: Récords</div>} />
+          <Route path="records" element={<RecordsPage />} />
         
         </Route>
         <Route path="/contacto" element={<ContactoPage />} />

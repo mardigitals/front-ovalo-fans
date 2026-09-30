@@ -712,8 +712,8 @@ export const CIRCUITOS = [
     sentido: 'anti-horario',
     epoca: '1966-Actualidad',
     record: 'Lloyd Ruby - 278.675 km/h (173.160 mph) - 1971 - Moongose Ford V8 Turbo',
-    recordmax:'Gabriel Ponce de León - 306,383 km/h (190.378 mph) - 2012 - Honda Civic V8 ',
-    recordmoto:'René Zanatta - 309,544 km/h  (192.341 mph)- 2019 - Kawazaki H2R',
+    recordmax:'Gabriel Ponce de León - 306,383 km/h (190.378 mph) - 2012 - Honda Civic V8',
+    recordmoto:'René Zanatta - 309,544 km/h  (192.341 mph)- 2019 - Kawazaki H2 1000cc',
     recordsud:'Facundo Ardusso - 264,796 km/h (164.537 mph) - 2012 - Peugeot V8',
     foto: '/public/images/historia/circuitos/circuito-1966.png', 
     detalle: 'El Óvalo peraltado de asfalto, conocido como el Óvalo Rafaelino (circuito N°1) contaba con un trazado interno (circuito N°2). El óvalo tiene un recorrido de 4.624,46 metros, mientras que el circuito interno es de 2.687,14 metros. El óvalo, que en principio fue de 12 metros de ancho, hasta la extensión a 18 metros en el año 1971, contaba con 2 rectas de 1.181,01 metros y dos curvones especialmente diseñados, conformados por: 2 curvas clotoides de 361,52 m  y una curva circular de 408,18 m. Con un peralte máximo del 15% (8.53°). Máximo radio en curvas de 245 metros. Fue inaugurado el 4 de septiembre de 1966 con una competencia de 500 Millas, ganador Jorge Cupeiro. Récord de velocidad promedio: Lloyd Ruby a 278,675 km/h a 59´ 7´´.' 
@@ -762,4 +762,147 @@ export const CIRCUITOS = [
     detalle: 'Este óvalo con 2 chicanas es el que usa actualmente el TC2000. Sus chicanas reducen la velocidad de tránsito en los curvones, pero las dos rectas se utilizan casi en su totalidad, por lo que el sistema de frenado es la parte mas delicada y castigada del auto.'
   }
 
+];
+
+export const RECORDS = [
+  // --- RÉCORDS DE VELOCIDAD ---
+  {
+    id: 'rec-1',
+    tipo: 'velocidad',
+    nombre: 'Récord Absoluto Vuelta Promedio',
+    protagonista: 'Lloyd Ruby',
+    velocidad:'278,675 km/h',
+    marca: 'Mongoose Ford V8 Turbo',
+    categoria: [ 
+      { url:'/src/assets/icons/logo-indycar.png'}
+    ],
+    año: '1971',
+    detalle: 'Durante la clasificación para las 300 Millas de Rafaela (USAC IndyCar), clavó los cronómetros en 59 segundos y 7 décimas. Es el récord absoluto e imbatible del trazado original.'
+  },
+  {
+    id: 'rec-2',
+    tipo: 'velocidad',
+    nombre: 'Récord Sudamericano de Velocidad Final',
+    protagonista: 'G. Ponce de León',
+    velocidad:'306,383 km/h',
+    marca: 'Honda Civic V8 (Súper TC2000)',
+    categoria: [ 
+      { url:'/src/assets/icons/logo-cda.png'}
+    ],
+    año: '2012',
+    detalle: 'Alcanzó la impresionante velocidad punta de 306,383 km/h al final de la recta, demostrando el tremendo potencial aerodinámico y de motor de la categoría en el óvalo sin chicanas.'
+  },
+  {
+    id: 'rec-3',
+    tipo: 'velocidad',
+    nombre: 'Récord Sudamericano Vuelta Promedio',
+    protagonista: 'Facundo Ardusso',
+    velocidad:'264,796 km/h',
+    marca: 'Peugeot 408 (Súper TC2000)',
+    categoria: [ 
+      { url:'/src/assets/icons/logo-cda.png'}
+    ],
+    año: '2012',
+    detalle: 'Estableció un tiempo de 1m02s869, logrando un promedio de 264,796 km/h. Es el récord sudamericano de vuelta en circuito cerrado.'
+  },
+  {
+    id: 'rec-4',
+    tipo: 'velocidad',
+    nombre: 'Récord Sudamericano de Velocidad Final c/ moto',
+    protagonista: 'René Zanatta',
+    velocidad:'309,544 km/h',
+    marca: 'Kawasaki H2 1000cc',
+    categoria: [ 
+      { url:'/src/assets/icons/logo-fim.webp'}
+    ],
+    año: '2019',
+    detalle: 'El histórico piloto rafaelino voló en el Templo de la Velocidad alcanzando los 309,544 km/h de velocidad máxima, batiendo todos los registros de dos ruedas.'
+  },
+  {
+    id: 'rec-5',
+    tipo: 'velocidad',
+    nombre: 'Récord Óvalo Tierra (Vuelta Promedio)',
+    protagonista: 'Félix A. Peduzzi',
+    velocidad:'165 km/h',
+    marca: 'Chevrolet',
+    categoria: [ 
+      { url:'/src/assets/icons/logo-actc.png'}
+    ],
+    año: '1955',
+    detalle: 'Logró un promedio de 165 km/h (1m 41s 7/10) en el extinto óvalo peraltado de tierra, superando la marca original de Juan Gálvez de 1953.'
+  },
+  {
+    id: 'rec-6',
+    tipo: 'velocidad',
+    nombre: 'Récord TC - Óvalo 3 Chicanas',
+    protagonista: 'Valentín Aguirre',
+    velocidad:'199,596 km/h',
+    marca: 'Chevrolet',
+    categoria: [ 
+      { url:'/src/assets/icons/logo-actc.png'}
+    ],
+    año: '2026',
+    detalle: 'Marcó un promedio de 199,596 km/h en la variante actual de 4.740 metros, que obliga a fuertes frenajes antes de los curvones.'
+  },
+  {
+    id: 'rec-7',
+    tipo: 'velocidad',
+    nombre: 'Récord TC - Óvalo sin chicanas',
+    protagonista: 'Carlos Marincovich',
+    velocidad:'212,763 km/h',
+    marca: 'Chevitres',
+    categoria: [ 
+      { url:'/src/assets/icons/logo-actc.png'}
+    ],
+    año: '1968',
+    detalle: 'Carlos Marincovich (Chevitrés) gana la carrera más rápida de la historia del TC en un autódromo (212,763 km/h), que paradójicamente es la última en el óvalo sin chicanas.'
+  },
+  
+  {
+    id: 'rec-7',
+    tipo: 'velocidad',
+    nombre: 'Récord TC2000 - Óvalo 2 Chicanas',
+    protagonista: 'Néstor "Bebu" Girolami',
+    velocidad:'223,736 km/h',
+    marca: 'Peugeot 408',
+    categoria: [ 
+      { url:'/src/assets/icons/logo-cda.png'}
+    ],
+    año: '2014',
+    detalle: 'Promedio de 223,736 km/h en la variante de 4.662 metros, demostrando el límite de frenado y aceleración de los tracción delantera.'
+  },
+
+  // --- RÉCORDS DE VICTORIAS ---
+  {
+    id: 'rec-8',
+    tipo: 'victoria',
+    nombre: 'Los Máximos Ganadores Nacionales',
+    protagonista:  `Traverso 7.
+
+     Zanatta 7.
+     
+     Ruben Luis Di Palma 7.
+     
+     `,
+    marca: 'Varias',
+    categoria: [ 
+      { url:'/src/assets/icons/logo-autodromo-color.png'}
+    ],
+    año: 'Histórico',
+    detalle: 'Juan María Traverso, el local René Zanatta y Luis Rubén Di Palma comparten el olimpo de ser los pilotos más laureados en el historial del Autódromo de Rafaela a nivel nacional.'
+  },
+
+  // --- RÉCORD DE PÚBLICO ---
+  {
+    id: 'rec-9',
+    tipo: 'publico',
+    nombre: 'Récord de Concurrencia',
+    protagonista: 'La Pasión del Turismo Carretera',
+    marca: 'La "Carrera de los Millones"',
+    categoria: [ 
+      { url:'/src/assets/icons/logo-actc.png'}
+    ],
+    año: '2019 / Actualidad',
+    detalle: 'El Turismo Carretera ha reventado los alambrados de Rafaela superando estimaciones de 45.000 a 50.000 espectadores, convirtiendo al predio de 134 hectáreas en una verdadera ciudad rodante.'
+  }
 ];
