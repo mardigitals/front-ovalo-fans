@@ -9,7 +9,7 @@ const SalonFamaPage = () => {
         <h2 className="title-fan text-5xl md:text-6xl text-slate-800 dark:text-white uppercase tracking-tighter">
           Salón de la Fama
         </h2>
-        <p className="subtitle-fan text-xl md:text-2xl text-amber-500">Los nombres que forjaron nuestra historia</p>
+        <p className="subtitle-fan text-xl md:text-2xl">Los nombres que forjaron nuestra historia</p>
       </div>
 
       <div className="space-y-16">

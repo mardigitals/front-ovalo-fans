@@ -1,3 +1,5 @@
+import ganadoresData from './carreras_rafaela-v2.json'; //
+
 export // --- DATA HISTÓRICA DEL AUTÓDROMO ---
 const ETAPAS_HISTORIA = [
 
@@ -834,7 +836,7 @@ export const RECORDS = [
   {
     id: 'rec-6',
     tipo: 'velocidad',
-    nombre: 'Récord TC - Óvalo 3 Chicanas',
+    nombre: 'Rec. TC Óvalo 3 Chicanas (Vuelta Promedio)',
     protagonista: 'Valentín Aguirre',
     velocidad:'199,596 km/h',
     marca: 'Chevrolet',
@@ -847,7 +849,7 @@ export const RECORDS = [
   {
     id: 'rec-7',
     tipo: 'velocidad',
-    nombre: 'Récord TC - Óvalo sin chicanas',
+    nombre: 'Récord TC Óvalo (Vuelta Promedio)',
     protagonista: 'Carlos Marincovich',
     velocidad:'212,763 km/h',
     marca: 'Chevitres',
@@ -877,19 +879,15 @@ export const RECORDS = [
     id: 'rec-8',
     tipo: 'victoria',
     nombre: 'Los Máximos Ganadores Nacionales',
-    protagonista:  `Traverso 7.
-
-     Zanatta 7.
-     
-     Ruben Luis Di Palma 7.
-     
+    protagonista:  `Traverso, Zanatta y
+     Ruben Luis Di Palma con 7 victorias   
      `,
     marca: 'Varias',
     categoria: [ 
       { url:'/src/assets/icons/logo-autodromo-color.png'}
     ],
     año: 'Histórico',
-    detalle: 'Juan María Traverso, el local René Zanatta y Luis Rubén Di Palma comparten el olimpo de ser los pilotos más laureados en el historial del Autódromo de Rafaela a nivel nacional.'
+    detalle: 'Juan María Traverso (6 en TC2000 y 1 en TC), el local René Zanatta (5 automovilismo y 2 motociclismo) y Luis Rubén Di Palma (7 victorias) comparten el olimpo de ser los pilotos más laureados en el historial del Autódromo de Rafaela a nivel nacional.'
   },
 
   // --- RÉCORD DE PÚBLICO ---
@@ -902,7 +900,16 @@ export const RECORDS = [
     categoria: [ 
       { url:'/src/assets/icons/logo-actc.png'}
     ],
-    año: '2019 / Actualidad',
-    detalle: 'El Turismo Carretera ha reventado los alambrados de Rafaela superando estimaciones de 45.000 a 50.000 espectadores, convirtiendo al predio de 134 hectáreas en una verdadera ciudad rodante.'
+    año: '2016',
+    detalle: 'El Turismo Carretera ha reventado los alambrados de Rafaela superando 45.000 espectadores, convirtiendo al predio en una verdadera ciudad rodante.'
   }
 ];
+
+// 2. Exportamos la constante mapeando las propiedades del JSON a nuestra interfaz
+export const GANADORES = ganadoresData.map((carrera) => ({
+  id: carrera.nro,
+  fecha: carrera.fecha,
+  ganador: carrera.corredor,
+  marca: carrera.marca,
+  categoria: carrera.categoria
+})); //

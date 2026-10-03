@@ -51,6 +51,7 @@ import LineaHistoricaPage from '@/pages/public/LineaHistoricaPage';
 import EvolucionCircuitosPage from '@/pages/public/EvolucionCircuitosPage';
 import ScrollToTop from '@/components/ui/ScrollToTop';
 import RecordsPage from '@/pages/public/RecordsPage';
+import GanadoresPage from '@/pages/public/GanadoresPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -69,7 +70,7 @@ const AppRoutes = () => (
           <Route path="linea-historica" element={<LineaHistoricaPage />} />
           <Route path="evolucion-circuitos" element={<EvolucionCircuitosPage />} />
           <Route path="salon-fama" element={<SalonFamaPage />} />
-          <Route path="ganadores" element={<div>Próximamente: Ganadores</div>} />
+          <Route path="ganadores" element={<GanadoresPage />} />
           <Route path="records" element={<RecordsPage />} />
         
         </Route>

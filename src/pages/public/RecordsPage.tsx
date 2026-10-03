@@ -46,7 +46,7 @@ const RecordsPage = () => {
         <h2 className="title-fan text-4xl sm:text-5xl md:text-6xl text-slate-800 dark:text-white uppercase tracking-tighter">
           Récords
         </h2>
-        <p className="subtitle-fan text-lg sm:text-xl md:text-2xl text-cyan-600 dark:text-cyan-400 max-w-2xl">
+        <p className="subtitle-fan text-lg sm:text-xl md:text-2xl max-w-2xl">
           Las marcas históricas en el Templo de la Velocidad
         </p>
       </div>

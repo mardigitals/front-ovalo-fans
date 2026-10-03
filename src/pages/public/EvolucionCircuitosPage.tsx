@@ -15,7 +15,7 @@ const EvolucionCircuitosPage = () => {
         <h2 className="title-fan text-4xl sm:text-5xl md:text-6xl text-slate-800 dark:text-white uppercase tracking-tighter">
           Evolución del Óvalo Rafaelino
         </h2>
-        <p className="subtitle-fan text-lg sm:text-xl md:text-2xl text-cyan-600 dark:text-cyan-400 max-w-2xl">
+        <p className="subtitle-fan text-lg sm:text-xl md:text-2xl max-w-2xl">
           Los distintos trazados que marcaron épocas
         </p>
       </div>

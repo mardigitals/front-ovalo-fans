@@ -1,0 +1,1997 @@
+[
+  {
+    "nro": 1,
+    "fecha": "25/05/1919",
+    "corredor": "PIOVANO Oberdan",
+    "marca": "Overland",
+    "categoria": "Fuerza Libre"
+  },
+  {
+    "nro": 2,
+    "fecha": "25/05/1920",
+    "corredor": "MASOERO José",
+    "marca": "Dodge",
+    "categoria": "Fuerza Libre"
+  },
+  {
+    "nro": 3,
+    "fecha": "25/05/1921",
+    "corredor": "ROMITELLI Armando",
+    "marca": "Dort",
+    "categoria": "Fuerza Libre"
+  },
+  {
+    "nro": 4,
+    "fecha": "25/05/1922",
+    "corredor": "OVIDE Antonio",
+    "marca": "Studebaker",
+    "categoria": "Fuerza Libre"
+  },
+  {
+    "nro": 5,
+    "fecha": "25/05/1923",
+    "corredor": "GIUSTINA Ceferino",
+    "marca": "Chevrolet",
+    "categoria": "Fuerza Libre"
+  },
+  {
+    "nro": 6,
+    "fecha": "14/06/1924",
+    "corredor": "MALCOM Juan",
+    "marca": "Chandler",
+    "categoria": "Fuerza Libre"
+  },
+  {
+    "nro": 7,
+    "fecha": "25/05/1925",
+    "corredor": "DUTRUEL Eduardo",
+    "marca": "Schudebaker",
+    "categoria": "Fuerza Libre"
+  },
+  {
+    "nro": 8,
+    "fecha": "29/08/1926",
+    "corredor": "RIGANTI Raúl",
+    "marca": "Húdson",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 9,
+    "fecha": "22/05/1927",
+    "corredor": "MALCON Juan",
+    "marca": "Delage",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 10,
+    "fecha": "27/05/1928",
+    "corredor": "FORREST GREENE Eric",
+    "marca": "Bugatti",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 11,
+    "fecha": "02/06/1929",
+    "corredor": "BUCCI Domingo",
+    "marca": "Húdson",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 12,
+    "fecha": "14/09/1930",
+    "corredor": "D´AMICO Cayetano",
+    "marca": "Gardner",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 13,
+    "fecha": "08/09/1935",
+    "corredor": "ZATUSCECK Carlos",
+    "marca": "M.Benz",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 14,
+    "fecha": "15/09/1936",
+    "corredor": "BLANCO Ernesto H.",
+    "marca": "R.E.O.",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 15,
+    "fecha": "12/09/1937",
+    "corredor": "ZATUSCECK Carlos",
+    "marca": "M. Benz",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 16,
+    "fecha": "11/09/1938",
+    "corredor": "BROSUTTI Luis",
+    "marca": "M. Benz",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 17,
+    "fecha": "10/09/1939",
+    "corredor": "DONZINO Eleuterio",
+    "marca": "Cadillac",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 18,
+    "fecha": "10/11/1940",
+    "corredor": "BLANCO Ernesto",
+    "marca": "R.E.O.",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 19,
+    "fecha": "12/01/1941",
+    "corredor": "MARCILLA Eusebio",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 20,
+    "fecha": "20/03/1947",
+    "corredor": "BUCCI Clemar",
+    "marca": "Cadillac",
+    "categoria": "Mec. Nacional"
+  },
+  {
+    "nro": 21,
+    "fecha": "20/03/1947",
+    "corredor": "GALVEZ Oscar A.",
+    "marca": "Alfa Romeo",
+    "categoria": "C. Especiales"
+  },
+  {
+    "nro": 22,
+    "fecha": "07/09/1947",
+    "corredor": "GULLE Pablo",
+    "marca": "Ford",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 23,
+    "fecha": "19/09/1948",
+    "corredor": "BROSUTTI Luis",
+    "marca": "M. Benz",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 24,
+    "fecha": "23/10/1949",
+    "corredor": "FANTO José",
+    "marca": "M. Benz",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 25,
+    "fecha": "24/12/1950",
+    "corredor": "FANGIO Juan M.",
+    "marca": "Talbot Lago",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 26,
+    "fecha": "14/10/1951",
+    "corredor": "FANTO José",
+    "marca": "M. Benz",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 27,
+    "fecha": "02/08/1953",
+    "corredor": "GALVEZ Juan",
+    "marca": "Ford",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 28,
+    "fecha": "23/05/1954",
+    "corredor": "BONOMI Roberto",
+    "marca": "Ferrari 4500",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 29,
+    "fecha": "01/08/1954",
+    "corredor": "BIRGER Pablo",
+    "marca": "Ford",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 30,
+    "fecha": "29/05/1955",
+    "corredor": "R.LARRETA (Larry)",
+    "marca": "Ferrari 3000",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 31,
+    "fecha": "07/08/1955",
+    "corredor": "GALVEZ Juan",
+    "marca": "Ford",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 32,
+    "fecha": "17/06/1956",
+    "corredor": "NAJURIETA Carlos",
+    "marca": "Ferrari 4500",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 33,
+    "fecha": "02/05/1957",
+    "corredor": "REQUEJO Ramón",
+    "marca": "Chevrolet",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 34,
+    "fecha": "14/09/1958",
+    "corredor": "GONZALES J.Froilán",
+    "marca": "Chevrolet",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 35,
+    "fecha": "06/09/1959",
+    "corredor": "GONZALES J.Froilán",
+    "marca": "Chevrolet",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 36,
+    "fecha": "21/11/1960",
+    "corredor": "REQUEJO Ramón",
+    "marca": "Chevrolet",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 37,
+    "fecha": "15/10/1961",
+    "corredor": "GALAVERNA Hugo",
+    "marca": "Chevrolet",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 38,
+    "fecha": "02/09/1962",
+    "corredor": "REQUEJO Ramón",
+    "marca": "Chevrolet",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 39,
+    "fecha": "08/09/1963",
+    "corredor": "CIPOLATTI Vicente",
+    "marca": "Chevrolet",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 40,
+    "fecha": "06/09/1964",
+    "corredor": "DI SANTO Domingo",
+    "marca": "Chevrolet",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 41,
+    "fecha": "04/09/1966",
+    "corredor": "CUPEIRO Jorge",
+    "marca": "Chevrolet",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 42,
+    "fecha": "23/10/1966",
+    "corredor": "RIENZI Angél",
+    "marca": "Ford",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 43,
+    "fecha": "07/05/1967",
+    "corredor": "COPELLO Eduardo",
+    "marca": "Torino",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 44,
+    "fecha": "25/06/1967",
+    "corredor": "RUESCH Carlos",
+    "marca": "Renault",
+    "categoria": "T. Anexo J"
+  },
+  {
+    "nro": 45,
+    "fecha": "25/06/1967",
+    "corredor": "REUTEMANN / FRANCO",
+    "marca": "Fiat",
+    "categoria": "T. Anexo J"
+  },
+  {
+    "nro": 46,
+    "fecha": "25/06/1967",
+    "corredor": "SANCHA Pedro",
+    "marca": "Chevrolet",
+    "categoria": "T. Anexo J"
+  },
+  {
+    "nro": 47,
+    "fecha": "10/09/1967",
+    "corredor": "GRADASSI Héctor I.",
+    "marca": "Tornado",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 48,
+    "fecha": "14/03/1968",
+    "corredor": "SOTRO Ronaldo",
+    "marca": "Ford",
+    "categoria": "Mec.Arg. F.1"
+  },
+  {
+    "nro": 49,
+    "fecha": "19/05/1968",
+    "corredor": "ALZAGA Rodolfo de",
+    "marca": "Torino",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 50,
+    "fecha": "25/08/1968",
+    "corredor": "PAIRETI Carlos",
+    "marca": "Chevrolet",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 51,
+    "fecha": "03/11/1968",
+    "corredor": "MARINCOVICH Carlos",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 52,
+    "fecha": "22/06/1969",
+    "corredor": "PASCUALINI Carlos",
+    "marca": "Ford",
+    "categoria": "Sport Prototipo"
+  },
+  {
+    "nro": 53,
+    "fecha": "07/09/1969",
+    "corredor": "TERNENGO Jorge",
+    "marca": "Tornado",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 54,
+    "fecha": "05/10/1969",
+    "corredor": "GARCIA VEIGA Néstor",
+    "marca": "Chevrolet",
+    "categoria": "Mec. Arg. F.1"
+  },
+  {
+    "nro": 55,
+    "fecha": "12/07/1970",
+    "corredor": "KISSLING Raúl",
+    "marca": "Fiat",
+    "categoria": "Mec. Arg. F.2"
+  },
+  {
+    "nro": 56,
+    "fecha": "12/07/1970",
+    "corredor": "CUPEIRO Jorge",
+    "marca": "Chevrolet",
+    "categoria": "Sport Prototipo"
+  },
+  {
+    "nro": 57,
+    "fecha": "06/09/1970",
+    "corredor": "CUPEIRO Jorge",
+    "marca": "Chevrolet",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 58,
+    "fecha": "29/11/1970",
+    "corredor": "CUBERTINO Omar",
+    "marca": "Dodge",
+    "categoria": "Mec. Arg. F.1"
+  },
+  {
+    "nro": 59,
+    "fecha": "29/11/1970",
+    "corredor": "PAIRETTI Carlos",
+    "marca": "Ford",
+    "categoria": "Sport Prototipo"
+  },
+  {
+    "nro": 60,
+    "fecha": "28/02/1971",
+    "corredor": "UNSER Alan",
+    "marca": "Ford-Colt Turbo",
+    "categoria": "Championship"
+  },
+  {
+    "nro": 61,
+    "fecha": "05/09/1971",
+    "corredor": "CUPEIRO Jorge",
+    "marca": "Chevrolet",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 62,
+    "fecha": "07/05/1972",
+    "corredor": "MONGUZZI Angel",
+    "marca": "Dodge",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 63,
+    "fecha": "20/08/1972",
+    "corredor": "BALANGIONI Jorge",
+    "marca": "Renault",
+    "categoria": "Mec. Arg. F.4"
+  },
+  {
+    "nro": 64,
+    "fecha": "20/08/1972",
+    "corredor": "DI PALMA Rubén Luis",
+    "marca": "Tornado",
+    "categoria": "Sport Prototipo"
+  },
+  {
+    "nro": 65,
+    "fecha": "06/05/1973",
+    "corredor": "GARCIA VEIGA Néstor",
+    "marca": "Tornado",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 66,
+    "fecha": "02/09/1973",
+    "corredor": "MANZANO Carlos",
+    "marca": "Renault 12",
+    "categoria": "Turismo Nac.B"
+  },
+  {
+    "nro": 67,
+    "fecha": "02/09/1973",
+    "corredor": "RODRIGUEZ CANEDO",
+    "marca": "Fiat 125",
+    "categoria": "Turismo Nac.C"
+  },
+  {
+    "nro": 68,
+    "fecha": "07/10/1973",
+    "corredor": "SIGNORE Oscar",
+    "marca": "Renault",
+    "categoria": "M.Argentina F.4"
+  },
+  {
+    "nro": 69,
+    "fecha": "18/11/1973",
+    "corredor": "BIANCHI Jorge",
+    "marca": "Berta-Tornado",
+    "categoria": "M.Argentina F.1"
+  },
+  {
+    "nro": 70,
+    "fecha": "05/05/1974",
+    "corredor": "PLA Víctor Hugo",
+    "marca": "Berta-Tornado",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 71,
+    "fecha": "21/06/1974",
+    "corredor": "MORENO Héctor",
+    "marca": "Renault 12",
+    "categoria": "Turismo Nac.B"
+  },
+  {
+    "nro": 72,
+    "fecha": "21/09/1974",
+    "corredor": "GERVASONI Luis",
+    "marca": "Fiat 125",
+    "categoria": "Turismo Nac.C"
+  },
+  {
+    "nro": 73,
+    "fecha": "29/09/1974",
+    "corredor": "BIANCHI Jorge",
+    "marca": "Tornado",
+    "categoria": "Mecánica A. F1"
+  },
+  {
+    "nro": 74,
+    "fecha": "16/11/1975",
+    "corredor": "DI PALMA Rubén Luis",
+    "marca": "Berta-Torino",
+    "categoria": "500 Millas"
+  },
+  {
+    "nro": 75,
+    "fecha": "10/10/1976",
+    "corredor": "DI PALMA Rubén Luis",
+    "marca": "Berta-Torino",
+    "categoria": "M. Argentina F.1"
+  },
+  {
+    "nro": 76,
+    "fecha": "10/10/1976",
+    "corredor": "RISSO Miguel",
+    "marca": "Dodge",
+    "categoria": "M. Argentina F.2"
+  },
+  {
+    "nro": 77,
+    "fecha": "21/08/1977",
+    "corredor": "GARCIA Marito",
+    "marca": "Chevrolet",
+    "categoria": "M. Argentina F.1"
+  },
+  {
+    "nro": 78,
+    "fecha": "21/08/1977",
+    "corredor": "DE AMORRORTU Jorge",
+    "marca": "Chivilo Dodge",
+    "categoria": "M. Argentina F2"
+  },
+  {
+    "nro": 79,
+    "fecha": "16/10/1977",
+    "corredor": "MONGUZZI Angel",
+    "marca": "Dodge",
+    "categoria": "M. Argentina F.1"
+  },
+  {
+    "nro": 80,
+    "fecha": "29/10/1978",
+    "corredor": "DEL RIO Jorge",
+    "marca": "Dodge",
+    "categoria": "M. Argentina F.1"
+  },
+  {
+    "nro": 81,
+    "fecha": "16/09/1979",
+    "corredor": "DEL RIO Jorge",
+    "marca": "Dodge",
+    "categoria": "M. Argentina F.1"
+  },
+  {
+    "nro": 82,
+    "fecha": "16/09/1979",
+    "corredor": "BENAMO Enrique",
+    "marca": "Dodge",
+    "categoria": "M. Argentina F.2"
+  },
+  {
+    "nro": 83,
+    "fecha": "20/07/1980",
+    "corredor": "MALDONADO G.",
+    "marca": "Dodge",
+    "categoria": "M. Argentina F.2"
+  },
+  {
+    "nro": 84,
+    "fecha": "25/04/1982",
+    "corredor": "MONGUZZI Angel",
+    "marca": "Datsun 280",
+    "categoria": "Club Arg. Pilotos"
+  },
+  {
+    "nro": 85,
+    "fecha": "26/09/1982",
+    "corredor": "KISSLING Guillermo",
+    "marca": "Datsun 280",
+    "categoria": "Club Arg. Pilotos"
+  },
+  {
+    "nro": 86,
+    "fecha": "12/12/1982",
+    "corredor": "DI PALMA Rubén L.",
+    "marca": "Darsun 280",
+    "categoria": "Club Arg. Pilotos"
+  },
+  {
+    "nro": 87,
+    "fecha": "05/06/1983",
+    "corredor": "CONTRERAS Miguel",
+    "marca": "Dahiatsun",
+    "categoria": "T. Pista Clase1"
+  },
+  {
+    "nro": 88,
+    "fecha": "05/06/1983",
+    "corredor": "GUIRAL Jorge",
+    "marca": "Fiat 128",
+    "categoria": "T. Pista Clase2"
+  },
+  {
+    "nro": 89,
+    "fecha": "05/06/1983",
+    "corredor": "TALONE Jorge",
+    "marca": "Peugeot 504",
+    "categoria": "T. Pista Clase3"
+  },
+  {
+    "nro": 90,
+    "fecha": "05/06/1983",
+    "corredor": "TRAVERSO Juan M.",
+    "marca": "Ford Taunus",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 91,
+    "fecha": "07/08/1983",
+    "corredor": "GURINI Néstor",
+    "marca": "Renault",
+    "categoria": "F. Renault Arg."
+  },
+  {
+    "nro": 92,
+    "fecha": "07/08/1983",
+    "corredor": "MALDONADO G.",
+    "marca": "Dodge",
+    "categoria": "For.2 Codasur"
+  },
+  {
+    "nro": 93,
+    "fecha": "02/10/1983",
+    "corredor": "ETCHEGARAY Miguel",
+    "marca": "Renault",
+    "categoria": "F. Renault Arg."
+  },
+  {
+    "nro": 94,
+    "fecha": "02/10/1983",
+    "corredor": "DI PALMA Rubén L.",
+    "marca": "Datsun",
+    "categoria": "Club Arg. Pilotos"
+  },
+  {
+    "nro": 95,
+    "fecha": "05/05/1984",
+    "corredor": "DANA Humberto",
+    "marca": "Renault",
+    "categoria": "F. Renault Arg."
+  },
+  {
+    "nro": 96,
+    "fecha": "05/05/1984",
+    "corredor": "GUERRA Miguel A.",
+    "marca": "Renault",
+    "categoria": "For. 2 Codasur"
+  },
+  {
+    "nro": 97,
+    "fecha": "17/06/1984",
+    "corredor": "SERAFINI Mario",
+    "marca": "Datsun",
+    "categoria": "T.C. 2000"
+  },
+  {
+    "nro": 98,
+    "fecha": "02/09/1984",
+    "corredor": "OLMI Hugo",
+    "marca": "Fiat",
+    "categoria": "T. Pista Clase 2"
+  },
+  {
+    "nro": 99,
+    "fecha": "02/09/1984",
+    "corredor": "CANO José",
+    "marca": "Renault 18",
+    "categoria": "T. Pista Clase 3"
+  },
+  {
+    "nro": 100,
+    "fecha": "02/09/1984",
+    "corredor": "BESSONE Ernesto",
+    "marca": "Datsun",
+    "categoria": "Club Arg. Pilotos"
+  },
+  {
+    "nro": 101,
+    "fecha": "05/12/1984",
+    "corredor": "BONOMO Omar",
+    "marca": "Fiat 128",
+    "categoria": "T. Pista Clase 2"
+  },
+  {
+    "nro": 102,
+    "fecha": "05/12/1984",
+    "corredor": "DE PAOLI Ricardo",
+    "marca": "Renault 18",
+    "categoria": "T. Pista Clase 3"
+  },
+  {
+    "nro": 103,
+    "fecha": "05/12/1984",
+    "corredor": "BESSONE Ernesto",
+    "marca": "Datsun",
+    "categoria": "Club Arg. Pilotos"
+  },
+  {
+    "nro": 104,
+    "fecha": "14/04/1985",
+    "corredor": "ETCHEGARAY Miguel",
+    "marca": "Renault",
+    "categoria": "For. Renault Arg"
+  },
+  {
+    "nro": 105,
+    "fecha": "14/04/1985",
+    "corredor": "DARAY Rubén",
+    "marca": "Ford Sierra",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 106,
+    "fecha": "25/05/1985",
+    "corredor": "ROMAGNOLI Víctor",
+    "marca": "Renault",
+    "categoria": "For. Renault Arg"
+  },
+  {
+    "nro": 107,
+    "fecha": "26/05/1985",
+    "corredor": "KISSLING Guillermo",
+    "marca": "Berta",
+    "categoria": "For. 2 Codasur"
+  },
+  {
+    "nro": 108,
+    "fecha": "06/05/1985",
+    "corredor": "BESSONE Ernesto",
+    "marca": "Renault",
+    "categoria": "T. Pista Clase 2"
+  },
+  {
+    "nro": 109,
+    "fecha": "06/05/1985",
+    "corredor": "COSTANZO Ricardo",
+    "marca": "Alfa Romeo",
+    "categoria": "T. Pista Clase 3"
+  },
+  {
+    "nro": 110,
+    "fecha": "01/09/1985",
+    "corredor": "FERNANDINO Esteban",
+    "marca": "Renault 18",
+    "categoria": "Club Arg. Pilotos"
+  },
+  {
+    "nro": 111,
+    "fecha": "27/04/1986",
+    "corredor": "ZANATTA René",
+    "marca": "Datsun 280",
+    "categoria": "Club Arg. Pilotos"
+  },
+  {
+    "nro": 112,
+    "fecha": "27/04/1986",
+    "corredor": "OLTRA Silvio",
+    "marca": "Nissan 300",
+    "categoria": "Club Arg. Pilotos"
+  },
+  {
+    "nro": 113,
+    "fecha": "25/05/1986",
+    "corredor": "FURLAN Néstor",
+    "marca": "Renault",
+    "categoria": "F. Renault Arg."
+  },
+  {
+    "nro": 114,
+    "fecha": "25/05/1986",
+    "corredor": "KISSLING Guillermo",
+    "marca": "Berta - Renault",
+    "categoria": "For. 2 Codasur"
+  },
+  {
+    "nro": 115,
+    "fecha": "07/09/1986",
+    "corredor": "PEREYRA Oscar",
+    "marca": "Renault",
+    "categoria": "F. Renault Arg."
+  },
+  {
+    "nro": 116,
+    "fecha": "07/09/1986",
+    "corredor": "MINERVINO Luis",
+    "marca": "Renault",
+    "categoria": "For. EntreCor"
+  },
+  {
+    "nro": 117,
+    "fecha": "07/09/1986",
+    "corredor": "TRAVERSO Juan M.",
+    "marca": "Renault Fuego",
+    "categoria": "T.C. 2000"
+  },
+  {
+    "nro": 118,
+    "fecha": "07/09/1986",
+    "corredor": "BONOMO Omar",
+    "marca": "V.W.",
+    "categoria": "T. Pista Clase 2"
+  },
+  {
+    "nro": 119,
+    "fecha": "19/10/1986",
+    "corredor": "BREARD Eugenio",
+    "marca": "Alfa Romeo",
+    "categoria": "T. Pista Clase 3"
+  },
+  {
+    "nro": 120,
+    "fecha": "19/10/1986",
+    "corredor": "FINESCHI Oscar",
+    "marca": "Ford Sierra",
+    "categoria": "Fórmula Sierra"
+  },
+  {
+    "nro": 121,
+    "fecha": "20/03/1987",
+    "corredor": "LOPEZ Osvaldo",
+    "marca": "Nissan",
+    "categoria": "Club A. Pilotos"
+  },
+  {
+    "nro": 122,
+    "fecha": "20/03/1987",
+    "corredor": "REDOLFI Hugo",
+    "marca": "Datsun",
+    "categoria": "Club A. Pilotos"
+  },
+  {
+    "nro": 123,
+    "fecha": "07/06/1987",
+    "corredor": "MOURAS Roberto",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 124,
+    "fecha": "02/08/1987",
+    "corredor": "MARTIN Henry",
+    "marca": "Crespi-Renault",
+    "categoria": "F. Renault Arg."
+  },
+  {
+    "nro": 125,
+    "fecha": "02/08/1987",
+    "corredor": "GENTILE Norberto",
+    "marca": "Renault",
+    "categoria": "F. 2 Nacional"
+  },
+  {
+    "nro": 126,
+    "fecha": "02/08/1987",
+    "corredor": "OLTRA Silvio",
+    "marca": "Renault",
+    "categoria": "T.C. 2000"
+  },
+  {
+    "nro": 127,
+    "fecha": "15/05/1988",
+    "corredor": "FRIEDRICH Leonel",
+    "marca": "VW",
+    "categoria": "F. 2 Codasur"
+  },
+  {
+    "nro": 128,
+    "fecha": "04/09/1988",
+    "corredor": "MALDONADO G.",
+    "marca": "Berta -VW",
+    "categoria": "T.C. 2000"
+  },
+  {
+    "nro": 129,
+    "fecha": "04/09/1988",
+    "corredor": "MARTIN Henry",
+    "marca": "Crespi-Renault",
+    "categoria": "F. Renault Arg."
+  },
+  {
+    "nro": 130,
+    "fecha": "04/09/1988",
+    "corredor": "MASSEY Gabriel",
+    "marca": "Crespi-Renault",
+    "categoria": "F. 2 Nacional"
+  },
+  {
+    "nro": 131,
+    "fecha": "10/09/1989",
+    "corredor": "GRINOVERO Ricardo",
+    "marca": "Berta VW",
+    "categoria": "F. 2 Nacional"
+  },
+  {
+    "nro": 132,
+    "fecha": "10/09/1989",
+    "corredor": "BOVONE Daniel",
+    "marca": "Berta VW",
+    "categoria": "F. Renault Elf"
+  },
+  {
+    "nro": 133,
+    "fecha": "10/09/1989",
+    "corredor": "TRAVERSO Juan M.",
+    "marca": "Renault-Fuego",
+    "categoria": "T.C 2000"
+  },
+  {
+    "nro": 134,
+    "fecha": "02/09/1990",
+    "corredor": "GORRINI Rolando",
+    "marca": "Berta Ranault",
+    "categoria": "F. 2 Nacional"
+  },
+  {
+    "nro": 135,
+    "fecha": "02/09/1990",
+    "corredor": "TRAVERSO Juan M.",
+    "marca": "Renault Fuego",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 136,
+    "fecha": "21/10/1990",
+    "corredor": "RAMA-VERDIER",
+    "marca": "Chevy",
+    "categoria": "Stock Car"
+  },
+  {
+    "nro": 137,
+    "fecha": "21/10/1990",
+    "corredor": "MARTINEZ Omar",
+    "marca": "Crespi-Renault",
+    "categoria": "For. Renault Elf"
+  },
+  {
+    "nro": 138,
+    "fecha": "21/10/1990",
+    "corredor": "BULLA Rubén",
+    "marca": "Nissan 300",
+    "categoria": "Club A. Pilotos"
+  },
+  {
+    "nro": 139,
+    "fecha": "15/09/1991",
+    "corredor": "MARTINEZ Omar",
+    "marca": "Crespi-Renault",
+    "categoria": "For. Renault Elf"
+  },
+  {
+    "nro": 140,
+    "fecha": "15/10/1991",
+    "corredor": "TRAVERSO Juan M.",
+    "marca": "Renault-Fuego",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 141,
+    "fecha": "15/10/1991",
+    "corredor": "RAFU Pablo",
+    "marca": "Ford Sierra",
+    "categoria": "T. Pista F. Sierra"
+  },
+  {
+    "nro": 142,
+    "fecha": "15/12/1991",
+    "corredor": "GIOVANETTI Ariel",
+    "marca": "Renault 18GTX",
+    "categoria": "T. Clase 3"
+  },
+  {
+    "nro": 143,
+    "fecha": "15/12/1991",
+    "corredor": "ZANATTA René",
+    "marca": "VW Gacel",
+    "categoria": "T. Clase 2"
+  },
+  {
+    "nro": 144,
+    "fecha": "15/12/1991",
+    "corredor": "MASSEY Gabriel",
+    "marca": "Berta - Gacel",
+    "categoria": "F. 2 Nacional"
+  },
+  {
+    "nro": 145,
+    "fecha": "06/09/1992",
+    "corredor": "BENITEZ Marcelo",
+    "marca": "Crespi",
+    "categoria": "F. Renault Elf"
+  },
+  {
+    "nro": 146,
+    "fecha": "06/09/1992",
+    "corredor": "PALUMBO Carlos",
+    "marca": "Berta VW",
+    "categoria": "F. 2 Nacional"
+  },
+  {
+    "nro": 147,
+    "fecha": "06/09/1992",
+    "corredor": "BESSONE Ernesto",
+    "marca": "Ford Sierra",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 148,
+    "fecha": "14/03/1993",
+    "corredor": "SANCHEZ Roberto",
+    "marca": "Crespi-Renault",
+    "categoria": "F. Renault Elf"
+  },
+  {
+    "nro": 149,
+    "fecha": "14/03/1993",
+    "corredor": "TRAVERSO Juan M.",
+    "marca": "Renault Fuego",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 150,
+    "fecha": "14/03/1993",
+    "corredor": "VERNA Rafael",
+    "marca": "Ford Escort",
+    "categoria": "T. Nacional C.2"
+  },
+  {
+    "nro": 151,
+    "fecha": "25/04/1993",
+    "corredor": "DEL CAMPO Gerardo",
+    "marca": "Ford Escort",
+    "categoria": "T. Nacional C. 3"
+  },
+  {
+    "nro": 152,
+    "fecha": "25/04/1993",
+    "corredor": "FIERROS Hugo",
+    "marca": "Ford Sierra",
+    "categoria": "T. Nacional C. 4"
+  },
+  {
+    "nro": 153,
+    "fecha": "11/07/1993",
+    "corredor": "DOUMUC Marcelo",
+    "marca": "Nissan 300",
+    "categoria": "Club A. Pilotos"
+  },
+  {
+    "nro": 154,
+    "fecha": "11/07/1993",
+    "corredor": "ACUÑA Fabián",
+    "marca": "Ford",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 155,
+    "fecha": "12/09/1993",
+    "corredor": "ORTELLI Guillermo",
+    "marca": "Crespi-Renault",
+    "categoria": "For. Renault Elf"
+  },
+  {
+    "nro": 156,
+    "fecha": "12/09/1993",
+    "corredor": "BELLOSO Luis",
+    "marca": "Renault Fuego",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 157,
+    "fecha": "12/09/1993",
+    "corredor": "PATTI Roberto",
+    "marca": "Ford Escort",
+    "categoria": "T. Pista Clase 2"
+  },
+  {
+    "nro": 158,
+    "fecha": "15/05/1994",
+    "corredor": "BONOMO Omar",
+    "marca": "VW Gol",
+    "categoria": "T. Pista Clase 3"
+  },
+  {
+    "nro": 159,
+    "fecha": "15/05/1994",
+    "corredor": "GERETTO Mario",
+    "marca": "Renault 18",
+    "categoria": "T. Pista Clase 4"
+  },
+  {
+    "nro": 160,
+    "fecha": "05/06/1994",
+    "corredor": "IGLESIAS Fernando",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 161,
+    "fecha": "05/06/1994",
+    "corredor": "SATRIANO Cristian",
+    "marca": "Nissan 300",
+    "categoria": "S. Turismo 3000"
+  },
+  {
+    "nro": 162,
+    "fecha": "04/09/1994",
+    "corredor": "SMITH Brian",
+    "marca": "Crespi-Renault",
+    "categoria": "For. Renault Elf"
+  },
+  {
+    "nro": 163,
+    "fecha": "04/09/1994",
+    "corredor": "MASSEI Gabriel",
+    "marca": "Berta-Renault",
+    "categoria": "Súper Renault"
+  },
+  {
+    "nro": 164,
+    "fecha": "04/09/1994",
+    "corredor": "ZANATTA René",
+    "marca": "Ford Sierra",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 165,
+    "fecha": "18/12/1994",
+    "corredor": "DI GIACINTI Guillermo",
+    "marca": "Crespi-Renault",
+    "categoria": "For. Renault Elf"
+  },
+  {
+    "nro": 166,
+    "fecha": "18/12/1994",
+    "corredor": "ORTELLI Guillermo",
+    "marca": "Ford Escort",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 167,
+    "fecha": "18/06/1995",
+    "corredor": "ARMELLINI Lucas",
+    "marca": "Crespi-Renault",
+    "categoria": "For. Renault Elf"
+  },
+  {
+    "nro": 168,
+    "fecha": "18/06/1995",
+    "corredor": "ETCHEGARAY Miguel",
+    "marca": "Renault 19 RT",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 169,
+    "fecha": "13/08/1995",
+    "corredor": "SPINELLA Juan J.",
+    "marca": "Nissan 300",
+    "categoria": "S. Turismo 3000"
+  },
+  {
+    "nro": 170,
+    "fecha": "13/08/1995",
+    "corredor": "TRAVERSO-GUERRA",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 171,
+    "fecha": "01/10/1995",
+    "corredor": "PERCAZ Néstor",
+    "marca": "Ford Escort",
+    "categoria": "T. N. Clase 2"
+  },
+  {
+    "nro": 172,
+    "fecha": "01/10/1995",
+    "corredor": "CANELA Oscar",
+    "marca": "Renault 18",
+    "categoria": "T. N. Clase 3"
+  },
+  {
+    "nro": 173,
+    "fecha": "02/06/1996",
+    "corredor": "CONIGLIO Pablo",
+    "marca": "Nissan 300",
+    "categoria": "G. T. I."
+  },
+  {
+    "nro": 174,
+    "fecha": "02/06/1996",
+    "corredor": "DI PALMA Rubén L.",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 175,
+    "fecha": "23/06/1996",
+    "corredor": "BASSO Martín",
+    "marca": "Crespi-Renault",
+    "categoria": "F. Renault Arg."
+  },
+  {
+    "nro": 176,
+    "fecha": "23/06/1996",
+    "corredor": "FLAUMER Néstor",
+    "marca": "Berta-Renault",
+    "categoria": "Súper Renault"
+  },
+  {
+    "nro": 177,
+    "fecha": "14/07/1996",
+    "corredor": "BULLA-DEMATEO",
+    "marca": "Dodge",
+    "categoria": "SuperCard"
+  },
+  {
+    "nro": 178,
+    "fecha": "01/09/1996",
+    "corredor": "MARTINEZ Omar",
+    "marca": "Renault 19",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 179,
+    "fecha": "15/12/1996",
+    "corredor": "BASSO Martín",
+    "marca": "Crespi-Renault",
+    "categoria": "F. Renault Elf"
+  },
+  {
+    "nro": 180,
+    "fecha": "15/12/1996",
+    "corredor": "FLAUMER Néstor",
+    "marca": "TOM´S",
+    "categoria": "F. Súper Renault"
+  },
+  {
+    "nro": 181,
+    "fecha": "06/04/1997",
+    "corredor": "HERNAMDEZ Walter",
+    "marca": "VW Polo",
+    "categoria": "T. C. 2000 1º"
+  },
+  {
+    "nro": 182,
+    "fecha": "06/04/1997",
+    "corredor": "DER OHANESSIAN G.",
+    "marca": "VW Polo",
+    "categoria": "T. C. 2000 2º"
+  },
+  {
+    "nro": 183,
+    "fecha": "18/05/1997",
+    "corredor": "FLAQUE Fabián",
+    "marca": "Crespi-Renault",
+    "categoria": "For. Renault Elf"
+  },
+  {
+    "nro": 184,
+    "fecha": "18/05/1997",
+    "corredor": "FLAUMER Néstor",
+    "marca": "TOM´S",
+    "categoria": "F. Súper Renault"
+  },
+  {
+    "nro": 185,
+    "fecha": "20/07/1997",
+    "corredor": "OYHANART Mariano",
+    "marca": "Nissan 300",
+    "categoria": "G. T. I."
+  },
+  {
+    "nro": 186,
+    "fecha": "20/07/1997",
+    "corredor": "ACUÑA Fabián",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 187,
+    "fecha": "31/08/1997",
+    "corredor": "JUNQUEIRA Bruno",
+    "marca": "Dall. Opel",
+    "categoria": "F. 3 Sud"
+  },
+  {
+    "nro": 188,
+    "fecha": "07/12/1997",
+    "corredor": "ARMELLINI Lucas",
+    "marca": "Crespi Renault",
+    "categoria": "For. Renault Elf"
+  },
+  {
+    "nro": 189,
+    "fecha": "07/12/1997",
+    "corredor": "FLAUMER Néstor",
+    "marca": "TOM´S",
+    "categoria": "F. Súper Renault"
+  },
+  {
+    "nro": 190,
+    "fecha": "21/12/1997",
+    "corredor": "MARTIN Henry",
+    "marca": "Ford Escort",
+    "categoria": "T. C. 2000 1º"
+  },
+  {
+    "nro": 191,
+    "fecha": "21/12/1997",
+    "corredor": "TADEI Gustavo",
+    "marca": "Ford Escort",
+    "categoria": "T. C. 2000 2ª"
+  },
+  {
+    "nro": 192,
+    "fecha": "08/1998",
+    "corredor": "Susp. por Accidente",
+    "marca": "",
+    "categoria": ""
+  },
+  {
+    "nro": 193,
+    "fecha": "26/09/1999",
+    "corredor": "FONTANA Gustavo",
+    "marca": "Ford",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 194,
+    "fecha": "26/09/1999",
+    "corredor": "ACUÑA Fabián",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 195,
+    "fecha": "31/10/1999",
+    "corredor": "BASSO Martín",
+    "marca": "Ralt",
+    "categoria": "F. 3 Sud"
+  },
+  {
+    "nro": 196,
+    "fecha": "07/11/1999",
+    "corredor": "HERNANDEZ Walter",
+    "marca": "VW",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 197,
+    "fecha": "07/11/1999",
+    "corredor": "HERNANDEZ Walter",
+    "marca": "VW",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 198,
+    "fecha": "30/10/2000",
+    "corredor": "LAZURICA Sebastián",
+    "marca": "Chevrolet",
+    "categoria": "T. Pista"
+  },
+  {
+    "nro": 199,
+    "fecha": "30/10/2000",
+    "corredor": "DI PALMA Marcos",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 200,
+    "fecha": "18/06/2000",
+    "corredor": "GUERRIERI Esteban",
+    "marca": "Crespi",
+    "categoria": "FRA"
+  },
+  {
+    "nro": 201,
+    "fecha": "18/06/2000",
+    "corredor": "SOTO Pablo",
+    "marca": "Dallara",
+    "categoria": "Súper Renault"
+  },
+  {
+    "nro": 202,
+    "fecha": "30/07/2000",
+    "corredor": "BESSONE Ernesto",
+    "marca": "Chrysler Neon",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 203,
+    "fecha": "30/07/2000",
+    "corredor": "BESSONE Ernesto",
+    "marca": "Chrysler Neon",
+    "categoria": "Top Race"
+  },
+  {
+    "nro": 204,
+    "fecha": "30/07/2000",
+    "corredor": "BESSONE Ernesto",
+    "marca": "Chrysler Neon",
+    "categoria": "Top Race"
+  },
+  {
+    "nro": 205,
+    "fecha": "10/09/2000",
+    "corredor": "AVENTIN Diego",
+    "marca": "Mustang",
+    "categoria": "GTA"
+  },
+  {
+    "nro": 206,
+    "fecha": "10/09/2000",
+    "corredor": "SAIZ Carlos",
+    "marca": "Ch. Corvette",
+    "categoria": "GTA"
+  },
+  {
+    "nro": 207,
+    "fecha": "10/09/2000",
+    "corredor": "AZAR Javier",
+    "marca": "Chevrolet",
+    "categoria": "Pick Up"
+  },
+  {
+    "nro": 208,
+    "fecha": "10/10/2000",
+    "corredor": "MADERO Nicolás",
+    "marca": "Dodge",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 209,
+    "fecha": "10/10/2000",
+    "corredor": "DI PALMA José Luis",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 210,
+    "fecha": "18/03/2001",
+    "corredor": "HERNANDEZ Walter",
+    "marca": "Ford Escort",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 211,
+    "fecha": "20/05/2001",
+    "corredor": "MERLINO Maximiliano",
+    "marca": "Crespi",
+    "categoria": "FRA"
+  },
+  {
+    "nro": 212,
+    "fecha": "20/05/2001",
+    "corredor": "REDOLFI Pablo",
+    "marca": "TOM´S",
+    "categoria": "Súper Renault"
+  },
+  {
+    "nro": 213,
+    "fecha": "01/07/2001",
+    "corredor": "GIANINI Juan Pablo",
+    "marca": "Ford",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 214,
+    "fecha": "01/07/2001",
+    "corredor": "URRETAVISCAYA R.",
+    "marca": "Ford",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 215,
+    "fecha": "26/08/2001",
+    "corredor": "VUYOVICH Nicolás",
+    "marca": "VW Gol Ab9",
+    "categoria": "T. N. Cl.-2"
+  },
+  {
+    "nro": 216,
+    "fecha": "26/08/2001",
+    "corredor": "MASSEI Gabriel",
+    "marca": "XR3 Zetec",
+    "categoria": "T. N. Ci.-3"
+  },
+  {
+    "nro": 217,
+    "fecha": "25/08/2002",
+    "corredor": "SOTO Pablo",
+    "marca": "Dodge",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 218,
+    "fecha": "25/08/2002",
+    "corredor": "AVENTIN Diego",
+    "marca": "Ford",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 219,
+    "fecha": "2003",
+    "corredor": "ORTELLI Guillermo",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 220,
+    "fecha": "05/09/2004",
+    "corredor": "DIRUSCIO Sebastián",
+    "marca": "Chevrolet",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 221,
+    "fecha": "05/09/2004",
+    "corredor": "BESSONE Ernesto",
+    "marca": "Dodge",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 222,
+    "fecha": "14/11/2004",
+    "corredor": "BOSIO Ezequiel",
+    "marca": "Crespi",
+    "categoria": "For. Renault Elf"
+  },
+  {
+    "nro": 223,
+    "fecha": "14/11/2004",
+    "corredor": "CANTONATTI Gabriel",
+    "marca": "TOM´S",
+    "categoria": "Súper Renault"
+  },
+  {
+    "nro": 224,
+    "fecha": "14/11/2004",
+    "corredor": "KRUJOSKI Alfredo",
+    "marca": "Megane",
+    "categoria": "Copa Megane"
+  },
+  {
+    "nro": 225,
+    "fecha": "14/11/2004",
+    "corredor": "BUGLIOTTI Marcelo",
+    "marca": "Chevrolet Astra",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 226,
+    "fecha": "12/06/2005",
+    "corredor": "ORTELLI Guillermo",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 227,
+    "fecha": "12/06/2005",
+    "corredor": "BOSIO Ezequiel",
+    "marca": "Dodge",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 228,
+    "fecha": "04/09/2005",
+    "corredor": "PONCE DE LEON Gabriel",
+    "marca": "Ford Focus",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 229,
+    "fecha": "04/09/2005",
+    "corredor": "ANGELINI Juan M.",
+    "marca": "Crespi-Renault",
+    "categoria": "Renault Elf"
+  },
+  {
+    "nro": 230,
+    "fecha": "04/09/2005",
+    "corredor": "",
+    "marca": "",
+    "categoria": "Copa Megane"
+  },
+  {
+    "nro": 231,
+    "fecha": "04/09/2005",
+    "corredor": "CARDOZO Zeca",
+    "marca": "Dallara F. 301",
+    "categoria": "Form. 3 Sudam."
+  },
+  {
+    "nro": 232,
+    "fecha": "04/09/2005",
+    "corredor": "NUÑEZ Diego",
+    "marca": "Dallara F. 301",
+    "categoria": "Form. 3 Sudam."
+  },
+  {
+    "nro": 233,
+    "fecha": "09/2006",
+    "corredor": "BOSIO Ezequiel",
+    "marca": "Dodge",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 234,
+    "fecha": "16/07/2006",
+    "corredor": "Susp. por Accidente",
+    "marca": "",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 235,
+    "fecha": "15/10/2006",
+    "corredor": "Ariel Pacho",
+    "marca": "Volkswagen",
+    "categoria": "Top Race"
+  },
+  {
+    "nro": 236,
+    "fecha": "29/08/2007",
+    "corredor": "TREBBIANI Jorge",
+    "marca": "Dodge",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 237,
+    "fecha": "29/08/2007",
+    "corredor": "ROSSI Matías",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 238,
+    "fecha": "13/07/2008",
+    "corredor": "TREBBIANI Jorge",
+    "marca": "Dodge",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 239,
+    "fecha": "13/07/2008",
+    "corredor": "MORIATIS Emanuel",
+    "marca": "Ford",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 240,
+    "fecha": "24/05/2009",
+    "corredor": "TREBBIANI Jorge",
+    "marca": "Dodge",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 241,
+    "fecha": "24/05/2009",
+    "corredor": "FONTANA Norberto",
+    "marca": "Dodge",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 242,
+    "fecha": "23/05/2010",
+    "corredor": "TRUCCO Juan Martín",
+    "marca": "Dodge",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 243,
+    "fecha": "23/05/2010",
+    "corredor": "CASTELLANO Jhonatan",
+    "marca": "Dodge",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 244,
+    "fecha": "03/07/2011",
+    "corredor": "GILES Germán",
+    "marca": "Dodge",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 245,
+    "fecha": "03/07/2011",
+    "corredor": "ANGELINI Juan M.",
+    "marca": "Dodge",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 246,
+    "fecha": "08/07/2012",
+    "corredor": "ROSSI M.",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 247,
+    "fecha": "08/07/2012",
+    "corredor": "PORTO Sebastian",
+    "marca": "Chevrolet",
+    "categoria": "T.C."
+  },
+  {
+    "nro": 248,
+    "fecha": "12/08/2012",
+    "corredor": "LOPEZ José M.",
+    "marca": "YPF Chevrolet",
+    "categoria": "Súper T.C. 2000"
+  },
+  {
+    "nro": 249,
+    "fecha": "12/04/2013",
+    "corredor": "SANTERO Julián",
+    "marca": "",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 250,
+    "fecha": "03/06/2013",
+    "corredor": "LOPEZ José M.",
+    "marca": "Dodge",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 251,
+    "fecha": "03/06/2013",
+    "corredor": "MANGONI Santiago",
+    "marca": "Ford",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 252,
+    "fecha": "23/03/2014",
+    "corredor": "CALAMARI Daniel",
+    "marca": "",
+    "categoria": "For. Renault"
+  },
+  {
+    "nro": 253,
+    "fecha": "23/03/2014",
+    "corredor": "CALAMARI Daniel",
+    "marca": "",
+    "categoria": "For. Renault"
+  },
+  {
+    "nro": 254,
+    "fecha": "23/03/2014",
+    "corredor": "FONTANA Norberto",
+    "marca": "Chevrolet Cruze",
+    "categoria": "Sup. T. C. 2000"
+  },
+  {
+    "nro": 255,
+    "fecha": "31/08/2014",
+    "corredor": "LEDESMA C.",
+    "marca": "Chevrolet",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 256,
+    "fecha": "31/08/2014",
+    "corredor": "ECHEVERRIA C.",
+    "marca": "Dodge",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 257,
+    "fecha": "28/06/2015",
+    "corredor": "MARINO Emiliano",
+    "marca": "",
+    "categoria": "Form. Renault 2.0"
+  },
+  {
+    "nro": 258,
+    "fecha": "28/06/2015",
+    "corredor": "MOGGIA Martín",
+    "marca": "",
+    "categoria": "Form. 2.0"
+  },
+  {
+    "nro": 259,
+    "fecha": "28/06/2015",
+    "corredor": "GIROLAMI “Bebu”",
+    "marca": "Peugeot 408",
+    "categoria": "Sup. T. C. 2000"
+  },
+  {
+    "nro": 260,
+    "fecha": "18/08/2015",
+    "corredor": "CINGOLANI Domingo",
+    "marca": "Fiat Línea",
+    "categoria": "Sup. T. C. 2000"
+  },
+  {
+    "nro": 261,
+    "fecha": "18/08/2015",
+    "corredor": "VUYOVICH Pablo",
+    "marca": "Clio",
+    "categoria": "T. Pista Clase 3"
+  },
+  {
+    "nro": 262,
+    "fecha": "18/08/2015",
+    "corredor": "BESSONE Luis",
+    "marca": "Chevrolet Corsa",
+    "categoria": "T. Pista Clase 3"
+  },
+  {
+    "nro": 263,
+    "fecha": "06/09/2015",
+    "corredor": "MARTINEZ “Gury”",
+    "marca": "Ford",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 264,
+    "fecha": "06/09/2015",
+    "corredor": "RUGGIERO Alan",
+    "marca": "Ford",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 265,
+    "fecha": "14/08/2016",
+    "corredor": "WERNER Gabriel",
+    "marca": "Ford",
+    "categoria": "T. Carretera"
+  },
+  {
+    "nro": 266,
+    "fecha": "14/08/2016",
+    "corredor": "URRETAVIZCAYA Tomás",
+    "marca": "",
+    "categoria": "T. C. Pista"
+  },
+  {
+    "nro": 267,
+    "fecha": "02/10/2016",
+    "corredor": "CINGOLANI Tomás",
+    "marca": "Fiat Línea",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 268,
+    "fecha": "02/10/2016",
+    "corredor": "MOGGIA Martín",
+    "marca": "Fiat Línea",
+    "categoria": "T. C. 2000"
+  },
+  {
+    "nro": 269,
+    "fecha": "02/06/2018",
+    "corredor": "BASTÍAS E.",
+    "marca": "",
+    "categoria": "Fórmula 2"
+  },
+  {
+    "nro": 270,
+    "fecha": "03/06/2018",
+    "corredor": "MOSCARDINI N.",
+    "marca": "",
+    "categoria": "Fórmula 2"
+  },
+  {
+    "nro": 271,
+    "fecha": "03/06/2018",
+    "corredor": "CHAPUR F.",
+    "marca": "",
+    "categoria": "STC 2000"
+  },
+  {
+    "nro": 272,
+    "fecha": "29/07/2018",
+    "corredor": "LANVIRIS M.",
+    "marca": "Ford",
+    "categoria": "TC"
+  },
+  {
+    "nro": 273,
+    "fecha": "29/07/2018",
+    "corredor": "VAZQUEZ M.",
+    "marca": "Dodge",
+    "categoria": "TC Pista"
+  },
+  {
+    "nro": 274,
+    "fecha": "08/10/2017",
+    "corredor": "SPATARO E.",
+    "marca": "Torino",
+    "categoria": "TC"
+  },
+  {
+    "nro": 275,
+    "fecha": "08/10/2017",
+    "corredor": "MUCHIUT M.",
+    "marca": "Ford",
+    "categoria": "TC Pista"
+  },
+  {
+    "nro": 276,
+    "fecha": "02/07/2017",
+    "corredor": "SPATARO E.",
+    "marca": "Renault",
+    "categoria": "Super TC 2000"
+  },
+  {
+    "nro": 277,
+    "fecha": "02/07/2017",
+    "corredor": "ROSSO S.",
+    "marca": "",
+    "categoria": "Fórmula 2"
+  },
+  {
+    "nro": 278,
+    "fecha": "02/07/2017",
+    "corredor": "ROSSO S.",
+    "marca": "",
+    "categoria": "Fórmula 2"
+  },
+  {
+    "nro": 279,
+    "fecha": "31/03/2019",
+    "corredor": "YOSSEN J. WINNE D.",
+    "marca": "Baquet",
+    "categoria": ""
+  },
+  {
+    "nro": 280,
+    "fecha": "26/05/2019",
+    "corredor": "URCERA Juan M.",
+    "marca": "Chevrolet",
+    "categoria": "TC"
+  },
+  {
+    "nro": 281,
+    "fecha": "26/05/2019",
+    "corredor": "CIANTINI Diego",
+    "marca": "Ford",
+    "categoria": "TC Pista"
+  },
+  {
+    "nro": 282,
+    "fecha": "08/09/2019",
+    "corredor": "LONDERO Ayrton",
+    "marca": "Ford",
+    "categoria": "TC Pista"
+  },
+  {
+    "nro": 283,
+    "fecha": "11/09/2019",
+    "corredor": "CANAPINO Agustín",
+    "marca": "Chevrolet",
+    "categoria": "TC"
+  },
+  {
+    "nro": 284,
+    "fecha": "12/09/2021",
+    "corredor": "LEDESMA Cristian",
+    "marca": "Chevrolet",
+    "categoria": "TC"
+  },
+  {
+    "nro": 285,
+    "fecha": "12/09/2021",
+    "corredor": "ALVAREZ Santiago",
+    "marca": "Dodge",
+    "categoria": "TC Pista"
+  }
+]
