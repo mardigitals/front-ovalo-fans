@@ -669,7 +669,7 @@ export const CIRCUITOS = [
     sentido: 'horario y anti-horario',
     trazados:'5',
     epoca:'Actualidad',
-    foto: '/public/images/historia/circuitos/autodromo-rafaela.png',
+    foto:'/public/images/historia/circuitos/autodromo-rafaela.png',    
     detalle:'El Autódromo "Ciudad de Rafaela" con todas sus variantes.'
   },
   

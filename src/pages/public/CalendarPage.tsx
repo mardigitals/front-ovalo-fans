@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import logo from '@/assets/icons/logo-autodromo-negro.png';
+import autodromoRafaela from '/public/images/historia/circuitos/autodromo-rafaela-2.png';
 import api from '@/api/axios';
 import CalendarioVisualizador from '@/components/ui/Calendar';
 import ButtonHome from '@/components/ui/ButtonHome';
@@ -33,11 +33,11 @@ const CalendarPage = () => {
       <header className="absolute top-0 w-full h-[50vh] flex-shrink-0 overflow-hidden bg-gradient-to-r from-transparent via-white/20 to-transparent z-0">
         <div className="absolute inset-0">
           <img 
-            src={logo} 
-            alt="Logo Autódromo de Rafaela" 
-            className="w-full h-full object-cover opacity-10 dark:opacity-90" 
+            src={autodromoRafaela} 
+            alt="Autódromo de Rafaela" 
+            className="w-full h-full object-cover opacity-85 dark:opacity-90" 
           />          
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc/80 to-zinc dark:via-[#08060d]/80 dark:to-[#08060d]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-white dark:via-[#08060d]/80 dark:to-[#08060d]" />
         </div>
       </header>  
 
@@ -49,7 +49,7 @@ const CalendarPage = () => {
       <section className="relative z-10 flex flex-col px-4 py-16 md:py-20 w-full max-w-6xl mx-auto flex-grow">
      
         {/* HERO SECTION */}
-        <div className="w-full mb-12 border-b border-slate-300 dark:border-white/10 pb-8">
+        <div className="mb-12 pt-0 border-b border-slate-400 dark:border-white/10 pb-2">
           <h1 className="title-fan text-4xl md:text-5xl dark:text-white uppercase tracking-tighter mb-4">
             Calendario <span className="title-fan text-4xl md:text-5xl">de eventos</span>
           </h1>
@@ -59,7 +59,7 @@ const CalendarPage = () => {
         </div>
 
         {/* CONTENEDOR DEL CALENDARIO */}
-        <div className="w-full w-full animate-in fade-in slide-in-from-bottom-8 duration-700">
+        <div className="w-full w-full pt-12 object-cover animate-in fade-in slide-in-from-bottom-8 duration-700">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center min-h-[400px] bg-white/50 dark:bg-black/20 backdrop-blur-md rounded-3xl border border-slate-200 dark:border-white/10">
               <div className="w-12 h-12 border-4 border-institucional-celeste border-t-transparent rounded-full animate-spin mb-4"></div>
