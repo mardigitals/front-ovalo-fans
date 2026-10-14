@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, CheckCircle2, AlertOctagon } from "lucide-react";
+import { X, CheckCircle2, AlertOctagon, Clock } from "lucide-react";
 
 interface GenericPayProps {
   onSelectPlan: (nivelId: number) => void; 
@@ -8,7 +8,7 @@ interface GenericPayProps {
   subtitulo?: string; 
   membresias: any[]; 
   planActualId?: number | null; 
-  estadoUsuario?: string | null; // 🔥 NUEVO: Recibe si está Vencido, Activo, etc.
+  estadoUsuario?: string | null; 
 }
 
 const GenericPay = ({ onSelectPlan, isLoading = false, titulo, subtitulo, membresias, planActualId, estadoUsuario }: GenericPayProps) => {
@@ -44,22 +44,24 @@ const GenericPay = ({ onSelectPlan, isLoading = false, titulo, subtitulo, membre
             </div>
         )}
 
-        {/* Si solo hay 1 tarjeta (ej. para pagar deuda), la centramos con justify-center */}
         <div className={`flex flex-wrap gap-6 mt-8 ${membresias.length === 1 ? 'justify-center' : 'grid grid-cols-1 md:grid-cols-3'}`}>
           {membresias.map((membresia, index) => {
             const estilosBase = obtenerEstilosTarjeta(index);
             const esPlanActual = planActualId === membresia.id;
             
-            // 🔥 LÓGICA DE DEUDA: Si es su plan, y está Vencido o Cancelado
+            // 🔥 VERIFICAMOS SI ESTÁ VENCIDO O PENDIENTE
             const tieneDeuda = esPlanActual && (estadoUsuario === 'Vencido' || estadoUsuario === 'Cancelado');
+            const estaPendiente = esPlanActual && estadoUsuario === 'Pendiente';
 
             let claseBorde = `${estilosBase.border} ${estilosBase.shadow} hover:scale-[1.01]`;
             
-            if (esPlanActual && !tieneDeuda) {
+            if (esPlanActual && !tieneDeuda && !estaPendiente) {
                 claseBorde = 'border-institucional-celeste/70 scale-[1.02] z-10 shadow-[0_0_25px_rgba(6,182,212,0.15)] ring-2 ring-institucional-celeste/20';
             } else if (tieneDeuda) {
-                // Estilo de peligro si está vencido
                 claseBorde = 'border-red-500/70 scale-[1.02] z-10 shadow-[0_0_25px_rgba(239,68,68,0.2)] ring-2 ring-red-500/20';
+            } else if (estaPendiente) {
+                // 🔥 Estilo Amarillo de Advertencia para el Pendiente
+                claseBorde = 'border-yellow-500/70 scale-[1.02] z-10 shadow-[0_0_25px_rgba(234,179,8,0.2)] ring-2 ring-yellow-500/20';
             }
 
             return (
@@ -68,22 +70,28 @@ const GenericPay = ({ onSelectPlan, isLoading = false, titulo, subtitulo, membre
                 className={`border-2 p-6 rounded-2xl text-center relative flex flex-col bg-white dark:bg-[#0a0f16] transition-all duration-300 w-full md:max-w-sm ${claseBorde}`}
               >
                 
-                {estilosBase.badge && !esPlanActual && !tieneDeuda && (
+                {estilosBase.badge && !esPlanActual && !tieneDeuda && !estaPendiente && (
                   <span className={`absolute -top-3 left-1/2 -translate-x-1/2 ${index === 0 ? 'bg-yellow-500' : 'bg-sky-500'} text-black px-3 py-1 text-[10px] font-black rounded-full tracking-widest`}>
                     {estilosBase.badge}
                   </span>
                 )}
                 
-                {esPlanActual && !tieneDeuda && (
+                {esPlanActual && !tieneDeuda && !estaPendiente && (
                   <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-institucional-celeste text-white px-4 py-1.5 text-xs font-black rounded-full tracking-widest shadow-[0_0_10px_rgba(6,182,212,0.4)] whitespace-nowrap">
                     TU PLAN ACTUAL
                   </span>
                 )}
 
-                {/* Badge de deuda */}
                 {tieneDeuda && (
                   <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-1.5 text-xs font-black rounded-full tracking-widest shadow-[0_0_10px_rgba(239,68,68,0.4)] flex items-center gap-1 whitespace-nowrap">
                     <AlertOctagon size={14}/> DEUDA PENDIENTE
+                  </span>
+                )}
+
+                {/* 🔥 BADGE PENDIENTE */}
+                {estaPendiente && (
+                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-yellow-500 text-black px-4 py-1.5 text-xs font-black rounded-full tracking-widest shadow-[0_0_10px_rgba(234,179,8,0.4)] flex items-center gap-1 whitespace-nowrap">
+                    <Clock size={14}/> PAGO INICIADO
                   </span>
                 )}
 
@@ -98,20 +106,22 @@ const GenericPay = ({ onSelectPlan, isLoading = false, titulo, subtitulo, membre
                 </button>
                 
                 <div className="flex-grow flex flex-col justify-end mt-6">
-                  <p className={`text-2xl font-black mb-4 ${esPlanActual && !tieneDeuda ? 'text-institucional-celeste' : tieneDeuda ? 'text-red-500' : 'text-slate-800 dark:text-white'}`}>
+                  <p className={`text-2xl font-black mb-4 ${esPlanActual && !tieneDeuda && !estaPendiente ? 'text-institucional-celeste' : tieneDeuda ? 'text-red-500' : estaPendiente ? 'text-yellow-500' : 'text-slate-800 dark:text-white'}`}>
                     {formatearPrecio(membresia.precio_mensual)} <span className="text-sm font-medium opacity-60">/ mes</span>
                   </p>
                   
-                  {/* 🔥 BOTÓN INTELIGENTE */}
+                  {/* 🔥 BOTÓN MULTIESTADO */}
                   <button 
                     onClick={() => onSelectPlan(membresia.id)} 
-                    disabled={isLoading || (esPlanActual && !tieneDeuda)}
+                    disabled={isLoading || (esPlanActual && !tieneDeuda && !estaPendiente)}
                     className={`w-full py-3.5 rounded-xl font-black transition-all uppercase tracking-wide
                         ${tieneDeuda 
-                            ? 'bg-red-500 hover:bg-red-600 text-white shadow-lg shadow-red-500/30' // ROJO PARA PAGAR
-                            : esPlanActual && !tieneDeuda
-                                ? 'bg-institucional-celeste/10 text-institucional-celeste border border-institucional-celeste/30 cursor-default opacity-100' // AZUL PLAN ACTIVO
-                                : `${estilosBase.btn} disabled:opacity-50 disabled:cursor-wait` // NORMAL SELECCIONAR
+                            ? 'bg-red-500 hover:bg-red-600 text-white shadow-lg shadow-red-500/30' 
+                            : estaPendiente
+                                ? 'bg-yellow-500 hover:bg-yellow-400 text-black shadow-lg shadow-yellow-500/30' // AMARILLO PARA REINTENTAR
+                                : esPlanActual
+                                    ? 'bg-institucional-celeste/10 text-institucional-celeste border border-institucional-celeste/30 cursor-default opacity-100' 
+                                    : `${estilosBase.btn} disabled:opacity-50 disabled:cursor-wait`
                         }`
                     }
                   >
@@ -119,9 +129,11 @@ const GenericPay = ({ onSelectPlan, isLoading = false, titulo, subtitulo, membre
                         ? 'Procesando...' 
                         : tieneDeuda 
                             ? 'Pagar Cuota' 
-                            : esPlanActual 
-                                ? 'Plan Activo' 
-                                : 'Seleccionar'}
+                            : estaPendiente
+                                ? 'Reintentar Pago' 
+                                : esPlanActual 
+                                    ? 'Plan Activo' 
+                                    : 'Seleccionar'}
                   </button>
                 </div>
               </div>
@@ -130,7 +142,7 @@ const GenericPay = ({ onSelectPlan, isLoading = false, titulo, subtitulo, membre
         </div>
       </div>
 
-      {/* Modal de Beneficios Dinámico (Mismo código de siempre...) */}
+      {/* Modal de Beneficios Dinámico */}
       {membresiaActiva && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
           <div className="w-full max-w-md bg-white/95 dark:bg-[#08060d]/95 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl relative p-6 md:p-8 animate-in zoom-in-95 duration-300">

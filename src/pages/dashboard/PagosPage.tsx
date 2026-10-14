@@ -16,17 +16,14 @@ const PagosPage = () => {
     useEffect(() => {
         const fetchDatosFinancieros = async () => {
             try {
-                // 1. Buscamos el Perfil
                 const perfilRes = await api.get('/usuario-auth/perfil');
-                const estado = perfilRes.data.estadoSuscripcion || 'Pendiente';
+                const estado = perfilRes.data.estadoSuscripcion || 'Sin Suscripción';
                 setEstadoSuscripcion(estado);
                 
-                // 🔥 CORRECCIÓN: Guardamos el ID del plan actual SIEMPRE (esté Activo, Vencido o Cancelado)
                 if (perfilRes.data.suscripcion) {
                     setMembresiaActualId(perfilRes.data.suscripcion.membresia_id);
                 }
 
-                // 2. Promesas en paralelo para Pagos y Membresías
                 const [pagosRes, membresiasRes] = await Promise.all([
                     api.get('/pagos/mis-pagos').catch(() => ({ data: [] })),
                     api.get('/membresia').catch(() => ({ data: [] }))
@@ -34,7 +31,6 @@ const PagosPage = () => {
                 
                 setHistorialPagos(pagosRes.data || []);
 
-                // 3. Filtramos las dadas de baja y las ordenamos por precio
                 const activas = membresiasRes.data
                     .filter((m: any) => !m.eliminado_en)
                     .sort((a: any, b: any) => b.precio_mensual - a.precio_mensual);
@@ -43,7 +39,7 @@ const PagosPage = () => {
 
             } catch (err) {
                 console.error("Error al cargar datos financieros:", err);
-                setEstadoSuscripcion('Pendiente');
+                setEstadoSuscripcion('Sin Suscripción');
                 setHistorialPagos([]);
             } finally {
                 setCargandoDatos(false);
@@ -87,11 +83,12 @@ const PagosPage = () => {
             );
         }
 
+        // 🔥 NUEVO: Manejo del estado Pendiente
         if (estadoSuscripcion === 'Pendiente') {
             return (
-                <div className="text-center space-y-2 mb-8">
-                    <h2 className="title-fan text-center text-3xl pb-4 md:text-5xl">Elegí una membresía</h2>
-                    <p className="text-slate-500 font-medium">Adherite para obtener los beneficios.</p>
+                <div className="text-center space-y-2 mb-8 animate-in fade-in zoom-in duration-500">
+                    <h2 className="title-fan text-center text-yellow-500 text-3xl pb-4 md:text-5xl">Completá tu pago</h2>
+                    <p className="text-slate-500 font-medium">Tenés una transacción en proceso. Reintentá el pago para volver a pista.</p>
                 </div>
             );
         }
@@ -104,11 +101,18 @@ const PagosPage = () => {
                 </div>
             );
         }
-        return null; 
+
+        // Si es "Sin Suscripción" (Usuario nuevo)
+        return (
+            <div className="text-center space-y-2 mb-8">
+                <h2 className="title-fan text-center text-3xl pb-4 md:text-5xl">Elegí una membresía</h2>
+                <p className="text-slate-500 font-medium">Adherite para obtener los beneficios.</p>
+            </div>
+        );
     };
 
-    // 🔥 FILTRO ESTRICTO: Si está Vencido/Cancelado, SOLO mostramos la tarjeta que adeuda
-    const membresiasAMostrar = (estadoSuscripcion === 'Vencido' || estadoSuscripcion === 'Cancelado')
+    // 🔥 FILTRO ESTRICTO: Ahora también filtramos si está 'Pendiente'
+    const membresiasAMostrar = (estadoSuscripcion === 'Vencido' || estadoSuscripcion === 'Cancelado' || estadoSuscripcion === 'Pendiente')
         ? membresiasActivas.filter(m => m.id === membresiaActualId)
         : membresiasActivas;
 
@@ -141,7 +145,7 @@ const PagosPage = () => {
                         isLoading={isLoading} 
                         membresias={membresiasAMostrar} 
                         planActualId={membresiaActualId} 
-                        estadoUsuario={estadoSuscripcion} // 🔥 NUEVO: Le pasamos el estado para que cambie el color del botón
+                        estadoUsuario={estadoSuscripcion} 
                     />
                 ) : !cargandoDatos && (
                     <div className="text-center py-10 text-slate-500 border-2 border-dashed border-slate-200 dark:border-white/10 rounded-2xl">
