@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Wallet2, AlertTriangle, Receipt } from 'lucide-react';
-import GenericPay from '@/components/ui/GenericPay'; // Ajustá la ruta si es necesario
+import GenericPay from '@/components/ui/GenericPay';
 import api from '@/api/axios';
 
 const PagosPage = () => {
@@ -8,8 +8,9 @@ const PagosPage = () => {
     const [error, setError] = useState('');
     
     const [estadoSuscripcion, setEstadoSuscripcion] = useState<string | null>(null);
+    const [membresiaActualId, setMembresiaActualId] = useState<number | null>(null);
     const [historialPagos, setHistorialPagos] = useState<any[]>([]);
-    const [membresiasActivas, setMembresiasActivas] = useState<any[]>([]); // 🔥 NUEVO ESTADO
+    const [membresiasActivas, setMembresiasActivas] = useState<any[]>([]);
     const [cargandoDatos, setCargandoDatos] = useState(true);
 
     useEffect(() => {
@@ -19,9 +20,13 @@ const PagosPage = () => {
                 const perfilRes = await api.get('/usuario-auth/perfil');
                 const estado = perfilRes.data.estadoSuscripcion || 'Pendiente';
                 setEstadoSuscripcion(estado);
+                
+                // 🔥 CORRECCIÓN: Guardamos el ID del plan actual SIEMPRE (esté Activo, Vencido o Cancelado)
+                if (perfilRes.data.suscripcion) {
+                    setMembresiaActualId(perfilRes.data.suscripcion.membresia_id);
+                }
 
-        
-                // 3. Promesas en paralelo para Pagos y Membresías (Más rápido)
+                // 2. Promesas en paralelo para Pagos y Membresías
                 const [pagosRes, membresiasRes] = await Promise.all([
                     api.get('/pagos/mis-pagos').catch(() => ({ data: [] })),
                     api.get('/membresia').catch(() => ({ data: [] }))
@@ -29,7 +34,7 @@ const PagosPage = () => {
                 
                 setHistorialPagos(pagosRes.data || []);
 
-                // 🔥 4. Filtramos las dadas de baja y las ordenamos por precio de mayor a menor
+                // 3. Filtramos las dadas de baja y las ordenamos por precio
                 const activas = membresiasRes.data
                     .filter((m: any) => !m.eliminado_en)
                     .sort((a: any, b: any) => b.precio_mensual - a.precio_mensual);
@@ -77,12 +82,12 @@ const PagosPage = () => {
             return (
                 <div className="text-center space-y-2 mb-8">
                     <h2 className="title-fan text-center text-3xl pb-4 md:text-5xl">¿Querés modificar tu plan?</h2>
-                    <p className="text-slate-500 font-medium">Elegí una nueva membresía para subir de nivel.</p>
+                    <p className="text-slate-500 font-medium">Elegí una nueva membresía para hacer un Upgrade o Downgrade.</p>
                 </div>
             );
         }
 
-          if (estadoSuscripcion === 'Pendiente') {
+        if (estadoSuscripcion === 'Pendiente') {
             return (
                 <div className="text-center space-y-2 mb-8">
                     <h2 className="title-fan text-center text-3xl pb-4 md:text-5xl">Elegí una membresía</h2>
@@ -91,17 +96,21 @@ const PagosPage = () => {
             );
         }
         
-        
         if (estadoSuscripcion === 'Vencido' || estadoSuscripcion === 'Cancelado') {
             return (
-                <div className="text-center space-y-2 mb-8">
-                    <h2 className="title-fan text-center text-3xl pb-4 md:text-5xl">Renová tu suscripción</h2>
+                <div className="text-center space-y-2 mb-8 animate-in fade-in zoom-in duration-500">
+                    <h2 className="title-fan text-center text-red-500 text-3xl pb-4 md:text-5xl">Renová tu suscripción</h2>
                     <p className="text-slate-500 font-medium">Regularizá tu pago para seguir disfrutando del Autódromo.</p>
                 </div>
             );
         }
         return null; 
     };
+
+    // 🔥 FILTRO ESTRICTO: Si está Vencido/Cancelado, SOLO mostramos la tarjeta que adeuda
+    const membresiasAMostrar = (estadoSuscripcion === 'Vencido' || estadoSuscripcion === 'Cancelado')
+        ? membresiasActivas.filter(m => m.id === membresiaActualId)
+        : membresiasActivas;
 
     return (
         <div className="max-w-4xl mx-auto space-y-10 pb-12">
@@ -126,13 +135,13 @@ const PagosPage = () => {
            <section className="bg-white/5 p-4 md:p-8 rounded-3xl border border-white/5">
                 {renderizarTitulos()}
                 
-                {/* 🔥 LE PASAMOS LAS MEMBRESÍAS DINÁMICAS AL COMPONENTE */}
                 {!cargandoDatos && membresiasActivas.length > 0 ? (
                     <GenericPay 
                         onSelectPlan={handlePayment} 
                         isLoading={isLoading} 
-                        membresias={membresiasActivas} 
-                        // 🔥 Eliminamos las líneas de titulo y subtitulo acá para que no se dupliquen
+                        membresias={membresiasAMostrar} 
+                        planActualId={membresiaActualId} 
+                        estadoUsuario={estadoSuscripcion} // 🔥 NUEVO: Le pasamos el estado para que cambie el color del botón
                     />
                 ) : !cargandoDatos && (
                     <div className="text-center py-10 text-slate-500 border-2 border-dashed border-slate-200 dark:border-white/10 rounded-2xl">
@@ -141,6 +150,7 @@ const PagosPage = () => {
                 )}
             </section>
             
+            {/* Historial de Pagos... */}
             <section className="bg-white dark:bg-[#110c1b] border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-xl">
                 <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-white/5">
                     <Receipt className="text-institucional-celeste" />
