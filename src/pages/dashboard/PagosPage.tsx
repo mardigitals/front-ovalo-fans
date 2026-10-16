@@ -78,7 +78,7 @@ const PagosPage = () => {
             return (
                 <div className="text-center space-y-2 mb-8">
                     <h2 className="title-fan text-center text-3xl pb-4 md:text-5xl">¿Querés modificar tu plan?</h2>
-                    <p className="text-slate-500 font-medium">Elegí una nueva membresía para hacer un Upgrade o Downgrade.</p>
+                    <p className="text-slate-500 font-medium">Modificá tu actual membresía <span className="subtitle-fan">P{membresiaActualId}</span> por otra</p>
                 </div>
             );
         }
