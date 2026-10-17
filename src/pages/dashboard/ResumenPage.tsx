@@ -13,6 +13,7 @@ import { EventosPieChart } from '@/components/ui/EventosPieChart';
 import { ContenidoRadarChart } from '@/components/ui/ContenidoRadarChart';
 import { VisualizacionesBarChart } from '@/components/ui/VisualizacionesBarChart';
 import ValidadorDni from '@/components/ui/ValidadorDni';
+import ChicanaFavorita from '@/components/ui/ChicanaFavorita';
 
 const ResumenPage = () => {
     const [perfil, setPerfil] = useState<any>(null);
@@ -337,17 +338,7 @@ const ResumenPage = () => {
                                     </p>
                                 </div>
                             </div>
-                            <div className="bg-white dark:bg-[#161024] border border-slate-200 dark:border-white/5 rounded-2xl p-5 flex items-center gap-4 shadow-sm">
-                                <div className="p-3 bg-amber-500/10 text-amber-500 rounded-xl">
-                                    <Star size={24} />
-                                </div>
-                                <div>
-                                    <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">Tu Chicana Favorita</p>
-                                    <p className="text-lg font-black text-slate-800 dark:text-white truncate max-w-[180px]">
-                                        {perfil?.perfil_fan?.chicana_favorita || 'Curvón del Óvalo'}
-                                    </p>
-                                </div>
-                            </div>
+                            <ChicanaFavorita chicanaEscogida={perfil?.perfil_fan?.chicana_favorita} />
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
