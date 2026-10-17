@@ -52,6 +52,7 @@ import EvolucionCircuitosPage from '@/pages/public/EvolucionCircuitosPage';
 import ScrollToTop from '@/components/ui/ScrollToTop';
 import RecordsPage from '@/pages/public/RecordsPage';
 import GanadoresPage from '@/pages/public/GanadoresPage';
+import ReactivarCuentaPage from '@/pages/dashboard/ReactivarCuentaPage';
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -83,6 +84,7 @@ const AppRoutes = () => (
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <Route path="/reactivar-cuenta" element={<ReactivarCuentaPage />} />
       <Route path="/terms-conditions" element={<TermsConditionsPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
      
