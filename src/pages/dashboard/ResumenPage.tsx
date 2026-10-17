@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User, Shield, Calendar, X, QrCode, CheckCircle, Clock, Award, Star } from 'lucide-react';
+import { User, Shield, Calendar, X, QrCode, CheckCircle, Clock, Award } from 'lucide-react';
 import api from '@/api/axios';
 
 // --- IMPORTACIONES COMPONENTES UI CHARTS Y TABLE---
