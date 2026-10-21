@@ -10,6 +10,7 @@ const PagosPage = () => {
     const [estadoSuscripcion, setEstadoSuscripcion] = useState<string | null>(null);
     const [membresiaActualId, setMembresiaActualId] = useState<number | null>(null);
     const [historialPagos, setHistorialPagos] = useState<any[]>([]);
+    const [suscripcionActual, setSuscripcionActual] = useState<any | null>(null);
     const [membresiasActivas, setMembresiasActivas] = useState<any[]>([]);
     const [cargandoDatos, setCargandoDatos] = useState(true);
 
@@ -22,6 +23,7 @@ const PagosPage = () => {
                 
                 if (perfilRes.data.suscripcion) {
                     setMembresiaActualId(perfilRes.data.suscripcion.membresia_id);
+                    setSuscripcionActual(perfilRes.data.suscripcion);
                 }
 
                 const [pagosRes, membresiasRes] = await Promise.all([
@@ -146,6 +148,7 @@ const PagosPage = () => {
                         membresias={membresiasAMostrar} 
                         planActualId={membresiaActualId} 
                         estadoUsuario={estadoSuscripcion} 
+                        fechaFinSuscripcion={suscripcionActual?.fecha_fin}
                     />
                 ) : !cargandoDatos && (
                     <div className="text-center py-10 text-slate-500 border-2 border-dashed border-slate-200 dark:border-white/10 rounded-2xl">

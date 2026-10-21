@@ -21,13 +21,13 @@ const ChicanaFavorita = ({ chicanaEscogida }: { chicanaEscogida: string }) => {
       case '2 de adentro':
         return {
           nombre: 'CHICANA 2 (Adentro)',
-          img: '/public/images/chicana 2 adentro.jpg',
+          img: '/public/images/chicana 2.jpg',
           desc: ''
         };
       case '2 de afuera':
         return {
           nombre: 'CHICANA 2 (Afuera)',
-          img: '/public/images/chicana 2 afuera.jpg',
+          img: '/public/images/chicana 2.jpg',
           desc: ''
         };
       case '3':
