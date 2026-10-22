@@ -13,6 +13,7 @@ const PagosPage = () => {
     const [suscripcionActual, setSuscripcionActual] = useState<any | null>(null);
     const [membresiasActivas, setMembresiasActivas] = useState<any[]>([]);
     const [cargandoDatos, setCargandoDatos] = useState(true);
+    const [suscripcionPendienteInfo, setSuscripcionPendienteInfo] = useState<any | null>(null);
 
     useEffect(() => {
         const fetchDatosFinancieros = async () => {
@@ -24,6 +25,9 @@ const PagosPage = () => {
                 if (perfilRes.data.suscripcion) {
                     setMembresiaActualId(perfilRes.data.suscripcion.membresia_id);
                     setSuscripcionActual(perfilRes.data.suscripcion);
+                    if (estado === 'Pendiente') {
+                        setSuscripcionPendienteInfo(perfilRes.data.suscripcion);
+                    }
                 }
 
                 const [pagosRes, membresiasRes] = await Promise.all([
@@ -55,9 +59,21 @@ const PagosPage = () => {
         setIsLoading(true);
         setError('');
 
-        try {
-            const suscripcionResponse = await api.post('/suscripcion', { membresia_id: membresiaId });
-            const pagoResponse = await api.post('/pagos/generar-link', { suscripcion_id: suscripcionResponse.data.id });
+       try {
+            let idSuscripcionAPagar = null;
+
+            // 🔥 LOGICA: Si está PENDIENTE y aprieta "Reintentar" en la misma membresía
+            if (estadoSuscripcion === 'Pendiente' && membresiaActualId === membresiaId && suscripcionPendienteInfo) {
+                // NO creamos suscripción nueva. Usamos la que ya está pendiente.
+                idSuscripcionAPagar = suscripcionPendienteInfo.id;
+            } else {
+                // Es un pago nuevo normal
+                const suscripcionResponse = await api.post('/suscripcion', { membresia_id: membresiaId });
+                idSuscripcionAPagar = suscripcionResponse.data.id;
+            }
+
+            // Generamos el link de pago con el ID correspondiente
+            const pagoResponse = await api.post('/pagos/generar-link', { suscripcion_id: idSuscripcionAPagar });
 
             if (pagoResponse.data.url_sandbox) {
                 window.location.href = pagoResponse.data.url_sandbox; 
@@ -69,6 +85,20 @@ const PagosPage = () => {
             const msg = err.response?.data?.message || 'Error al procesar la suscripción.';
             setError(Array.isArray(msg) ? msg[0] : msg);
         } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const cancelarPendiente = async () => {
+        setIsLoading(true);
+        try {
+            // Le sacamos el ID de la URL. El backend ya sabe quién es el usuario por el token.
+            await api.delete('/suscripcion/pendiente'); 
+            
+            // Recargamos la página para que vuelva a traer los datos limpios (Vencido o Activo anterior)
+            window.location.reload(); 
+        } catch (error) {
+            setError("No se pudo cancelar la operación. Intentá de nuevo.");
             setIsLoading(false);
         }
     };
@@ -149,6 +179,7 @@ const PagosPage = () => {
                         planActualId={membresiaActualId} 
                         estadoUsuario={estadoSuscripcion} 
                         fechaFinSuscripcion={suscripcionActual?.fecha_fin}
+                        onCancelarPendiente={cancelarPendiente}
                     />
                 ) : !cargandoDatos && (
                     <div className="text-center py-10 text-slate-500 border-2 border-dashed border-slate-200 dark:border-white/10 rounded-2xl">
