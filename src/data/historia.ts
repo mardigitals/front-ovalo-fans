@@ -410,7 +410,7 @@ export const HOMENAJES = [
     nombre: 'Ero Borgogno',
     rol: 'Dirigente',
     foto: '/public/images/historia/fama/ero-borgogno.jpg',
-    descripcion: 'Para "Chispa", el autódromo era su segundo hogar. Fue un pilar histórico de la Subcomisión de Automovilismo de Atlético de Rafaela durante 45 años. En su honor, hoy un paseo con su nombre recorre el camino de la ciudad hacia el autódromo.'
+    descripcion: 'Para "Chispa", el autódromo era su segundo hogar. Fue un pilar histórico de la Subcomisión de Automovilismo, ejerciendo la presidencia, durante 45 años. En su honor, hoy un paseo con su nombre recorre el camino de la ciudad hacia el autódromo.'
   },
   {
     id: 9,
