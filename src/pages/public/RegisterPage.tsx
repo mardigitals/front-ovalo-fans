@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '@/api/axios';
 import GenericPay from '@/components/ui/GenericPay';
 
@@ -13,6 +13,7 @@ const RegisterPage = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [authId, setAuthId] = useState<number | null>(null);
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         nombre: '', apellido: '', dni: '', fecha_nacimiento: '', genero: 'M',
@@ -141,9 +142,21 @@ const RegisterPage = () => {
             localStorage.setItem('token', newToken);
             api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
 
-            await api.post('/perfil-fan', perfilFanPayload, {
+            const perfilRes = await api.post('/perfil-fan', perfilFanPayload, {
                 headers: { Authorization: `Bearer ${newToken}` } 
             });
+
+            //  SI ES SOCIO VERIFICADO DE ATLÉTICO AL DÍA -> SALTEA EL PAGO Y VA AL DASHBOARD CON P3 ACTIVO
+            if (perfilRes.data.bonificado_socio_ar) {
+                alert('¡Socio de Atlético de Rafaela verificado! Tenés tu membresía P3 FAN bonificada al 100%. ¡Bienvenido a pista!');
+                navigate('/dashboard/resumen');
+                return;
+            }
+
+            // Si tildó "Soy socio" pero no estaba en el padrón o estaba moroso, le avisamos y pasa al Paso 3
+            if (perfilRes.data.aviso_socio) {
+                setError(perfilRes.data.aviso_socio);
+            }
 
             setStep(3);
         } catch (err: any) {
@@ -197,7 +210,7 @@ const RegisterPage = () => {
             {/* Tarjeta con soporte Claro/Oscuro */}
             <div className={`w-full ${step === 1 ? 'max-w-md' : 'max-w-4xl'} p-8 bg-white/80 dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl dark:shadow-sky-500/20 transition-all duration-500`}>
                 
-                {error && (
+                {error && step !== 3 && (
                     <div className="mb-6 bg-red-500/10 border border-red-500/20 text-red-500 text-sm p-3 rounded text-center font-bold">
                         {error}
                     </div>
@@ -463,7 +476,30 @@ const RegisterPage = () => {
 
                 {/* --- UI PASO 3: PAGO --- */}
                 {step === 3 && (
-                    <GenericPay onSelectPlan={handlePayment} isLoading={isLoading} membresias={membresias} titulo="Membresías disponibles" subtitulo="Selecciona el plan que mejor se adapte a vos" />
+                    <div className="space-y-6">
+                        {error && (
+                            <div className="p-4 bg-amber-500/10 border border-amber-500/30 text-amber-400 rounded-xl text-center font-bold text-sm flex items-center justify-center gap-2 animate-in fade-in duration-300">
+                                <span>⚠️</span> {error}
+                            </div>
+                        )}
+                        <GenericPay 
+                            onSelectPlan={handlePayment} 
+                            isLoading={isLoading} 
+                            membresias={membresias} 
+                            titulo="Membresías disponibles" 
+                            subtitulo="Selecciona el plan que mejor se adapte a vos" 
+                        />
+                        
+                        {/* Botón para volver al menú / inicio */}
+                        <div className="text-center pt-4">
+                            <Link 
+                                to="/dashboard/resumen" 
+                                className="inline-block py-3 px-6 rounded-xl text-xs font-black uppercase tracking-widest text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
+                            >
+                                ← Ir al dashboard
+                            </Link>
+                        </div>
+                    </div>
                 )}
 
             </div>
