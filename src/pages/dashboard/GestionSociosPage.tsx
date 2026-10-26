@@ -103,78 +103,80 @@ const GestionSociosPage = () => {
       </div>
 
       {/* TABLA DE SOCIOS */}
-      <div className="bg-white dark:bg-[#0a0f16] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden shadow-sm min-h-[400px] relative">
-        
-        {isLoadingSocios ? (
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-sky-500">
-             <Loader2 className="animate-spin mb-4" size={40} />
-             <p className="text-slate-500 font-bold uppercase tracking-widest text-sm">Cargando grilla...</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-slate-50 dark:bg-white/5 border-b border-slate-200 dark:border-white/10">
-                  <th className="p-4 text-xs font-black uppercase text-slate-500 tracking-wider">Socio</th>
-                  <th className="p-4 text-xs font-black uppercase text-slate-500 tracking-wider">Membresía</th>
-                  <th className="p-4 text-xs font-black uppercase text-slate-500 tracking-wider">Período</th>
-                  <th className="p-4 text-xs font-black uppercase text-slate-500 tracking-wider text-right">Pagos</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtrados.map(socio => {
-                  const nombreSocio = socio.perfilFan?.usuario?.nombre ? `${socio.perfilFan.usuario.nombre} ${socio.perfilFan.usuario.apellido}` : socio.perfilFan?.alias || 'Socio Desconocido';
-                  
-                  return (
-                    <tr key={socio.id} className="border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
-                      <td className="p-4">
-                        <div className="flex flex-col">
-                          <span className="font-bold text-slate-800 dark:text-white capitalize">{nombreSocio}</span>
-                          {/* El DNI sirve como validación rápida para el administrativo */}
-                          <span className="text-xs text-slate-500">DNI: {socio.perfilFan?.usuario?.dni || '-'}</span>
-                        </div>
-                      </td>
-                      <td className="p-4">
-                        <span className="inline-flex items-center px-2.5 py-1 bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 rounded-lg text-xs font-bold uppercase tracking-wide">
-                          {socio.membresia?.nombre || 'Plan N/A'}
-                        </span>
-                      </td>
-                      <td className="p-4">
-                        {socio.fecha_inicio ? (
-                          <div className="flex flex-col text-sm text-slate-600 dark:text-slate-300">
-                            <span className="flex items-center gap-1"><Calendar size={12} className="text-slate-400"/> {new Date(socio.fecha_inicio).toLocaleDateString('es-AR')}</span>
-                            <span className="flex items-center gap-1 opacity-70">
-                              <span className="text-[10px] uppercase font-bold text-slate-400 ml-1">Vence:</span> 
-                              {new Date(socio.fecha_fin).toLocaleDateString('es-AR')}
-                            </span>
+      <div className="p-4">
+        <div className="bg-white dark:bg-[#0a0f16] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden shadow-sm min-h-[400px] relative">
+          
+          {isLoadingSocios ? (
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-sky-500">
+              <Loader2 className="animate-spin mb-4" size={40} />
+              <p className="text-slate-500 font-bold uppercase tracking-widest text-sm">Cargando grilla...</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-slate-50 dark:bg-white/5 border-b border-slate-200 dark:border-white/10">
+                    <th className="p-4 text-xs font-black uppercase text-slate-500 tracking-wider">Socio</th>
+                    <th className="p-4 text-xs font-black uppercase text-slate-500 tracking-wider">Membresía</th>
+                    <th className="p-4 text-xs font-black uppercase text-slate-500 tracking-wider">Período</th>
+                    <th className="p-4 text-xs font-black uppercase text-slate-500 tracking-wider text-right">Pagos</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtrados.map(socio => {
+                    const nombreSocio = socio.perfilFan?.usuario?.nombre ? `${socio.perfilFan.usuario.nombre} ${socio.perfilFan.usuario.apellido}` : socio.perfilFan?.alias || 'Socio Desconocido';
+                    
+                    return (
+                      <tr key={socio.id} className="border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                        <td className="p-4">
+                          <div className="flex flex-col">
+                            <span className="font-bold text-slate-800 dark:text-white capitalize">{nombreSocio}</span>
+                            {/* El DNI sirve como validación rápida para el administrativo */}
+                            <span className="text-xs text-slate-500">DNI: {socio.perfilFan?.usuario?.dni || '-'}</span>
                           </div>
-                        ) : (
-                          <span className="text-xs text-slate-400 italic">Esperando pago...</span>
-                        )}
-                      </td>
-                      <td className="p-4 text-right">
-                        <button 
-                          onClick={() => handleAbrirHistorial(socio)}
-                          className="inline-flex items-center justify-center p-2 text-slate-400 hover:text-sky-500 hover:bg-sky-500/10 border border-slate-200 dark:border-white/10 rounded-xl transition-all shadow-sm"
-                          title="Ver Historial de Pagos"
-                        >
-                          <Receipt size={20} />
-                        </button>
+                        </td>
+                        <td className="p-4">
+                          <span className="inline-flex items-center px-2.5 py-1 bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 rounded-lg text-xs font-bold uppercase tracking-wide">
+                            {socio.membresia?.nombre || 'Plan N/A'}
+                          </span>
+                        </td>
+                        <td className="p-4">
+                          {socio.fecha_inicio ? (
+                            <div className="flex flex-col text-sm text-slate-600 dark:text-slate-300">
+                              <span className="flex items-center gap-1"><Calendar size={12} className="text-slate-400"/> {new Date(socio.fecha_inicio).toLocaleDateString('es-AR')}</span>
+                              <span className="flex items-center gap-1 opacity-70">
+                                <span className="text-[10px] uppercase font-bold text-slate-400 ml-1">Vence:</span> 
+                                {new Date(socio.fecha_fin).toLocaleDateString('es-AR')}
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="text-xs text-slate-400 italic">Esperando pago...</span>
+                          )}
+                        </td>
+                        <td className="p-4 text-right">
+                          <button 
+                            onClick={() => handleAbrirHistorial(socio)}
+                            className="inline-flex items-center justify-center p-2 text-slate-400 hover:text-sky-500 hover:bg-sky-500/10 border border-slate-200 dark:border-white/10 rounded-xl transition-all shadow-sm"
+                            title="Ver Historial de Pagos"
+                          >
+                            <Receipt size={20} />
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                  {filtrados.length === 0 && (
+                    <tr>
+                      <td colSpan={4} className="p-12 text-center text-slate-500">
+                        No se encontraron socios en estado <span className="font-bold uppercase text-slate-400">{activeTab}</span>.
                       </td>
                     </tr>
-                  )
-                })}
-                {filtrados.length === 0 && (
-                  <tr>
-                    <td colSpan={4} className="p-12 text-center text-slate-500">
-                      No se encontraron socios en estado <span className="font-bold uppercase text-slate-400">{activeTab}</span>.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        )}
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* MODAL DE HISTORIAL DE PAGOS */}
