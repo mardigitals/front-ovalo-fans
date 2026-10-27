@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import  logo  from "@/assets/icons/logo-autodromo-color.png";
+
 
 const obtenerEstadoDinamico = (fechaInicioStr: string, fechaFinStr?: string) => {
   if (!fechaInicioStr) return 'PROGRAMADO';
@@ -75,13 +77,13 @@ const Calendar = ({ eventos }: { eventos: any[] }) => {
             
             let glassStyle = "bg-cyan-500/20 dark:bg-cyan-400/20 subtitle-fan shadow-[0_0_15px_rgba(14,165,233,0.3)] border-cyan-500/30";
             if (estadoVirtual === 'FINALIZADO') {
-              glassStyle = "bg-slate-500/15 dark:bg-slate-400/20 text-slate-700 dark:text-slate-300 border-slate-500/30";
+               glassStyle = "bg-slate-500/15 dark:bg-slate-400/20 text-slate-700 dark:text-slate-300 border-slate-500/30";
             }
 
-            return (
+           return (
               <div 
                 key={ev.id} 
-                className={`${glassStyle} backdrop-blur-md border text-[11px] md:text-xs font-bold uppercase px-2 py-1 rounded-lg shadow-sm truncate cursor-help transition-all hover:scale-[1.02]`}
+                className={`${glassStyle} backdrop-blur-md border text-[10px] md:text-xs font-bold uppercase px-1.5 py-1 rounded-lg shadow-sm whitespace-normal break-words leading-tight cursor-pointer transition-all hover:scale-[1.02]`}
                 title={`${ev.titulo} - ${new Date(ev.fecha_evento).toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'})}`}
               >
                 {ev.titulo}
@@ -96,9 +98,15 @@ const Calendar = ({ eventos }: { eventos: any[] }) => {
   return (
     <div className="subtitle-fan text-sm  bg-sky-500 px-2 py-1 rounded-2xl hover:text-sky-500 transition-colors shadow-[0_0_15px_rgba(14,165,233,0.3)] p-5 md:p-8 w-full">
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
-        <h2 className="subtitle-fan text-base md:text-lg text-slate-700 dark:text-slate-200 flex items-center gap-2">
-          <CalendarIcon size={18} className="text-institucional-celeste" /> Calendario Oficial
+        <h2 className="subtitle-fan md:text-lg flex items-center gap-2">
+           <div className="flex items-center gap-2">
+              <img src={logo} alt="Logo Autódromo" className="h-4 md:h-7 w-auto" />
+            </div>
+         Calendario Oficial
         </h2>
+
+       
+          
         
         <div className="flex items-center gap-4 bg-slate-100/80 dark:bg-black/50 border border-slate-200 dark:border-white/10 rounded-full px-3 py-1.5 shadow-[0_0_15px_rgba(14,165,233,0.3)] backdrop-blur-md">
           <button type="button" onClick={prevMonth} className="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 transition-colors">
@@ -117,6 +125,16 @@ const Calendar = ({ eventos }: { eventos: any[] }) => {
         <button onClick={goToday} className="text-xs subtitle-fan hover:text-sky-400 uppercase tracking-widest transition-colors shadow-[0_0_15px_rgba(14,165,233,0.3)] py-1 px-3 rounded-full hover:bg-institucional-celeste/10">
           Ir a Hoy
         </button>
+      </div>
+
+      <div className="md:flex-row justify-between gap-4 mb-8">
+        <span className="bg-slate-500/15 m-2 dark:bg-slate-400/20 text-slate-700 dark:text-slate-300 border-slate-500/30 backdrop-blur-md border text-[11px] md:text-xs font-bold uppercase px-2 py-1 rounded-lg shadow-sm truncate cursor-help transition-all hover:scale-[1.02]">
+           FINALIZADO
+        </span>
+        <span className="bg-cyan-500/20 dark:bg-cyan-400/20 subtitle-fan shadow-[0_0_15px_rgba(14,165,233,0.3)] border-cyan-500/30 backdrop-blur-md border text-[11px] md:text-xs font-bold uppercase px-2 py-1 rounded-lg shadow-sm truncate cursor-help transition-all hover:scale-[1.02]">
+           PROGRAMADO
+        </span>
+      
       </div>
 
       <div className="grid grid-cols-7 gap-2 mb-3">
