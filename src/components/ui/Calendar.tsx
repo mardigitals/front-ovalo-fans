@@ -96,7 +96,7 @@ const Calendar = ({ eventos }: { eventos: any[] }) => {
   });
 
   return (
-    <div className="subtitle-fan text-sm  bg-sky-500 px-2 py-1 rounded-2xl hover:text-sky-500 transition-colors shadow-[0_0_15px_rgba(14,165,233,0.3)] mt-4 p-5 md:p-8 w-full">
+    <div className="bg-white/80 dark:bg-[#0c0914]/80 backdrop-blur-xl rounded-3xl border border-slate-200 dark:border-white/10 transition-colors shadow-[0_0_15px_rgba(14,165,233,0.3)] mt-4 p-5 md:p-8 w-full">
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <h2 className="subtitle-fan md:text-lg flex items-center gap-2">
            <div className="flex items-center gap-2">
