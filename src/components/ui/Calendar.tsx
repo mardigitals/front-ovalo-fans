@@ -83,7 +83,7 @@ const Calendar = ({ eventos }: { eventos: any[] }) => {
            return (
               <div 
                 key={ev.id} 
-                className={`${glassStyle} backdrop-blur-md border text-[5px] md:text-xs font-bold uppercase px-1.5 py-1 rounded-lg shadow-sm whitespace-normal break-words leading-tight cursor-pointer transition-all hover:scale-[1.02]`}
+                className={`${glassStyle} backdrop-blur-md border text-[5px] md:text-xs font-bold uppercase p-0.5 rounded-lg shadow-sm whitespace-normal break-words leading-tight cursor-pointer transition-all hover:scale-[1.02]`}
                 title={`${ev.titulo} - ${new Date(ev.fecha_evento).toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'})}`}
               >
                 {ev.titulo}
