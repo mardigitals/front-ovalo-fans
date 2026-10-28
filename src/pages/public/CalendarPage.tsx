@@ -27,19 +27,19 @@ const CalendarPage = () => {
   }, []);
 
   return (
-    <main className="flex flex-col pt-16 min-h-screen bg-zinc dark:bg-[#08060d] transition-colors duration-300">
+    <main className="flex flex-col pt-20 md:pt-24 min-h-screen bg-zinc dark:bg-[#08060d] transition-colors duration-300">
       
-      {/* HEADER HERO (Adaptado a menor altura para dar espacio al calendario) */}
-      <header className="absolute top-0 w-full h-[50vh] flex-shrink-0 overflow-hidden bg-gradient-to-r from-transparent via-white/20 to-transparent z-0">
+      {/* HEADER HERO (Adaptado para que comience debajo de la barra de navegación en mobile y desktop) */}
+      <header className="absolute top-0 w-full h-[40vh] md:h-[50vh] flex-shrink-0 overflow-hidden bg-gradient-to-r from-transparent via-white/20 to-transparent z-0">
         <div className="absolute inset-0">
           <img 
             src={autodromoRafaela} 
             alt="Autódromo de Rafaela" 
             className="w-full h-full object-cover opacity-85 dark:opacity-90" 
-          />          
+          />         
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-white dark:via-[#08060d]/80 dark:to-[#08060d]" />
         </div>
-      </header>  
+      </header>
 
       {/* BOTÓN FLOTANTE PARA VOLVER A LA WEB */}
       <div className="fixed bottom-6 right-6 z-50">

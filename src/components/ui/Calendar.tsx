@@ -83,7 +83,7 @@ const Calendar = ({ eventos }: { eventos: any[] }) => {
            return (
               <div 
                 key={ev.id} 
-                className={`${glassStyle} backdrop-blur-md border text-[10px] md:text-xs font-bold uppercase px-1.5 py-1 rounded-lg shadow-sm whitespace-normal break-words leading-tight cursor-pointer transition-all hover:scale-[1.02]`}
+                className={`${glassStyle} backdrop-blur-md border text-[5px] md:text-xs font-bold uppercase px-1.5 py-1 rounded-lg shadow-sm whitespace-normal break-words leading-tight cursor-pointer transition-all hover:scale-[1.02]`}
                 title={`${ev.titulo} - ${new Date(ev.fecha_evento).toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'})}`}
               >
                 {ev.titulo}
@@ -96,7 +96,7 @@ const Calendar = ({ eventos }: { eventos: any[] }) => {
   });
 
   return (
-    <div className="subtitle-fan text-sm  bg-sky-500 px-2 py-1 rounded-2xl hover:text-sky-500 transition-colors shadow-[0_0_15px_rgba(14,165,233,0.3)] p-5 md:p-8 w-full">
+    <div className="subtitle-fan text-sm  bg-sky-500 px-2 py-1 rounded-2xl hover:text-sky-500 transition-colors shadow-[0_0_15px_rgba(14,165,233,0.3)] mt-4 p-5 md:p-8 w-full">
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <h2 className="subtitle-fan md:text-lg flex items-center gap-2">
            <div className="flex items-center gap-2">
@@ -104,10 +104,6 @@ const Calendar = ({ eventos }: { eventos: any[] }) => {
             </div>
          Calendario Oficial
         </h2>
-
-       
-          
-        
         <div className="flex items-center gap-4 bg-slate-100/80 dark:bg-black/50 border border-slate-200 dark:border-white/10 rounded-full px-3 py-1.5 shadow-[0_0_15px_rgba(14,165,233,0.3)] backdrop-blur-md">
           <button type="button" onClick={prevMonth} className="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 transition-colors">
             <ChevronLeft size={18} />
@@ -143,7 +139,7 @@ const Calendar = ({ eventos }: { eventos: any[] }) => {
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-1 md:gap-2">
+      <div className="grid grid-cols-7 gap-1 mb-2 md:gap-2">
         {emptyDays}
         {days}
       </div>
