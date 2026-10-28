@@ -164,11 +164,11 @@ const EventosPage = () => {
       render: (item: any) => {
         const estadoVirtual = obtenerEstadoDinamico(item.fecha_evento);
         let color = estadoVirtual === 'PROGRAMADO' 
-            ? "bg-blue-500/10 text-blue-500 border-blue-500/20" 
-            : "bg-slate-500/10 text-slate-400 border-slate-500/20";
+            ? "bg-cyan-500/20 dark:bg-cyan-400/20 subtitle-fan shadow-[0_0_15px_rgba(14,165,233,0.3)] border-cyan-500/30 backdrop-blur-md border shadow-sm truncate cursor-help transition-all hover:scale-[1.02]" 
+            : "bg-slate-500/10 dark:bg-slate-400/20 text-slate-600 font-bold dark:text-slate-300 border-slate-500/20";
         
         return (
-          <span className={`px-2 py-1 rounded text-xs font-black border ${color}`}>
+          <span className={`px-2 py-1 rounded text-xs border ${color}`}>
             {estadoVirtual}
           </span>
         )
@@ -179,10 +179,7 @@ const EventosPage = () => {
   return (
     <div className="relative h-full max-w-7xl mx-auto space-y-6 pb-12 animate-in fade-in duration-500">
       
-      {/* 1. EL NUEVO CALENDARIO INTERACTIVO (Invocado como Componente) */}
-      <Calendar eventos={eventos} />
-
-      {/* 2. LA TABLA CRUD TRADICIONAL */}
+      {/* 1. LA TABLA CRUD TRADICIONAL */}
       <GenericCrud
         title="CALENDARIO DE EVENTOS" subtitle="Administrá las carreras y los eventos del autódromo."
         columns={columns} 
@@ -286,7 +283,12 @@ const EventosPage = () => {
         itemName={eventoAEliminar?.titulo || ''}
         warningText="Esta acción no se puede deshacer y borrará el evento del calendario."
       />
+    
+      {/* 2. EL NUEVO CALENDARIO INTERACTIVO (Invocado como Componente) */}
+      <Calendar eventos={eventos} />
+
     </div>
+      
   );
 };
 
