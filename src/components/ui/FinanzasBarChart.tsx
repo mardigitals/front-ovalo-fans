@@ -25,7 +25,11 @@ export function FinanzasBarChart({ metricasFinanzas }: { metricasFinanzas: any[]
             <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
             <Bar dataKey="ingresos" fill="#0ea5e9" radius={4}>
               <LabelList dataKey="mes" position="insideLeft" offset={8} className="fill-white font-medium" fontSize={12} />
-              <LabelList dataKey="ingresos" position="right" offset={8} className="fill-slate-700 dark:fill-white font-bold" fontSize={12} formatter={(v: any) => `$${(v/1000)}k`} />
+              <LabelList dataKey="ingresos" position="right" offset={8} className="fill-slate-700 dark:fill-white font-bold" fontSize={12} formatter={(v: any) => new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    maximumFractionDigits: 0
+  }).format(v)} />
             </Bar>
           </BarChart>
         </ChartContainer>
