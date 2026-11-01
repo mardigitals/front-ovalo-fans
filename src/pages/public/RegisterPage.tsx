@@ -3,23 +3,37 @@ import { Link, useNavigate } from 'react-router-dom';
 import api from '@/api/axios';
 import GenericPay from '@/components/ui/GenericPay';
 
-
 const RegisterPage = () => {
     const [step, setStep] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [authId, setAuthId] = useState<number | null>(null);
+    const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
     const navigate = useNavigate();
 
+    // Estado único unificado que incluye Auth, Usuario y Perfil Fan
     const [formData, setFormData] = useState({
-        nombre: '', apellido: '', dni: '', fecha_nacimiento: '', genero: 'M',
-        nacionalidad: '', telefono: '', calle: '', numero: '', piso: '', depto: '',
-        cp: '', ciudad: '', provincia: '', pais: 'Argentina',
-        alias: '', es_socio_club: false, hincha_marca_tc: 'Ford', chicana_favorita: '1 de adentro'
+        email: '',
+        contrasena: '',
+        confirmPassword: '',
+        nombre: '', 
+        apellido: '', 
+        dni: '', 
+        fecha_nacimiento: '', 
+        genero: 'M',
+        nacionalidad: 'Argentina', 
+        telefono: '', 
+        calle: '', 
+        numero: '', 
+        piso: '', 
+        depto: '',
+        cp: '', 
+        ciudad: '', 
+        provincia: '', 
+        pais: 'Argentina',
+        alias: '', 
+        es_socio_club: false, 
+        hincha_marca_tc: 'Ford', 
+        chicana_favorita: '1 de adentro'
     });
 
     const [membresias, setMembresias] = useState<any[]>([]);
@@ -32,6 +46,7 @@ const RegisterPage = () => {
         'Panamá', 'Paraguay', 'Perú', 'Reino Unido', 'Uruguay', 'Venezuela', 'Otro'
     ]);
 
+    // Cargar membresías para el Paso 3
     useEffect(() => {
         const cargarMembresias = async () => {
             try {
@@ -60,7 +75,6 @@ const RegisterPage = () => {
 
     // 2. CARGAR CIUDADES (Solo si es Argentina)
     useEffect(() => {
-        // Si no hay provincia elegida, O el país NO es Argentina, cortamos acá.
         if (!formData.provincia || formData.pais !== 'Argentina') {
             setCiudades([]);
             return;
@@ -75,120 +89,107 @@ const RegisterPage = () => {
             }
         };
         fetchCiudades();
-    }, [formData.provincia, formData.pais]); // <-- Agregamos formData.pais a las dependencias
-
+    }, [formData.provincia, formData.pais]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
         const checked = (e.target as HTMLInputElement).checked;
+        
         setFormData(prev => ({
             ...prev,
             [name]: type === 'checkbox' ? checked : value
         }));
+
+        // Limpiar error individual al escribir
+        if (fieldErrors[name]) {
+            setFieldErrors(prev => ({ ...prev, [name]: '' }));
+        }
     };
 
-    const handleRegisterFree = async (e: React.FormEvent) => {
+    // Paso 1: Validación local de contraseñas y avance visual
+    const handleNextStep1 = (e: React.FormEvent) => {
         e.preventDefault();
-        if (password !== confirmPassword) {
-            setError('Las contraseñas no coinciden. Verificalas antes de acelerar.');
+        if (formData.contrasena !== formData.confirmPassword) {
+            setFieldErrors({ confirmPassword: 'Las contraseñas no coinciden. Verificalas antes de acelerar.' });
             return;
         }
+        setFieldErrors({});
+        setStep(2);
+    };
+
+    // Paso 2: Envío unificado atómico al backend (/usuario-auth/register-full)
+    const handleCompleteRegistration = async (e: React.FormEvent) => {
+        e.preventDefault();
         setIsLoading(true);
         setError('');
+        setFieldErrors({});
 
         try {
-            const registerResponse = await api.post('/usuario-auth/register', { email, contrasena: password });
-            setAuthId(registerResponse.data.id); 
+            // 1. Registro atómico completo (Crea Auth, Usuario y Perfil Fan de una vez)
+            await api.post('/usuario-auth/register-full', formData);
 
-            const loginResponse = await api.post('/usuario-auth/login', { email, contrasena: password });
+            // 2. Autenticarnos automáticamente para obtener el token JWT
+            const loginResponse = await api.post('/usuario-auth/login', { 
+                email: formData.email, 
+                contrasena: formData.contrasena 
+            });
             const token = loginResponse.data.access_token;
             
             localStorage.setItem('token', token);
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            
-            setStep(2); 
-        } catch (err: any) {
-            const msg = err.response?.data?.message || 'Error al crear la cuenta';
-            setError(Array.isArray(msg) ? msg[0] : msg);
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
-    const handleRegisterFan = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
-        setError('');
+            // 3. Verificamos si el usuario quedó bonificado como socio de Atlético de Rafaela
+            // Consultamos el perfil actual o evaluamos la respuesta si el backend lo devuelve
+            const perfilRes = await api.get('/perfil-fan/me').catch(() => null);
 
-        try {
-            const usuarioPayload = {
-                usuario_auth_id: authId, nombre: formData.nombre, apellido: formData.apellido,
-                dni: formData.dni, fecha_nacimiento: formData.fecha_nacimiento, genero: formData.genero,
-                nacionalidad: formData.nacionalidad || undefined, 
-                telefono: formData.telefono, calle: formData.calle, numero: formData.numero,
-                piso: formData.piso || undefined, depto: formData.depto || undefined, cp: formData.cp,
-                ciudad: formData.ciudad, provincia: formData.provincia, pais: formData.pais
-            };
-
-            const perfilFanPayload = {
-                alias: formData.alias, es_socio_club: formData.es_socio_club,
-                hincha_marca_tc: formData.hincha_marca_tc, chicana_favorita: formData.chicana_favorita,
-            };
-
-            await api.post('/usuario', usuarioPayload);
-            const loginResponse = await api.post('/usuario-auth/login', { email, contrasena: password });
-            const newToken = loginResponse.data.access_token;
-            
-            localStorage.setItem('token', newToken);
-            api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-
-            const perfilRes = await api.post('/perfil-fan', perfilFanPayload, {
-                headers: { Authorization: `Bearer ${newToken}` } 
-            });
-
-            //  SI ES SOCIO VERIFICADO DE ATLÉTICO AL DÍA -> SALTEA EL PAGO Y VA AL DASHBOARD CON P3 ACTIVO
-            if (perfilRes.data.bonificado_socio_ar) {
+            if (perfilRes?.data?.bonificado_socio_ar) {
                 alert('¡Socio de Atlético de Rafaela verificado! Tenés tu membresía P3 FAN bonificada al 100%. ¡Bienvenido a pista!');
                 navigate('/dashboard/resumen');
                 return;
             }
 
-            // Si tildó "Soy socio" pero no estaba en el padrón o estaba moroso, le avisamos y pasa al Paso 3
-            if (perfilRes.data.aviso_socio) {
+            if (perfilRes?.data?.aviso_socio) {
                 setError(perfilRes.data.aviso_socio);
             }
 
+            // 4. Si no está bonificado, pasamos directo al Paso 3 (Pagos)
             setStep(3);
+
         } catch (err: any) {
-            const msg = err.response?.data?.message || 'Error al guardar tu perfil de Fan';
-            setError(Array.isArray(msg) ? msg[0] : msg);
+            console.error("Error en registro completo:", err);
+            
+            // Si el backend devuelve errores de validación de los DTOs por campo
+            if (err.response?.data?.errores) {
+                setFieldErrors(err.response.data.errores);
+                // Si el error viene de credenciales del paso 1, podemos devolverlo al paso 1
+                if (err.response.data.errores.email || err.response.data.errores.contrasena) {
+                    setStep(1);
+                }
+            } else {
+                const msg = err.response?.data?.message || 'Error al procesar el registro completo';
+                setError(Array.isArray(msg) ? msg[0] : msg);
+            }
         } finally {
             setIsLoading(false);
         }
     };
 
-    // Ahora recibimos un número, que es el ID de la membresía en tu BD
+    // Paso 3: Proceso de pago con Mercado Pago
     const handlePayment = async (membresiaId: number) => {
         setIsLoading(true);
         setError('');
 
         try {
-            // 1. Crear la Suscripción mandando el membresia_id correcto
             const suscripcionResponse = await api.post('/suscripcion', {
                 membresia_id: membresiaId 
-                // Nota: perfil_fan_id es @IsOptional en tu DTO, así que si tu backend 
-                // lo saca automáticamente del token JWT, no hace falta mandarlo acá.
             });
 
             const suscripcionId = suscripcionResponse.data.id; 
 
-            // 2. Generar el link de Mercado Pago
             const pagoResponse = await api.post('/pagos/generar-link', {
                 suscripcion_id: suscripcionId
             });
 
-            // 3. Redirigir a Mercado Pago usando el nombre de variable de TU backend
-            // Usamos url_sandbox para pruebas
             if (pagoResponse.data.url_sandbox) {
                 window.location.href = pagoResponse.data.url_sandbox; 
             } else {
@@ -199,15 +200,13 @@ const RegisterPage = () => {
             console.error("Error en el proceso de pago:", err);
             const msg = err.response?.data?.message || 'Error al procesar la suscripción.';
             setError(Array.isArray(msg) ? msg[0] : msg);
+        } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        // Quitamos colores fijos del fondo principal
         <div className="min-h-screen flex flex-col items-center justify-center p-4 py-12">
-            
-            {/* Tarjeta con soporte Claro/Oscuro */}
             <div className={`w-full ${step === 1 ? 'max-w-md' : 'max-w-4xl'} p-8 bg-white/80 dark:bg-black/40 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl dark:shadow-sky-500/20 transition-all duration-500`}>
                 
                 {error && step !== 3 && (
@@ -224,30 +223,32 @@ const RegisterPage = () => {
                             <p className="mt-2 text-center text-fan text-sm">Paso 1: Datos de acceso</p>
                         </div>
                         
-                        <form onSubmit={handleRegisterFree} className="space-y-6">
+                        <form onSubmit={handleNextStep1} className="space-y-6">
                             <div className="space-y-4">
                                 <div>
                                     <label className="label-fan">Correo electrónico</label>
-                                    <input type="email" required placeholder="tu@correo.com" value={email} onChange={(e) => setEmail(e.target.value)} className="input-fan" />
+                                    <input type="email" required placeholder="tu@correo.com" value={formData.email} onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))} className="input-fan" />
+                                    {fieldErrors.email && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.email}</span>}
                                 </div>
                                 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label className="label-fan">Contraseña</label>
-                                        {/* Agregamos el pattern para que el navegador también valide la regex de tu DTO */}
-                                        <input type="password" required placeholder="Mín. 8, Mayúscula y Especial" value={password} onChange={(e) => setPassword(e.target.value)} className="input-fan" 
+                                        <input type="password" required placeholder="Mín. 8, Mayúscula y Especial" value={formData.contrasena} onChange={(e) => setFormData(prev => ({ ...prev, contrasena: e.target.value }))} className="input-fan" 
                                         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$" title="Debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial" />
+                                        {fieldErrors.contrasena && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.contrasena}</span>}
                                     </div>
                                     <div>
                                         <label className="label-fan">Repetir Contraseña</label>
-                                        <input type="password" required placeholder="Repetir contraseña" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="input-fan" />
+                                        <input type="password" required placeholder="Repetir contraseña" value={formData.confirmPassword} onChange={(e) => setFormData(prev => ({ ...prev, confirmPassword: e.target.value }))} className="input-fan" />
+                                        {fieldErrors.confirmPassword && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.confirmPassword}</span>}
                                     </div>
                                 </div>
                             </div>
                             
                             <button type="submit" disabled={isLoading} 
                                 className="w-full py-3 px-4 font-black rounded-lg text-slate-900 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 transition-all uppercase tracking-widest mt-2">
-                                {isLoading ? 'Registrando...' : 'Siguiente'}
+                                Siguiente
                             </button>
                         </form>
                         
@@ -273,35 +274,34 @@ const RegisterPage = () => {
                             <p className="text-fan">Completa tu perfil para acceder a beneficios exclusivos.</p>
                         </div>
 
-                        <form onSubmit={handleRegisterFan} className="space-y-8">
+                        <form onSubmit={handleCompleteRegistration} className="space-y-8">
                             
                             {/* Sección Datos Personales */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
                                 <h3 className="subtitle-fan md:col-span-2 border-b border-slate-200 dark:border-white/10 pb-2">Datos Personales</h3>
                                 
-                                {/* Le agregamos pattern para letras y espacios */}
                                 <div>
                                     <label className="label-fan">Nombre</label>
-                                    <input type="text" name="nombre" required placeholder="Franco" value={formData.nombre} onChange={handleInputChange} className="input-fan" 
-                                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras" />
+                                    <input type="text" name="nombre" required placeholder="Franco" value={formData.nombre} onChange={handleInputChange} className="input-fan" />
+                                    {fieldErrors.nombre && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.nombre}</span>}
                                 </div>
                                 
                                 <div>
                                     <label className="label-fan">Apellido</label>
-                                    <input type="text" name="apellido" required placeholder="Colapinto" value={formData.apellido} onChange={handleInputChange} className="input-fan" 
-                                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo se permiten letras" />
+                                    <input type="text" name="apellido" required placeholder="Colapinto" value={formData.apellido} onChange={handleInputChange} className="input-fan" />
+                                    {fieldErrors.apellido && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.apellido}</span>}
                                 </div>
                                 
-                                {/* Le agregamos pattern numérico de 7 a 8 caracteres */}
                                 <div>
                                     <label className="label-fan">DNI</label>
-                                    <input type="text" name="dni" required placeholder="Sin puntos" value={formData.dni} onChange={handleInputChange} className="input-fan" 
-                                    pattern="[0-9]{7,8}" title="Debe contener entre 7 y 8 números, sin puntos" />
+                                    <input type="text" name="dni" required placeholder="Sin puntos" value={formData.dni} onChange={handleInputChange} className="input-fan" />
+                                    {fieldErrors.dni && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.dni}</span>}
                                 </div>
                                 
                                 <div>
                                     <label className="label-fan">Fecha de Nacimiento</label>
                                     <input type="date" name="fecha_nacimiento" required value={formData.fecha_nacimiento} onChange={handleInputChange} className="input-fan [&::-webkit-calendar-picker-indicator]:dark:filter [&::-webkit-calendar-picker-indicator]:dark:invert" />
+                                    {fieldErrors.fecha_nacimiento && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.fecha_nacimiento}</span>}
                                 </div>
                                 
                                 <div>
@@ -313,33 +313,21 @@ const RegisterPage = () => {
                                     </select>
                                 </div>
 
-                                {/* --- INPUT DE NACIONALIDAD  --- */}
                                 <div className="md:col-span-3">
                                     <label className="label-fan">Nacionalidad</label>
-                                    <select 
-                                        name="nacionalidad" 
-                                        required 
-                                        value={formData.nacionalidad} 
-                                        onChange={handleInputChange} className="input-fan"
-                                    >
-                                        {/* Argentina fija al principio por UX */}
+                                    <select name="nacionalidad" required value={formData.nacionalidad} onChange={handleInputChange} className="input-fan">
                                         <option value="Argentina">Argentina</option>
-                                        
                                         <option disabled>──────────</option>
-                                        
-                                        {/* Resto del mundo dinámico */}
                                         {paises.map(pais => (
                                             <option key={pais} value={pais}>{pais}</option>
                                         ))}
                                     </select>
                                 </div>
 
-
-                                {/* Le agregamos pattern solo números */}
                                 <div>
                                     <label className="label-fan">Teléfono</label>
-                                    <input type="tel" name="telefono" required placeholder="349215334455" value={formData.telefono} onChange={handleInputChange} className="input-fan" 
-                                    pattern="[0-9]+" title="Solo se permiten números, sin guiones ni espacios" />
+                                    <input type="tel" name="telefono" required placeholder="349215334455" value={formData.telefono} onChange={handleInputChange} className="input-fan" />
+                                    {fieldErrors.telefono && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.telefono}</span>}
                                 </div>
                             </div>
 
@@ -350,11 +338,13 @@ const RegisterPage = () => {
                                 <div className="md:col-span-2">
                                     <label className="label-fan">Calle</label>
                                     <input type="text" name="calle" required placeholder="Bv. Lehmann" value={formData.calle} onChange={handleInputChange} className="input-fan" />
+                                    {fieldErrors.calle && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.calle}</span>}
                                 </div>
                                 
                                 <div>
                                     <label className="label-fan">Número</label>
-                                    <input type="text" name="numero" required placeholder="1234" value={formData.numero} onChange={handleInputChange} className="input-fan" pattern="[0-9]+" title="El número de calle solo debe contener números" />
+                                    <input type="text" name="numero" required placeholder="1234" value={formData.numero} onChange={handleInputChange} className="input-fan" />
+                                    {fieldErrors.numero && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.numero}</span>}
                                 </div>
                                 
                                 <div>
@@ -369,10 +359,10 @@ const RegisterPage = () => {
                                 
                                 <div>
                                     <label className="label-fan">Código Postal</label>
-                                    <input type="text" name="cp" required placeholder="2300" value={formData.cp} onChange={handleInputChange} className="input-fan" pattern="[0-9]+" title="El código postal solo debe contener números" />
+                                    <input type="text" name="cp" required placeholder="2300" value={formData.cp} onChange={handleInputChange} className="input-fan" />
+                                    {fieldErrors.cp && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.cp}</span>}
                                 </div>
 
-                                {/* --- PAÍS (Select con API Mundial) --- */}
                                 <div className="md:col-span-3">
                                     <label className="label-fan">País</label>
                                     <select 
@@ -381,27 +371,20 @@ const RegisterPage = () => {
                                         value={formData.pais} 
                                         onChange={(e) => {
                                             handleInputChange(e);
-                                            // Si cambia de país, limpiamos la provincia y ciudad
                                             setFormData(prev => ({ ...prev, provincia: '', ciudad: '' }));
                                         }} 
                                         className="input-fan"
                                     >
-                                        {/* Argentina fija al principio por UX */}
                                         <option value="Argentina">Argentina</option>
-                                        
                                         <option disabled>──────────</option>
-                                        
-                                        {/* Resto del mundo dinámico */}
                                         {paises.map(pais => (
                                             <option key={pais} value={pais}>{pais}</option>
                                         ))}
                                     </select>
                                 </div>
 
-                                {/* --- RENDERIZADO CONDICIONAL: API ARGENTINA VS RESTO DEL MUNDO --- */}
                                 {formData.pais === 'Argentina' ? (
                                     <>
-                                        {/* --- PROVINCIA ARGENTINA (API) --- */}
                                         <div className="md:col-span-1">
                                             <label className="label-fan">Provincia</label>
                                             <select name="provincia" required value={formData.provincia} onChange={(e) => { handleInputChange(e); setFormData(prev => ({ ...prev, ciudad: '' })); }} className="input-fan">
@@ -410,9 +393,9 @@ const RegisterPage = () => {
                                                     <option key={prov.id} value={prov.nombre}>{prov.nombre}</option>
                                                 ))}
                                             </select>
+                                            {fieldErrors.provincia && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.provincia}</span>}
                                         </div>
 
-                                        {/* --- CIUDAD ARGENTINA (API) --- */}
                                         <div className="md:col-span-2">
                                             <label className="label-fan">Ciudad / Localidad</label>
                                             <select name="ciudad" required value={formData.ciudad} onChange={handleInputChange} className="input-fan disabled:opacity-50 disabled:cursor-not-allowed" disabled={!formData.provincia || ciudades.length === 0}>
@@ -421,20 +404,20 @@ const RegisterPage = () => {
                                                     <option key={ciudad.id} value={ciudad.nombre}>{ciudad.nombre}</option>
                                                 ))}
                                             </select>
+                                            {fieldErrors.ciudad && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.ciudad}</span>}
                                         </div>
                                     </>
                                 ) : (
                                     <>
-                                        {/* --- ESTADO/PROVINCIA EXTRANJERA (Input libre) --- */}
                                         <div className="md:col-span-1">
                                             <label className="label-fan">Estado / Provincia</label>
-                                            <input type="text" name="provincia" required placeholder="Indiana" value={formData.provincia} onChange={handleInputChange} className="input-fan" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo letras" />
+                                            <input type="text" name="provincia" required placeholder="Indiana" value={formData.provincia} onChange={handleInputChange} className="input-fan" />
+                                            {fieldErrors.provincia && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.provincia}</span>}
                                         </div>
-
-                                        {/* --- CIUDAD EXTRANJERA (Input libre) --- */}
                                         <div className="md:col-span-2">
                                             <label className="label-fan">Ciudad / Localidad</label>
-                                            <input type="text" name="ciudad" required placeholder="Indianapolis" value={formData.ciudad} onChange={handleInputChange} className="input-fan" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Solo letras" />
+                                            <input type="text" name="ciudad" required placeholder="Indianapolis" value={formData.ciudad} onChange={handleInputChange} className="input-fan" />
+                                            {fieldErrors.ciudad && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.ciudad}</span>}
                                         </div>
                                     </>
                                 )}
@@ -444,9 +427,12 @@ const RegisterPage = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 bg-slate-100 dark:bg-white/[0.02] p-6 rounded-xl border border-slate-200 dark:border-white/5">
                                 <h3 className="subtitle-fan md:col-span-2 flex items-center gap-2">🏁 Tu ADN Tuerca</h3>
                                 
-                                <div><label className="label-fan">Alias / Apodo</label><input type="text" name="alias" required placeholder="FanDeArdusso12" value={formData.alias} onChange={handleInputChange} maxLength={20} className="input-fan" /></div>
+                                <div>
+                                    <label className="label-fan">Alias / Apodo</label>
+                                    <input type="text" name="alias" required placeholder="FanDeArdusso12" value={formData.alias} onChange={handleInputChange} maxLength={20} className="input-fan" />
+                                    {fieldErrors.alias && <span className="text-red-500 text-xs mt-1 block font-medium">{fieldErrors.alias}</span>}
+                                </div>
                                 
-                                {/* Checkbox adaptado a Light/Dark */}
                                 <div className="flex items-center space-x-3 bg-white dark:bg-black/50 px-4 mt-[18px] rounded-md border border-slate-300 dark:border-white/10 h-[50px]">
                                     <input type="checkbox" id="es_socio" name="es_socio_club" checked={formData.es_socio_club} onChange={handleInputChange} className="w-5 h-5 accent-sky-500" />
                                     <label htmlFor="es_socio" className="text-sm font-medium cursor-pointer text-slate-700 dark:text-slate-300">Soy socio del club</label>
@@ -466,10 +452,15 @@ const RegisterPage = () => {
                                 </div>
                             </div>
 
-                            <button type="submit" disabled={isLoading} 
-                                className="w-full py-4 px-6 font-black rounded-lg text-black bg-sky-500 hover:bg-sky-400 shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.6)] transition-all uppercase tracking-widest text-lg mt-8">
-                                {isLoading ? 'Acelerando...' : 'Completar Perfil Fan'}
-                            </button>
+                            <div className="flex gap-4">
+                                <button type="button" onClick={() => setStep(1)} className="w-1/3 py-4 font-bold rounded-lg uppercase bg-slate-800 text-white hover:bg-slate-700">
+                                    Volver
+                                </button>
+                                <button type="submit" disabled={isLoading} 
+                                    className="w-2/3 py-4 px-6 font-black rounded-lg text-black bg-sky-500 hover:bg-sky-400 shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.6)] transition-all uppercase tracking-widest text-lg">
+                                    {isLoading ? 'Acelerando...' : 'Completar Perfil Fan'}
+                                </button>
+                            </div>
                         </form>
                     </div>
                 )}
@@ -490,7 +481,6 @@ const RegisterPage = () => {
                             subtitulo="Selecciona el plan que mejor se adapte a vos" 
                         />
                         
-                        {/* Botón para volver al menú / inicio */}
                         <div className="text-center pt-4">
                             <Link 
                                 to="/dashboard/resumen" 
