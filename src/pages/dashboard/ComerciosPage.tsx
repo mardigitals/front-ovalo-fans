@@ -28,7 +28,7 @@ const ClickableMap = ({ lat, lng, onLocationSelect }: { lat: number | string, ln
   return (
     <>
       <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       {lat && lng && <Marker position={[Number(lat), Number(lng)]} />}

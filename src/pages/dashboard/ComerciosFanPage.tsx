@@ -83,10 +83,10 @@ const ComerciosFanPage = () => {
             style={{ height: '100%', width: '100%' }}
             scrollWheelZoom={false}
           >
-            <TileLayer
-              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            />
+              <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  />
             
             {/* Renderizamos un pin por cada comercio filtrado que tenga coordenadas */}
             {comerciosFiltrados.map((comercio) => {
