@@ -5,7 +5,7 @@ const SalonFamaPage = () => {
   return (
     <div className="w-full max-w-6xl mx-auto py-12">
       <div className="flex flex-col items-center justify-center gap-4 mb-24 text-center">
-         <img src={logo} className="text-cyan-500 h-14 mb-2 drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]" />
+         <img src={logo} className="text-cyan-500 h-14 mb-2 drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]" alt="Logo Autodromo"/>
         <h2 className="title-fan text-5xl md:text-6xl text-slate-800 dark:text-white uppercase tracking-tighter">
           Salón de la Fama
         </h2>
