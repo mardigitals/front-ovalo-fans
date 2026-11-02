@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { CheckCircle2, AlertTriangle, Loader2 } from 'lucide-react';
-import api from '@/api/axios'; // Ajustá la ruta según tu configuración
+import api from '@/api/axios';
 
 const ReactivarCuentaPage = () => {
   const [searchParams] = useSearchParams();
@@ -12,6 +12,8 @@ const ReactivarCuentaPage = () => {
   const [mensaje, setMensaje] = useState('Reactivando tu cuenta...');
 
   useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+
     if (!token) {
       setStatus('error');
       setMensaje('Token inválido o ausente.');
@@ -20,13 +22,12 @@ const ReactivarCuentaPage = () => {
 
     const reactivar = async () => {
       try {
-        // Hacemos el PATCH al backend enviando el token en el body
         const response = await api.patch('/usuario-auth/restore-account', { token });
         setStatus('success');
         setMensaje(response.data.message || '¡Cuenta reactivada con éxito!');
         
-        // Redirigimos al login después de 3 segundos
-        setTimeout(() => navigate('/login'), 3000);
+        // Guardamos el timeout en la variable
+        timeoutId = setTimeout(() => navigate('/login'), 3000);
       } catch (error: any) {
         setStatus('error');
         setMensaje(error.response?.data?.message || 'Hubo un error al reactivar la cuenta. El enlace puede haber expirado.');
@@ -34,6 +35,10 @@ const ReactivarCuentaPage = () => {
     };
 
     reactivar();
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [token, navigate]);
 
   return (
