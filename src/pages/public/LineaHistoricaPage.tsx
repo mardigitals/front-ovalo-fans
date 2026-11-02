@@ -40,7 +40,7 @@ const LineaHistoricaPage = () => {
     return (
         <div className="w-full flex flex-col items-center">
 
-            <img src={logo} className="text-cyan-500 mt-12 h-14 mb-2 drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]" />
+            <img src={logo} className="text-cyan-500 mt-12 h-14 mb-2 drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]" alt="Logo Autodromo" />
             {/* 1. LÍNEA DE TIEMPO INTERACTIVA */}
             <div className="w-full py-8 px-4 md:px-12 m-2 relative mt-4 mb-10 overflow-x-auto custom-scrollbar">
                 
