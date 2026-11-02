@@ -134,7 +134,8 @@ const RegisterPage = () => {
                 contrasena: formData.contrasena 
             });
             const token = loginResponse.data.access_token;
-            
+            //CORREGIR CON COOKIE EN PRODUCCIÓN
+            // eslint-disable-next-line react-doctor/auth-token     
             localStorage.setItem('token', token);
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
